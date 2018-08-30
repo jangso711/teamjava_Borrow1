@@ -36,12 +36,11 @@
 	text-align : left;
 	z-index: 2;
 }
-.content{
-	position:relative;
-	min-height:500px;
-	left:0;
-	top:160px;
+.maincontent{
+	padding-top:70px;
+	padding-bottom:70px;
 }
+
 .footer{
 	height: 160px;
 	background-color: #7dc4c6;

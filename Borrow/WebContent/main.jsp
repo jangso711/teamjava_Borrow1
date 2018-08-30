@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="col-sm-12 content" align="center" style="padding-top:200px;">
-<fieldset class="field-container">
-  <input type="text" placeholder="Search..." style="width:700px; height:50px; letter-spacing: 2px" />
-</fieldset><br><br><br><br><br><br>
+<div class="maincontent"align="center" >
+<form action="">
+ <input type="text" placeholder="Search..." style="width:700px; height:50px; letter-spacing: 2px" />
+</form>
+<br><br><br>
 <a href=""><img id="wintersports" height="150" width="150" 
 src="${pageContext.request.contextPath }/img/겨울스포츠.png" alt="겨스"></a>
 <a href=""><img id="swim" height="150" width="150" 

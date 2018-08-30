@@ -22,7 +22,7 @@
 </div>
 <div class="row content">
 	<div class="col-sm-12">
-	<c:import url="${requestScope.url }"/>
+		<c:import url="${requestScope.url }"/>
 	</div>
 </div>
 <div class="row footer">
