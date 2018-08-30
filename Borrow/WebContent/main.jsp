@@ -2,8 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="col-sm-12 maincontent"align="center" >
-<form action="">
- <input type="text" placeholder="Search..." style="width:700px; height:50px; letter-spacing: 2px" />
+<form action="${pageContext.request.contextPath}/front">
+ <input type="hidden" name="command" value="ItemSearch">
+ <input type="text" name="searchtext" placeholder="Search..." style="width:700px; height:50px; letter-spacing: 2px" />
 </form>
 <br><br><br>
 <a href=""><img id="wintersports" height="150" width="150" 

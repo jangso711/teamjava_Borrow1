@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
@@ -24,5 +25,21 @@ public class ItemDAO {
 		if(rs!=null)rs.close();
 		if(pstmt!=null)pstmt.close();
 		if(con!=null)con.close();
+	}
+	
+	
+	/**
+	 * Item table에서 이름 중에 검색어(searchtext)포함하는 
+	 * 상품들을 전부 찾아서 ArrayList로 반환한다 
+	 * @param searchtext
+	 * @return
+	 */
+	public ArrayList<ItemVO> getAllItemListByName(String searchtext) {
+		ArrayList<ItemVO> list= new ArrayList<ItemVO>();
+		
+		
+		
+		
+		return list;
 	}
 }
