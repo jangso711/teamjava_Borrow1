@@ -10,6 +10,7 @@ drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
 
+drop table member;
 create table member(
 	id varchar2(100) primary key,
 	pwd varchar2(100) not null,

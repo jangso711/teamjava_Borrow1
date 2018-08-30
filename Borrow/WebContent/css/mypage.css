@@ -28,7 +28,7 @@
 	z-index: 2;
 }
 .header{
-	position:fixed;
+	/* position:fixed; 이거 적용하면 로그인 폼 안보임..*/
 	left:0px;
 	top:30px;
 	height: 130px;
