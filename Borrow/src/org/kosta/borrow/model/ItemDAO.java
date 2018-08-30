@@ -42,4 +42,28 @@ public class ItemDAO {
 		
 		return list;
 	}
+	/**
+	 * 180831-소정
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<CategoryVO> getAllCategories() throws SQLException {
+		ArrayList<CategoryVO> list = new ArrayList<CategoryVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql="select cat_no,cat_name from category";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(new CategoryVO(Integer.toString(rs.getInt(1)),rs.getString(2)));
+			}
+		}finally {
+			closeAll(rs,pstmt,con);
+		}
+		
+		return list;
+	}
 }
