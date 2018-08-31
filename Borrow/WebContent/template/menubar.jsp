@@ -19,6 +19,7 @@
 		<a href="${pageContext.request.contextPath }/front?command=Logout">Logout</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="">MyPage</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="">FAQ</a>&nbsp;&nbsp;
+	<a href="${pageContext.request.contextPath }/front?command=ItemRegisterForm">register</a>&nbsp;&nbsp;
 </c:otherwise>
 </c:choose>
 

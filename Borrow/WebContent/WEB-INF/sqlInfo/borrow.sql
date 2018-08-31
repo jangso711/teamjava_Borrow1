@@ -34,7 +34,7 @@ insert into member values('jb', '1234', '정빈', '강남','036',10000);
 
 select * from member;
 
-
+select add_months(sysdate,3) from dual;
 create table item(
    item_no number primary key,
    id varchar2(100) not null,
@@ -101,7 +101,6 @@ insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '유아용품'
 
 select * from category;
 
-
 create table item_category(
    item_no number not null,
    cat_no number not null,
@@ -114,3 +113,7 @@ create table item_category(
 insert into ITEM_CATEGORY(item_no, cat_no) values(10001,3003);  
 insert into ITEM_CATEGORY(item_no, cat_no) values(10002,3007);  
 insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3007);  
+
+-- CONTENTS 추가
+alter table item add item_expl clob;
+select * from picture;

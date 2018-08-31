@@ -35,7 +35,7 @@ input[type=number]{
 </div>
 <div class="col-sm-12 content">
 <h3>상품등록</h3>
-<form action="${pageContext.request.contextPath }/front">
+<form action="${pageContext.request.contextPath }/front"method="post"enctype="multipart/form-data">
 <input type="hidden"name="command"value="ItemRegister">
 <div class="formContent">
 <table cellpadding="3">
@@ -49,7 +49,7 @@ input[type=number]{
 	<td>모델명(번호)</td><td><input type="text"name="itemModel"></td>
 	</tr>
 	<tr>
-	<td>상품가격(*)</td><td><input type="number"name="itemModel"></td>
+	<td>상품가격(*)</td><td><input type="number"name="itemPrice"></td>
 	</tr>
 	<tr>
 	<td>분류선택(*)</td>
@@ -61,10 +61,10 @@ input[type=number]{
 	</td>
 	</tr>
 	<tr>
-	<td>사진등록(*)</td><td><input type="file"name="img" multiple></td>
+	<td>사진등록(*)</td><td><input type="file"name="img"></td>
 	</tr>
 	<tr>
-	<td>상품설명(*)</td><td><textarea cols="50"rows="8"></textarea></td>
+	<td>상품설명(*)</td><td><textarea name="itemExpl"cols="50"rows="8"></textarea></td>
 	</tr>
 	<tr >
 	<td></td>
