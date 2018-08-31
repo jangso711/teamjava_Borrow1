@@ -38,7 +38,7 @@ tr{
 <br>
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12 ">
-	<h3>회원 정보 상세 보기</h3>
+	<h3>회원 정보</h3>
 	<div class="membercontent">
 	<table cellpadding="15">
 		<tr>

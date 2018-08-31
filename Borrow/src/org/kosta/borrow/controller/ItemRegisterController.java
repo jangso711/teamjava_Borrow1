@@ -17,13 +17,20 @@ public class ItemRegisterController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-		
+
+		//180831 MIRI Test 후 주석 수정
 		String workspacePath="C:\\Users\\kosta\\git\\teamjava_Borrow1\\Borrow\\WebContent\\upload\\";
 //		String savePath = request.getServletContext().getRealPath("upload");
 //		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
+
 		// 파일 크기 10MB로 제한
-		int sizeLimit = 1024*1024*10;		
-		MultipartRequest multi = new MultipartRequest(request, workspacePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
+		int sizeLimit = 1024*1024*10;	
+		//String workspacePath="C:\\Users\\kosta\\git\\teamjava_Borrow1\\Borrow\\WebContent\\upload\\";
+		//MultipartRequest multi = new MultipartRequest(request, workspacePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
+		String savePath = request.getServletContext().getRealPath("upload");
+		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
+		
+			
 		String fileName = multi.getFilesystemName("img");
 		PictureVO pvo = new PictureVO();
 		pvo.setPicturePath(fileName);

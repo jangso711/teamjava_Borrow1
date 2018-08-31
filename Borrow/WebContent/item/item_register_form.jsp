@@ -61,10 +61,10 @@ input[type=number]{
 	</td>
 	</tr>
 	<tr>
-	<td>사진등록(*)</td><td><input type="file"name="img"></td>
+	<td>사진*</td><td><input type="file"name="img"></td>
 	</tr>
 	<tr>
-	<td>상품설명(*)</td><td><textarea name="itemExpl"cols="50"rows="8"></textarea></td>
+	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8"></textarea></td>
 	</tr>
 	<tr >
 	<td></td>
