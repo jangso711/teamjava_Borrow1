@@ -9,7 +9,7 @@
 }
 
 .logincontent{
-   margin-top:160px;
+   
    min-height: 300px;
    text-align:center;
    padding-top:120px;
@@ -28,8 +28,13 @@ input[type=text]{
    border-radius: 5px;
    padding:5px;
 }
+.bgheader{
 
+	height:160px;
+}
 </style>
+<div class="col-sm-12 bgheader">
+</div>
 <div class="col-sm-12 logincontent">
 <form action="${pageContext.request.contextPath }/front"method="post">
 <table align="center" cellpadding="3">
