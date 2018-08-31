@@ -34,36 +34,24 @@ input[type=number]{
 <div class="col-sm-12 bgheader">
 </div>
 <div class="col-sm-12 content">
-<h3>상세보기</h3>
+<h3>전체 상품 목록</h3>
 	<form>
 		<table class="table">
 			<thead>
 				<tr>
-					<th> </th>
-					<th>카테고리이름</th>
-					<th>상품명</th>
-					<th>브랜드</th>
-					<th>모델</th>
-					<th>가격</th>
-					<th>등록날짜</th>
-					<th>만료날짜</th>
-					<th>등록자</th>
-					<th>설명</th>
+					<th> </th><th>이름</th><th>설명</th><th>가격</th><th>아이디</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.itemDetail }" var="detail">
+				<c:forEach items="${requestScope.allItemList }" var="allitemlist">
+				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allitemlist.itemNo}" 
+					var="detailurl"></c:set>
 					<tr>
-						<td>사진</td>
-						<td>${detail.categoryVO.catName }</td>
-						<td>${detail.itemName }</td>
-						<td>${detail.itemBrand }</td>
-						<td>${detail.itemModel }</td>
-						<td>${detail.itemPrice }</td>
-						<td>${detail.itemRegDate }</td>
-						<td>${detail.itemExpDate }</td>
-						<td>${detail.memberVO.id }</td>
+						<td><a href="${detailurl }">사진(링크)</a></td>
+						<td><a href="${detailurl }">${allitemlist.itemName }(링크)</a></td>
 						<td>설명</td>
+						<td>${allitemlist.itemPrice }</td>
+						<td>${allitemlist.memberVO.id }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

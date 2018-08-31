@@ -31,6 +31,8 @@ public class HandlerMapping {
 			controller = new MemberMypageController();
 		}else if(command.equals("ItemSearch")) {
 			controller = new ItemSearchController();
+		}else if(command.equals("ItemAllSearch")) {
+			controller = new ItemAllSearchController();
 		}else if(command.equals("ItemDetail")) {
 			controller = new ItemDetailController();
 		}else if(command.equals("ItemRegisterForm")) {

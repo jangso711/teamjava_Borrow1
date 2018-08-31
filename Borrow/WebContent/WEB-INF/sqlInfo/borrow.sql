@@ -33,8 +33,13 @@ insert into member values('jangso711', '1234', '소정', '강남','035',10000);
 insert into member values('jb', '1234', '정빈', '강남','036',10000);
 
 select * from member;
+<<<<<<< HEAD
 
 select add_months(sysdate,3) from dual;
+=======
+select * from item_category;
+
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 create table item(
    item_no number primary key,
    id varchar2(100) not null,
@@ -57,9 +62,20 @@ values(item_no_seq.nextval, 'yosep', '유모차', '드림아일랜드', '컴퍼�
 insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status) 
 values(item_no_seq.nextval, 'miri', '모빌', '세도나', 'KOSTA', 11000, sysdate, add_months(sysdate,3), 1);
 
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status) 
+values(item_no_seq.nextval, 'qqq', '뽀로로 유모차', '뽀로로친구들', '뽀롱뽀롱', 35000, sysdate, add_months(sysdate,3), 1);
 
+update item set item_status=1 where item_no=10004;
+
+select item_no, item_name, item_price, id, item_status from item where item_status=1;
+select item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate from item where item_status=1 and item_no=10001;
+
+select  i.item_no, i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, ic.cat_no, c.cat_name 
+from item i, category c, item_category ic 
+where i.item_status=1 and i.item_no=10001 and i.item_no=ic.item_no and ic.cat_no=c.cat_no;
 
 select * from item;
+select * from member;
 
 create table item_add(
    item_no number primary key,
@@ -114,6 +130,11 @@ insert into ITEM_CATEGORY(item_no, cat_no) values(10001,3003);
 insert into ITEM_CATEGORY(item_no, cat_no) values(10002,3007);  
 insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3007);  
 
+
 -- CONTENTS 추가
 alter table item add item_expl clob;
 select * from picture;
+
+insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3007);  
+
+
