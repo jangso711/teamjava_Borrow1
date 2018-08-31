@@ -12,9 +12,10 @@ public class ItemVO {
 	private MemberVO memberVO;
 	private CategoryVO categoryVO;
 	public ItemVO() {
-		
+		memberVO=new MemberVO();
 	}
-	
+
+
 	public ItemVO(String itemNo, String itemName, int itemPrice, MemberVO memberVO) {
 		super();
 		this.itemNo = itemNo;

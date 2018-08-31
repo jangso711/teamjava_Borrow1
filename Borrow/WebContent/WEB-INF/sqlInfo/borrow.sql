@@ -137,4 +137,23 @@ select * from picture;
 
 insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3007);  
 
+--RENTAL DETAILS 추가
+insert into rental_details(rental_no, item_no, id, rental_date, return_date)
+values (rental_no_seq.nextval, 10001, 'yosep', '2018/8/1' , '2018/8/2');
+insert into rental_details(rental_no, item_no, id, rental_date, return_date)
+values (rental_no_seq.nextval, 10003, 'yosep', '2018/8/2' , '2018/8/5');
+--'yosep'의 대여내역 조회 
+select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date 
+from rental_details r, item i 
+where r.item_no=i.item_no and r.id='yosep';
+
+
+
+
+
+
+
+
+
+
 

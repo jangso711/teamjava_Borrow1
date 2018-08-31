@@ -237,4 +237,42 @@ public class ItemDAO {
 		}
 		return itemNo;
 	}
+	
+	/**
+	 * 로그인되어있는 자신의 id로 대여 내역을 조회해 리스트로 반환한다.
+	 * Item 테이블과 Rental_details 테이블을 조인함. 
+	 * @param id
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<RentalDetailVO> getAllRentalDetailById(String id) throws SQLException {
+		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql="select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date \r\n" + 
+					"from rental_details r, item i \r\n" + 
+					"where r.item_no=i.item_no and r.id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();			
+			while(rs.next()) {
+				RentalDetailVO rentalDetailVo= new RentalDetailVO();
+				rentalDetailVo.setRentalNo(rs.getString(1));
+				ItemVO item= new ItemVO();
+				item.setItemName(rs.getString(2));
+				item.getMemberVO().setId(rs.getString(3));
+				rentalDetailVo.setItemVO(item);
+				rentalDetailVo.setRentalDate(rs.getString(4));
+				rentalDetailVo.setReturnDate(rs.getString(5));			
+				list.add(rentalDetailVo);			
+			}
+				
+		}finally {
+			closeAll(rs,pstmt,con);
+		}		
+		return list;
+	}
 }
