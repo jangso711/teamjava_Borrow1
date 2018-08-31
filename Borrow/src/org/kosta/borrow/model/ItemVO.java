@@ -28,6 +28,9 @@ public class ItemVO {
 		this.memberVO = memberVO;
 		this.categoryVO = categoryVO;
 	}
+	public ItemVO(String itemNo) {
+		this.itemNo = itemNo;
+	}
 	public String getItemNo() {
 		return itemNo;
 	}
