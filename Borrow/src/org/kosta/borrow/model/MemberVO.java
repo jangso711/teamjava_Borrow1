@@ -19,6 +19,9 @@ public class MemberVO {
 		this.tel = tel;
 		this.point = point;
 	}
+	public MemberVO(String id) {
+		this.id=id;
+	}
 	public String getId() {
 		return id;
 	}

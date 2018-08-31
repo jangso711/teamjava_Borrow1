@@ -47,4 +47,63 @@ public class MemberDAO {
 		}
 		return user;
 	}
+	
+	public MemberVO memberDetail(String id) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		MemberVO vo=null;
+		try {
+			con=getConnection();
+			String sql="select id,name,address,tel,point from member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				vo=new MemberVO(rs.getString(1),null,rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5));
+			}
+				
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		
+		return vo;
+	}
+	public void registerMember(MemberVO memberVO) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="insert into member(id,pwd,name,address,tel) values(?,?,?,?,?) ";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, memberVO.getId());
+			pstmt.setString(2, memberVO.getPwd());
+			pstmt.setString(3, memberVO.getName());
+			pstmt.setString(4, memberVO.getAddress());
+			pstmt.setString(5, memberVO.getTel());
+			pstmt.executeQuery();
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+	}
+	public boolean IdCheck(String id) throws SQLException {
+		boolean flag=false;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="select count(*) from member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,id);
+			rs=pstmt.executeQuery();
+			if(rs.next()&&(rs.getInt(1)>0))
+			flag=true;			
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return flag;
+	}
 }
+

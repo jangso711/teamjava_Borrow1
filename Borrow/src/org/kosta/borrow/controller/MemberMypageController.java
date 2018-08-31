@@ -7,8 +7,8 @@ public class MemberMypageController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		request.setAttribute("url", "/member/member_mypage.jsp");
+		return "/template/layout.jsp";
 	}
 
 }
