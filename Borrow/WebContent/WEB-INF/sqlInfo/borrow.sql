@@ -72,7 +72,7 @@ select item_no, id, item_name, item_brand, item_model, item_price, item_regdate,
 
 select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
 from item i, picture p
-where i.item_status=1 and i.item_no=p.item_no;
+where i.item_status=1;
 
 select picture_path from picture where item_no=10005;
 
@@ -85,8 +85,19 @@ select  i.item_no, i.id, i.item_name, i.item_brand, i.item_model, i.item_price, 
 from item i, category c, item_category ic 
 where i.item_status=1 and i.item_no=10001 and i.item_no=ic.item_no and ic.cat_no=c.cat_no;
 
+select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
+from item i, picture p
+where i.item_status=1 and i.item_no=p.item_no and i.item_name like '%유모차%'
+order by i.item_no asc;
+
 select * from item;
 select * from member;
+select * from picture;
+
+insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
+insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
+insert into picture(item_no, picture_path) values(10004,'cell_selected.png');
+update picture set picture_path='EmptyTray.png' where item_no=10007;
 
 create table item_add(
    item_no number primary key,

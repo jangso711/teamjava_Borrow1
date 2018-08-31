@@ -19,8 +19,7 @@ public class ItemAllSearchController implements Controller {
 			for (ItemVO itemVO : itemList) {
 				pictureList.add(new PictureVO(ItemDAO.getInstance().getPicturePath(itemVO.getItemNo()), itemVO));
 			}
-			request.setAttribute("allItemList", itemList);
-			request.setAttribute("pictureList", pictureList);
+			request.setAttribute("allItemList", pictureList);
 		}
 		request.setAttribute("url", "/item/item_all_search_result.jsp");		
 		return "template/layout.jsp";
