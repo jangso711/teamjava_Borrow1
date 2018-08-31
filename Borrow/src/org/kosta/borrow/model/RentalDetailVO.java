@@ -9,6 +9,8 @@ public class RentalDetailVO {
 	public RentalDetailVO() {
 		
 	}
+	
+	
 	public RentalDetailVO(String rentalNo, String rentalDate, String returnDate, ItemVO itemVO, MemberVO memberVO) {
 		super();
 		this.rentalNo = rentalNo;

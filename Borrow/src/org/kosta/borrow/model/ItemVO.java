@@ -13,7 +13,7 @@ public class ItemVO {
 	private MemberVO memberVO;
 	private CategoryVO categoryVO;
 	public ItemVO() {
-		
+		memberVO=new MemberVO();
 	}
 	
 	public ItemVO(String itemNo, String itemName, String itemExpl, int itemPrice, MemberVO memberVO) {
