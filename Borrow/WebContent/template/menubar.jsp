@@ -12,7 +12,7 @@
 <c:choose>
 	<c:when test="${empty sessionScope.user }">
 		<a href="${pageContext.request.contextPath }/front?command=LoginForm">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="">Join Us</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">Join Us</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="">FAQ</a>&nbsp;&nbsp;
 </c:when>
 	<c:otherwise>
