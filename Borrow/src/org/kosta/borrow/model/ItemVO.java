@@ -14,6 +14,15 @@ public class ItemVO {
 	public ItemVO() {
 		
 	}
+	
+	public ItemVO(String itemNo, String itemName, int itemPrice, MemberVO memberVO) {
+		super();
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.memberVO = memberVO;
+	}
+
 	public ItemVO(String itemNo, String itemName, String itemBrand, String itemModel, int itemPrice, String itemRegDate,
 			String itemExpDate, String itemStatus, MemberVO memberVO, CategoryVO categoryVO) {
 		super();
