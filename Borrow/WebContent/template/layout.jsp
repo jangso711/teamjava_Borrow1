@@ -23,7 +23,7 @@
 <div class="row">
 		<c:import url="${requestScope.url }"/>
 </div>
-<div class="row footer">
+<div class="row">
 	<c:import url="/template/footer.jsp"/>
 </div>
 </body>

@@ -9,7 +9,13 @@ create sequence cat_no_seq start with 3001 nocache;
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
-
+drop table member;
+drop table item;
+drop table category;
+drop table picture;
+drop table item_add;
+drop table item_category;
+drop table rental_details;
 create table member(
    id varchar2(100) primary key,
    pwd varchar2(100) not null,
