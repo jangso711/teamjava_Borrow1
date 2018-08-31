@@ -54,11 +54,9 @@ input[type=number]{
 			<tbody>
 				<c:forEach items="${requestScope.itemDetail }" var="detail">
 					<tr>
-<<<<<<< HEAD
-						<td><img src="${pageContext.request.contextPath}/upload/${detail.pvo.picture}"><br></td>
-=======
+
 						<td><img src="${pageContext.request.contextPath }/upload/아이유1.jpg" width="150" height="150"></td>
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+
 						<td>${detail.categoryVO.catName }</td>
 						<td>${detail.itemName }</td>
 						<td>${detail.itemBrand }</td>
