@@ -13,6 +13,7 @@
 
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
+	<br><h3>나의 대여 목록</h3><br>
 	<c:choose>
 		<c:when test="${fn:length(requestScope.rentallist)==0}">
 			<span>대여하신 물품이 없습니다!! </span>

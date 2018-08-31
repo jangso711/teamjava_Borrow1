@@ -271,6 +271,7 @@ public class ItemDAO {
 	}
 	
 	/**
+	 * 180831 yosep 완료
 	 * 로그인되어있는 자신의 id로 대여 내역을 조회해 리스트로 반환한다.
 	 * Item 테이블과 Rental_details 테이블을 조인함. 
 	 * @param id
