@@ -51,6 +51,8 @@ public class HandlerMapping {
 			controller = new ItemRentalListController();
 		}else if(command.equals("ItemRegisterList")) {
 			controller = new ItemRegisterListController();
+		}else if(command.equals("FAQ")) {
+			controller=new FAQController();
 		}
 		
 		return controller;
