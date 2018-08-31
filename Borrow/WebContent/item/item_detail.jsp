@@ -52,22 +52,19 @@ input[type=number]{
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.itemDetail }" var="detail">
-					<tr>
-
-						<td><img src="${pageContext.request.contextPath }/upload/아이유1.jpg" width="150" height="150"></td>
-
-						<td>${detail.categoryVO.catName }</td>
-						<td>${detail.itemName }</td>
-						<td>${detail.itemBrand }</td>
-						<td>${detail.itemModel }</td>
-						<td>${detail.itemPrice }</td>
-						<td>${detail.itemRegDate }</td>
-						<td>${detail.itemExpDate }</td>
-						<td>${detail.memberVO.id }</td>
-						<td><pre>${detail.itemExpl }</pre></td>
-					</tr>
-				</c:forEach>
+				<tr>
+				<c:set value="${requestScope.itemDetail.itemVO }" var="item"></c:set>
+					<td><img src="${pageContext.request.contextPath }/upload/${itemDetail.picturePath}" width="150" height="150"></td>
+					<td>${item.categoryVO.catName }</td>
+					<td>${item.itemName }</td>
+					<td>${item.itemBrand }</td>
+					<td>${item.itemModel }</td>
+					<td>${item.itemPrice }</td>
+					<td>${item.itemRegDate }</td>
+					<td>${item.itemExpDate }</td>
+					<td>${item.memberVO.id }</td>
+					<td><pre>${item.itemExpl }</pre></td>
+				</tr>
 			</tbody>
 		</table>
 		
@@ -85,8 +82,10 @@ input[type=number]{
 				}
 			}
 		</script>
-		
-		<button type="button" name="update" onclick="updateItem(10005)">수정</button>
-		<button type="button" name="delete" onclick="deleteItem(10006)">삭제</button>
+		<c:if test="${sessionScope.user.id == requestScope.itemDetail.itemVO.memberVO.id}">
+			<c:set value="${requestScope.itemDetail.itemVO.itemNo}" var="itemNo"></c:set>
+			<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
+			<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
+		</c:if>
 	</form>
 </div>

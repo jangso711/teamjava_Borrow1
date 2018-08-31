@@ -76,13 +76,34 @@ public class ItemDAO {
 	 * 상품들을 전부 찾아서 ArrayList로 반환한다 
 	 * @param searchtext
 	 * @return
+	 * @throws SQLException 
 	 */
-	public ArrayList<ItemVO> getAllItemListByName(String searchtext) {
-		ArrayList<ItemVO> list= new ArrayList<ItemVO>();
-		
-		
-		
-		
+	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
+		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+		MemberVO memberVO = null;
+		StringBuilder sb = new StringBuilder();
+		searchtext = "%"+searchtext+"%";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, p.picture_path");
+			sb.append(" from item i, picture p");
+			sb.append(" where i.item_status=1 and i.item_no=p.item_no and i.item_name like ?");
+			sb.append(" order by i.item_no asc");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, searchtext);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setId(rs.getString(1));
+				list.add(new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
+						memberVO));
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
 		return list;
 	}
 	
@@ -92,8 +113,8 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<ItemVO> getDetailItemByNo(String itemno) throws SQLException {
-		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+	public ItemVO getDetailItemByNo(String itemno) throws SQLException {
+		ItemVO itemVO = null;
 		MemberVO memberVO = null;
 		CategoryVO categoryVO = null;
 		StringBuilder sb = new StringBuilder();
@@ -116,13 +137,13 @@ public class ItemDAO {
 				categoryVO = new CategoryVO();
 				categoryVO.setCatNo(rs.getString(9));
 				categoryVO.setCatName(rs.getString(10));
-				list.add(new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
-						rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, categoryVO));
+				itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
+						rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, categoryVO);
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
 		}
-		return list;
+		return itemVO;
 	}
 	/**
 	 * 180831 MIRI 완료
