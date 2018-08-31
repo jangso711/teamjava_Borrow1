@@ -43,15 +43,16 @@ input[type=number]{
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.allItemList }" var="allitemlist">
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allitemlist.itemNo}" 
+				<c:forEach items="${requestScope.pictureList }" var="pictureList">
+				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${pictureList.itemVO.itemNo}" 
 					var="detailurl"></c:set>
 					<tr>
-						<td><a href="${detailurl }">사진(링크)</a></td>
-						<td><a href="${detailurl }">${allitemlist.itemName }(링크)</a></td>
-						<td>설명</td>
-						<td>${allitemlist.itemPrice }</td>
-						<td>${allitemlist.memberVO.id }</td>
+						<td><a href="${detailurl }">
+							<img src="${pageContext.request.contextPath }/upload/${pictureList.picturePath}" width="150" height="150"></a></td>
+						<td><a href="${detailurl }">${pictureList.itemVO.itemName }(링크)</a></td>
+						<td><pre>${pictureList.itemVO.itemExpl }</pre></td>
+						<td>${pictureList.itemVO.itemPrice }</td>
+						<td>${pictureList.itemVO.memberVO.id }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

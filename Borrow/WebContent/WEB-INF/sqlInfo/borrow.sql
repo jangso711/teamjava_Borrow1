@@ -70,6 +70,17 @@ update item set item_status=1 where item_no=10004;
 select item_no, item_name, item_price, id, item_status from item where item_status=1;
 select item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate from item where item_status=1 and item_no=10001;
 
+select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
+from item i, picture p
+where i.item_status=1 and i.item_no=p.item_no;
+
+select picture_path from picture where item_no=10005;
+
+update item set item_expl='카시트~' where item_no=10001;
+update item set item_expl='유모롱롱' where item_no=10002;
+update item set item_expl='모비루쨩~' where item_no=10003;
+update item set item_expl='크롱크롱' where item_no=10004;
+
 select  i.item_no, i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, ic.cat_no, c.cat_name 
 from item i, category c, item_category ic 
 where i.item_status=1 and i.item_no=10001 and i.item_no=ic.item_no and ic.cat_no=c.cat_no;
