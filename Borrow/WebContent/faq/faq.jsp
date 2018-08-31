@@ -24,9 +24,9 @@ function showhide(num)    {
 </script>
 <style>
 
-h1 {
-    color: red;
+h3 {
     text-align: center;
+   	padding:20px;
 }
 table{
 	text-align: center;
@@ -37,7 +37,7 @@ table{
 </style>
 <div class="col-sm-12 bgheader"></div>
 <div class="container">
-<h1>자주 묻는 질문</h1>
+<h3>자주 묻는 질문(FAQ)</h3>
 	<table class="table table-hover table table-bordered">
 		<tr class="table-primary">
 			<td><div align="center">

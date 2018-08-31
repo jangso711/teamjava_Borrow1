@@ -54,7 +54,7 @@ input[type=number]{
 			<tbody>
 				<c:forEach items="${requestScope.itemDetail }" var="detail">
 					<tr>
-						<td>사진</td>
+						<td><img src="${pageContext.request.contextPath}/upload/${detail.pvo.picture}"><br></td>
 						<td>${detail.categoryVO.catName }</td>
 						<td>${detail.itemName }</td>
 						<td>${detail.itemBrand }</td>
