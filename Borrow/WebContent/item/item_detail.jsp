@@ -54,7 +54,11 @@ input[type=number]{
 			<tbody>
 				<c:forEach items="${requestScope.itemDetail }" var="detail">
 					<tr>
+<<<<<<< HEAD
 						<td><img src="${pageContext.request.contextPath}/upload/${detail.pvo.picture}"><br></td>
+=======
+						<td><img src="${pageContext.request.contextPath }/upload/아이유1.jpg" width="150" height="150"></td>
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 						<td>${detail.categoryVO.catName }</td>
 						<td>${detail.itemName }</td>
 						<td>${detail.itemBrand }</td>
@@ -63,10 +67,28 @@ input[type=number]{
 						<td>${detail.itemRegDate }</td>
 						<td>${detail.itemExpDate }</td>
 						<td>${detail.memberVO.id }</td>
-						<td>설명</td>
+						<td><pre>${detail.itemExpl }</pre></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		
+		<script type="text/javascript">
+			function updateItem(upitem_no) {
+				var up = confirm("게시글을 수정하시겠습니까?");
+				if(up) {
+					location.href="${pageContext.request.contextPath}/front?command=ItemUpdateForm&upitem_no="+upitem_no;
+				}
+			}
+			function deleteItem(delitem_no) {
+				var del = confirm("게시글을 삭제하시겠습니까?");
+				if(del) {
+					location.href="${pageContext.request.contextPath}/front?command=ItemDelete&delitem_no="+delitem_no;
+				}
+			}
+		</script>
+		
+		<button type="button" name="update" onclick="updateItem(10005)">수정</button>
+		<button type="button" name="delete" onclick="deleteItem(10006)">삭제</button>
 	</form>
 </div>
