@@ -40,7 +40,7 @@ input[type=number]{
 <div class="formContent">
 <table cellpadding="3">
 	<tr>
-	<td>상품이름(*)</td><td><input type="text"name="itemName"required="required"></td>
+	<td>상품이름*</td><td><input type="text"name="itemName"required="required"></td>
 	</tr>
 	<tr>
 	<td>제조사</td><td><input type="text"name="itemBrand"></td>
@@ -49,10 +49,10 @@ input[type=number]{
 	<td>모델명(번호)</td><td><input type="text"name="itemModel"></td>
 	</tr>
 	<tr>
-	<td>상품가격(*)</td><td><input type="number"name="itemPrice"></td>
+	<td>상품가격*</td><td><input type="number"name="itemPrice"required="required"></td>
 	</tr>
 	<tr>
-	<td>분류선택(*)</td>
+	<td>분류선택*</td>
 	<td >
 	<c:forEach items="${requestScope.catList }" var="cat" varStatus="info">
 	<input type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
