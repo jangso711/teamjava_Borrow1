@@ -20,10 +20,8 @@
 <div class="row">
 	<c:import url="/template/header.jsp"/>
 </div>
-<div class="row content">
-	<div class="col-sm-12">
-	<c:import url="${requestScope.url }"/>
-	</div>
+<div class="row">
+		<c:import url="${requestScope.url }"/>
 </div>
 <div class="row footer">
 	<c:import url="/template/footer.jsp"/>

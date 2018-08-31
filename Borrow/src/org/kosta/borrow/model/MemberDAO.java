@@ -47,4 +47,26 @@ public class MemberDAO {
 		}
 		return user;
 	}
+	
+	public MemberVO memberDetail(String id) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		MemberVO vo=null;
+		try {
+			con=getConnection();
+			String sql="select id,name,address,tel,point from member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				vo=new MemberVO(rs.getString(1),null,rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5));
+			}
+				
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		
+		return vo;
+	}
 }
