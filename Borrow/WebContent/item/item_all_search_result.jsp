@@ -50,7 +50,7 @@ input[type=number]{
 						<td>
 							<!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
 							<c:if test="${empty allItemList.picList }">
-								<img src="${pageContext.request.contextPath }/upload/디폴트.PNG">
+								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
 							</c:if>
 							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 사진을 띄움 -->
 							<c:forEach items="${allItemList.picList }" var="picList" varStatus="status">

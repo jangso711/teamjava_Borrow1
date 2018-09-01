@@ -108,7 +108,7 @@ public class ItemDAO {
 	}
 	
 	/**
-	 * 180831 MIRI 완료
+	 * 180831 MIRI 진행중
 	 * @param itemno
 	 * @return
 	 * @throws SQLException 
@@ -116,29 +116,30 @@ public class ItemDAO {
 	public ItemVO getDetailItemByNo(String itemno) throws SQLException {
 		ItemVO itemVO = null;
 		MemberVO memberVO = null;
-		CategoryVO categoryVO = null;
+		ArrayList<String> picList = null;
+		ArrayList<CategoryVO> catList = null;
 		StringBuilder sb = new StringBuilder();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,");
-			sb.append(" to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate,");
-			sb.append(" i.item_expl, ic.cat_no, c.cat_name");
-			sb.append(" from item i, category c, item_category ic");
-			sb.append(" where i.item_status=1 and i.item_no=? and i.item_no=ic.item_no and ic.cat_no=c.cat_no");
+			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
+			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
+			sb.append(" where item_status=1 and item_no=? order by item_no asc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
-				/*memberVO = new MemberVO();
+				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
-				categoryVO = new CategoryVO();
-				categoryVO.setCatNo(rs.getString(9));
-				categoryVO.setCatName(rs.getString(10));
-				itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
-						rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, categoryVO);*/
+				catList = getCategoryList(itemno);
+				if(catList != null) {
+					picList = getPictureList(itemno);
+					itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
+							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
+				}
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
@@ -204,6 +205,7 @@ public class ItemDAO {
 			pstmt.setString(1, itemNo);
 			rs = pstmt.executeQuery();
 			picList = new ArrayList<String>();
+			
 			while(rs.next()) {
 				picList.add(rs.getString(1));
 			}
@@ -214,6 +216,39 @@ public class ItemDAO {
 		return picList;
 	}
 	
+	/**
+	 * 180901 MIRI 진행 중
+	 * Item No를 이용해 해당 상품에 맞는 카테고리 리스트를 반환한다.
+	 * @param itemNo
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<CategoryVO> getCategoryList(String itemNo) throws SQLException {
+		//180901 MIRI 상품에 맞는 카테고리를 다수로 받기 위해 ArrayList로 반환 타입 지정
+		ArrayList<CategoryVO> catList = null;
+		StringBuilder sb = new StringBuilder();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			sb.append(" select c.cat_no, c.cat_name");
+			sb.append(" from item_category ic, category c");
+			sb.append(" where ic.cat_no=c.cat_no and ic.item_no=?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, itemNo);
+			rs = pstmt.executeQuery();
+			catList = new ArrayList<CategoryVO>();
+			
+			while(rs.next()) {
+				catList.add(new CategoryVO(rs.getString(1), rs.getString(2)));
+			}
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+		
+		return catList;
+	}
 	
 	/**
 	 * 180831-소정
