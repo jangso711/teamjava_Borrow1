@@ -350,7 +350,7 @@ public class ItemDAO {
 	}
 	
 	/**
-	 * 180831 yosep 완료
+	 * 180831 yosep 진행중
 	 * 로그인되어있는 자신의 id로 대여 내역을 조회해 리스트로 반환한다.
 	 * Item 테이블과 Rental_details 테이블을 조인함. 
 	 * @param id
@@ -364,7 +364,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date \r\n" + 
+			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date \r\n" + 
 					"from rental_details r, item i \r\n" + 
 					"where r.item_no=i.item_no and r.id=?";
 			pstmt = con.prepareStatement(sql);
@@ -374,11 +374,16 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();
-				item.setItemName(rs.getString(2));
-				item.getMemberVO().setId(rs.getString(3));
+				//String picturePath = getPicturePath(rs.getString(2));
+				//System.out.println(picturePath);
+				//item.getPicList().add(picturePath);
+				item.getPicList().add("img/testImg.jpg");  //테스트 이미지..(9/1)
+				item.setItemName(rs.getString(3));
+				item.setItemPrice(rs.getInt(4));
+				item.getMemberVO().setId(rs.getString(5));				
 				rentalDetailVo.setItemVO(item);
-				rentalDetailVo.setRentalDate(rs.getString(4));
-				rentalDetailVo.setReturnDate(rs.getString(5));			
+				rentalDetailVo.setRentalDate(rs.getString(6));
+				rentalDetailVo.setReturnDate(rs.getString(7));			
 				list.add(rentalDetailVo);			
 			}
 				

@@ -168,6 +168,8 @@ values (rental_no_seq.nextval, 10003, 'yosep', '2018/8/2' , '2018/8/5');
 select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date 
 from rental_details r, item i 
 where r.item_no=i.item_no and r.id='yosep';
+--'miri'의 등록내역 조회
+
 
 
 select * from item;
