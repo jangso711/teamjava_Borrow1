@@ -86,7 +86,7 @@ public class ItemDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		try {
+		/*try {
 			con = getConnection();
 			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, p.picture_path");
 			sb.append(" from item i, picture p");
@@ -103,12 +103,13 @@ public class ItemDAO {
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
-		}
+		}*/
 		return list;
 	}
 	
 	/**
 	 * 180831 MIRI 진행중
+	 * 180901 MIRI 완료
 	 * @param itemno
 	 * @return
 	 * @throws SQLException 
@@ -134,8 +135,10 @@ public class ItemDAO {
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
+				//180901 MIRI 해당 상품번호에 맞는 카테고리가 있으면 리스트를 전부 불러와 set 시킴
 				catList = getCategoryList(itemno);
 				if(catList != null) {
+					//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
 					picList = getPictureList(itemno);
 					itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
 							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
@@ -217,7 +220,7 @@ public class ItemDAO {
 	}
 	
 	/**
-	 * 180901 MIRI 진행 중
+	 * 180901 MIRI 완료
 	 * Item No를 이용해 해당 상품에 맞는 카테고리 리스트를 반환한다.
 	 * @param itemNo
 	 * @return
