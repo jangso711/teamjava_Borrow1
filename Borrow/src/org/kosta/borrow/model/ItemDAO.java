@@ -43,10 +43,10 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			pstmt.executeUpdate();
-			
 		}finally {
 			closeAll(pstmt, con);
 		}
+
 	}
 	
 	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
@@ -81,8 +81,6 @@ public class ItemDAO {
 		return vo;
 	}
 
-	
-	
 	/**
 	 * 180831 MIRI 진행중
 	 * Item table에서 이름 중에 검색어(searchtext)포함하는 

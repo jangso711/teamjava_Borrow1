@@ -4,20 +4,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.kosta.borrow.model.ItemDAO;
-import org.kosta.borrow.model.ItemVO;
 
-public class ItemDeleteController implements Controller {
+public class ItemDeleteCheckController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String itemNo = request.getParameter("itemNo");
-		ItemVO vo=new ItemVO();
-		vo.setItemNo(itemNo);
-		ItemDAO.getInstance().ItemDelete(vo);
+		boolean del = ItemDAO.getInstance().deleteCheck(itemNo);
 		
-		
-		return "redirect:index.jsp";
+		request.setAttribute("responsebody", del);
+		return	"/AjaxView";
 	}
 
 }
-
