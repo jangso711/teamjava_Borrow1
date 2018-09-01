@@ -46,9 +46,10 @@ public class ItemDAO {
 		}
 	}
 	
-	public void itemRental(RentalDetailVO vo) throws SQLException {
+	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			con=getConnection();
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
@@ -57,7 +58,13 @@ public class ItemDAO {
 			pstmt.setString(2, vo.getMemberVO().getId());
 			pstmt.setString(3, vo.getRentalDate());
 			pstmt.setString(4, vo.getReturnDate());
-			pstmt.executeUpdate();
+			pstmt.close();
+			pstmt=con.prepareStatement("select rental_no_seq.currval from rental_details");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo.setRentalNo(rs.getString(1));
+			}
+			rs.close();
 			pstmt.close();
 			String sql2 = "update item_add set rental_count = RENTAL_count +1 where item_no = ?";
 			pstmt = con.prepareStatement(sql2);
@@ -66,6 +73,7 @@ public class ItemDAO {
 		}finally {
 			closeAll(pstmt, con);
 		}
+		return vo;
 	}
 
 	
@@ -278,7 +286,54 @@ public class ItemDAO {
 		return list;
 
 	}
-	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats, PictureVO pvo,String expl) throws SQLException {
+
+	
+
+
+	public RentalDetailVO itemRentDetail(RentalDetailVO vo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		RentalDetailVO rvo = null;
+		ItemVO ivo = null;
+		MemberVO mvo = null;
+		try {
+			con = getConnection();
+			StringBuilder sql = new StringBuilder();
+			sql.append("select m.name, ");
+			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, ");
+			sql.append("r.rental_no, r.rental_date, r.return_date ");
+			sql.append("from member m, item i, rental_details r ");
+			sql.append("where m.id = r.id ");
+			sql.append("and i.item_no = r.item_no ");
+			sql.append("and rental_no=? ");
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, vo.getRentalNo());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				rvo = new RentalDetailVO();
+				ivo = new ItemVO();
+				mvo = new MemberVO();
+				mvo.setName("name");
+				rvo.setMemberVO(mvo);
+				ivo.setItemName("itemName");
+				ivo.setItemBrand("itemBrand");
+				ivo.setItemModel("itemModel");
+				ivo.setItemPrice(Integer.parseInt("itemPrice"));
+				rvo.setItemVO(ivo);
+				rvo.setRentalNo("rentalNo");
+				rvo.setRentalDate("rentalDate");
+				rvo.setReturnDate("returnDate");
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return rvo;
+	}
+		
+
+	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats,String expl) throws SQLException {
+
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -326,12 +381,15 @@ public class ItemDAO {
 				pstmt.close();
 			}
 			//picture 저장
-			sql = new StringBuilder();
-			sql.append("insert into picture values(?,?)");
-			pstmt=con.prepareStatement(sql.toString());
-			pstmt.setInt(1, itemNo);
-			pstmt.setString(2, pvo.getPicturePath());
-			pstmt.executeUpdate();
+			for(int i=0;i<ivo.getPicList().size();i++) {
+				sql = new StringBuilder();
+				sql.append("insert into picture(item_no,picture_path) values(?,?)");
+				pstmt=con.prepareStatement(sql.toString());
+				pstmt.setInt(1, itemNo);
+				pstmt.setString(2, ivo.getPicList().get(i));
+				pstmt.executeUpdate();
+			}
+		
 			
 		}finally {
 			closeAll(rs,pstmt,con);
@@ -340,7 +398,7 @@ public class ItemDAO {
 	}
 	
 	/**
-	 * 180831 yosep 완료
+	 * 180831 yosep 진행중
 	 * 로그인되어있는 자신의 id로 대여 내역을 조회해 리스트로 반환한다.
 	 * Item 테이블과 Rental_details 테이블을 조인함. 
 	 * @param id
@@ -354,7 +412,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date \r\n" + 
+			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date \r\n" + 
 					"from rental_details r, item i \r\n" + 
 					"where r.item_no=i.item_no and r.id=?";
 			pstmt = con.prepareStatement(sql);
@@ -364,11 +422,16 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();
-				item.setItemName(rs.getString(2));
-				item.getMemberVO().setId(rs.getString(3));
+				//String picturePath = getPicturePath(rs.getString(2));
+				//System.out.println(picturePath);
+				//item.getPicList().add(picturePath);
+				item.getPicList().add("img/testImg.jpg");  //테스트 이미지..(9/1)
+				item.setItemName(rs.getString(3));
+				item.setItemPrice(rs.getInt(4));
+				item.getMemberVO().setId(rs.getString(5));				
 				rentalDetailVo.setItemVO(item);
-				rentalDetailVo.setRentalDate(rs.getString(4));
-				rentalDetailVo.setReturnDate(rs.getString(5));			
+				rentalDetailVo.setRentalDate(rs.getString(6));
+				rentalDetailVo.setReturnDate(rs.getString(7));			
 				list.add(rentalDetailVo);			
 			}
 				
@@ -376,5 +439,6 @@ public class ItemDAO {
 			closeAll(rs,pstmt,con);
 		}		
 		return list;
+
 	}
 }

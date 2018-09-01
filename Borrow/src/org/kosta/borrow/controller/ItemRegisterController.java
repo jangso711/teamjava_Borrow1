@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
 import org.kosta.borrow.model.MemberVO;
-import org.kosta.borrow.model.PictureVO;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -32,8 +31,7 @@ public class ItemRegisterController implements Controller {
 		
 			
 		String fileName = multi.getFilesystemName("img");
-		PictureVO pvo = new PictureVO();
-		pvo.setPicturePath(fileName);
+		
 		System.out.println("fileName:"+fileName);
 		ItemVO ivo = new ItemVO();
 		int itemNo;
@@ -48,14 +46,14 @@ public class ItemRegisterController implements Controller {
 		ivo.setItemBrand(brand);
 		ivo.setItemModel(model);
 		ivo.setItemPrice(price);
-		
+		ivo.getPicList().add(fileName);
 		HttpSession session = request.getSession(false);
 		
 		
 		
 		if(session!=null&&session.getAttribute("user")!=null) {
 			MemberVO mvo = (MemberVO)session.getAttribute("user");
-			itemNo=ItemDAO.getInstance().registerItem(mvo,ivo,cats,pvo,expl);
+			itemNo=ItemDAO.getInstance().registerItem(mvo,ivo,cats,expl);
 		}else {
 			//세션만료
 		}

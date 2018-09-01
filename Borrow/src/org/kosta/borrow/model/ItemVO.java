@@ -3,53 +3,55 @@ package org.kosta.borrow.model;
 import java.util.ArrayList;
 
 public class ItemVO {
-   private String itemNo;
-   private String itemName;
-   private String itemBrand;
-   private String itemModel;
-   private int itemPrice;
-   private String itemRegDate;
-   private String itemExpDate;
-   private String itemStatus;
-   private String itemExpl;
-   private MemberVO memberVO;
-   private ArrayList<String> picList ;
-   private ArrayList<CategoryVO> catList;
-   //private CategoryVO categoryVO;
-   public ItemVO() {
-      memberVO=new MemberVO();
-      picList = new ArrayList<String>();
-      catList = new ArrayList<CategoryVO>();
-   }
-   
-   public ItemVO(String itemNo, String itemName, String itemExpl, int itemPrice, MemberVO memberVO) {
-      super();
-      this.itemNo = itemNo;
-      this.itemName = itemName;
-      this.itemExpl = itemExpl;
-      this.itemPrice = itemPrice;
-      this.memberVO = memberVO;
-      picList = new ArrayList<String>();
-      catList = new ArrayList<CategoryVO>();
-   }
-   
-   public ItemVO(String itemNo, String itemName, String itemBrand, String itemModel, int itemPrice, String itemRegDate,
-         String itemExpDate, String itemStatus, String itemExpl, MemberVO memberVO, ArrayList<String> picList,
-         ArrayList<CategoryVO> catList) {
-      super();
-      this.itemNo = itemNo;
-      this.itemName = itemName;
-      this.itemBrand = itemBrand;
-      this.itemModel = itemModel;
-      this.itemPrice = itemPrice;
-      this.itemRegDate = itemRegDate;
-      this.itemExpDate = itemExpDate;
-      this.itemStatus = itemStatus;
-      this.itemExpl = itemExpl;
-      this.memberVO = memberVO;
-      this.picList = picList;
-      this.catList = catList;
-   }
+  
+	private String itemNo;
+	private String itemName;
+	private String itemBrand;
+	private String itemModel;
+	private int itemPrice;
+	private String itemRegDate;
+	private String itemExpDate;
+	private String itemStatus;
+	private String itemExpl;
+	private MemberVO memberVO;
+	private ArrayList<String> picList ;
+	private ArrayList<CategoryVO> catList;
+	//private CategoryVO categoryVO;
+	public ItemVO() {
+		memberVO=new MemberVO();
+		picList = new ArrayList<String>();
+		catList = new ArrayList<CategoryVO>();
+	}
+	
+	public ItemVO(String itemNo, String itemName, String itemExpl, int itemPrice, MemberVO memberVO) {
+		super();
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemExpl = itemExpl;
+		this.itemPrice = itemPrice;
+		this.memberVO = memberVO;
+		picList = new ArrayList<String>();
+		catList = new ArrayList<CategoryVO>();
+	}
+	
+	public ItemVO(String itemNo, String itemName, String itemBrand, String itemModel, int itemPrice, String itemRegDate,
+			String itemExpDate, String itemStatus, String itemExpl, MemberVO memberVO, ArrayList<String> picList,
+			ArrayList<CategoryVO> catList) {
+		super();
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemBrand = itemBrand;
+		this.itemModel = itemModel;
+		this.itemPrice = itemPrice;
+		this.itemRegDate = itemRegDate;
+		this.itemExpDate = itemExpDate;
+		this.itemStatus = itemStatus;
+		this.itemExpl = itemExpl;
+		this.memberVO = memberVO;
+		this.picList = picList;
+		this.catList = catList;
+	}
+
 
    public ItemVO(String itemNo) {
       this.itemNo = itemNo;

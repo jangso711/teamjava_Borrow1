@@ -181,6 +181,8 @@ values (rental_no_seq.nextval, 10003, 'yosep', '2018/8/2' , '2018/8/5');
 select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date 
 from rental_details r, item i 
 where r.item_no=i.item_no and r.id='yosep';
+--'miri'의 등록내역 조회
+
 
 
 select * from item;
@@ -190,9 +192,5 @@ select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.ite
 from item i, category c, item_category ic
 where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no=c.cat_no
 
-
-
-
-
-
-
+select * from item_category;
+select * from picture;

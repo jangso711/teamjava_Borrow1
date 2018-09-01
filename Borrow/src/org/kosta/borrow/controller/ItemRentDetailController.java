@@ -3,12 +3,19 @@ package org.kosta.borrow.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ItemRentDetailController implements Controller {
+import org.kosta.borrow.model.ItemDAO;
+import org.kosta.borrow.model.RentalDetailVO;
 
+public class ItemRentDetailController implements Controller {
+	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String rental_no = request.getParameter("rental_no");
+		RentalDetailVO vo = new RentalDetailVO();
+		vo.setRentalNo(rental_no);
+		ItemDAO.getInstance().itemRentDetail(vo);
+		request.setAttribute("rvo", vo);
+		return "item_rental_detail.jsp";
 	}
 
 }
