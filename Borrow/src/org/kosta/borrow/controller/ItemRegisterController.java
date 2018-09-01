@@ -1,5 +1,7 @@
 package org.kosta.borrow.controller;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,9 +33,9 @@ public class ItemRegisterController implements Controller {
 		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 		
 			
-		String fileName = multi.getFilesystemName("img");
+		/*String fileName = multi.getFilesystemName("img");*/
 		
-		System.out.println("fileName:"+fileName);
+		
 		ItemVO ivo = new ItemVO();
 		int itemNo;
 		String name = multi.getParameter("itemName");
@@ -47,11 +49,18 @@ public class ItemRegisterController implements Controller {
 		ivo.setItemBrand(brand);
 		ivo.setItemModel(model);
 		ivo.setItemPrice(price);
-		ivo.getPicList().add(fileName);
+		
+		
+		Enumeration<String> fileNames = multi.getFileNames();
+		while(fileNames.hasMoreElements()) {
+			String fn = (String)fileNames.nextElement();
+			String fileName=multi.getFilesystemName(fn);
+			ivo.getPicList().add(fileName);
+		}
+		
+		
 		HttpSession session = request.getSession(false);
-		
-		
-		
+
 		if(session!=null&&session.getAttribute("user")!=null) {
 			MemberVO mvo = (MemberVO)session.getAttribute("user");
 			itemNo=ItemDAO.getInstance().registerItem(mvo,ivo,cats,expl);

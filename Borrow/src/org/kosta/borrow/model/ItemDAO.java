@@ -1,6 +1,7 @@
 package org.kosta.borrow.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,21 +36,26 @@ public class ItemDAO {
 	public void ItemDelete(ItemVO vo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+
 		try {
 			con=getConnection();
-			String sql = "UPDATE item SET item_status = 0 WHERE item_no = ?";
+			String sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, vo.getItemNo());
+			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			pstmt.executeUpdate();
+			
+			
 		}finally {
 			closeAll(pstmt, con);
 		}
+
 	}
 	
 	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
 		try {
 			con=getConnection();
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
@@ -387,5 +393,28 @@ public class ItemDAO {
 		}		
 		return list;
 
+	}
+	public boolean deleteCheck(String itemNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean result = false;
+		try {
+			con=getConnection();
+			String sql = "select sysdate,max(return_date) from rental_details where item_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				Date today = rs.getDate(1);
+				Date returnDate = rs.getDate(2);
+				if(today.before(returnDate)) {
+					result = false;
+				}else result = true;
+			}
+		}finally {
+			closeAll(pstmt, con);
+		}
+		return result;
 	}
 }
