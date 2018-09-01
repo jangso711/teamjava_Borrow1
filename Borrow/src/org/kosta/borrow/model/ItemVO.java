@@ -13,11 +13,13 @@ public class ItemVO {
 	private String itemStatus;
 	private String itemExpl;
 	private MemberVO memberVO;
-	private ArrayList<String> picList;
+	private ArrayList<String> picList ;
 	private ArrayList<CategoryVO> catList;
 	//private CategoryVO categoryVO;
 	public ItemVO() {
 		memberVO=new MemberVO();
+		picList = new ArrayList<String>();
+		catList = new ArrayList<CategoryVO>();
 	}
 	
 	public ItemVO(String itemNo, String itemName, String itemExpl, int itemPrice, MemberVO memberVO) {
@@ -27,6 +29,8 @@ public class ItemVO {
 		this.itemExpl = itemExpl;
 		this.itemPrice = itemPrice;
 		this.memberVO = memberVO;
+		picList = new ArrayList<String>();
+		catList = new ArrayList<CategoryVO>();
 	}
 	
 	public ItemVO(String itemNo, String itemName, String itemBrand, String itemModel, int itemPrice, String itemRegDate,

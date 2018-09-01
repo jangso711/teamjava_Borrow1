@@ -179,7 +179,7 @@ select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.ite
 
 
 select * from item_category;
-
+select * from picture;
 
 
 

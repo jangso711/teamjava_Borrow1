@@ -230,7 +230,7 @@ public class ItemDAO {
 		return list;
 
 	}
-	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats, PictureVO pvo,String expl) throws SQLException {
+	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats,String expl) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -278,12 +278,15 @@ public class ItemDAO {
 				pstmt.close();
 			}
 			//picture 저장
-			sql = new StringBuilder();
-			sql.append("insert into picture values(?,?)");
-			pstmt=con.prepareStatement(sql.toString());
-			pstmt.setInt(1, itemNo);
-			pstmt.setString(2, pvo.getPicturePath());
-			pstmt.executeUpdate();
+			for(int i=0;i<ivo.getPicList().size();i++) {
+				sql = new StringBuilder();
+				sql.append("insert into picture(item_no,picture_path) values(?,?)");
+				pstmt=con.prepareStatement(sql.toString());
+				pstmt.setInt(1, itemNo);
+				pstmt.setString(2, ivo.getPicList().get(i));
+				pstmt.executeUpdate();
+			}
+		
 			
 		}finally {
 			closeAll(rs,pstmt,con);
