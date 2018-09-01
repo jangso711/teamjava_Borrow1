@@ -170,10 +170,15 @@ from rental_details r, item i
 where r.item_no=i.item_no and r.id='yosep';
 
 
+select * from item;
+
+select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate,
+			 i.item_expl, ic.cat_no, c.cat_name
+			 from item i, category c, item_category ic
+			 where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no=c.cat_no
 
 
-
-
+select * from item_category;
 
 
 

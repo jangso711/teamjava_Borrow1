@@ -1,5 +1,7 @@
 package org.kosta.borrow.model;
 
+import java.util.ArrayList;
+
 public class ItemVO {
 	private String itemNo;
 	private String itemName;
@@ -11,7 +13,9 @@ public class ItemVO {
 	private String itemStatus;
 	private String itemExpl;
 	private MemberVO memberVO;
-	private CategoryVO categoryVO;
+	private ArrayList<String> picList;
+	private ArrayList<CategoryVO> catList;
+	//private CategoryVO categoryVO;
 	public ItemVO() {
 		memberVO=new MemberVO();
 	}
@@ -24,9 +28,10 @@ public class ItemVO {
 		this.itemPrice = itemPrice;
 		this.memberVO = memberVO;
 	}
-
+	
 	public ItemVO(String itemNo, String itemName, String itemBrand, String itemModel, int itemPrice, String itemRegDate,
-			String itemExpDate, String itemStatus, String itemExpl, MemberVO memberVO, CategoryVO categoryVO) {
+			String itemExpDate, String itemStatus, String itemExpl, MemberVO memberVO, ArrayList<String> picList,
+			ArrayList<CategoryVO> catList) {
 		super();
 		this.itemNo = itemNo;
 		this.itemName = itemName;
@@ -38,8 +43,10 @@ public class ItemVO {
 		this.itemStatus = itemStatus;
 		this.itemExpl = itemExpl;
 		this.memberVO = memberVO;
-		this.categoryVO = categoryVO;
+		this.picList = picList;
+		this.catList = catList;
 	}
+
 	public ItemVO(String itemNo) {
 		this.itemNo = itemNo;
 	}
@@ -97,12 +104,23 @@ public class ItemVO {
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
-	public CategoryVO getCategoryVO() {
-		return categoryVO;
+	
+	public ArrayList<String> getPicList() {
+		return picList;
 	}
-	public void setCategoryVO(CategoryVO categoryVO) {
-		this.categoryVO = categoryVO;
+
+	public void setPicList(ArrayList<String> picList) {
+		this.picList = picList;
 	}
+
+	public ArrayList<CategoryVO> getCatList() {
+		return catList;
+	}
+
+	public void setCatList(ArrayList<CategoryVO> catList) {
+		this.catList = catList;
+	}
+
 	public String getItemExpl() {
 		return itemExpl;
 	}
@@ -115,7 +133,8 @@ public class ItemVO {
 		return "ItemVO [itemNo=" + itemNo + ", itemName=" + itemName + ", itemBrand=" + itemBrand + ", itemModel="
 				+ itemModel + ", itemPrice=" + itemPrice + ", itemRegDate=" + itemRegDate + ", itemExpDate="
 				+ itemExpDate + ", itemStatus=" + itemStatus + ", itemExpl=" + itemExpl + ", memberVO=" + memberVO
-				+ ", categoryVO=" + categoryVO + "]";
+				+ ", picList=" + picList + ", catList=" + catList + "]";
 	}
+
 	
 }

@@ -132,13 +132,13 @@ public class ItemDAO {
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				memberVO = new MemberVO();
+				/*memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
 				categoryVO = new CategoryVO();
 				categoryVO.setCatNo(rs.getString(9));
 				categoryVO.setCatName(rs.getString(10));
 				itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
-						rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, categoryVO);
+						rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, categoryVO);*/
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
