@@ -393,4 +393,47 @@ public class ItemDAO {
 		return list;
 
 	}
+	/**
+	 * 180901 yosep 진행중
+	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 해준 것만)
+	 * 
+	 * @param id
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<RentalDetailVO> getAllRegisterListById(String id) throws SQLException {
+		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, r.rental_date, r.return_date " + 
+					"from Rental_details r,(select i.item_no from item i where i.id=?) a, item i " + 
+					"where r.item_no=a.item_no and r.item_no=i.item_no";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();			
+			while(rs.next()) {
+				RentalDetailVO rentalDetailVo= new RentalDetailVO();
+				rentalDetailVo.setRentalNo(rs.getString(1));
+				ItemVO item= new ItemVO();
+				//String picturePath = getPicturePath(rs.getString(2));
+				//System.out.println(picturePath);
+				//item.getPicList().add(picturePath);
+				item.getPicList().add("img/testImg.jpg");  //테스트 이미지..(9/1)
+				item.setItemName(rs.getString(3));
+				item.getMemberVO().setId(rs.getString(4));
+				item.setItemPrice(rs.getInt(5));
+				rentalDetailVo.setItemVO(item);
+				rentalDetailVo.setRentalDate(rs.getString(6));
+				rentalDetailVo.setReturnDate(rs.getString(7));						
+				list.add(rentalDetailVo);			
+			}
+				
+		}finally {
+			closeAll(rs,pstmt,con);
+		}		
+		return list;
+	}
 }
