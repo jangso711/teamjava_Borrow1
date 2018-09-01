@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <style>
 h3{
 	padding-left:100px;
@@ -35,7 +34,7 @@ input[type=number]{
 <div class="col-sm-12 bgheader">
 </div>
 <div class="col-sm-12 content">
-<h3>검색 상품 목록</h3>
+<h3>전체 상품 목록</h3>
 	<form>
 		<table class="table">
 			<thead>
@@ -44,16 +43,16 @@ input[type=number]{
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.itemSearchList }" var="itemSearchList">
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${itemSearchList.itemVO.itemNo}" 
+				<c:forEach items="${requestScope.allItemList }" var="allItemList">
+				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemVO.itemNo}" 
 					var="detailurl"></c:set>
 					<tr>
 						<td><a href="${detailurl }">
-							<img src="${pageContext.request.contextPath }/upload/${itemSearchList.picturePath}" width="150" height="150"></a></td>
-						<td><a href="${detailurl }">${itemSearchList.itemVO.itemName }(링크)</a></td>
-						<td><pre>${itemSearchList.itemVO.itemExpl }</pre></td>
-						<td>${itemSearchList.itemVO.itemPrice }</td>
-						<td>${itemSearchList.itemVO.memberVO.id }</td>
+							<img src="${pageContext.request.contextPath }/upload/${allItemList.picturePath}" width="150" height="150"></a></td>
+						<td><a href="${detailurl }">${allItemList.itemVO.itemName }(링크)</a></td>
+						<td><pre>${allItemList.itemVO.itemExpl }</pre></td>
+						<td>${allItemList.itemVO.itemPrice }</td>
+						<td>${allItemList.itemVO.memberVO.id }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

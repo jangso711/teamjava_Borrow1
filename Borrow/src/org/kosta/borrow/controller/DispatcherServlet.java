@@ -16,6 +16,13 @@ public class DispatcherServlet extends HttpServlet {
     protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	try {
     		String command = request.getParameter("command");
+    		if(request.getContentType() != null && 
+				    request.getContentType().toLowerCase().indexOf("multipart/form-data") > -1) {				
+				command="ItemRegister";
+				System.out.println("파일업로드요청 "+command);
+			}else {//일반요청이면 
+				command=request.getParameter("command");
+		    }
     		Controller controller=HandlerMapping.getInstance().create(command);
     		String viewName = controller.handleRequest(request, response).trim();
     		

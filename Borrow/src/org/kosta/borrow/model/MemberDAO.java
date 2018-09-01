@@ -69,4 +69,41 @@ public class MemberDAO {
 		
 		return vo;
 	}
+	public void registerMember(MemberVO memberVO) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="insert into member(id,pwd,name,address,tel) values(?,?,?,?,?) ";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, memberVO.getId());
+			pstmt.setString(2, memberVO.getPwd());
+			pstmt.setString(3, memberVO.getName());
+			pstmt.setString(4, memberVO.getAddress());
+			pstmt.setString(5, memberVO.getTel());
+			pstmt.executeQuery();
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+	}
+	public boolean IdCheck(String id) throws SQLException {
+		boolean flag=false;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="select count(*) from member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,id);
+			rs=pstmt.executeQuery();
+			if(rs.next()&&(rs.getInt(1)>0))
+			flag=true;			
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return flag;
+	}
 }
+

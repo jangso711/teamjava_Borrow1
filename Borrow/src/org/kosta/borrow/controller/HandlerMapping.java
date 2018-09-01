@@ -8,6 +8,7 @@ public class HandlerMapping {
 	}
 	public Controller create(String command) {
 		Controller controller = null;
+		System.out.println("command:"+command);
 		if(command.equals("Main")) {
 			controller = new MainController();
 		}else if(command.equals("Login")) {
@@ -30,6 +31,8 @@ public class HandlerMapping {
 			controller = new MemberMypageController();
 		}else if(command.equals("ItemSearch")) {
 			controller = new ItemSearchController();
+		}else if(command.equals("ItemAllSearch")) {
+			controller = new ItemAllSearchController();
 		}else if(command.equals("ItemDetail")) {
 			controller = new ItemDetailController();
 		}else if(command.equals("ItemRegisterForm")) {
@@ -48,6 +51,8 @@ public class HandlerMapping {
 			controller = new ItemRentalListController();
 		}else if(command.equals("ItemRegisterList")) {
 			controller = new ItemRegisterListController();
+		}else if(command.equals("FAQ")) {
+			controller=new FAQController();
 		}
 		
 		return controller;
