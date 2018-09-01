@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
 import org.kosta.borrow.model.MemberVO;
-import org.kosta.borrow.model.PictureVO;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;

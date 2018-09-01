@@ -44,15 +44,26 @@ input[type=number]{
 			</thead>
 			<tbody>
 				<c:forEach items="${requestScope.allItemList }" var="allItemList">
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemVO.itemNo}" 
-					var="detailurl"></c:set>
+				<!-- 180831 MIRI 클릭시 향하는 url을 변수에 담음 -->
+				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemNo}" var="detailurl"></c:set>
 					<tr>
-						<td><a href="${detailurl }">
-							<img src="${pageContext.request.contextPath }/upload/${allItemList.picturePath}" width="150" height="150"></a></td>
-						<td><a href="${detailurl }">${allItemList.itemVO.itemName }(링크)</a></td>
-						<td><pre>${allItemList.itemVO.itemExpl }</pre></td>
-						<td>${allItemList.itemVO.itemPrice }</td>
-						<td>${allItemList.itemVO.memberVO.id }</td>
+						<td>
+							<!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
+							<c:if test="${empty allItemList.picList }">
+								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
+							</c:if>
+							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 사진을 띄움 -->
+							<c:forEach items="${allItemList.picList }" var="picList" varStatus="status">
+								<!-- 180901 MIRI 사진이 여러장이면 첫 번째 대표 사진만 띄움 -->
+								<c:if test="${status.index == 0 }">
+									<a href="${detailurl }"><img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"></a><br>
+								</c:if>
+							</c:forEach>
+						</td>
+						<td><a href="${detailurl }">${allItemList.itemName }</a></td>
+						<td><pre>${allItemList.itemExpl }</pre></td>
+						<td>${allItemList.itemPrice }</td>
+						<td>${allItemList.memberVO.id }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

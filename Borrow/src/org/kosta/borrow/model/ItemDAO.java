@@ -100,7 +100,7 @@ public class ItemDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		try {
+		/*try {
 			con = getConnection();
 			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, p.picture_path");
 			sb.append(" from item i, picture p");
@@ -117,12 +117,13 @@ public class ItemDAO {
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
-		}
+		}*/
 		return list;
 	}
 	
 	/**
-	 * 180831 MIRI 완료
+	 * 180831 MIRI 진행중
+	 * 180901 MIRI 완료
 	 * @param itemno
 	 * @return
 	 * @throws SQLException 
@@ -130,29 +131,32 @@ public class ItemDAO {
 	public ItemVO getDetailItemByNo(String itemno) throws SQLException {
 		ItemVO itemVO = null;
 		MemberVO memberVO = null;
-		CategoryVO categoryVO = null;
+		ArrayList<String> picList = null;
+		ArrayList<CategoryVO> catList = null;
 		StringBuilder sb = new StringBuilder();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,");
-			sb.append(" to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate,");
-			sb.append(" i.item_expl, ic.cat_no, c.cat_name");
-			sb.append(" from item i, category c, item_category ic");
-			sb.append(" where i.item_status=1 and i.item_no=? and i.item_no=ic.item_no and ic.cat_no=c.cat_no");
+			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
+			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
+			sb.append(" where item_status=1 and item_no=? order by item_no asc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
-				/*memberVO = new MemberVO();
+				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
-				categoryVO = new CategoryVO();
-				categoryVO.setCatNo(rs.getString(9));
-				categoryVO.setCatName(rs.getString(10));
-				itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
-						rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, categoryVO);*/
+				//180901 MIRI 해당 상품번호에 맞는 카테고리가 있으면 리스트를 전부 불러와 set 시킴
+				catList = getCategoryList(itemno);
+				if(catList != null) {
+					//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
+					picList = getPictureList(itemno);
+					itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
+							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
+				}
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
@@ -160,45 +164,54 @@ public class ItemDAO {
 		return itemVO;
 	}
 	/**
-	 * 180831 MIRI 완료
-	 * Item table에 있는 모든 상품들을 찾아서 ArrayList로 반환한다
+	 * 180831 MIRI 진행 중
+	 * 180901 MIRI 완료
+	 * Item table에 저장되어 있는 모든 상품들을 찾아서 ArrayList로 반환한다.
 	 * @return
 	 * @throws SQLException 
 	 */
 	public ArrayList<ItemVO> getAllItemList() throws SQLException {
+		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+		ItemVO itemVO = new ItemVO();
 		MemberVO memberVO = null;
-		StringBuilder sb = new StringBuilder();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select i.item_no, i.item_name, i.item_expl, i.item_price, i.id");
-			sb.append(" from item i, picture p");
-			sb.append(" where i.item_status=1 and i.item_no=p.item_no");
-			pstmt = con.prepareStatement(sb.toString());
+			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no asc";
+			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
+
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(5));
-				list.add(new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO));
+				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
+				//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
+				picList = getPictureList(rs.getString(1));
+				if(picList != null) 
+					itemVO.setPicList(picList);
+				list.add(itemVO);
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
 		}
+		
 		return list;
 	}
 	
 	/**
 	 * 180831 MIRI 진행 중
-	 * Item No를 이용해 해당 상품에 맞는 사진 경로(이름)를 반환한다.
+	 * 180901 MIRI 완료
+	 * Item No를 이용해 해당 상품에 맞는 사진 이름 리스트를 반환한다.
 	 * @param itemNo
 	 * @return
 	 * @throws SQLException 
 	 */
-	public String getPicturePath(String itemNo) throws SQLException {
-		String picturePath = null;
+	public ArrayList<String> getPictureList(String itemNo) throws SQLException {
+		//180901 MIRI 상품에 맞는 사진이 여러장일 수 있으니 ArrayList로 반환하도록 수정
+		ArrayList<String> picList = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -208,16 +221,51 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, itemNo);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				picturePath = rs.getString(1);
+			picList = new ArrayList<String>();
+			
+			while(rs.next()) {
+				picList.add(rs.getString(1));
 			}
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
 		
-		return picturePath;
+		return picList;
 	}
 	
+	/**
+	 * 180901 MIRI 완료
+	 * Item No를 이용해 해당 상품에 맞는 카테고리 리스트를 반환한다.
+	 * @param itemNo
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<CategoryVO> getCategoryList(String itemNo) throws SQLException {
+		//180901 MIRI 상품에 맞는 카테고리를 다수로 받기 위해 ArrayList로 반환 타입 지정
+		ArrayList<CategoryVO> catList = null;
+		StringBuilder sb = new StringBuilder();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			sb.append(" select c.cat_no, c.cat_name");
+			sb.append(" from item_category ic, category c");
+			sb.append(" where ic.cat_no=c.cat_no and ic.item_no=?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, itemNo);
+			rs = pstmt.executeQuery();
+			catList = new ArrayList<CategoryVO>();
+			
+			while(rs.next()) {
+				catList.add(new CategoryVO(rs.getString(1), rs.getString(2)));
+			}
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+		
+		return catList;
+	}
 	
 	/**
 	 * 180831-소정
@@ -356,7 +404,7 @@ public class ItemDAO {
 	}
 	
 	/**
-	 * 180831 yosep 완료
+	 * 180831 yosep 진행중
 	 * 로그인되어있는 자신의 id로 대여 내역을 조회해 리스트로 반환한다.
 	 * Item 테이블과 Rental_details 테이블을 조인함. 
 	 * @param id
@@ -370,7 +418,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date \r\n" + 
+			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date \r\n" + 
 					"from rental_details r, item i \r\n" + 
 					"where r.item_no=i.item_no and r.id=?";
 			pstmt = con.prepareStatement(sql);
@@ -380,11 +428,16 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();
-				item.setItemName(rs.getString(2));
-				item.getMemberVO().setId(rs.getString(3));
+				//String picturePath = getPicturePath(rs.getString(2));
+				//System.out.println(picturePath);
+				//item.getPicList().add(picturePath);
+				item.getPicList().add("img/testImg.jpg");  //테스트 이미지..(9/1)
+				item.setItemName(rs.getString(3));
+				item.setItemPrice(rs.getInt(4));
+				item.getMemberVO().setId(rs.getString(5));				
 				rentalDetailVo.setItemVO(item);
-				rentalDetailVo.setRentalDate(rs.getString(4));
-				rentalDetailVo.setReturnDate(rs.getString(5));			
+				rentalDetailVo.setRentalDate(rs.getString(6));
+				rentalDetailVo.setReturnDate(rs.getString(7));			
 				list.add(rentalDetailVo);			
 			}
 				

@@ -53,9 +53,23 @@ input[type=number]{
 			</thead>
 			<tbody>
 				<tr>
-				<c:set value="${requestScope.itemDetail.itemVO }" var="item"></c:set>
-					<td><img src="${pageContext.request.contextPath }/upload/${itemDetail.picturePath}" width="150" height="150"></td>
-					<td>${item.categoryVO.catName }</td>
+				<c:set value="${requestScope.itemDetail }" var="item"></c:set>
+					<td>
+						<!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
+							<c:if test="${empty itemDetail.picList }">
+								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
+							</c:if>
+							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 사진을 띄움 -->
+							<c:forEach items="${itemDetail.picList }" var="picList">
+								<img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"><br>
+							</c:forEach>
+					</td>
+					<td>
+						<!-- 180901 MIRI 상품 전체 카테고리 리스트를 불러옴 -->
+						<c:forEach items="${itemDetail.catList }" var="catList">
+							${catList.catName }<br>
+						</c:forEach>
+					</td>
 					<td>${item.itemName }</td>
 					<td>${item.itemBrand }</td>
 					<td>${item.itemModel }</td>
@@ -69,23 +83,40 @@ input[type=number]{
 		</table>
 		
 		<script type="text/javascript">
+			/* 180831 MIRI 게시글 수정 함수 */
 			function updateItem(upitem_no) {
 				var up = confirm("게시글을 수정하시겠습니까?");
 				if(up) {
-					location.href="${pageContext.request.contextPath}/front?command=ItemUpdateForm&upitem_no="+upitem_no;
+					location.href="${pageContext.request.contextPath}/front?command=ItemUpdateForm&itemNo="+upitem_no;
 				}
 			}
+			/* 180831 MIRI 게시글 삭제 함수 */
 			function deleteItem(delitem_no) {
 				var del = confirm("게시글을 삭제하시겠습니까?");
 				if(del) {
-					location.href="${pageContext.request.contextPath}/front?command=ItemDelete&delitem_no="+delitem_no;
+					location.href="${pageContext.request.contextPath}/front?command=ItemDelete&itemNo="+delitem_no;
+				}
+			}
+			/* 180901 MIRI 게시글 렌트 함수 */
+			function rentItem(rentitem_no) {
+				var rent = confirm("해당 물품을 대여하시겠습니까?");
+				if(del) {
+					location.href="${pageContext.request.contextPath}/front?command=ItemRental&rentitem_no="+rentitem_no;
 				}
 			}
 		</script>
-		<c:if test="${sessionScope.user.id == requestScope.itemDetail.itemVO.memberVO.id}">
-			<c:set value="${requestScope.itemDetail.itemVO.itemNo}" var="itemNo"></c:set>
-			<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
-			<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
-		</c:if>
+		
+		<c:set value="${requestScope.itemDetail.itemNo}" var="itemNo"></c:set>
+		<!-- 180831 MIRI 본인일 경우에는 수정/삭제 버튼 보이고 본인이 아닐 경우에는 달력 및 대여버튼 보이기-->
+		<c:choose>
+			<c:when test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
+				<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
+				<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
+			</c:when>
+			<c:otherwise>
+				<input type="date" value="" id="rentDate" name="rentDate">
+				<button type="button" name="rent" onclick="rentItem(${itemNo})"> 대여하기</button>
+			</c:otherwise>
+		</c:choose>
 	</form>
 </div>

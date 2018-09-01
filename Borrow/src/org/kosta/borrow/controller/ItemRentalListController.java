@@ -23,8 +23,7 @@ public class ItemRentalListController implements Controller {
 		ArrayList<RentalDetailVO> rentallist = ItemDAO.getInstance().getAllRentalDetailById(id);
 		request.setAttribute("rentallist", rentallist);
 		
-		System.out.println(rentallist);
-		
+				
 		request.setAttribute("url", "/item/item_rental_list.jsp");
 		
 		return "template/layout.jsp";

@@ -49,6 +49,9 @@ public class HandlerMapping {
 			controller = new ItemRentDetailController();
 		}else if(command.equals("ItemRentalList")) {
 			controller = new ItemRentalListController();
+			//180901 MIRI ItemRentalController 추가
+		}else if(command.equals("ItemRental")) {
+			controller = new ItemRentalController();
 		}else if(command.equals("ItemRegisterList")) {
 			controller = new ItemRegisterListController();
 		}else if(command.equals("ItemDeleteCheck")) {
@@ -56,7 +59,6 @@ public class HandlerMapping {
 		}else if(command.equals("FAQ")) {
 			controller=new FAQController();
 		}
-		
 		return controller;
 	}
 }
