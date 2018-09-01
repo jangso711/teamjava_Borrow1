@@ -44,15 +44,19 @@ input[type=number]{
 			</thead>
 			<tbody>
 				<c:forEach items="${requestScope.allItemList }" var="allItemList">
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemVO.itemNo}" 
-					var="detailurl"></c:set>
+				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemNo}" var="detailurl"></c:set>
 					<tr>
-						<td><a href="${detailurl }">
-							<img src="${pageContext.request.contextPath }/upload/${allItemList.picturePath}" width="150" height="150"></a></td>
-						<td><a href="${detailurl }">${allItemList.itemVO.itemName }(링크)</a></td>
-						<td><pre>${allItemList.itemVO.itemExpl }</pre></td>
-						<td>${allItemList.itemVO.itemPrice }</td>
-						<td>${allItemList.itemVO.memberVO.id }</td>
+						<td>
+							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 이미지칸에 이미지를 띄움 -->
+							
+							<c:forEach items="${allItemList.picList }" var="picList">
+								<a href="${detailurl }"><img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"></a><br>
+							</c:forEach>
+						</td>
+						<td><a href="${detailurl }">${allItemList.itemName }(링크)</a></td>
+						<td><pre>${allItemList.itemExpl }</pre></td>
+						<td>${allItemList.itemPrice }</td>
+						<td>${allItemList.memberVO.id }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

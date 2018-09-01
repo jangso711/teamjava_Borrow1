@@ -67,12 +67,19 @@ values(item_no_seq.nextval, 'qqq', '뽀로로 유모차', '뽀로로친구들', 
 
 update item set item_status=1 where item_no=10004;
 
-select item_no, item_name, item_price, id, item_status from item where item_status=1;
+select item_no, item_name, item_price, id, item_expl, item_status from item where item_status=1;
 select item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate from item where item_status=1 and item_no=10001;
+
+select i.*, p.picture_path
+COALESCE(p.picture_path,'1') as coal
+from (select item_no, item_name, item_price, id, item_expl, item_status from item) i, picture p
+where i.item_status=1;
 
 select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
 from item i, picture p
 where i.item_status=1;
+
+insert into picture values(10007,'Cutting.png');
 
 select picture_path from picture where item_no=10005;
 
@@ -89,6 +96,8 @@ select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
 from item i, picture p
 where i.item_status=1 and i.item_no=p.item_no and i.item_name like '%유모차%'
 order by i.item_no asc;
+
+select picture_path from picture where item_no=10007
 
 select * from item;
 select * from member;
@@ -172,10 +181,10 @@ where r.item_no=i.item_no and r.id='yosep';
 
 select * from item;
 
-select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate,
-			 i.item_expl, ic.cat_no, c.cat_name
-			 from item i, category c, item_category ic
-			 where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no=c.cat_no
+select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,
+		to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, ic.cat_no, c.cat_name
+from item i, category c, item_category ic
+where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no=c.cat_no
 
 
 select * from item_category;

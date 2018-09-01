@@ -13,10 +13,10 @@ public class ItemDetailController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ItemVO itemVO = ItemDAO.getInstance().getDetailItemByNo(request.getParameter("itemSearchId"));
 		PictureVO itemDetail = new PictureVO();
-		if(itemVO != null) {
+		/*if(itemVO != null) {
 			itemDetail = new PictureVO(ItemDAO.getInstance().getPicturePath(itemVO.getItemNo()), itemVO);
 			request.setAttribute("itemDetail", itemDetail);
-		}
+		}*/
 		request.setAttribute("url", "/item/item_detail.jsp");		
 		return "template/layout.jsp";
 	}
