@@ -38,7 +38,7 @@
 					<fmt:parseDate value="${registerdetail.returnDate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
 					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
 					<tr>
-						<td><img src="${pageContext.request.contextPath}/${registerdetail.itemVO.picList[0]}" width="150" height="150" ></td>
+						<td><img src="${pageContext.request.contextPath}/upload/${registerdetail.itemVO.picList[0]}" width="150" height="150" ></td>
 						<td>${registerdetail.rentalNo}</td>
 						<td>${registerdetail.itemVO.itemName}</td>
 						<td>${registerdetail.itemVO.memberVO.id}</td>

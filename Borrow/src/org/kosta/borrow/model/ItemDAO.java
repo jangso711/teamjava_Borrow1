@@ -228,7 +228,9 @@ public class ItemDAO {
 			
 			while(rs.next()) {
 				picList.add(rs.getString(1));
-			}
+			}			
+			if(picList.isEmpty())  //사진이 없으면
+				picList.add("디폴트.png");
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
@@ -481,7 +483,7 @@ public class ItemDAO {
 	 * @param id
 	 * @return
 	 * @throws SQLException 
-	 */
+	 */	 
 	public ArrayList<RentalDetailVO> getAllRegisterListById(String id) throws SQLException {
 		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
 		Connection con = null;
@@ -499,10 +501,7 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();
-				//String picturePath = getPicturePath(rs.getString(2));
-				//System.out.println(picturePath);
-				//item.getPicList().add(picturePath);
-				item.getPicList().add("img/testImg.jpg");  //테스트 이미지..(9/1)
+				item.setPicList(getPictureList(rs.getString(2)));				
 				item.setItemName(rs.getString(3));
 				item.getMemberVO().setId(rs.getString(4));
 				item.setItemPrice(rs.getInt(5));
@@ -518,4 +517,47 @@ public class ItemDAO {
 		return list;
 
 	}
+	
+	/**
+	 * 180902 yosep 진행중
+	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
+	 * 
+	 * @param id
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<ItemVO> getAllItemListById(String id) throws SQLException {
+		ArrayList<String> picList = null;
+		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+		ItemVO itemVO = new ItemVO();
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 and id=? order by item_no asc";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setId(rs.getString(5));
+				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
+				picList = getPictureList(rs.getString(1));
+				if(picList != null) 
+					itemVO.setPicList(picList);
+				list.add(itemVO);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		
+		return list;
+	}
+	
+
+
+
 }
