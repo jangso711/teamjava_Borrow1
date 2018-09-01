@@ -15,13 +15,13 @@ public class ItemSearchController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String searchtext= request.getParameter("searchtext");
 		ArrayList<ItemVO> itemList = ItemDAO.getInstance().getAllItemListByName(searchtext);
-		ArrayList<PictureVO> pictureList = new ArrayList<PictureVO>();
+		/*ArrayList<PictureVO> pictureList = new ArrayList<PictureVO>();
 		if(itemList != null) {
 			for (ItemVO itemVO : itemList) {
 				pictureList.add(new PictureVO(ItemDAO.getInstance().getPicturePath(itemVO.getItemNo()), itemVO));
 			}
 		}
-		request.setAttribute("itemSearchList", pictureList);
+		request.setAttribute("itemSearchList", pictureList);*/
 		request.setAttribute("url", "/item/item_search_result.jsp");		
 		return "template/layout.jsp";
 	}
