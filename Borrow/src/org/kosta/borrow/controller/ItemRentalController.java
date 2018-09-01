@@ -25,7 +25,8 @@ public class ItemRentalController implements Controller {
 		vo.setItemVO(new ItemVO(item_no));
 		vo.setMemberVO(new MemberVO(id));
 		ItemDAO.getInstance().itemRental(vo);
-		return "${pageContext.request.contextPath}/item_rent_detail.jsp";
+		String rental_no = vo.getRentalNo();
+		return "front?command=ItemRentDetail$rental_no="+rental_no;
 	}
 
 }
