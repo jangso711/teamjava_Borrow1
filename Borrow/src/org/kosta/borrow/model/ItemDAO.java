@@ -11,8 +11,6 @@ import javax.sql.DataSource;
 
 
 
-
-
 public class ItemDAO {
 	private static ItemDAO instance = new ItemDAO();
 	private DataSource dataSource;
@@ -45,8 +43,6 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			pstmt.executeUpdate();
-			
-			
 		}finally {
 			closeAll(pstmt, con);
 		}
@@ -85,8 +81,6 @@ public class ItemDAO {
 		return vo;
 	}
 
-	
-	
 	/**
 	 * 180831 MIRI 진행중
 	 * Item table에서 이름 중에 검색어(searchtext)포함하는 
@@ -295,11 +289,7 @@ public class ItemDAO {
 		}
 		
 		return list;
-
 	}
-
-	
-
 
 	public RentalDetailVO itemRentDetail(RentalDetailVO vo) throws SQLException {
 		Connection con = null;
@@ -341,10 +331,8 @@ public class ItemDAO {
 		}
 		return rvo;
 	}
-		
 
 	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats,String expl) throws SQLException {
-
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -381,7 +369,6 @@ public class ItemDAO {
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			
 			for(int i=0;i<cats.length;i++) {
 				sql = new StringBuilder();
 				sql.append("insert into item_category(item_no,cat_no) values(?,?)");
@@ -400,7 +387,6 @@ public class ItemDAO {
 				pstmt.setString(2, ivo.getPicList().get(i));
 				pstmt.executeUpdate();
 			}
-		
 			
 		}finally {
 			closeAll(rs,pstmt,con);
