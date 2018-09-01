@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
-import org.kosta.borrow.model.PictureVO;
 
 public class ItemAllSearchController implements Controller {
 

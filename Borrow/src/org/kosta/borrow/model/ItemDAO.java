@@ -173,10 +173,6 @@ public class ItemDAO {
 				//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
 				picList = getPictureList(rs.getString(1));
 				if(picList != null) 
-					for (String picture : picList) {
-						
-					}
-					
 					itemVO.setPicList(picList);
 				list.add(itemVO);
 			}
