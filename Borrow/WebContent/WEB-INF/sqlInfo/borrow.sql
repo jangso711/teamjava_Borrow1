@@ -67,14 +67,24 @@ values(item_no_seq.nextval, 'qqq', '뽀로로 유모차', '뽀로로친구들', 
 
 update item set item_status=1 where item_no=10004;
 
-select item_no, item_name, item_price, id, item_status from item where item_status=1;
+select item_no, item_name, item_price, id, item_expl, item_status from item where item_status=1;
 select item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate from item where item_status=1 and item_no=10001;
+
+select id, item_name, item_brand, item_model, item_price,
+	to_char(item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(item_expdate, 'yyyy-MM-dd') as item_expdate,
+	item_expl
+from item
+where item_status=1 and item_no=10008
 
 select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
 from item i, picture p
 where i.item_status=1;
 
-select picture_path from picture where item_no=10005;
+select c.cat_no, c.cat_name
+from item_category ic, category c
+where ic.cat_no=c.cat_no and ic.item_no=10008
+
+insert into picture values(10007,'Cutting.png');
 
 update item set item_expl='카시트~' where item_no=10001;
 update item set item_expl='유모롱롱' where item_no=10002;
@@ -90,9 +100,12 @@ from item i, picture p
 where i.item_status=1 and i.item_no=p.item_no and i.item_name like '%유모차%'
 order by i.item_no asc;
 
+select cat_no from item_category where item_no=10008
+
 select * from item;
 select * from member;
 select * from picture;
+select * from item_category;
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
 insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
@@ -165,22 +178,33 @@ values (rental_no_seq.nextval, 10001, 'yosep', '2018/8/1' , '2018/8/2');
 insert into rental_details(rental_no, item_no, id, rental_date, return_date)
 values (rental_no_seq.nextval, 10003, 'yosep', '2018/8/2' , '2018/8/5');
 --'yosep'의 대여내역 조회 
-select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date 
-from rental_details r, item i 
+select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date 
+from rental_details r, item i
 where r.item_no=i.item_no and r.id='yosep';
+
+--'miri'의 등록아이템중 아이템 번호를 조회
+select i.item_no from item i where i.id='miri';
+
+--'miri'의 등록내역 조회
+select r.* 
+from Rental_details r,(select i.item_no from item i where i.id='miri') a
+where r.item_no=a.item_no;
+
+--'miri' 등록내역 상세 조회(조인)
+ select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, r.rental_date, r.return_date
+from Rental_details r,(select i.item_no from item i where i.id='miri') a, item i
+where r.item_no=a.item_no and r.item_no=i.item_no;
+
+
+
 
 
 select * from item;
 
-select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate,
-			 i.item_expl, ic.cat_no, c.cat_name
-			 from item i, category c, item_category ic
-			 where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no=c.cat_no
-
+select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,
+		to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, ic.cat_no, c.cat_name
+from item i, category c, item_category ic
+where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no=c.cat_no
 
 select * from item_category;
-
-
-
-
-
+select * from picture;
