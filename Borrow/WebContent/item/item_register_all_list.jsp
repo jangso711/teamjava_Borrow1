@@ -33,7 +33,7 @@ input[type=number]{
 </style>
 <div class="col-sm-12 bgheader">
 </div>
-<div class="col-sm-12 content">
+<div class="col-sm-12 content" align="center">
 <h3>내가 등록한 상품 목록</h3>
 	<form>
 		<table class="table">

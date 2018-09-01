@@ -418,11 +418,8 @@ public class ItemDAO {
 			while(rs.next()) {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
-				ItemVO item= new ItemVO();
-				//String picturePath = getPicturePath(rs.getString(2));
-				//System.out.println(picturePath);
-				//item.getPicList().add(picturePath);
-				item.getPicList().add("img/testImg.jpg");  //테스트 이미지..(9/1)
+				ItemVO item= new ItemVO();			
+				item.setPicList(getPictureList(rs.getString(2)));					
 				item.setItemName(rs.getString(3));
 				item.setItemPrice(rs.getInt(4));
 				item.getMemberVO().setId(rs.getString(5));				
