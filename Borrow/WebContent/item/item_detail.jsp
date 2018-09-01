@@ -87,14 +87,14 @@ input[type=number]{
 			function updateItem(upitem_no) {
 				var up = confirm("게시글을 수정하시겠습니까?");
 				if(up) {
-					location.href="${pageContext.request.contextPath}/front?command=ItemUpdateForm&upitem_no="+upitem_no;
+					location.href="${pageContext.request.contextPath}/front?command=ItemUpdateForm&itemNo="+upitem_no;
 				}
 			}
 			/* 180831 MIRI 게시글 삭제 함수 */
 			function deleteItem(delitem_no) {
 				var del = confirm("게시글을 삭제하시겠습니까?");
 				if(del) {
-					location.href="${pageContext.request.contextPath}/front?command=ItemDelete&delitem_no="+delitem_no;
+					location.href="${pageContext.request.contextPath}/front?command=ItemDelete&itemNo="+delitem_no;
 				}
 			}
 			/* 180901 MIRI 게시글 렌트 함수 */

@@ -208,3 +208,13 @@ where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no
 
 select * from item_category;
 select * from picture;
+
+select * from item;
+
+select * from rental_details;
+insert into rental_details values(rental_no_seq.nextval,10001,'yosep',sysdate,(sysdate+10));
+insert into rental_details values(rental_no_seq.nextval,10001,'yosep',sysdate+10,sysdate+20);
+select sysdate,max(return_date) from rental_details where item_no=10001;
+select * from item where item_no=10013;
+update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10013;
+

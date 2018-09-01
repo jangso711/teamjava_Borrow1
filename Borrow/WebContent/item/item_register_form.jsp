@@ -30,6 +30,10 @@ input[type=number]{
 
 	height:160px;
 }
+tr{
+	border-top: 1px;
+	border-bottom: 1px;
+}
 </style>
 <div class="col-sm-12 bgheader">
 </div>
@@ -52,6 +56,12 @@ input[type=number]{
 	<td>상품가격*</td><td><input type="number"name="itemPrice"required="required"></td>
 	</tr>
 	<tr>
+	<td>대여기간</td>
+	<td><input type="radio"name="duration"id="2months">2개월&nbsp;
+		<input type="radio"name="duration"id="3months"checked="checked">3개월
+	</td>
+	</tr>
+	<tr>
 	<td>분류선택*</td>
 	<td >
 	<c:forEach items="${requestScope.catList }" var="cat" varStatus="info">
@@ -61,7 +71,7 @@ input[type=number]{
 	</td>
 	</tr>
 	<tr>
-	<td>사진*</td><td><input type="file"name="img"></td>
+	<td>사진*</td><td><input type="file"name="img[]" multiple="multiple"></td>
 	</tr>
 	<tr>
 	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8"></textarea></td>
