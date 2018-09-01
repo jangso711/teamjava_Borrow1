@@ -11,6 +11,8 @@ import javax.sql.DataSource;
 
 
 
+
+
 public class ItemDAO {
 	private static ItemDAO instance = new ItemDAO();
 	private DataSource dataSource;
@@ -64,8 +66,9 @@ public class ItemDAO {
 			pstmt.setString(2, vo.getMemberVO().getId());
 			pstmt.setString(3, vo.getRentalDate());
 			pstmt.setString(4, vo.getReturnDate());
+			pstmt.executeUpdate();
 			pstmt.close();
-			pstmt=con.prepareStatement("select rental_no_seq.currval from rental_details");
+			pstmt=con.prepareStatement("select rental_no_seq.currval from dual");
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				vo.setRentalNo(rs.getString(1));
@@ -320,16 +323,16 @@ public class ItemDAO {
 				rvo = new RentalDetailVO();
 				ivo = new ItemVO();
 				mvo = new MemberVO();
-				mvo.setName("name");
+				mvo.setName(rs.getString(1));
 				rvo.setMemberVO(mvo);
-				ivo.setItemName("itemName");
-				ivo.setItemBrand("itemBrand");
-				ivo.setItemModel("itemModel");
-				ivo.setItemPrice(Integer.parseInt("itemPrice"));
+				ivo.setItemName(rs.getString(2));
+				ivo.setItemBrand(rs.getString(3));
+				ivo.setItemModel(rs.getString(4));
+				ivo.setItemPrice(rs.getInt(5));
 				rvo.setItemVO(ivo);
-				rvo.setRentalNo("rentalNo");
-				rvo.setRentalDate("rentalDate");
-				rvo.setReturnDate("returnDate");
+				rvo.setRentalNo(rs.getString(6));
+				rvo.setRentalDate(rs.getString(7));
+				rvo.setReturnDate(rs.getString(8));
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
@@ -447,6 +450,7 @@ public class ItemDAO {
 		return list;
 
 	}
+
 	public boolean deleteCheck(String itemNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -469,5 +473,49 @@ public class ItemDAO {
 			closeAll(pstmt, con);
 		}
 		return result;
+}
+	/**
+	 * 180901 yosep 진행중
+	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 해준 것만)
+	 * 
+	 * @param id
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<RentalDetailVO> getAllRegisterListById(String id) throws SQLException {
+		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, r.rental_date, r.return_date " + 
+					"from Rental_details r,(select i.item_no from item i where i.id=?) a, item i " + 
+					"where r.item_no=a.item_no and r.item_no=i.item_no";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();			
+			while(rs.next()) {
+				RentalDetailVO rentalDetailVo= new RentalDetailVO();
+				rentalDetailVo.setRentalNo(rs.getString(1));
+				ItemVO item= new ItemVO();
+				//String picturePath = getPicturePath(rs.getString(2));
+				//System.out.println(picturePath);
+				//item.getPicList().add(picturePath);
+				item.getPicList().add("img/testImg.jpg");  //테스트 이미지..(9/1)
+				item.setItemName(rs.getString(3));
+				item.getMemberVO().setId(rs.getString(4));
+				item.setItemPrice(rs.getInt(5));
+				rentalDetailVo.setItemVO(item);
+				rentalDetailVo.setRentalDate(rs.getString(6));
+				rentalDetailVo.setReturnDate(rs.getString(7));						
+				list.add(rentalDetailVo);			
+			}
+				
+		}finally {
+			closeAll(rs,pstmt,con);
+		}		
+		return list;
+
 	}
 }

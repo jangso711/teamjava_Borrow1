@@ -178,10 +178,24 @@ values (rental_no_seq.nextval, 10001, 'yosep', '2018/8/1' , '2018/8/2');
 insert into rental_details(rental_no, item_no, id, rental_date, return_date)
 values (rental_no_seq.nextval, 10003, 'yosep', '2018/8/2' , '2018/8/5');
 --'yosep'의 대여내역 조회 
-select r.rental_no, i.item_name, i.id, r.rental_date, r.return_date 
-from rental_details r, item i 
+select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date 
+from rental_details r, item i
 where r.item_no=i.item_no and r.id='yosep';
+
+--'miri'의 등록아이템중 아이템 번호를 조회
+select i.item_no from item i where i.id='miri';
+
 --'miri'의 등록내역 조회
+select r.* 
+from Rental_details r,(select i.item_no from item i where i.id='miri') a
+where r.item_no=a.item_no;
+
+--'miri' 등록내역 상세 조회(조인)
+ select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, r.rental_date, r.return_date
+from Rental_details r,(select i.item_no from item i where i.id='miri') a, item i
+where r.item_no=a.item_no and r.item_no=i.item_no;
+
+
 
 
 
