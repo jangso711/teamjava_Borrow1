@@ -113,9 +113,16 @@ input[type=number]{
 				<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
 				<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
 			</c:when>
-			<c:otherwise>
-				<input type="date" value="" id="rentDate" name="rentDate">
-				<button type="button" name="rent" onclick="rentItem(${itemNo})"> 대여하기</button>
+			<c:otherwise> 
+			<body>
+			<form action="front" method="post">
+				<input type="hidden" name="command" value="ItemRental">
+				<input type="hidden" name="item_no" value="${itemNo}">
+				대여날짜 입력<input type="date" value=""  name="rentalDate"><br>
+				반납날짜 입력<input type="date" value=""  name="returnDate"><br>
+				<input type="submit" value="대여하기">
+			</form>
+			</body>
 			</c:otherwise>
 		</c:choose>
 	</form>

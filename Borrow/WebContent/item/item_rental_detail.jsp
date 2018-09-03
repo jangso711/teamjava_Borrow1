@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <style>
 h1 {
@@ -31,7 +32,11 @@ td {
 <br>
 <br>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-4 container">       
+<div class="col-sm-4 container">    
+	<fmt:parseDate value="${requestScope.rvo.rentalDate}" var="strPlanDate" pattern="yyyy-MM-dd"/>
+	<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
+	<fmt:parseDate value="${requestScope.rvo.returnDate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
+	<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>    
 	<h1>대여 상세 보기</h1>     
   	<table class="table table-bordered" align = "center">
   		<tr>
@@ -41,16 +46,16 @@ td {
 			<th>거래번호</th><td>${requestScope.rvo.rentalNo}</td>
 		</tr>
 		<tr>
-			<th>상품명</th><td>${requestScope.rvo.ItemVO.itemName}</td>
+			<th>상품명</th><td>${requestScope.rvo.itemVO.itemName}</td>
 		</tr>
 		<tr>
-			<th>제조사</th><td>${requestScope.rvo.ItemVO.itemBrand}</td>
+			<th>제조사</th><td>${requestScope.rvo.itemVO.itemBrand}</td>
 		</tr>
 		<tr>
-			<th>모델명</th><td>${requestScope.rvo.ItemVO.itemModel}</td>
+			<th>모델명</th><td>${requestScope.rvo.itemVO.itemModel}</td>
 		</tr>
 		<tr>
-			<th>등록자</th><td>${requestScope.rvo.MemberVO.name}</td>
+			<th>등록자</th><td>${requestScope.rvo.memberVO.name}</td>
 		</tr>
 		<tr>
 			<th>대여일</th><td>${requestScope.rvo.rentalDate}</td>
@@ -59,7 +64,7 @@ td {
 			<th>반납일</th><td>${requestScope.rvo.returnDate}</td>
 		</tr>
 		<tr>
-			<th>대여료</th><td>${requestScope.rvo.ItemVO.itemPrice}</td>
+			<th>대여료</th><td>${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</td>
 		</tr>
 	</table>
 	<br><br>
