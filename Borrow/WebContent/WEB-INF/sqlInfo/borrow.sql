@@ -6,6 +6,7 @@ create sequence item_no_seq start with 10001 nocache;
 create sequence rental_no_seq start with 200001 nocache;
 create sequence cat_no_seq start with 3001 nocache;
 
+
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
@@ -218,3 +219,11 @@ select sysdate,max(return_date) from rental_details where item_no=10001;
 select * from item where item_no=10013;
 update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10013;
 
+
+
+
+
+
+
+select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, r.rental_no, r.rental_date, r.return_date
+from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
