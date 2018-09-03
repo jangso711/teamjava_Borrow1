@@ -24,11 +24,14 @@ public class MemberDAO {
 		if(pstmt!=null)pstmt.close();
 		if(con!=null)con.close();
 	}
-	
-	private void closeAll(PreparedStatement pstmt, Connection con) throws SQLException {
-		closeAll(null,pstmt,con);		
+
+	public void closeAll(PreparedStatement pstmt,Connection con) throws SQLException {
+		if(pstmt!=null)
+			pstmt.close();
+		if(con!=null)
+			con.close();
 	}
-	
+
 	public MemberVO login(String id, String pwd) throws SQLException {
 		MemberVO user = null;
 		Connection con = null;
@@ -128,6 +131,30 @@ public class MemberDAO {
 			closeAll(rs, pstmt, con);
 		}		
 	}
+	/**
+	 * 180903 성열 완료
+	 * id에 해당하는 사용자에게 point를 입금
+	 * @param id
+	 * @param point
+	 * @throws SQLException 
+	 */
+	public void depositPoint(String id, int point) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=getConnection();
+			String sql="update member set point=point+? where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, id);
+			pstmt.executeUpdate();
+				
+		}finally {
+			closeAll(pstmt, con);
+		}
+		
+	}
+
 	
 	/**
 	 * 180903 yosep 진행중
@@ -143,34 +170,13 @@ public class MemberDAO {
 			withdrawPoint(senderId, point);
 			depositPoint(receiverId, point);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//판매자 입금
 		
-	}
+	}	
 	
-	/**
-	 * 180903 yosep 진행중
-	 * memberId에 해당하는 사용자에게 point를 입금
-	 * @param memberId
-	 * @param point
-	 * @throws SQLException 
-	 */
-	public void depositPoint(String memberId, int point) throws SQLException {
-		PreparedStatement pstmt=null;
-		Connection con=null;		
-		try {
-			con=dataSource.getConnection();
-			String sql="update member set point=point+? where id=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, point);
-			pstmt.setString(2, memberId);			
-			pstmt.executeUpdate();				
-		}finally {
-			closeAll(pstmt, con);			
-		}				
-	}
+	
 	/**
 	 *  180903 yosep 진행중
 	 * memberId에 해당하는 사용자에게 point를 출금
@@ -184,6 +190,7 @@ public class MemberDAO {
 		try {
 			con=dataSource.getConnection();
 			String sql="update member set point=point-? where id=?";
+
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, point);
 			pstmt.setString(2, memberId);			
