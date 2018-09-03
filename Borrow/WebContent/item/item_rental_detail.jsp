@@ -27,6 +27,19 @@ td {
     text-align: center;
     }
 </style>
+<%-- 대여료 상세 추가 --%>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#infoSpan").hover(function(){
+			$("#friendImg").show().css("background-color", "yellow");
+		}, function(){
+			$("#friendImg").hide();
+		});
+	});
+</script>
+
 <br>
 <br>
 <br>
@@ -64,7 +77,15 @@ td {
 			<th>반납일</th><td>${requestScope.rvo.returnDate}</td>
 		</tr>
 		<tr>
-			<th>대여료</th><td>${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</td>
+			<%-- 대여료 상세 추가 --%>
+			<th>대여료</th>
+			<td><span id="infoSpan">${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</span>
+				<div id="friendImg" width="304" height="236">
+					대여료 상세 정보<br>
+					일대여료 : ${requestScope.rvo.itemVO.itemPrice}<br>
+					대여일수 : ${(endDate-strDate)}
+				</div>
+			</td>
 		</tr>
 	</table>
 	<br><br>
