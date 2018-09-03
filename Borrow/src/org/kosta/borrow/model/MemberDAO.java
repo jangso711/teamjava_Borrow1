@@ -201,7 +201,6 @@ public class MemberDAO {
 			e.printStackTrace();
 		}		
 	}		
-	
 	/**
 	 *  180903 성열 진행중
 	 * id에 해당하는 사용자에게 point를 출금
