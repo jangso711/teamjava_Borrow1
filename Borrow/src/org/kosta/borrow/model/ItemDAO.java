@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.kosta.borrow.exception.BalanceShortageException;
+
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 
@@ -52,11 +54,23 @@ public class ItemDAO {
 
 	}
 	
-	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException {
+	
+	
+	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException, BalanceShortageException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;	
 		try {
+			int buyerPoint=MemberDAO.getInstance().getPointByMemberId(vo.getMemberVO().getId()) ; //대여자 보유 포인트
+			int dDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
+			int price= getDetailItemByNo(vo.getItemVO().getItemNo()).getItemPrice();
+			int requiredPoint= dDate*price;  //구매에 필요한 포인트
+			if(buyerPoint<requiredPoint) {
+				//잔액 부족시 exception 발생
+				throw new BalanceShortageException();				
+			}
+			
+			
 			con=getConnection();
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
@@ -74,14 +88,13 @@ public class ItemDAO {
 			}
 			rs.close();
 			pstmt.close();
-			//
-			int dDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
-			int price= getDetailItemByNo(vo.getItemVO().getItemNo()).getItemPrice();
 			
+			//송금 작업			
 			String receiverId = getProductOwnerId(vo.getItemVO().getItemNo());
 			String senderId =vo.getMemberVO().getId();
-			MemberDAO.getInstance().transferPoint(receiverId, senderId, dDate*price);
+			MemberDAO.getInstance().transferPoint(receiverId, senderId, requiredPoint);
 			//
+			
 			String sql2 = "update item_add set rental_count = RENTAL_count +1 where item_no = ?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
@@ -461,7 +474,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date \r\n" + 
+			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD') \r\n" + 
 					"from rental_details r, item i \r\n" + 
 					"where r.item_no=i.item_no and r.id=?";
 			pstmt = con.prepareStatement(sql);
@@ -526,7 +539,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, r.rental_date, r.return_date " + 
+			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date, 'yyyy-MM-DD')" + 
 					"from Rental_details r,(select i.item_no from item i where i.id=?) a, item i " + 
 					"where r.item_no=a.item_no and r.item_no=i.item_no";
 			pstmt = con.prepareStatement(sql);
