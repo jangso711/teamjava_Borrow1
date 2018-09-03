@@ -13,10 +13,11 @@ public class ItemDeleteController implements Controller {
 		String itemNo = request.getParameter("itemNo");
 		ItemVO vo=new ItemVO();
 		vo.setItemNo(itemNo);
-		ItemDAO.getInstance().ItemDelete(vo);
+		String dirPath = request.getServletContext().getRealPath("upload");
+		ItemDAO.getInstance().deleteItem(vo,dirPath);
 		
-		
-		return "redirect:index.jsp";
+		request.setAttribute("url", "/item/item_delete_result.jsp");
+		return "template/layout.jsp";
 	}
 
 }

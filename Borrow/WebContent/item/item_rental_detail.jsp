@@ -40,7 +40,7 @@ td {
 	<h1>대여 상세 보기</h1>     
   	<table class="table table-bordered" align = "center">
   		<tr>
-  			<th rowspan="9"> 사진 </th>
+  			<th rowspan="9"> <img src="${pageContext.request.contextPath}/upload/${rvo.itemVO.picList[0]}" width="150" height="150" > </th>
   		</tr>
   		<tr>
 			<th>거래번호</th><td>${requestScope.rvo.rentalNo}</td>
@@ -70,8 +70,8 @@ td {
 	<br><br>
 	<table align="center">
    	 <tr>
-      <td><input class="btn btn_pk" type="button" value="홈" onclick="location.href='${pageContext.request.contextPath}/test.jsp'"></td>
-      <td><input class="btn btn_pk" type="button" value="마이페이지" onclick="location.href='${pageContext.request.contextPath}/test.jsp'"></td>
+      <td><input class="btn btn_pk" type="button" value="홈" onclick="location.href='${pageContext.request.contextPath}/index.jsp'"></td>
+      <td><input class="btn btn_pk" type="button" value="마이페이지" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberMypage'"></td>
    	 </tr>
 	</table>	
 </div>

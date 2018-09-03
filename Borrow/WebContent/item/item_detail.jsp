@@ -110,23 +110,25 @@ input[type=number]{
 		
 		<c:set value="${requestScope.itemDetail.itemNo}" var="itemNo"></c:set>
 		<!-- 180831 MIRI 본인일 경우에는 수정/삭제 버튼 보이고 본인이 아닐 경우에는 달력 및 대여버튼 보이기-->
-		<c:choose>
-			<c:when test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
-				<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
-				<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
-			</c:when>
-			<c:otherwise> 
-			<body>
-			<form action="front" method="post">
-				<input type="hidden" name="command" value="ItemRental">
-				<input type="hidden" name="item_no" value="${itemNo}">
-				<!-- 180903 JB 대여일 조건 추가 위해 min/max 추가 -->
-				대여날짜 입력<input type="date" value="" name="rentalDate" min="${item.itemRegDate}" max="${item.itemExpDate}"><br>
-				반납날짜 입력<input type="date" value="" name="returnDate" min="${item.itemRegDate}" max="${item.itemExpDate}"><br>
-				<input type="submit" value="대여하기">
-			</form>
-			</body>
-			</c:otherwise>
-		</c:choose>
+		<c:if test="${!empty sessionScope.user}">   <!-- 로그인되어있으면 -->
+			<c:choose>
+				<c:when test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
+					<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
+					<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
+				</c:when>
+				<c:otherwise> 
+				<body>
+				<form action="front" method="post">
+					<input type="hidden" name="command" value="ItemRental">
+					<input type="hidden" name="item_no" value="${itemNo}">
+					<!-- 180903 JB 대여일 조건 추가 위해 min/max 추가 -->
+					대여날짜 입력<input type="date" value="" name="rentalDate" min="${item.itemRegDate}" max="${item.itemExpDate}" required="required"><br>
+					반납날짜 입력<input type="date" value="" name="returnDate" min="${item.itemRegDate}" max="${item.itemExpDate}" required="required" ><br>
+					<input type="submit" value="대여하기">
+				</form>
+				</body>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 	</form>
 </div>
