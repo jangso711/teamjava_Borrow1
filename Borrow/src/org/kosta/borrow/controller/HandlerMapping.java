@@ -33,6 +33,9 @@ public class HandlerMapping {
 			controller = new MemberIdCheckController();
 		}else if(command.equals("ItemSearch")) {
 			controller = new ItemSearchController();
+		//180903 MIRI ItemCategorySearchController 추가
+		}else if(command.equals("ItemCategorySearch")) {
+			controller = new ItemCategorySearchController();
 		}else if(command.equals("ItemAllSearch")) {
 			controller = new ItemAllSearchController();
 		}else if(command.equals("ItemDetail")) {
