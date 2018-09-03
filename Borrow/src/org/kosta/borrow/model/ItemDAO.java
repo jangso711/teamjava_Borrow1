@@ -1,13 +1,16 @@
 package org.kosta.borrow.model;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 
 
@@ -49,7 +52,7 @@ public class ItemDAO {
 
 	}
 	
-	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
+	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;	
@@ -71,6 +74,14 @@ public class ItemDAO {
 			}
 			rs.close();
 			pstmt.close();
+			//
+			int dDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
+			int price= getDetailItemByNo(vo.getItemVO().getItemNo()).getItemPrice();
+			
+			String receiverId = getProductOwnerId(vo.getItemVO().getItemNo());
+			String senderId =vo.getMemberVO().getId();
+			MemberDAO.getInstance().transferPoint(receiverId, senderId, dDate*price);
+			//
 			String sql2 = "update item_add set rental_count = RENTAL_count +1 where item_no = ?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
@@ -119,7 +130,7 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
+ 	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
 		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = new ItemVO();
@@ -580,6 +591,32 @@ public class ItemDAO {
 		return list;
 	}
 	
+
+	public int calDateBetweenAandB(String rentalDate, String returnDate) throws java.text.ParseException
+	{
+	 
+	     // String Type을 Date Type으로 캐스팅하면서 생기는 예외로 인해 여기서 예외처리 해주지 않으면 컴파일러에서 에러가 발생해서 컴파일을 할 수 없다.
+	        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
+	        Date FirstDate = format.parse(rentalDate);
+	        Date SecondDate = format.parse(returnDate);
+	        
+	        // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
+	        // 연산결과 -950400000. long type 으로 return 된다.
+	        long calDate = FirstDate.getTime() - SecondDate.getTime(); 
+	        
+	        // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다. 
+	        // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
+	        long calDateDays = calDate / ( 24*60*60*1000); 
+	 
+	        calDateDays = Math.abs(calDateDays);
+	        
+	        System.out.println("두 날짜의 날짜 차이: "+calDateDays);
+	        
+	        return (int) calDateDays;
+	}    
+	        
+
 
 
 

@@ -139,8 +139,15 @@ public class MemberDAO {
 	 */
 	public void transferPoint(String receiverId, String senderId, int point) {
 		//구매자 출금
-		
+		try {
+			withdrawPoint(senderId, point);
+			depositPoint(receiverId, point);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//판매자 입금
+		
 	}
 	
 	/**
@@ -155,7 +162,7 @@ public class MemberDAO {
 		Connection con=null;		
 		try {
 			con=dataSource.getConnection();
-			String sql="update member set point=point+? from 	member where id=?";
+			String sql="update member set point=point+? where id=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, point);
 			pstmt.setString(2, memberId);			
@@ -176,7 +183,7 @@ public class MemberDAO {
 		Connection con=null;		
 		try {
 			con=dataSource.getConnection();
-			String sql="update member set point=point-? from 	member where id=?";
+			String sql="update member set point=point-? where id=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, point);
 			pstmt.setString(2, memberId);			
