@@ -218,3 +218,6 @@ select sysdate,max(return_date) from rental_details where item_no=10001;
 select * from item where item_no=10013;
 update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10013;
 
+
+update member set pwd='1234',name='이동규',address='당진',tel='041' where id='qqq';
+select * from member;
