@@ -104,6 +104,7 @@ input[type=number]{
 					location.href="${pageContext.request.contextPath}/front?command=ItemRental&rentitem_no="+rentitem_no;
 				}
 			}
+			
 		</script>
 		
 		<c:set value="${requestScope.itemDetail.itemNo}" var="itemNo"></c:set>
@@ -118,8 +119,9 @@ input[type=number]{
 			<form action="front" method="post">
 				<input type="hidden" name="command" value="ItemRental">
 				<input type="hidden" name="item_no" value="${itemNo}">
-				대여날짜 입력<input type="date" value=""  name="rentalDate"><br>
-				반납날짜 입력<input type="date" value=""  name="returnDate"><br>
+				<!-- 180903 JB 대여일 조건 추가 위해 min/max 추가 -->
+				대여날짜 입력<input type="date" value="" name="rentalDate" min="${item.itemRegDate}" max="${item.itemExpDate}"><br>
+				반납날짜 입력<input type="date" value="" name="returnDate" min="${item.itemRegDate}" max="${item.itemExpDate}"><br>
 				<input type="submit" value="대여하기">
 			</form>
 			</body>
