@@ -15,8 +15,8 @@ public class ItemDeleteController implements Controller {
 		vo.setItemNo(itemNo);
 		ItemDAO.getInstance().ItemDelete(vo);
 		
-		
-		return "redirect:index.jsp";
+		request.setAttribute("url", "/item/item_delete_result.jsp");
+		return "template/layout.jsp";
 	}
 
 }

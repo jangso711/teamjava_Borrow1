@@ -335,11 +335,12 @@ public class ItemDAO {
 		RentalDetailVO rvo = null;
 		ItemVO ivo = null;
 		MemberVO mvo = null;
+		ArrayList<String> picList = null;
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
 			sql.append("select m.name, ");
-			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, ");
+			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
 			sql.append("r.rental_no, r.rental_date, r.return_date ");
 			sql.append("from member m, item i, rental_details r ");
 			sql.append("where m.id = i.id ");
@@ -358,10 +359,12 @@ public class ItemDAO {
 				ivo.setItemBrand(rs.getString(3));
 				ivo.setItemModel(rs.getString(4));
 				ivo.setItemPrice(rs.getInt(5));
+				ivo.setPicList(getPictureList(rs.getString(6)));
+				System.out.println(ivo);
 				rvo.setItemVO(ivo);
-				rvo.setRentalNo(rs.getString(6));
-				rvo.setRentalDate(rs.getString(7));
-				rvo.setReturnDate(rs.getString(8));
+				rvo.setRentalNo(rs.getString(7));
+				rvo.setRentalDate(rs.getString(8));
+				rvo.setReturnDate(rs.getString(9));
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
