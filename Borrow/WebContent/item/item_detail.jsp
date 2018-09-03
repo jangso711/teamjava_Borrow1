@@ -55,10 +55,11 @@ input[type=number]{
 				<tr>
 				<c:set value="${requestScope.itemDetail }" var="item"></c:set>
 					<td>
-						<!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
+						<!-- 180903 MIRI ItemDAO에서 처리 -->
+						<%-- <!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
 							<c:if test="${empty itemDetail.picList }">
 								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
-							</c:if>
+							</c:if> --%>
 							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 사진을 띄움 -->
 							<c:forEach items="${itemDetail.picList }" var="picList">
 								<img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"><br>

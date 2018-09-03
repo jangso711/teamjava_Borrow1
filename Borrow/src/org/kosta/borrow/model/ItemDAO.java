@@ -83,38 +83,44 @@ public class ItemDAO {
 
 	/**
 	 * 180831 MIRI 진행중
-	 * Item table에서 이름 중에 검색어(searchtext)포함하는 
-	 * 상품들을 전부 찾아서 ArrayList로 반환한다 
+	 * 180903 MIRI 완료
+	 * Item table에서 이름 중에 검색어(searchtext)포함하는 상품들을 전부 찾아서 ArrayList로 반환한다 
 	 * @param searchtext
 	 * @return
 	 * @throws SQLException 
 	 */
 	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
+		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+		ItemVO itemVO = new ItemVO();
 		MemberVO memberVO = null;
 		StringBuilder sb = new StringBuilder();
 		searchtext = "%"+searchtext+"%";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		/*try {
+		try {
 			con = getConnection();
-			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, p.picture_path");
-			sb.append(" from item i, picture p");
-			sb.append(" where i.item_status=1 and i.item_no=p.item_no and i.item_name like ?");
-			sb.append(" order by i.item_no asc");
+			sb.append(" select id, item_no, item_name, item_expl, item_price");
+			sb.append(" from item");
+			sb.append(" where item_status=1 and item_name like ?");
+			sb.append(" order by item_no asc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
-				list.add(new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
-						memberVO));
+				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), memberVO);
+				//180903 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
+				picList = getPictureList(rs.getString(2));
+				if(picList != null) 
+					itemVO.setPicList(picList);
+				list.add(itemVO);
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
-		}*/
+		}
 		return list;
 	}
 	
@@ -222,7 +228,8 @@ public class ItemDAO {
 			
 			while(rs.next()) {
 				picList.add(rs.getString(1));
-			}			
+			}
+			//180902 yosep 기존 jsp 주석처리하고 여기서 진행
 			if(picList.isEmpty())  //사진이 없으면
 				picList.add("디폴트.png");
 		} finally {
