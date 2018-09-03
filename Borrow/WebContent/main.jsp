@@ -7,16 +7,18 @@
 			type="text" name="searchtext" placeholder="Search..."
 			style="width: 700px; height: 50px; letter-spacing: 2px" />
 	</form>
-	<br> <br> <br> <a href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3004"><img id="wintersports"
-		height="150" width="150"
-		src="${pageContext.request.contextPath }/img/겨울스포츠.png" alt="겨스"></a>
+	<br> <br> <br> 
+	<!-- 180903 MIRI 카테고리 url 작성 -->
+	<a href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3004"><img id="wintersports"
+		height="150" width="150" src="${pageContext.request.contextPath }/img/겨울스포츠.png" alt="겨스"></a>
 	<a href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3002"><img id="swim" height="150" width="150"
 		src="${pageContext.request.contextPath }/img/수영.png" alt="수영"></a> <a
 		href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3006"><img id="outdoor" height="150" width="150"
 		src="${pageContext.request.contextPath }/img/야외스포츠.png" alt="야외"></a>
 	<a href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3005"><img id="fishing" height="150" width="150"
 		src="${pageContext.request.contextPath }/img/낚시.png" alt="낚시"></a><br>
-	<br> <a href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3001"><img id="climb" height="150" width="150"
+	<br>
+	<a href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3001"><img id="climb" height="150" width="150"
 		src="${pageContext.request.contextPath }/img/등산.png" alt="등산"></a> <a
 		href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3003"><img id="camping" height="150" width="150"
 		src="${pageContext.request.contextPath }/img/캠핑.png" alt="캠핑"></a> <a

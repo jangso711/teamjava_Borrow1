@@ -130,9 +130,6 @@ public class ItemDAO {
 		}		
 		return ownerId;		
 	}
-	
-	
-
 
 	/**
 	 * 180831 MIRI 진행중
@@ -161,6 +158,7 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
@@ -209,7 +207,6 @@ public class ItemDAO {
 				//180901 MIRI 해당 상품번호에 맞는 카테고리가 있으면 리스트를 전부 불러와 set 시킴
 				catList = getCategoryList(itemno);
 				if(catList != null) {
-					//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
 					picList = getPictureList(itemno);
 					itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
 							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
@@ -245,7 +242,6 @@ public class ItemDAO {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(5));
 				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
-				//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
 				picList = getPictureList(rs.getString(1));
 				if(picList != null) 
 					itemVO.setPicList(picList);
@@ -277,13 +273,12 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, itemNo);
 			rs = pstmt.executeQuery();
-			picList = new ArrayList<String>();
 			
-			while(rs.next()) {
+			picList = new ArrayList<String>();
+			while(rs.next())
 				picList.add(rs.getString(1));
-			}
-			//180902 yosep 기존 jsp 주석처리하고 여기서 진행
-			if(picList.isEmpty())  //사진이 없으면
+			//180902 yosep 사진이 없을경우 기존 jsp에 있던 코드들 전부 주석처리하고 여기서 진행
+			if(picList.isEmpty())
 				picList.add("디폴트.png");
 		} finally {
 			closeAll(rs, pstmt, con);
@@ -313,11 +308,10 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemNo);
 			rs = pstmt.executeQuery();
-			catList = new ArrayList<CategoryVO>();
 			
-			while(rs.next()) {
+			catList = new ArrayList<CategoryVO>();
+			while(rs.next())
 				catList.add(new CategoryVO(rs.getString(1), rs.getString(2)));
-			}
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
@@ -348,11 +342,11 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
 				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), memberVO);
-				//180903 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
 				picList = getPictureList(rs.getString(2));
 				if(picList != null) 
 					itemVO.setPicList(picList);
@@ -381,9 +375,9 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, catno);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			
+			if(rs.next())
 				categoryVO = new CategoryVO(catno, rs.getString(1));
-			}
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
