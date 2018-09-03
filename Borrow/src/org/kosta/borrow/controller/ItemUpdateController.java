@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.kosta.borrow.model.CategoryVO;
+import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
 
 public class ItemUpdateController implements Controller {
@@ -12,6 +13,7 @@ public class ItemUpdateController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ItemVO ivo = new ItemVO();
+		String itemNo = request.getParameter("itemNo");
 		String itemName = request.getParameter("itemName");
 		String itemBrand = request.getParameter("itemBrand");
 		String itemModel = request.getParameter("itemModel");
@@ -28,12 +30,16 @@ public class ItemUpdateController implements Controller {
 			cvo.setCatNo(cats[i]);
 			ivo.getCatList().add(cvo);
 		}
+		
+		ivo.setItemNo(itemNo);
 		ivo.setItemName(itemName);
 		ivo.setItemBrand(itemBrand);
 		ivo.setItemModel(itemModel);
 		ivo.setItemExpDate(itemExpDate);
 		ivo.setItemExpl(itemExpl);
 		ivo.setItemPrice(Integer.parseInt(itemPrice));
+		String dirPath = request.getServletContext().getRealPath("upload");
+		ItemDAO.getInstance().updateItem(ivo,dirPath);
 		
 		return "redirect:index.jsp";
 	}

@@ -1,4 +1,3 @@
-<%@page import="org.kosta.borrow.model.CategoryVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -82,6 +81,7 @@ ul{
 			$(this).parent().remove();
 		});
 		$("#updateBtn").click(function(){
+			alert(" ");
 			$("#catAlert").text("")
 			var cats = $(".category:checkbox:checked");
 			var pics = $("#pictureList li").length;
@@ -106,10 +106,11 @@ ul{
 <div class="col-sm-12 content">
 <h3>상품등록</h3>
 <div class="formContent">
-<form id="updateForm"action="${pageContext.request.contextPath }/front"method="post"enctype="multipart/form-data">
+<form id="updateForm"action="${pageContext.request.contextPath }/front"method="post">
 <input type="hidden"name="command"value="ItemUpdate">
+<c:set value="${requestScope.itemInfo}" var="i"></c:set>
+<input type="hidden"name="itemNo"value="${i.itemNo }">
 <table cellpadding="3">
-	<c:set value="${requestScope.itemInfo}" var="i"></c:set>
 	<tr>
 	<td>상품이름*</td><td><input type="text"name="itemName"required="required"value="${i.itemName}"></td>
 	</tr>
@@ -131,9 +132,10 @@ ul{
 	<td>분류선택*</td>
 	<td >
 	<c:forEach items="${requestScope.catList }" var="cat" varStatus="info">	
-	<input type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
+	<input class="category"type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
 	<c:if test="${info.count%3==0}"><br></c:if>
 	</c:forEach>
+	<br><span id="catAlert"></span>
 	</td>
 	</tr>
 	<tr>
@@ -141,10 +143,10 @@ ul{
 	</tr>
 	<tr>
 	<td>사진*</td>
-	<td>
+	<td><span id="picAlert"></span>
 	<ul id="pictureList">
 	<c:forEach items="${i.picList}" var="picName" varStatus="info">
-	<li >${picName }<button class='deleteBtn'>x</button></li>	
+	<li >${picName }<input type="hidden"name="pics"value="${picName}"><button class='deleteBtn'>x</button></li>	
 	</c:forEach>
 	</ul>
 	</td>

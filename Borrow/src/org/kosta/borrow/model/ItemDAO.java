@@ -693,6 +693,75 @@ public class ItemDAO {
 	        System.out.println("두 날짜의 날짜 차이: "+calDateDays);
 	        
 	        return (int) calDateDays;
+	}
+	public void updateItem(ItemVO ivo,String dirPath) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+	
+			String sql = "update item set item_name=?, item_brand=?,item_model=?,item_price=?,item_expdate=?,item_expl=? where item_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ivo.getItemName());
+			pstmt.setString(2, ivo.getItemBrand());
+			pstmt.setString(3,ivo.getItemModel());
+			pstmt.setInt(4, ivo.getItemPrice());
+			pstmt.setString(5, ivo.getItemExpDate());
+			pstmt.setString(6, ivo.getItemExpl());
+			pstmt.setInt(7, Integer.parseInt(ivo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			/*ArrayList<String> picList = getPictureList(ivo.getItemNo());
+			for(String fileName:picList) {
+				String path = dirPath+File.separator+fileName;
+				File f = new File(path);
+				f.delete();
+			}*/
+			
+			sql = "delete from item_category where item_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			sql = "delete from picture where item_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			ArrayList<CategoryVO> cats=ivo.getCatList();
+			for(int i=0;i<cats.size();i++) {
+			
+				sql="insert into item_category(item_no,cat_no) values(?,?)";
+				pstmt = con.prepareStatement(sql.toString());
+				pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+				pstmt.setInt(2, Integer.parseInt(cats.get(i).getCatNo()));
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+			//picture 저장
+			ArrayList<String>pics = ivo.getPicList();
+			for(int i=0;i<pics.size();i++) {
+				sql="insert into picture(item_no,picture_path) values(?,?)";
+				pstmt=con.prepareStatement(sql.toString());
+				pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+				pstmt.setString(2, pics.get(i));
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+
+			
+			
+			
+			
+			
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		
 	}    
 	        
 
