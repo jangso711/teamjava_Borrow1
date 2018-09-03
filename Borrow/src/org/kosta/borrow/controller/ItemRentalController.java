@@ -26,7 +26,7 @@ public class ItemRentalController implements Controller {
 		vo.setMemberVO(new MemberVO(id));
 		ItemDAO.getInstance().itemRental(vo);
 		String rental_no = vo.getRentalNo();
-		return "front?command=ItemRentDetail$rental_no="+rental_no;
+		return "front?command=ItemRentDetail&rental_no="+rental_no;
 	}
 
 }
