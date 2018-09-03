@@ -334,8 +334,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		RentalDetailVO rvo = null;
 		ItemVO ivo = null;
-		MemberVO mvo = null;
-		ArrayList<String> picList = null;
+		MemberVO mvo = null;		
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
@@ -365,6 +364,8 @@ public class ItemDAO {
 				rvo.setRentalNo(rs.getString(7));
 				rvo.setRentalDate(rs.getString(8));
 				rvo.setReturnDate(rs.getString(9));
+				
+				
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
