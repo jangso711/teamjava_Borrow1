@@ -44,8 +44,8 @@ input[type=number]{
 			</tr>
 		</thead>
 		<tbody>
+			<!-- 180903 MIRI 클릭한 카테고리로 등록된 상품이 없을 시 alert 띄우고 메인화면으로 이동 -->
 			<c:choose>
-				<!-- 180903 MIRI 클릭한 카테고리로 등록된 상품이 없을 시 alert 띄우고 메인화면으로 이동 -->
 				<c:when test="${empty requestScope.itemCategorySearchList }">
 					<script>
 						alert("현재 '${requestScope.categoryVO.catName}' 카테고리에 해당하는 상품이 없습니다.");
