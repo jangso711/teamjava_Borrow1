@@ -15,7 +15,7 @@ public class MemberPointChargeController implements Controller {
 		HttpSession session=request.getSession();
 		MemberVO mvo=(MemberVO) session.getAttribute("user");
 		String id=mvo.getId();
-		MemberDAO.getInstance().pointCharge(point,id);
+		MemberDAO.getInstance().depositPoint(id, point);
 		request.setAttribute("url", "/member/member_point_charge_ok.jsp");
 		return "/template/layout.jsp";
 	}

@@ -52,13 +52,10 @@ public class ItemDAO {
 	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
+		ResultSet rs = null;	
 		try {
 			con=getConnection();
-			
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
-			
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
@@ -83,6 +80,36 @@ public class ItemDAO {
 		}
 		return vo;
 	}
+	
+   /**
+    * itemNo에 해당하는 등록자의 Id를 반환
+    * 주인이 없으면 null반환
+    * @param itemId
+    * @return
+ * @throws SQLException 
+    */
+	public String getProductOwnerId(String itemNo) throws SQLException {
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		Connection con=null;
+		String ownerId=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="select id from 	item where item_no=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);	
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				ownerId=rs.getString(1);
+			}			
+		}finally {
+			closeAll(rs, pstmt, con);			
+		}		
+		return ownerId;		
+	}
+	
+	
+
 
 	/**
 	 * 180831 MIRI 진행중
@@ -308,11 +335,12 @@ public class ItemDAO {
 		RentalDetailVO rvo = null;
 		ItemVO ivo = null;
 		MemberVO mvo = null;
+		ArrayList<String> picList = null;
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
 			sql.append("select m.name, ");
-			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, ");
+			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
 			sql.append("r.rental_no, r.rental_date, r.return_date ");
 			sql.append("from member m, item i, rental_details r ");
 			sql.append("where m.id = i.id ");
@@ -331,10 +359,12 @@ public class ItemDAO {
 				ivo.setItemBrand(rs.getString(3));
 				ivo.setItemModel(rs.getString(4));
 				ivo.setItemPrice(rs.getInt(5));
+				ivo.setPicList(getPictureList(rs.getString(6)));
+				System.out.println(ivo);
 				rvo.setItemVO(ivo);
-				rvo.setRentalNo(rs.getString(6));
-				rvo.setRentalDate(rs.getString(7));
-				rvo.setReturnDate(rs.getString(8));
+				rvo.setRentalNo(rs.getString(7));
+				rvo.setRentalDate(rs.getString(8));
+				rvo.setReturnDate(rs.getString(9));
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
