@@ -44,6 +44,13 @@ input[type=number]{
 				</tr>
 			</thead>
 			<tbody>
+				<!-- 180903 MIRI 검색어와 일치하는 상품이 없을 시 alert 띄우고 메인화면으로 이동 -->
+				<c:if test="${empty requestScope.itemSearchList  }">
+					<script>
+						alert("검색하신 '${param.searchtext}'에 맞는 상품이 없습니다.");
+						location.href="${pageContext.request.contextPath }/front?command=Main";
+					</script>
+				</c:if>
 				<c:forEach items="${requestScope.itemSearchList }" var="itemSearchList">
 				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${itemSearchList.itemNo}" 
 					var="detailurl"></c:set>
