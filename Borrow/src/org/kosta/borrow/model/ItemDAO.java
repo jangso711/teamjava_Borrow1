@@ -1,13 +1,17 @@
 package org.kosta.borrow.model;
 
+import java.io.File;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.sql.DataSource;
+
+
 
 
 
@@ -33,14 +37,24 @@ public class ItemDAO {
 		if(con!=null)con.close();
 	}
 
-	public void ItemDelete(ItemVO vo) throws SQLException {
+	public void deleteItem(ItemVO vo,String dirPath) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		ArrayList<String> picList= null;
 		try {
 			con=getConnection();
 			String sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			picList = getPictureList(vo.getItemNo());
+			for(String fileName:picList) {
+				String path = dirPath+File.separator+fileName;
+				File f = new File(path);
+				f.delete();
+			}
+			pstmt = con.prepareStatement("delete from picture where item_no = ?");
 			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			pstmt.executeUpdate();
 		}finally {
@@ -49,16 +63,13 @@ public class ItemDAO {
 
 	}
 	
-	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
+	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
+		ResultSet rs = null;	
 		try {
 			con=getConnection();
-			
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
-			
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
@@ -74,6 +85,14 @@ public class ItemDAO {
 			}
 			rs.close();
 			pstmt.close();
+			//
+			int dDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
+			int price= getDetailItemByNo(vo.getItemVO().getItemNo()).getItemPrice();
+			
+			String receiverId = getProductOwnerId(vo.getItemVO().getItemNo());
+			String senderId =vo.getMemberVO().getId();
+			MemberDAO.getInstance().transferPoint(receiverId, senderId, dDate*price);
+			//
 			String sql2 = "update item_add set rental_count = RENTAL_count +1 where item_no = ?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
@@ -84,6 +103,36 @@ public class ItemDAO {
 		}
 		return vo;
 	}
+	
+   /**
+    * itemNo에 해당하는 등록자의 Id를 반환
+    * 주인이 없으면 null반환
+    * @param itemId
+    * @return
+ * @throws SQLException 
+    */
+	public String getProductOwnerId(String itemNo) throws SQLException {
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		Connection con=null;
+		String ownerId=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="select id from 	item where item_no=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);	
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				ownerId=rs.getString(1);
+			}			
+		}finally {
+			closeAll(rs, pstmt, con);			
+		}		
+		return ownerId;		
+	}
+	
+	
+
 
 	/**
 	 * 180831 MIRI 진행중
@@ -93,7 +142,7 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
+ 	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
 		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = new ItemVO();
@@ -372,12 +421,12 @@ public class ItemDAO {
 		ResultSet rs = null;
 		RentalDetailVO rvo = null;
 		ItemVO ivo = null;
-		MemberVO mvo = null;
+		MemberVO mvo = null;		
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
 			sql.append("select m.name, ");
-			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, ");
+			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
 			sql.append("r.rental_no, r.rental_date, r.return_date ");
 			sql.append("from member m, item i, rental_details r ");
 			sql.append("where m.id = i.id ");
@@ -396,10 +445,14 @@ public class ItemDAO {
 				ivo.setItemBrand(rs.getString(3));
 				ivo.setItemModel(rs.getString(4));
 				ivo.setItemPrice(rs.getInt(5));
+				ivo.setPicList(getPictureList(rs.getString(6)));
+				System.out.println(ivo);
 				rvo.setItemVO(ivo);
-				rvo.setRentalNo(rs.getString(6));
-				rvo.setRentalDate(rs.getString(7));
-				rvo.setReturnDate(rs.getString(8));
+				rvo.setRentalNo(rs.getString(7));
+				rvo.setRentalDate(rs.getString(8));
+				rvo.setReturnDate(rs.getString(9));
+				
+				
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
@@ -615,6 +668,32 @@ public class ItemDAO {
 		return list;
 	}
 	
+
+	public int calDateBetweenAandB(String rentalDate, String returnDate) throws java.text.ParseException
+	{
+	 
+	     // String Type을 Date Type으로 캐스팅하면서 생기는 예외로 인해 여기서 예외처리 해주지 않으면 컴파일러에서 에러가 발생해서 컴파일을 할 수 없다.
+	        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
+	        Date FirstDate = format.parse(rentalDate);
+	        Date SecondDate = format.parse(returnDate);
+	        
+	        // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
+	        // 연산결과 -950400000. long type 으로 return 된다.
+	        long calDate = FirstDate.getTime() - SecondDate.getTime(); 
+	        
+	        // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다. 
+	        // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
+	        long calDateDays = calDate / ( 24*60*60*1000); 
+	 
+	        calDateDays = Math.abs(calDateDays);
+	        
+	        System.out.println("두 날짜의 날짜 차이: "+calDateDays);
+	        
+	        return (int) calDateDays;
+	}    
+	        
+
 
 
 
