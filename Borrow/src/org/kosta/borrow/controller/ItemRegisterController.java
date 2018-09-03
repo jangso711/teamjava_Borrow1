@@ -20,7 +20,7 @@ public class ItemRegisterController implements Controller {
 		// TODO Auto-generated method stub
 
 		//180831 MIRI Test 후 주석 수정
-		String workspacePath="C:\\Users\\kosta\\git\\teamjava_Borrow1\\Borrow\\WebContent\\upload\\";
+		//String workspacePath="C:\\Users\\kosta\\git\\teamjava_Borrow1\\Borrow\\WebContent\\upload\\";
 //		String savePath = request.getServletContext().getRealPath("upload");
 //		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 

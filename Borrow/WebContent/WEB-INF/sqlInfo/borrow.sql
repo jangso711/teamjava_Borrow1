@@ -227,3 +227,10 @@ update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where i
 
 select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, r.rental_no, r.rental_date, r.return_date
 from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
+
+
+
+
+
+delete from picture where item_no = 10001
+select picture_path from picture where item_no = 10002

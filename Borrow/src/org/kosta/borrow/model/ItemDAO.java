@@ -1,16 +1,17 @@
 package org.kosta.borrow.model;
 
+import java.io.File;
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.sql.DataSource;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
 
 
 
@@ -36,14 +37,24 @@ public class ItemDAO {
 		if(con!=null)con.close();
 	}
 
-	public void ItemDelete(ItemVO vo) throws SQLException {
+	public void deleteItem(ItemVO vo,String dirPath) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		ArrayList<String> picList= null;
 		try {
 			con=getConnection();
 			String sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			picList = getPictureList(vo.getItemNo());
+			for(String fileName:picList) {
+				String path = dirPath+File.separator+fileName;
+				File f = new File(path);
+				f.delete();
+			}
+			pstmt = con.prepareStatement("delete from picture where item_no = ?");
 			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			pstmt.executeUpdate();
 		}finally {
