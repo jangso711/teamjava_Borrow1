@@ -184,7 +184,7 @@ public class MemberDAO {
 		Connection con=null;		
 		try {
 			con=dataSource.getConnection();
-			String sql="update member set point=point-? from 	member where id=?";
+			String sql="update member set point=point-? from member where id=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, point);
 			pstmt.setString(2, memberId);			
