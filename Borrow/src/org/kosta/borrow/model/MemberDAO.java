@@ -24,6 +24,12 @@ public class MemberDAO {
 		if(pstmt!=null)pstmt.close();
 		if(con!=null)con.close();
 	}
+	public void closeAll(PreparedStatement pstmt,Connection con) throws SQLException {
+		if(pstmt!=null)
+			pstmt.close();
+		if(con!=null)
+			con.close();
+	}
 	public MemberVO login(String id, String pwd) throws SQLException {
 		MemberVO user = null;
 		Connection con = null;
@@ -121,6 +127,22 @@ public class MemberDAO {
 			pstmt.executeQuery();
 		}finally {
 			closeAll(rs, pstmt, con);
+		}
+		
+	}
+	public void pointCharge(int point, String id) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=getConnection();
+			String sql="update member set point=point+? where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, id);
+			pstmt.executeUpdate();
+				
+		}finally {
+			closeAll(pstmt, con);
 		}
 		
 	}
