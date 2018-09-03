@@ -17,7 +17,7 @@ public class ItemRentalController implements Controller {
 		MemberVO user= (MemberVO)(session.getAttribute("user"));
 		String id=user.getId();	
 		String rentalDate = request.getParameter("rentalDate");
-		String returnDate = request.getParameter("returnDate");
+		String returnDate = request.getParameter("returnDate");	
 		String item_no=request.getParameter("item_no");	
 		RentalDetailVO vo = new RentalDetailVO();
 		vo.setRentalDate(rentalDate);
@@ -26,7 +26,7 @@ public class ItemRentalController implements Controller {
 		vo.setMemberVO(new MemberVO(id));
 		ItemDAO.getInstance().itemRental(vo);
 		String rental_no = vo.getRentalNo();
-		return "front?command=ItemRentDetail&rental_no="+rental_no;
+		return "redirect:front?command=ItemRentDetail&rental_no="+rental_no;
 	}
 
 }

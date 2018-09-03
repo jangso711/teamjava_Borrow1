@@ -38,7 +38,7 @@ input[type=password] {
 <script type="text/javascript">
 					$(document).ready(function() {
 						$("#id").keyup(function(){//아이디 중복확인
-							$("#id").text("");
+							//$("#id").text("");
 							var le=$(this).val();
 							if(le.length<4||le.length>10){
 								$("#idCheckResult").html("아이디는 4자이상 10자이하만 가능").css("color", "red");
@@ -51,36 +51,26 @@ input[type=password] {
 										if(result=="ok"){
 											$("#idCheckResult").html("사용 가능").css("color", "blue");
 										}else{
-											$("#idCheckResult").html("아이디가 중복 되어 사용 불가").css("color", "red");											
+											$("#idCheckResult").html("아이디가 중복 되어 사용 불가").css("color", "red");																			
 										}//else
-											/*  $("#registerBtn").click(function() {
-												if(result=="fail"){
-													$("#idcheckBtn").html("아이디를 확인하세요").css("color", "red");
-													return false; 
-												}//if
-											}) //click  */
-					
-						$("#pwd").keyup(function() {//비밀번호 확인
-							$("#pwd").text("");
-						});//keyup
-						$("#repwd").keyup(function() {
+									}//result
+								})//ajax
+							}//else		
+						})//keyup
+						$("#repwd").keyup(function() {//비밀번호 확인
 							if($("#repwd").val()!=$("#pwd").val()){							
 							$("#pwdcheckResult").html("비밀번호 불일치").css("color", "red");
 							}else{
 							$("#pwdcheckResult").html("비밀번호 일치").css("color", "blue");
 						}//else
 						});//keyup
-						 $("#registerBtn").click(function(){//비밀번호 오류시 회원가입 실패
-							if($("#repwd").val()!=$("#pwd").val()||result!="ok"){
-								$("#checkBtn").html("아이디 또는 비밀번호를 확인하세요").css("color", "red");
-							return false;		
-							}//if
-						})//registerBtn 
-									}//result
-								})//ajax
-							}//else		
-						})//keyup
-				})//ready
+						 $("#registerBtn").click(function(){//비밀번호,아이디 오류시 회원가입 실패
+							 if($("#pwdcheckResult").text()=="비밀번호 불일치"||$("#idCheckResult").text()!="사용 가능"){            
+						            alert('아이디 또는 비밀번호를 확인하세요');
+							return false;								
+									}//if
+								})//registerBtn 
+							})//ready
 				</script>
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12" align="center">
@@ -106,6 +96,5 @@ input[type=password] {
 		<br>
 		<br>
 		<input type="submit" value="회원가입" id="registerBtn"><br> 
-		<span id="checkBtn"></span>
 	</form>
 </div>

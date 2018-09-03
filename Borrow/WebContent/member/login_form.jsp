@@ -48,6 +48,6 @@ input[type=text]{
 <input type="hidden"name="command"value="Login">
 </form>
 <br>
-<a style="color:#f6cac9"href="${pageContext.request.contextPath }/front?command=RegisterForm">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a style="color:#f6cac9"href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="">비밀번호를 잊으셨습니까?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>

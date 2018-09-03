@@ -56,6 +56,9 @@ public class ItemDAO {
 		
 		try {
 			con=getConnection();
+			
+			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
+			
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
@@ -312,7 +315,7 @@ public class ItemDAO {
 			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, ");
 			sql.append("r.rental_no, r.rental_date, r.return_date ");
 			sql.append("from member m, item i, rental_details r ");
-			sql.append("where m.id = r.id ");
+			sql.append("where m.id = i.id ");
 			sql.append("and i.item_no = r.item_no ");
 			sql.append("and rental_no=? ");
 			pstmt = con.prepareStatement(sql.toString());
