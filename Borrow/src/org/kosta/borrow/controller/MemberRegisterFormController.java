@@ -2,9 +2,6 @@ package org.kosta.borrow.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.kosta.borrow.model.MemberDAO;
-
 public class MemberRegisterFormController implements Controller {
 
 	@Override

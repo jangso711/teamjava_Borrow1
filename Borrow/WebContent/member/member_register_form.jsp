@@ -76,7 +76,7 @@ input[type=password] {
 						 $("#registerBtn").click(function(){//비밀번호,아이디 오류시 회원가입 실패
 							 if($("#pwdcheckResult").text()=="비밀번호 불일치"||$("#idCheckResult").text()!="사용 가능"){            
 						            alert('아이디 또는 비밀번호를 확인하세요');
-							return false;								
+									return false;								
 									}//if
 								})//registerBtn 
 							})//ready
