@@ -52,13 +52,10 @@ public class ItemDAO {
 	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
+		ResultSet rs = null;	
 		try {
 			con=getConnection();
-			
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
-			
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
@@ -84,10 +81,32 @@ public class ItemDAO {
 		return vo;
 	}
 	
-/*	
-	public String getOwnerId(String itemId) {
-		
-	}*/
+   /**
+    * itemNo에 해당하는 등록자의 Id를 반환
+    * 주인이 없으면 null반환
+    * @param itemId
+    * @return
+ * @throws SQLException 
+    */
+	public String getProductOwnerId(String itemNo) throws SQLException {
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		Connection con=null;
+		String ownerId=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="select id from 	item where item_no=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);	
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				ownerId=rs.getString(1);
+			}			
+		}finally {
+			closeAll(rs, pstmt, con);			
+		}		
+		return ownerId;		
+	}
 	
 	
 	/**
@@ -98,10 +117,10 @@ public class ItemDAO {
 	 * @param senderId
 	 * @param point
 	 */
-	public void TransferPoint(String receiverId, String senderId, int point) {
+	public void transferPoint(String receiverId, String senderId, int point) {
 		//구매자 출금
 		
-		//판매자 입금	
+		//판매자 입금
 	}
 	
 	/**
@@ -109,18 +128,42 @@ public class ItemDAO {
 	 * memberId에 해당하는 사용자에게 point를 입금
 	 * @param memberId
 	 * @param point
+	 * @throws SQLException 
 	 */
-	public void DepositPoint(String memberId, int point) {
-		
+	public void depositPoint(String memberId, int point) throws SQLException {
+		PreparedStatement pstmt=null;
+		Connection con=null;		
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set point=point+? from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, memberId);			
+			pstmt.executeUpdate();				
+		}finally {
+			closeAll(pstmt, con);			
+		}				
 	}
 	/**
 	 *  180903 yosep 진행중
 	 * memberId에 해당하는 사용자에게 point를 출금
 	 * @param memberId
 	 * @param point
+	 * @throws SQLException 
 	 */
-	public void WithdrawPoint(String memberId, int point) {
-		
+	public void withdrawPoint(String memberId, int point) throws SQLException {
+		PreparedStatement pstmt=null;
+		Connection con=null;		
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set point=point-? from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, memberId);			
+			pstmt.executeUpdate();				
+		}finally {
+			closeAll(pstmt, con);			
+		}		
 	}
 
 	/**
