@@ -55,10 +55,11 @@ input[type=number]{
 				<tr>
 				<c:set value="${requestScope.itemDetail }" var="item"></c:set>
 					<td>
-						<!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
+						<!-- 180903 MIRI ItemDAO에서 처리 -->
+						<%-- <!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
 							<c:if test="${empty itemDetail.picList }">
 								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
-							</c:if>
+							</c:if> --%>
 							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 사진을 띄움 -->
 							<c:forEach items="${itemDetail.picList }" var="picList">
 								<img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"><br>
@@ -104,19 +105,30 @@ input[type=number]{
 					location.href="${pageContext.request.contextPath}/front?command=ItemRental&rentitem_no="+rentitem_no;
 				}
 			}
+			
 		</script>
 		
 		<c:set value="${requestScope.itemDetail.itemNo}" var="itemNo"></c:set>
 		<!-- 180831 MIRI 본인일 경우에는 수정/삭제 버튼 보이고 본인이 아닐 경우에는 달력 및 대여버튼 보이기-->
-		<c:choose>
-			<c:when test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
-				<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
-				<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
-			</c:when>
-			<c:otherwise>
-				<input type="date" value="" id="rentDate" name="rentDate">
-				<button type="button" name="rent" onclick="rentItem(${itemNo})"> 대여하기</button>
-			</c:otherwise>
-		</c:choose>
+		<c:if test="${!empty sessionScope.user}">   <!-- 로그인되어있으면 -->
+			<c:choose>
+				<c:when test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
+					<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
+					<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
+				</c:when>
+				<c:otherwise> 
+				<body>
+				<form action="front" method="post">
+					<input type="hidden" name="command" value="ItemRental">
+					<input type="hidden" name="item_no" value="${itemNo}">
+					<!-- 180903 JB 대여일 조건 추가 위해 min/max 추가 -->
+					대여날짜 입력<input type="date" value="" name="rentalDate" min="${item.itemRegDate}" max="${item.itemExpDate}" required="required"><br>
+					반납날짜 입력<input type="date" value="" name="returnDate" min="${item.itemRegDate}" max="${item.itemExpDate}" required="required" ><br>
+					<input type="submit" value="대여하기">
+				</form>
+				</body>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 	</form>
 </div>

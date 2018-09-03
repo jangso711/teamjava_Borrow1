@@ -15,7 +15,6 @@ public class ItemRegisterController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-		
 		ItemVO ivo = new ItemVO();
 		int itemNo;
 		String name = request.getParameter("itemName");

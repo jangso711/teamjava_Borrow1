@@ -6,6 +6,7 @@ create sequence item_no_seq start with 10001 nocache;
 create sequence rental_no_seq start with 200001 nocache;
 create sequence cat_no_seq start with 3001 nocache;
 
+
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
@@ -33,13 +34,10 @@ insert into member values('jangso711', '1234', '소정', '강남','035',10000);
 insert into member values('jb', '1234', '정빈', '강남','036',10000);
 
 select * from member;
-<<<<<<< HEAD
 
 select add_months(sysdate,3) from dual;
-=======
 select * from item_category;
 
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 create table item(
    item_no number primary key,
    id varchar2(100) not null,
@@ -95,17 +93,20 @@ select  i.item_no, i.id, i.item_name, i.item_brand, i.item_model, i.item_price, 
 from item i, category c, item_category ic 
 where i.item_status=1 and i.item_no=10001 and i.item_no=ic.item_no and ic.cat_no=c.cat_no;
 
-select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
-from item i, picture p
-where i.item_status=1 and i.item_no=p.item_no and i.item_name like '%유모차%'
-order by i.item_no asc;
+select id, item_no, item_name, item_expl, item_price
+from item
+where item_status=1 and item_name like '%유모차%'
+order by item_no asc;
 
-select cat_no from item_category where item_no=10008
+select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name
+from item i, item_category ic, category c
+where i.item_no=ic.item_no and ic.cat_no=3007 and ic.cat_no=c.cat_no
 
 select * from item;
 select * from member;
 select * from picture;
 select * from item_category;
+select * from category;
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
 insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
@@ -195,10 +196,6 @@ where r.item_no=a.item_no;
 from Rental_details r,(select i.item_no from item i where i.id='miri') a, item i
 where r.item_no=a.item_no and r.item_no=i.item_no;
 
-
-
-
-
 select * from item;
 
 select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,
@@ -218,3 +215,10 @@ select sysdate,max(return_date) from rental_details where item_no=10001;
 select * from item where item_no=10013;
 update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10013;
 
+update member set pwd='1234',name='이동규',address='당진',tel='041' where id='qqq';
+select * from member;
+select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, r.rental_no, r.rental_date, r.return_date
+from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
+
+delete from picture where item_no = 10001
+select picture_path from picture where item_no = 10002

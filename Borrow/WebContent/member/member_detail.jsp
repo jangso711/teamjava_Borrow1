@@ -65,6 +65,11 @@ tr{
 
 	</table>
 	<br>
-	<input class="btn btn_center btn_pk"type="button"value="회원 정보 수정">
+	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
+	'${pageContext.request.contextPath}/front?command=MemberUpdateForm'">회원 정보 수정</button>
+	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
+	'${pageContext.request.contextPath}/front?command=MemberDepositPointForm'">포인트 충전</button>
+	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
+	'${pageContext.request.contextPath}/front?command=MemberWithdrawPointForm'">포인트 환급</button>
 	</div>
 </div>

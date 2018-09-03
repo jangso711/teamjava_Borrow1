@@ -24,6 +24,14 @@ public class MemberDAO {
 		if(pstmt!=null)pstmt.close();
 		if(con!=null)con.close();
 	}
+
+	public void closeAll(PreparedStatement pstmt,Connection con) throws SQLException {
+		if(pstmt!=null)
+			pstmt.close();
+		if(con!=null)
+			con.close();
+	}
+
 	public MemberVO login(String id, String pwd) throws SQLException {
 		MemberVO user = null;
 		Connection con = null;
@@ -87,7 +95,7 @@ public class MemberDAO {
 			closeAll(rs, pstmt, con);
 		}
 	}
-	public boolean IdCheck(String id) throws SQLException {
+	public boolean idCheck(String id) throws SQLException {
 		boolean flag=false;
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -105,5 +113,117 @@ public class MemberDAO {
 		}
 		return flag;
 	}
+	public void updateMember(MemberVO memberVO) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set pwd=?,name=?,address=?,tel=? where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, memberVO.getPwd());
+			pstmt.setString(2, memberVO.getName());
+			pstmt.setString(3, memberVO.getAddress());
+			pstmt.setString(4, memberVO.getTel());
+			pstmt.setString(5, memberVO.getId());
+			pstmt.executeQuery();
+		}finally {
+			closeAll(rs, pstmt, con);
+		}		
+	}
+	/**
+	 * 180903 성열 완료
+	 * id에 해당하는 사용자에게 point를 입금
+	 * @param id
+	 * @param point
+	 * @throws SQLException 
+	 */
+	public void depositPoint(String id, int point) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=getConnection();
+			String sql="update member set point=point+? where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, id);
+			pstmt.executeUpdate();
+				
+		}finally {
+			closeAll(pstmt, con);
+		}
+		
+	}
+
+	/**
+	 * 180903 yosep
+	 * memberId에 해당하는 사용자의 point반환
+	 * @param memberId
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getPointByMemberId(String memberId) throws SQLException {
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		Connection con=null;
+		int point=0;
+		try {
+			con=dataSource.getConnection();
+			String sql="select point from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, memberId);	
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				point=rs.getInt(1);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);			
+		}		
+		return point;	
+	}
+	
+	
+	/**
+	 * 180903 yosep 진행중
+	 * senderId에 해당하는 사용자의 point를
+	 * receiverId에 해당하는 사용자에게 송금
+	 * @param receiverId
+	 * @param senderId
+	 * @param point
+	 */
+	public void transferPoint(String receiverId, String senderId, int point) {
+		try {
+			//구매자 출금
+			withdrawPoint(senderId, point);		
+			//판매자 입금
+			depositPoint(receiverId, point);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	}		
+	/**
+	 *  180903 성열 진행중
+	 * id에 해당하는 사용자에게 point를 출금
+	 * @param id
+	 * @param point
+	 * @throws SQLException 
+	 */
+	public void withdrawPoint(String id, int point) throws SQLException {
+		PreparedStatement pstmt=null;
+		Connection con=null;		
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set point=point-? where id=?";
+
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, id);			
+			pstmt.executeUpdate();				
+		}finally {
+			closeAll(pstmt, con);			
+		}		
+	}
+	
+	
 }
 

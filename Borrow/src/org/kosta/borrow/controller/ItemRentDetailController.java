@@ -15,7 +15,10 @@ public class ItemRentDetailController implements Controller {
 		vo.setRentalNo(rental_no);
 		RentalDetailVO result = ItemDAO.getInstance().itemRentDetail(vo);
 		request.setAttribute("rvo", result);
-		return "item/item_rental_detail.jsp";
+		
+		request.setAttribute("url", "/item/item_rental_detail.jsp");
+		
+		return "template/layout.jsp";
 	}
 
 }
