@@ -223,6 +223,10 @@ select * from item where item_no=10013;
 update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10013;
 
 
+<<<<<<< HEAD
+update member set pwd='1234',name='이동규',address='당진',tel='041' where id='qqq';
+select * from member;
+=======
 
 
 
@@ -237,3 +241,4 @@ from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item
 
 delete from picture where item_no = 10001
 select picture_path from picture where item_no = 10002
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git

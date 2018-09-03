@@ -155,6 +155,33 @@ public class MemberDAO {
 		
 	}
 
+	/**
+	 * 180903 yosep
+	 * memberId에 해당하는 사용자의 point반환
+	 * @param memberId
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getPointByMemberId(String memberId) throws SQLException {
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		Connection con=null;
+		int point=0;
+		try {
+			con=dataSource.getConnection();
+			String sql="select point from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, memberId);	
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				point=rs.getInt(1);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);			
+		}		
+		return point;	
+	}
+	
 	
 	/**
 	 * 180903 yosep 진행중
@@ -165,17 +192,16 @@ public class MemberDAO {
 	 * @param point
 	 */
 	public void transferPoint(String receiverId, String senderId, int point) {
-		//구매자 출금
 		try {
-			withdrawPoint(senderId, point);
+			//구매자 출금
+			withdrawPoint(senderId, point);		
+			//판매자 입금
 			depositPoint(receiverId, point);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		//판매자 입금
-		
-	}	
-	
+		}		
+	}		
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 	
 	/**
 	 *  180903 성열 진행중
