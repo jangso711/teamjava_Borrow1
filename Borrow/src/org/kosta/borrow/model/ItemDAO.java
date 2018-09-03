@@ -80,6 +80,45 @@ public class ItemDAO {
 		}
 		return vo;
 	}
+	
+/*	
+	public String getOwnerId(String itemId) {
+		
+	}*/
+	
+	
+	/**
+	 * 180903 yosep 진행중
+	 * senderId에 해당하는 사용자의 point를
+	 * receiverId에 해당하는 사용자에게 송금
+	 * @param receiverId
+	 * @param senderId
+	 * @param point
+	 */
+	public void TransferPoint(String receiverId, String senderId, int point) {
+		//구매자 출금
+		
+		//판매자 입금	
+	}
+	
+	/**
+	 * 180903 yosep 진행중
+	 * memberId에 해당하는 사용자에게 point를 입금
+	 * @param memberId
+	 * @param point
+	 */
+	public void DepositPoint(String memberId, int point) {
+		
+	}
+	/**
+	 *  180903 yosep 진행중
+	 * memberId에 해당하는 사용자에게 point를 출금
+	 * @param memberId
+	 * @param point
+	 */
+	public void WithdrawPoint(String memberId, int point) {
+		
+	}
 
 	/**
 	 * 180831 MIRI 진행중
