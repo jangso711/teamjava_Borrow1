@@ -39,6 +39,10 @@ public class HandlerMapping {
 			controller = new ItemRegisterFormController();
 		}else if(command.equals("ItemRegister")) {
 			controller = new ItemRegisterController();
+		}else if(command.equals("PictureUpload")) {
+			controller=new PictureUploadController();
+		}else if(command.equals("DeleteServerPicture")) {
+			controller=new DeleteServerPictureController();
 		}else if(command.equals("ItemUpdateForm")) {
 			controller = new ItemUpdateFormController();
 		}else if(command.equals("ItemUpdate")) {

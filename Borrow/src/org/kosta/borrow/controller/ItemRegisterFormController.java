@@ -16,7 +16,6 @@ public class ItemRegisterFormController implements Controller {
 		
 		request.setAttribute("url","/item/item_register_form.jsp");
 		ArrayList<CategoryVO> list = ItemDAO.getInstance().getAllCategories();
-		System.out.println(list);
 		request.setAttribute("catList", list);
 		return "/template/layout.jsp";
 	}

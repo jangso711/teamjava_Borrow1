@@ -332,7 +332,7 @@ public class ItemDAO {
 		return rvo;
 	}
 
-	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats,String expl) throws SQLException {
+	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats,String expl,int month) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -348,7 +348,7 @@ public class ItemDAO {
 			pstmt.setString(3,ivo.getItemBrand());
 			pstmt.setString(4, ivo.getItemModel());
 			pstmt.setInt(5, ivo.getItemPrice());
-			pstmt.setInt(6, 3);// default 3개월
+			pstmt.setInt(6, month);// default 3개월
 			pstmt.setString(7,expl);
 			pstmt.executeUpdate();
 			pstmt.close();
