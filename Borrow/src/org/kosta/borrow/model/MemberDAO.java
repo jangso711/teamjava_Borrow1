@@ -178,13 +178,13 @@ public class MemberDAO {
 	
 	
 	/**
-	 *  180903 yosep 진행중
-	 * memberId에 해당하는 사용자에게 point를 출금
-	 * @param memberId
+	 *  180903 성열 진행중
+	 * id에 해당하는 사용자에게 point를 출금
+	 * @param id
 	 * @param point
 	 * @throws SQLException 
 	 */
-	public void withdrawPoint(String memberId, int point) throws SQLException {
+	public void withdrawPoint(String id, int point) throws SQLException {
 		PreparedStatement pstmt=null;
 		Connection con=null;		
 		try {
@@ -193,7 +193,7 @@ public class MemberDAO {
 
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, point);
-			pstmt.setString(2, memberId);			
+			pstmt.setString(2, id);			
 			pstmt.executeUpdate();				
 		}finally {
 			closeAll(pstmt, con);			
