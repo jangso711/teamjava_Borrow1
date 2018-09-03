@@ -55,10 +55,11 @@ input[type=number]{
 				<tr>
 				<c:set value="${requestScope.itemDetail }" var="item"></c:set>
 					<td>
-						<!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
+						<!-- 180903 MIRI ItemDAO에서 처리 -->
+						<%-- <!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
 							<c:if test="${empty itemDetail.picList }">
 								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
-							</c:if>
+							</c:if> --%>
 							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 사진을 띄움 -->
 							<c:forEach items="${itemDetail.picList }" var="picList">
 								<img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"><br>
@@ -104,6 +105,7 @@ input[type=number]{
 					location.href="${pageContext.request.contextPath}/front?command=ItemRental&rentitem_no="+rentitem_no;
 				}
 			}
+			
 		</script>
 		
 		<c:set value="${requestScope.itemDetail.itemNo}" var="itemNo"></c:set>
@@ -118,8 +120,9 @@ input[type=number]{
 			<form action="front" method="post">
 				<input type="hidden" name="command" value="ItemRental">
 				<input type="hidden" name="item_no" value="${itemNo}">
-				대여날짜 입력<input type="date" value=""  name="rentalDate"><br>
-				반납날짜 입력<input type="date" value=""  name="returnDate"><br>
+				<!-- 180903 JB 대여일 조건 추가 위해 min/max 추가 -->
+				대여날짜 입력<input type="date" value="" name="rentalDate" min="${item.itemRegDate}" max="${item.itemExpDate}"><br>
+				반납날짜 입력<input type="date" value="" name="returnDate" min="${item.itemRegDate}" max="${item.itemExpDate}"><br>
 				<input type="submit" value="대여하기">
 			</form>
 			</body>

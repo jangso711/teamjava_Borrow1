@@ -95,10 +95,10 @@ select  i.item_no, i.id, i.item_name, i.item_brand, i.item_model, i.item_price, 
 from item i, category c, item_category ic 
 where i.item_status=1 and i.item_no=10001 and i.item_no=ic.item_no and ic.cat_no=c.cat_no;
 
-select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
-from item i, picture p
-where i.item_status=1 and i.item_no=p.item_no and i.item_name like '%유모차%'
-order by i.item_no asc;
+select id, item_no, item_name, item_expl, item_price
+from item
+where item_status=1 and item_name like '%유모차%'
+order by item_no asc;
 
 select cat_no from item_category where item_no=10008
 
