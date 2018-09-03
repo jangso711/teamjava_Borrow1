@@ -24,6 +24,11 @@ public class MemberDAO {
 		if(pstmt!=null)pstmt.close();
 		if(con!=null)con.close();
 	}
+	
+	private void closeAll(PreparedStatement pstmt, Connection con) throws SQLException {
+		closeAll(null,pstmt,con);		
+	}
+	
 	public MemberVO login(String id, String pwd) throws SQLException {
 		MemberVO user = null;
 		Connection con = null;
@@ -121,8 +126,66 @@ public class MemberDAO {
 			pstmt.executeQuery();
 		}finally {
 			closeAll(rs, pstmt, con);
-		}
-		
+		}		
 	}
+	
+	/**
+	 * 180903 yosep 진행중
+	 * senderId에 해당하는 사용자의 point를
+	 * receiverId에 해당하는 사용자에게 송금
+	 * @param receiverId
+	 * @param senderId
+	 * @param point
+	 */
+	public void transferPoint(String receiverId, String senderId, int point) {
+		//구매자 출금
+		
+		//판매자 입금
+	}
+	
+	/**
+	 * 180903 yosep 진행중
+	 * memberId에 해당하는 사용자에게 point를 입금
+	 * @param memberId
+	 * @param point
+	 * @throws SQLException 
+	 */
+	public void depositPoint(String memberId, int point) throws SQLException {
+		PreparedStatement pstmt=null;
+		Connection con=null;		
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set point=point+? from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, memberId);			
+			pstmt.executeUpdate();				
+		}finally {
+			closeAll(pstmt, con);			
+		}				
+	}
+	/**
+	 *  180903 yosep 진행중
+	 * memberId에 해당하는 사용자에게 point를 출금
+	 * @param memberId
+	 * @param point
+	 * @throws SQLException 
+	 */
+	public void withdrawPoint(String memberId, int point) throws SQLException {
+		PreparedStatement pstmt=null;
+		Connection con=null;		
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set point=point-? from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, memberId);			
+			pstmt.executeUpdate();				
+		}finally {
+			closeAll(pstmt, con);			
+		}		
+	}
+	
+	
 }
 
