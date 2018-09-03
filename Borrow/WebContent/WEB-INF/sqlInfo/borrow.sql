@@ -101,12 +101,15 @@ from item
 where item_status=1 and item_name like '%유모차%'
 order by item_no asc;
 
-select cat_no from item_category where item_no=10008
+select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name
+from item i, item_category ic, category c
+where i.item_no=ic.item_no and ic.cat_no=3007 and ic.cat_no=c.cat_no
 
 select * from item;
 select * from member;
 select * from picture;
 select * from item_category;
+select * from category;
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
 insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
@@ -227,3 +230,10 @@ update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where i
 
 select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, r.rental_no, r.rental_date, r.return_date
 from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
+
+
+
+
+
+delete from picture where item_no = 10001
+select picture_path from picture where item_no = 10002
