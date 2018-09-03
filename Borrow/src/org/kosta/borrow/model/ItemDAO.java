@@ -56,9 +56,7 @@ public class ItemDAO {
 		
 		try {
 			con=getConnection();
-			
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
-			
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
