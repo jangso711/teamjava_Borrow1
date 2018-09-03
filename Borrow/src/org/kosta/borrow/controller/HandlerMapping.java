@@ -62,10 +62,14 @@ public class HandlerMapping {
 			controller = new ItemDeleteCheckController();
 		}else if(command.equals("FAQ")) {
 			controller=new FAQController();
-		}else if(command.equals("MemberPointCharge")) {
-			controller=new MemberPointChargeController();
-		}else if(command.equals("MemberPointChargeForm")) {
-			controller=new MemberPointChargeFormController();
+		}else if(command.equals("MemberDepositPoint")) {
+			controller=new MemberDepositPointController();
+		}else if(command.equals("MemberDepositPointForm")) {
+			controller=new MemberDepositPointFormController();
+		}else if(command.equals("MemberWithdrawPoint")) {
+			controller=new MemberWithdrawPointController();
+		}else if(command.equals("MemberWithdrawPointForm")) {
+			controller=new MemberWithdrawPointFormController();
 		}
 		return controller;
 	}
