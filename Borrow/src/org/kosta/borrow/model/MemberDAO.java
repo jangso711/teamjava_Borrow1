@@ -155,9 +155,6 @@ public class MemberDAO {
 		
 	}
 
-	
-	
-	
 	/**
 	 * 180903 yosep
 	 * memberId에 해당하는 사용자의 point반환
@@ -204,7 +201,6 @@ public class MemberDAO {
 			e.printStackTrace();
 		}		
 	}		
-	
 	/**
 	 *  180903 성열 진행중
 	 * id에 해당하는 사용자에게 point를 출금
