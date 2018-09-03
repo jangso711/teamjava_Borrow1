@@ -48,6 +48,7 @@ input[type=number]{
 				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemNo}" var="detailurl"></c:set>
 					<tr>
 						<td>
+							<!-- 180902 yosep ItemDAO에서 처리 -->
 							<%-- <!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
 							<c:if test="${empty allItemList.picList }">
 								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
@@ -59,6 +60,8 @@ input[type=number]{
 									<a href="${detailurl }"><img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"></a><br>
 								</c:if>
 							</c:forEach> --%>
+							
+							<!-- 180902 yosep index를 0으로 처리(null값일경우에도 EL문에서 자동으로 처리)-->
 							<a href="${detailurl}"><img src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}" width="150" height="150" ></a>
 						</td>
 						<td><a href="${detailurl }">${allItemList.itemName }</a></td>

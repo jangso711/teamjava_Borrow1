@@ -45,15 +45,15 @@ input[type=number]{
 			</thead>
 			<tbody>
 				<c:forEach items="${requestScope.itemSearchList }" var="itemSearchList">
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${itemSearchList.itemVO.itemNo}" 
+				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${itemSearchList.itemNo}" 
 					var="detailurl"></c:set>
 					<tr>
 						<td><a href="${detailurl }">
-							<img src="${pageContext.request.contextPath }/upload/${itemSearchList.picturePath}" width="150" height="150"></a></td>
-						<td><a href="${detailurl }">${itemSearchList.itemVO.itemName }(링크)</a></td>
-						<td><pre>${itemSearchList.itemVO.itemExpl }</pre></td>
-						<td>${itemSearchList.itemVO.itemPrice }</td>
-						<td>${itemSearchList.itemVO.memberVO.id }</td>
+							<img src="${pageContext.request.contextPath }/upload/${itemSearchList.picList[0]}" width="150" height="150"></a></td>
+						<td><a href="${detailurl }">${itemSearchList.itemName }(링크)</a></td>
+						<td><pre>${itemSearchList.itemExpl }</pre></td>
+						<td>${itemSearchList.itemPrice }</td>
+						<td>${itemSearchList.memberVO.id }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

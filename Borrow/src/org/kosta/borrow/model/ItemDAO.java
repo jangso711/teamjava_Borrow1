@@ -52,8 +52,7 @@ public class ItemDAO {
 	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
+		ResultSet rs = null;	
 		try {
 			con=getConnection();
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
@@ -81,41 +80,132 @@ public class ItemDAO {
 		}
 		return vo;
 	}
+	
+   /**
+    * itemNo에 해당하는 등록자의 Id를 반환
+    * 주인이 없으면 null반환
+    * @param itemId
+    * @return
+ * @throws SQLException 
+    */
+	public String getProductOwnerId(String itemNo) throws SQLException {
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		Connection con=null;
+		String ownerId=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="select id from 	item where item_no=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);	
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				ownerId=rs.getString(1);
+			}			
+		}finally {
+			closeAll(rs, pstmt, con);			
+		}		
+		return ownerId;		
+	}
+	
+	
+	/**
+	 * 180903 yosep 진행중
+	 * senderId에 해당하는 사용자의 point를
+	 * receiverId에 해당하는 사용자에게 송금
+	 * @param receiverId
+	 * @param senderId
+	 * @param point
+	 */
+	public void transferPoint(String receiverId, String senderId, int point) {
+		//구매자 출금
+		
+		//판매자 입금
+	}
+	
+	/**
+	 * 180903 yosep 진행중
+	 * memberId에 해당하는 사용자에게 point를 입금
+	 * @param memberId
+	 * @param point
+	 * @throws SQLException 
+	 */
+	public void depositPoint(String memberId, int point) throws SQLException {
+		PreparedStatement pstmt=null;
+		Connection con=null;		
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set point=point+? from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, memberId);			
+			pstmt.executeUpdate();				
+		}finally {
+			closeAll(pstmt, con);			
+		}				
+	}
+	/**
+	 *  180903 yosep 진행중
+	 * memberId에 해당하는 사용자에게 point를 출금
+	 * @param memberId
+	 * @param point
+	 * @throws SQLException 
+	 */
+	public void withdrawPoint(String memberId, int point) throws SQLException {
+		PreparedStatement pstmt=null;
+		Connection con=null;		
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set point=point-? from 	member where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, point);
+			pstmt.setString(2, memberId);			
+			pstmt.executeUpdate();				
+		}finally {
+			closeAll(pstmt, con);			
+		}		
+	}
 
 	/**
 	 * 180831 MIRI 진행중
-	 * Item table에서 이름 중에 검색어(searchtext)포함하는 
-	 * 상품들을 전부 찾아서 ArrayList로 반환한다 
+	 * 180903 MIRI 완료
+	 * Item table에서 이름 중에 검색어(searchtext)포함하는 상품들을 전부 찾아서 ArrayList로 반환한다 
 	 * @param searchtext
 	 * @return
 	 * @throws SQLException 
 	 */
 	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
+		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+		ItemVO itemVO = new ItemVO();
 		MemberVO memberVO = null;
 		StringBuilder sb = new StringBuilder();
 		searchtext = "%"+searchtext+"%";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		/*try {
+		try {
 			con = getConnection();
-			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, p.picture_path");
-			sb.append(" from item i, picture p");
-			sb.append(" where i.item_status=1 and i.item_no=p.item_no and i.item_name like ?");
-			sb.append(" order by i.item_no asc");
+			sb.append(" select id, item_no, item_name, item_expl, item_price");
+			sb.append(" from item");
+			sb.append(" where item_status=1 and item_name like ?");
+			sb.append(" order by item_no asc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
-				list.add(new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
-						memberVO));
+				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), memberVO);
+				//180903 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
+				picList = getPictureList(rs.getString(2));
+				if(picList != null) 
+					itemVO.setPicList(picList);
+				list.add(itemVO);
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
-		}*/
+		}
 		return list;
 	}
 	
@@ -223,7 +313,8 @@ public class ItemDAO {
 			
 			while(rs.next()) {
 				picList.add(rs.getString(1));
-			}			
+			}
+			//180902 yosep 기존 jsp 주석처리하고 여기서 진행
 			if(picList.isEmpty())  //사진이 없으면
 				picList.add("디폴트.png");
 		} finally {
