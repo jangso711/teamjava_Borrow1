@@ -201,7 +201,6 @@ public class MemberDAO {
 			e.printStackTrace();
 		}		
 	}		
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 	
 	/**
 	 *  180903 성열 진행중
