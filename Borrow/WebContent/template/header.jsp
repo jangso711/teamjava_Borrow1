@@ -4,7 +4,7 @@
 <c:choose>
 	<c:when test="${requestScope.url=='/main.jsp'}">
 	<div class="col-sm-12 mainheader">
-	<a href="${pageContext.request.contextPath }/front?command=Main"><img id="logo"src="${pageContext.request.contextPath }/img/logo.png" alt="Logo"></a>
+	<a href="${pageContext.request.contextPath }/front?command=Main"><img id="logo"src="${pageContext.request.contextPath }/img/logo.png"  width="300" height="110" alt="Logo"></a>
 	</div>
 	</c:when>
 	<c:otherwise>
