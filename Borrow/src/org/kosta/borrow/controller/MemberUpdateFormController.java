@@ -7,8 +7,8 @@ public class MemberUpdateFormController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		request.setAttribute("url", "/member/member_update_form.jsp");
+		return "/template/layout.jsp";
 	}
 
 }

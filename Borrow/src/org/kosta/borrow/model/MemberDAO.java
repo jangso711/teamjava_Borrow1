@@ -87,7 +87,7 @@ public class MemberDAO {
 			closeAll(rs, pstmt, con);
 		}
 	}
-	public boolean IdCheck(String id) throws SQLException {
+	public boolean idCheck(String id) throws SQLException {
 		boolean flag=false;
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -104,6 +104,25 @@ public class MemberDAO {
 			closeAll(rs, pstmt, con);
 		}
 		return flag;
+	}
+	public void updateMember(MemberVO memberVO) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="update member set pwd=?,name=?,address=?,tel=? where id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, memberVO.getPwd());
+			pstmt.setString(2, memberVO.getName());
+			pstmt.setString(3, memberVO.getAddress());
+			pstmt.setString(4, memberVO.getTel());
+			pstmt.setString(5, memberVO.getId());
+			pstmt.executeQuery();
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		
 	}
 }
 

@@ -65,6 +65,6 @@ tr{
 
 	</table>
 	<br>
-	<input class="btn btn_center btn_pk"type="button"value="회원 정보 수정">
+	<input class="btn btn_center btn_pk"type="button" value="회원 정보 수정">
 	</div>
 </div>
