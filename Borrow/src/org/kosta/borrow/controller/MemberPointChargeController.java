@@ -16,7 +16,9 @@ public class MemberPointChargeController implements Controller {
 		MemberVO mvo=(MemberVO) session.getAttribute("user");
 		String id=mvo.getId();
 		MemberDAO.getInstance().depositPoint(id, point);
+		
 		return "front?command=MemberDetail";
+		
 	}
 
 }
