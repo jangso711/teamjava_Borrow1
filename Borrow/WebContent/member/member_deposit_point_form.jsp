@@ -56,7 +56,7 @@ input[type=number] {
 <h3>포인트 충전</h3>
 
 <form action="front" method="post" id="chargeForm">
-<input type="hidden" name="command" value="MemberPointCharge">
+<input type="hidden" name="command" value="MemberDepositPoint">
 <input type="number" name="point" id="point" required="required">
 <button type="submit" class="btn btn_center btn_pk" id="submitBtn">충전하기</button>
 </form>

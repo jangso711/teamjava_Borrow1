@@ -10,10 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.sql.DataSource;
-
-
-
-
+import org.kosta.borrow.exception.BalanceShortageException;
 
 public class ItemDAO {
 	private static ItemDAO instance = new ItemDAO();
@@ -63,11 +60,23 @@ public class ItemDAO {
 
 	}
 	
-	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException {
+	
+	
+	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException, BalanceShortageException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;	
 		try {
+			int buyerPoint=MemberDAO.getInstance().getPointByMemberId(vo.getMemberVO().getId()) ; //대여자 보유 포인트
+			int dDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
+			int price= getDetailItemByNo(vo.getItemVO().getItemNo()).getItemPrice();
+			int requiredPoint= dDate*price;  //구매에 필요한 포인트
+			if(buyerPoint<requiredPoint) {
+				//잔액 부족시 exception 발생
+				throw new BalanceShortageException();				
+			}
+			
+			
 			con=getConnection();
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
 			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
@@ -85,19 +94,19 @@ public class ItemDAO {
 			}
 			rs.close();
 			pstmt.close();
-			//
-			int dDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
-			int price= getDetailItemByNo(vo.getItemVO().getItemNo()).getItemPrice();
 			
+			//송금 작업			
 			String receiverId = getProductOwnerId(vo.getItemVO().getItemNo());
 			String senderId =vo.getMemberVO().getId();
-			MemberDAO.getInstance().transferPoint(receiverId, senderId, dDate*price);
+			MemberDAO.getInstance().transferPoint(receiverId, senderId, requiredPoint);
 			//
+			
 			String sql2 = "update item_add set rental_count = RENTAL_count +1 where item_no = ?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
 			pstmt.executeUpdate();
 		}finally {
+			
 			closeAll(pstmt, con);
 		}
 		return vo;
@@ -129,9 +138,6 @@ public class ItemDAO {
 		}		
 		return ownerId;		
 	}
-	
-	
-
 
 	/**
 	 * 180831 MIRI 진행중
@@ -160,6 +166,7 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
@@ -179,6 +186,7 @@ public class ItemDAO {
 	/**
 	 * 180831 MIRI 진행중
 	 * 180901 MIRI 완료
+	 * itemNo를 이용해 해당 상품의 상세 정보를 반환한다.
 	 * @param itemno
 	 * @return
 	 * @throws SQLException 
@@ -207,7 +215,6 @@ public class ItemDAO {
 				//180901 MIRI 해당 상품번호에 맞는 카테고리가 있으면 리스트를 전부 불러와 set 시킴
 				catList = getCategoryList(itemno);
 				if(catList != null) {
-					//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
 					picList = getPictureList(itemno);
 					itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
 							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
@@ -243,7 +250,6 @@ public class ItemDAO {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(5));
 				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
-				//180901 MIRI 해당 상품번호에 맞는 사진이 있으면 리스트를 전부 불러와 set 시킴
 				picList = getPictureList(rs.getString(1));
 				if(picList != null) 
 					itemVO.setPicList(picList);
@@ -252,7 +258,6 @@ public class ItemDAO {
 		}finally {
 			closeAll(rs, pstmt, con);
 		}
-		
 		return list;
 	}
 	
@@ -276,18 +281,16 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, itemNo);
 			rs = pstmt.executeQuery();
-			picList = new ArrayList<String>();
 			
-			while(rs.next()) {
+			picList = new ArrayList<String>();
+			while(rs.next())
 				picList.add(rs.getString(1));
-			}
-			//180902 yosep 기존 jsp 주석처리하고 여기서 진행
-			if(picList.isEmpty())  //사진이 없으면
+			//180902 yosep 사진이 없을경우 기존 jsp에 있던 코드들 전부 주석처리하고 여기서 진행
+			if(picList.isEmpty())
 				picList.add("디폴트.png");
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
-		
 		return picList;
 	}
 	
@@ -313,16 +316,80 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemNo);
 			rs = pstmt.executeQuery();
-			catList = new ArrayList<CategoryVO>();
 			
-			while(rs.next()) {
+			catList = new ArrayList<CategoryVO>();
+			while(rs.next())
 				catList.add(new CategoryVO(rs.getString(1), rs.getString(2)));
-			}
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
-		
 		return catList;
+	}
+	
+	/**
+	 * 180903 MIRI 완료
+	 * Main 화면에서 카테고리를 클릭하면 해당 카테고리로 등록된 상품들의 itemNo를 찾아서 ArrayList로 반환한다 
+	 * @param catno
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<ItemVO> getItemNoListByCategory(String catno) throws SQLException {
+		ArrayList<String> picList = null;
+		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+		ItemVO itemVO = new ItemVO();
+		MemberVO memberVO = null;
+		StringBuilder sb = new StringBuilder();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name");
+			sb.append(" from item i, item_category ic, category c");
+			sb.append(" where i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, catno);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setId(rs.getString(1));
+				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), memberVO);
+				picList = getPictureList(rs.getString(2));
+				if(picList != null) 
+					itemVO.setPicList(picList);
+				list.add(itemVO);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return list;
+	}
+	
+	/**
+	 * 180903 MIRI 완료
+	 * catNo를 이용해 catName을 찾은 뒤 CategoryVO를 반환한다.
+	 * @return
+	 * @throws SQLException 
+	 */
+	public CategoryVO getCatNameByCatNo(String catno) throws SQLException {
+		CategoryVO categoryVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql = "select cat_name from category where cat_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, catno);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				categoryVO = new CategoryVO(catno, rs.getString(1));
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+		return categoryVO;
 	}
 	
 	/**
@@ -472,7 +539,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date \r\n" + 
+			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD') \r\n" + 
 					"from rental_details r, item i \r\n" + 
 					"where r.item_no=i.item_no and r.id=?";
 			pstmt = con.prepareStatement(sql);
@@ -537,7 +604,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, r.rental_date, r.return_date " + 
+			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date, 'yyyy-MM-DD')" + 
 					"from Rental_details r,(select i.item_no from item i where i.id=?) a, item i " + 
 					"where r.item_no=a.item_no and r.item_no=i.item_no";
 			pstmt = con.prepareStatement(sql);

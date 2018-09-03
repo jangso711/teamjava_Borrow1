@@ -33,6 +33,9 @@ public class HandlerMapping {
 			controller = new MemberIdCheckController();
 		}else if(command.equals("ItemSearch")) {
 			controller = new ItemSearchController();
+		//180903 MIRI ItemCategorySearchController 추가
+		}else if(command.equals("ItemCategorySearch")) {
+			controller = new ItemCategorySearchController();
 		}else if(command.equals("ItemAllSearch")) {
 			controller = new ItemAllSearchController();
 		}else if(command.equals("ItemDetail")) {
@@ -51,7 +54,7 @@ public class HandlerMapping {
 			controller = new ItemRentDetailController();
 		}else if(command.equals("ItemRentalList")) {
 			controller = new ItemRentalListController();
-			//180901 MIRI ItemRentalController 추가
+		//180901 MIRI ItemRentalController 추가
 		}else if(command.equals("ItemRental")) {
 			controller = new ItemRentalController();
 		}else if(command.equals("ItemRegisterList")) {
@@ -62,10 +65,14 @@ public class HandlerMapping {
 			controller = new ItemDeleteCheckController();
 		}else if(command.equals("FAQ")) {
 			controller=new FAQController();
-		}else if(command.equals("MemberPointCharge")) {
-			controller=new MemberPointChargeController();
-		}else if(command.equals("MemberPointChargeForm")) {
-			controller=new MemberPointChargeFormController();
+		}else if(command.equals("MemberDepositPoint")) {
+			controller=new MemberDepositPointController();
+		}else if(command.equals("MemberDepositPointForm")) {
+			controller=new MemberDepositPointFormController();
+		}else if(command.equals("MemberWithdrawPoint")) {
+			controller=new MemberWithdrawPointController();
+		}else if(command.equals("MemberWithdrawPointForm")) {
+			controller=new MemberWithdrawPointFormController();
 		}
 		return controller;
 	}
