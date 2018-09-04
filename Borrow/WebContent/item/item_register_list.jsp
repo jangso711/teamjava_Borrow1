@@ -38,10 +38,10 @@
 					<fmt:parseDate value="${registerdetail.returnDate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
 					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
 					<tr>
-						<td><img src="${pageContext.request.contextPath}/upload/${registerdetail.itemVO.picList[0]}" width="150" height="150" ></td>
+						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemSearchId=${registerdetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${registerdetail.itemVO.picList[0]}" width="150" height="150" ></a></td>
 						<td>${registerdetail.rentalNo}</td>
 						<td>${registerdetail.itemVO.itemName}</td>
-						<td>${registerdetail.itemVO.memberVO.id}</td>
+						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${registerdetail.itemVO.memberVO.id}">${registerdetail.itemVO.memberVO.id}</a></td>
 						<td>${registerdetail.itemVO.itemPrice}원 x ${endDate-strDate}일 = ${registerdetail.itemVO.itemPrice*(endDate-strDate)}원</td>
 						<td>${registerdetail.rentalDate}</td>
 						<td>${registerdetail.returnDate}</td>
