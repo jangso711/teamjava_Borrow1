@@ -7,6 +7,9 @@
 			if($("#point").val()<1000){
 				alert("1000포인트 이상부터 환급 가능합니다.");
 				return false;
+			}else if($("#point").val()>${requestScope.existingPoint}){
+				alert("포인트가 부족합니다.")	;
+				return false;
 			}else{
 				alert("포인트 환급이 완료되었습니다.");
 			}

@@ -45,6 +45,8 @@
 						<td>${rentaldetail.itemVO.itemPrice}원 x ${endDate-strDate}일 = ${rentaldetail.itemVO.itemPrice*(endDate-strDate)}원</td>
 						<td>${rentaldetail.rentalDate}</td>
 						<td>${rentaldetail.returnDate}</td>
+						<td><button type="button" class="btn btn_center btn_pk" onclick="location.href=
+	'${pageContext.request.contextPath}/front?command=ItemEarlyReturn'">조기 반납</button></td>
 					</tr>
 				</c:forEach>
 			</table>
