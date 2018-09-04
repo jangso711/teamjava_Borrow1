@@ -108,7 +108,7 @@ select * from picture;
 select * from item_category;
 select * from category;
 
-delete item where item_no=10012
+delete item where item_no=10020
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
 insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
@@ -144,6 +144,8 @@ create table category(
    cat_no number primary key,
    cat_name varchar2(100) not null
 )
+
+update picture set picture_path='배경5.jpg' where picture_path='배경51.jpg'
 
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '등산용품');
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '물놀이용품');
