@@ -177,7 +177,9 @@ alter table rental_details add total_payment number;
 select * from rental_details;
 
 insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3007);  
-
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status, item_expl) 
+values(item_no_seq.nextval, 'miri', '카시트', 'TEAMTEX', '페라리 코스모 SP', 25000, '2018/7/1', add_months('2018/7/1',3), 1,'어린아이 있는 집에 꼭 필요한 카시트입니다.');
+select * from item;
 --RENTAL DETAILS 추가
 insert into rental_details(rental_no, item_no, id, rental_date, return_date)
 values (rental_no_seq.nextval, 10001, 'yosep', '2018/8/1' , '2018/8/2');
