@@ -1,23 +1,23 @@
 package org.kosta.borrow.model;
 
 public class ReviewVO {
-	String itemNo;
-	String reviewTitle;
-	String reviewContent;
-	int reviewGrade;
-	int reviewHit;
-	String reviewRegdate;
-	ItemVO itemVO;
-	MemberVO memberVO;
-	RentalDetailVO rentalDetailVO;
+	private String reviewNo;
+	private String reviewTitle;
+	private String reviewContent;
+	private int reviewGrade;
+	private int reviewHit;
+	private String reviewRegdate;
+	private ItemVO itemVO;
+	private MemberVO memberVO;
+	private RentalDetailVO rentalDetailVO;
 	public ReviewVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ReviewVO(String itemNo, String reviewTitle, String reviewContent, int reviewGrade, int reviewHit,
+	public ReviewVO(String reviewNo, String reviewTitle, String reviewContent, int reviewGrade, int reviewHit,
 			String reviewRegdate, ItemVO itemVO, MemberVO memberVO, RentalDetailVO rentalDetailVO) {
 		super();
-		this.itemNo = itemNo;
+		this.reviewNo = reviewNo;
 		this.reviewTitle = reviewTitle;
 		this.reviewContent = reviewContent;
 		this.reviewGrade = reviewGrade;
@@ -27,11 +27,11 @@ public class ReviewVO {
 		this.memberVO = memberVO;
 		this.rentalDetailVO = rentalDetailVO;
 	}
-	public String getItemNo() {
-		return itemNo;
+	public String getReviewNo() {
+		return reviewNo;
 	}
-	public void setItemNo(String itemNo) {
-		this.itemNo = itemNo;
+	public void setReviewNo(String reviewNo) {
+		this.reviewNo = reviewNo;
 	}
 	public String getReviewTitle() {
 		return reviewTitle;
@@ -83,7 +83,7 @@ public class ReviewVO {
 	}
 	@Override
 	public String toString() {
-		return "ReviewVO [itemNo=" + itemNo + ", reviewTitle=" + reviewTitle + ", reviewContent=" + reviewContent
+		return "ReviewVO [reviewNo=" + reviewNo + ", reviewTitle=" + reviewTitle + ", reviewContent=" + reviewContent
 				+ ", reviewGrade=" + reviewGrade + ", reviewHit=" + reviewHit + ", reviewRegdate=" + reviewRegdate
 				+ ", itemVO=" + itemVO + ", memberVO=" + memberVO + ", rentalDetailVO=" + rentalDetailVO + "]";
 	}
