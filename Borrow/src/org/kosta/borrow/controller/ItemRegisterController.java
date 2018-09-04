@@ -41,11 +41,11 @@ public class ItemRegisterController implements Controller {
 			MemberVO mvo = (MemberVO)session.getAttribute("user");
 			itemNo=ItemDAO.getInstance().registerItem(mvo,ivo,cats,expl,month);
 		}else {
-			//세션만료
+			return "redirect:index.jsp";
 		}
 		 
 		
-		return "redirect:front?command=ItemDetail&itemSearchId="+itemNo;//0903 동규 물품등록시 상품 상세정보로이동하게 수정
+		return "redirect:front?command=ItemDetail&itemNo="+itemNo;//0903 동규 물품등록시 상품 상세정보로이동하게 수정
 		//return "redirect:front?command=ItemDetail&itemNo="+itemNo;
 		//return "redirect:index.jsp";
 	}

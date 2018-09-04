@@ -12,15 +12,14 @@ public class ItemDeleteController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String itemNo = request.getParameter("itemNo");
 		String flag = request.getParameter("flag");
+		System.out.println("delete:"+itemNo+","+flag);
 		ItemVO vo=new ItemVO();
 		vo.setItemNo(itemNo);
 		//String dirPath = request.getServletContext().getRealPath("upload");
+		ItemDAO.getInstance().deleteItem(vo,flag);
+			
 		
-			ItemDAO.getInstance().deleteItem(vo,flag);
-		
-		
-		request.setAttribute("url", "/item/item_delete_result.jsp");
-		return "redirect:template/layout.jsp";
+		return "redirect:front?command=ItemDeleteResult";
 	}
 
 }

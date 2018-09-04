@@ -53,6 +53,8 @@ public class HandlerMapping {
 			controller = new ItemUpdateController();
 		}else if(command.equals("ItemDelete")) {
 			controller = new ItemDeleteController();
+		}else if(command.equals("ItemDeleteResult")) {
+			controller = new ItemDeleteResultController();	//180904 SOJEONG 추가
 		}else if(command.equals("ItemRentDetail")) {
 			controller = new ItemRentDetailController();
 		}else if(command.equals("ItemRentalList")) {
@@ -85,7 +87,6 @@ public class HandlerMapping {
 
 		}else if(command.equals("ItemEarlyReturn")) {
 			controller=new ItemEarlyReturnController();
-//github.com/jangso711/teamjava_Borrow1.git
 		}
 		return controller;
 	}

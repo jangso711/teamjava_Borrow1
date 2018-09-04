@@ -107,7 +107,7 @@ select * from member;
 select * from picture;
 select * from item_category;
 select * from category;
-
+select * from rental_details;
 delete item where item_no=10020
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
