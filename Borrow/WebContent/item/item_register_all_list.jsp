@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 h3{
 	padding-left:100px;
@@ -58,7 +59,7 @@ input[type=number]{
 								</td>
 								<td><a href="${detailurl }">${allItemList.itemName }</a></td>
 								<td><pre>${allItemList.itemExpl }</pre></td>
-								<td>${allItemList.itemPrice }</td>
+								<td><fmt:formatNumber>${allItemList.itemPrice }</fmt:formatNumber></td>
 								<td>${allItemList.memberVO.id }</td>
 							</tr>
 						</c:forEach>

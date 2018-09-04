@@ -80,8 +80,8 @@ td {
 		<tr>
 			<%-- 대여료 상세 추가 --%>
 			<th>대여료</th>
-			<td><span id="infoSpan">${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</span>
-				<div id="friendImg" width="304" height="236" style="none">
+			<td><span id="infoSpan"><fmt:formatNumber>${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber></span>
+				<div id="friendImg" width="304" height="236"  style="none">
 					대여료 상세 정보<br>
 					일대여료 : ${requestScope.rvo.itemVO.itemPrice}<br>
 					대여일수 : ${(endDate-strDate)}<br>
