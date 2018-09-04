@@ -222,3 +222,6 @@ from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item
 
 delete from picture where item_no = 10001
 select picture_path from picture where item_no = 10002
+
+select to_char(rental_date,'yyyymmdd'),to_char(return_date,'yyyymmdd') from rental_details where item_no=10001;
+select 

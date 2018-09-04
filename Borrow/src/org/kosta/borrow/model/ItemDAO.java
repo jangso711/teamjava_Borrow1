@@ -675,7 +675,7 @@ public class ItemDAO {
 	{
 	 
 	     // String Type을 Date Type으로 캐스팅하면서 생기는 예외로 인해 여기서 예외처리 해주지 않으면 컴파일러에서 에러가 발생해서 컴파일을 할 수 없다.
-	        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	        SimpleDateFormat format = new SimpleDateFormat("yyyymmdd");
 	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
 	        Date FirstDate = format.parse(rentalDate);
 	        Date SecondDate = format.parse(returnDate);
@@ -762,10 +762,31 @@ public class ItemDAO {
 			closeAll(rs,pstmt,con);
 		}
 		
+	}
+	public ArrayList<String> getRentalUnavailableDateList(String itemNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			con = getConnection();
+			String sql = "select to_char(rental_date,'yyyymmdd'),to_char(return_date,'yyyymmdd') from rental_details where item_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int rentalDate = Integer.parseInt(rs.getString(1));
+				int returnDate = Integer.parseInt(rs.getString(2));
+				while(rentalDate<=returnDate) {
+					list.add(Integer.toString(rentalDate++));	
+				}
+			}
+		}finally {
+			
+		}
+		return list;
 	}    
-	        
-
-
+	 
 
 
 }
