@@ -193,10 +193,33 @@ input[data-readonly] {
 			         }
 			      });
 			        $("#to").datepicker("option","disabled",true);
-			        
+			        /*180904 SOJEONG대여 날짜 비활성화 완료*/
+			        /*180904 SOJEONG 삭제 수정*/
+			        $("#deleteBtn").click(function(){
+			        	$.ajax({
+			        		type:"post",
+			        		url:"${pageContext.request.contextPath}/front",
+			        		data:"command=ItemDeleteCheck&itemNo="+${requestScope.itemDetail.itemNo},
+			        		success: function(result){
+			        			$("#flag").val(result);
+			        			if(result=="true"){// 삭제 가능
+			        				
+			        				if(confirm("현재 대여중인 상품이 없습니다. 상품을 삭제하시겠습니까?")){
+			        					//location.href="${pageContext.request.contextPath}/front?command=ItemDelete&itemNo=${requestScope.itemDetail.itemNo}";
+			        					$("#deleteForm").submit();
+			        				}
+			        			}else{	//삭제 여부 묻기
+			      
+									if(confirm("현재 대여 중인 상품이 있습니다.\n삭제 예정일 : "+result+"\n삭제 신청하시겠습니까?")){
+										//location.href="${pageContext.request.contextPath}/front?command=ItemDelete&itemNo=${requestScope.itemDetail.itemNo}&";
+										$("#deleteForm").submit();
+									}
+			        			}
+			        		}
+			        	});
+			        });
 			  } );
 			</script>
-
 			<c:set value="${requestScope.itemDetail.itemNo}" var="itemNo"></c:set>
 			<!-- 180831 MIRI 본인일 경우에는 수정/삭제 버튼 보이고 본인이 아닐 경우에는 달력 및 대여버튼 보이기-->
 			<c:if test="${!empty sessionScope.user}">   <!-- 로그인되어있으면 -->
@@ -204,7 +227,7 @@ input[data-readonly] {
 					<c:when test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
 						<button type="button" class="w3-theme-d1 w3-button w3-round-large" name="update" onclick="updateItem(${itemNo})">수정</button>
 						&nbsp;&nbsp;&nbsp;
-						<button type="button" class="w3-theme-d2 w3-button w3-round-large" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
+						<button id="deleteBtn"type="button" class="w3-theme-d2 w3-button w3-round-large" name="delete">삭제</button>
 						<br><br><br>
 					</c:when>
 					<c:otherwise> 
@@ -226,4 +249,8 @@ input[data-readonly] {
   </div>
 </div>
 
-
+<form id="deleteForm"action="${pageContext.request.contextPath}/front"method="post">
+	<input type="hidden" name="command" value="ItemDelete">
+	<input type="hidden" name="itemNo" value="${itemNo}">
+	<input type="hidden" name="flag" id="flag">
+</form>
