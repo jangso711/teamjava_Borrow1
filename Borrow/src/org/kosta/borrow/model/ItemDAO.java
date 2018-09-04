@@ -34,6 +34,13 @@ public class ItemDAO {
 		if(con!=null)con.close();
 	}
 
+	
+	/** 180904 yosep 수정완료
+	 *  아이템을 삭제한다. (상태변경만)
+	 * @param vo
+	 * @param dirPath
+	 * @throws SQLException
+	 */
 	public void deleteItem(ItemVO vo,String dirPath) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -42,8 +49,8 @@ public class ItemDAO {
 		try {
 			con=getConnection();
 			String sql=null;
-			if((lastRentalDate=deleteCheck(vo.getItemNo()))!=null) { //삭제 대기				
-				sql = "update item set item_status=0,item_expdate=to_char("+lastRentalDate+ ",'YYYY-MM-DD') where item_no=?";
+			if((lastRentalDate=getLastReturnDate(vo.getItemNo()))!=null) { //삭제 대기				
+				sql = "update item set item_status=0,item_expdate=to_date('"+lastRentalDate+ "','YYYY-MM-DD') where item_no=?";
 			}else { 
 				//상태를 0, 만료 날짜를 현재 날짜로
 				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";				
@@ -581,7 +588,34 @@ public class ItemDAO {
 
 	}
 
+	public String deleteCheck(String itemNo) throws SQLException {
+	      Connection con = null;
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String result = "true";
+	      try {
+	         con=getConnection();
+	         String sql = "select sysdate,max(return_date) from rental_details where item_no=?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, itemNo);
+	         rs=pstmt.executeQuery();
+	         if(rs.next()) {
+	            Date today = rs.getDate(1);
+	            Date returnDate = rs.getDate(2);
+	            if(today.before(returnDate)) {
+	               result = returnDate.toString();
+	            }
+	         }
+	      }finally {
+	         closeAll(pstmt, con);
+	      }
+	      return result;
+	}
+	
+	
+	
 	/**
+	 * 180904 yosep 완료
 	 * itemNo에 해당하는 아이템을 빌린 내역 중 마지막 반납 날짜와 현재 날짜를 비교한다
 	 * 현재 날짜가 마지막 반납 날짜보다 이전이면 마지막 반납 날짜 반환 (삭제대기)
 	 * 현재 날짜가 마지막 반납 날짜보다 이후이면 null 반환 (삭제완료 가능)
@@ -589,20 +623,23 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public String deleteCheck(String itemNo) throws SQLException {
+	public String getLastReturnDate(String itemNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String result = null;
 		try {
 			con=getConnection();
-			String sql = "select sysdate,max(return_date) from rental_details where item_no=?";
+			String sql = "select sysdate, to_char(max(return_date), 'yyyy-MM-DD') from rental_details where item_no=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, itemNo);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				Date today = rs.getDate(1);
 				Date returnDate = rs.getDate(2);
+				
+				if(returnDate==null) //빌린 날짜가 없으면
+					return null;				
 				if(today.before(returnDate)) 
 					result = rs.getString(2);		//마지막 반납 날짜		
 			}

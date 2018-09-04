@@ -241,3 +241,6 @@ select Max(return_date) from rental_details where item_no='10005';
 delete from RENTAL_DETAILS where item_no=?;
 
 update rental_details set return_date=sysdate where rental_no=200005;
+
+update item set item_status=0,item_expdate=to_date('2018-09-08','YYYY-MM-DD') where item_no=10018;
+select sysdate, to_char(max(return_date), 'yyyy-MM-DD') from rental_details where item_no=10018;
