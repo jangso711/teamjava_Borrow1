@@ -30,7 +30,8 @@
 					<th>등록한 사람(id)</th>
 					<th>지불금액</th>
 					<th>대여날짜</th>
-					<th>반납날짜</th>					
+					<th>반납날짜</th>		
+					<th>반납상태</th>			
 				</tr>
 				<c:forEach items="${requestScope.rentallist}" var="rentaldetail">
 					<fmt:parseDate value="${rentaldetail.rentalDate}" var="strPlanDate" pattern="yyyy-MM-dd"/>
@@ -45,8 +46,9 @@
 						<td>${rentaldetail.itemVO.itemPrice}원 x ${endDate-strDate}일 = ${rentaldetail.itemVO.itemPrice*(endDate-strDate)}원</td>
 						<td>${rentaldetail.rentalDate}</td>
 						<td>${rentaldetail.returnDate}</td>
-						<td><button type="button" class="btn btn_center btn_pk" onclick="location.href=
-	'${pageContext.request.contextPath}/front?command=ItemEarlyReturn'">조기 반납</button></td>
+						<td>
+						<button type="button" class="btn btn_center btn_pk" onclick="location.href=
+						'${pageContext.request.contextPath}/front?command=ItemEarlyReturn'">반납하기</button></td>
 					</tr>
 				</c:forEach>
 			</table>
