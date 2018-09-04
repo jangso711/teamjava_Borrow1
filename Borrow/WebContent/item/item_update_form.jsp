@@ -95,7 +95,12 @@ ul{
 				$("#picAlert").text("*사진을 1장 이상 등록해주세요.").css("color", "red");
 				return false;
 			}
-			$("#updateForm").submit();
+			$("#updateForm").submit(function(){
+				if(! $(this).valid()) {
+					alert("필수항목을 입력하세요.");
+					return false;
+					}
+			});
 			
 		});
 		
@@ -140,7 +145,7 @@ ul{
 	</td>
 	</tr>
 	<tr>
-	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8">${i.itemExpl }</textarea></td>
+	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8"required="required">${i.itemExpl }</textarea></td>
 	</tr>
 	<tr>
 	<td>사진*</td>
