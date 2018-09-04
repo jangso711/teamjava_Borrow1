@@ -108,6 +108,9 @@ select * from picture;
 select * from item_category;
 select * from category;
 
+insert into picture(item_no, picture_path) values(10010,'Glass.png');
+insert into picture(item_no, picture_path) values(10008,'Module1.png');
+
 delete item where item_no=10020
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
@@ -146,6 +149,13 @@ create table category(
 )
 
 update picture set picture_path='배경5.jpg' where picture_path='배경51.jpg'
+
+update item
+set item_expl='가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
+	||chr(13)||chr(10)||'가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
+	||chr(13)||chr(10)||'가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
+	||chr(13)||chr(10)||'가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
+where item_no=10021;
 
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '등산용품');
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '물놀이용품');

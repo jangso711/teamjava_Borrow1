@@ -5,7 +5,7 @@
 
 h3{
 	padding-left:100px;
-	padding-top:30px;
+	/* padding-top:30px; */
 	font-weight: bold;
 }
 .btn_pk {
@@ -38,7 +38,7 @@ input[type=password] {
 }
 
 .bgheader {
-	height: 160px;
+	height: 50px;
 }
 .formContent{
 	padding-top:20px;

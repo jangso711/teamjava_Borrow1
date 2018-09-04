@@ -2,57 +2,62 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <style>
-h3{
-	padding-left:100px;
-	padding-top:30px;
+h4 {
 	font-weight: bold;
 }
-.bgheader{
-
-	height:160px;
+.bgheader {
+	height: 50px;
+}
+.target {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap:break-word; 
+	line-height: 1.2em;
+	height: 3.6em;
 }
 </style>
-<div class="col-sm-12 bgheader">
+<div class="col-sm-12 bgheader"></div>
+<!-- Page Content -->
+<div class="container">
+	<div class="row">
+		<c:forEach items="${requestScope.allItemList }" var="allItemList">
+			<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${allItemList.itemNo}" var="detailurl"></c:set>
+			<div class="col-lg-4 portfolio-item">
+				<div class="card h-100">
+					<a href="${detailurl}"><img class="card-img-top"
+						src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}"
+						width="500" height="250" alt=""></a>
+					<div class="card-body">
+						<h4 class="card-title"> <a href="${detailurl }">${allItemList.itemName }</a> </h4>
+						<p class="card-text"><pre class="target">${allItemList.itemExpl }</pre>
+							<fmt:formatNumber>${allItemList.itemPrice }</fmt:formatNumber>원
+						</p>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+	<!-- /.row -->
+
+	<!-- Pagination -->
+	<ul class="pagination justify-content-center">
+		<li class="page-item"><a class="page-link" href="#"
+			aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
+				class="sr-only">Previous</span>
+		</a></li>
+		<li class="page-item"><a class="page-link" href="#">1</a></li>
+		<li class="page-item"><a class="page-link" href="#">2</a></li>
+		<li class="page-item"><a class="page-link" href="#">3</a></li>
+		<li class="page-item"><a class="page-link" href="#"
+			aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
+				class="sr-only">Next</span>
+		</a></li>
+	</ul>
 </div>
-<div class="col-sm-12 content">
-<h3>전체 상품 목록</h3>
-	<form>
-		<table class="table">
-			<thead>
-				<tr>
-					<th> </th><th>이름</th><th>설명</th><th>가격</th><th>아이디</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${requestScope.allItemList }" var="allItemList">
-				<!-- 180831 MIRI 클릭시 향하는 url을 변수에 담음 -->
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${allItemList.itemNo}" var="detailurl"></c:set>
-					<tr>
-						<td>
-							<!-- 180902 yosep ItemDAO에서 처리 -->
-							<%-- <!-- 180901 MIRI 사진이 없으면 디폴트 이미지 띄움 -->
-							<c:if test="${empty allItemList.picList }">
-								<img src="${pageContext.request.contextPath }/upload/디폴트.png">
-							</c:if>
-							<!-- 180901 MIRI 상품 전체 사진 리스트를 불러와 사진이 있으면 사진을 띄움 -->
-							<c:forEach items="${allItemList.picList }" var="picList" varStatus="status">
-								<!-- 180901 MIRI 사진이 여러장이면 첫 번째 대표 사진만 띄움 -->
-								<c:if test="${status.index == 0 }">
-									<a href="${detailurl }"><img src="${pageContext.request.contextPath }/upload/${picList}" width="150" height="150"></a><br>
-								</c:if>
-							</c:forEach> --%>
-							
-							<!-- 180902 yosep index를 0으로 처리(null값일경우에도 EL문에서 자동으로 처리)-->
-							<a href="${detailurl}"><img src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}" width="150" height="150" ></a>
-						</td>
-						<td><a href="${detailurl }">${allItemList.itemName }</a></td>
-						<td><pre>${allItemList.itemExpl }</pre></td>
-						<td><fmt:formatNumber>${allItemList.itemPrice }</fmt:formatNumber></td>
-						<td>${allItemList.memberVO.id }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</form>
-</div>
+<!-- /.container -->

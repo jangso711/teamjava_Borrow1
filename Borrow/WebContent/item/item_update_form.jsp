@@ -32,9 +32,8 @@ input[type=number]{
 	padding-bottom:20px;
 	
 }
-.bgheader{
-
-	height:160px;
+.bgheader {
+	height: 50px;
 }
 tr{
 	border-top: 1px;

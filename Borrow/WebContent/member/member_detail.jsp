@@ -7,14 +7,14 @@
 <style>
 h3 {
 	padding-left: 100px;
-	padding-top: 30px;
+	/* padding-top: 30px; */
 	font-weight: bold;
 }
 .bgheader {
-	height: 160px;
+	height: 50px;
 }
 .membercontent {
-	padding-top: 20px;
+	/* padding-top: 20px; */
 	padding-left: 200px;
 	padding-bottom: 20px;
 }

@@ -8,7 +8,7 @@
 
 <style type="text/css">
 .bgheader {
-	height: 160px;
+	height: 50px;
 }
 </style>
 

@@ -6,26 +6,25 @@
 <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 
 <style>
-h3 {
-	padding-left: 100px;
-	padding-top: 30px;
+h5 {
 	font-weight: bold;
 }
 
-.bgheader {height:160px;}
+.bgheader {
+	height: 50px;
+}
 
 .mySlides {display:none;}
 .w3-theme-d1 {color:#fff !important;background-color:#f1a4a3 !important}
 .w3-theme-d2 {color:#fff !important;background-color:#aeacb7 !important}
 </style>
 <div class="col-sm-12 bgheader"></div>
-	<h3>상세보기</h3>
 <div class="container-fluid">
   <div class="row" align="center">
     <div class="col-sm-1"></div>
     <div class="col-sm-5 type">
-    <c:set value="${requestScope.itemDetail }" var="item"></c:set>
-    <h2 class="w3-center">${item.itemName }</h2>
+    <%-- <c:set value="${requestScope.itemDetail }" var="item"></c:set> --%>
+    <%-- <h2 class="w3-center">${item.itemName }</h2> --%>
     <!-- 180904 MIRI 사진 슬라이드 기능 추가 -->
 	<div class="w3-content w3-display-container">
 		<c:forEach items="${itemDetail.picList }" var="picList">
@@ -56,12 +55,17 @@ h3 {
 		  x[slideIndex-1].style.display = "block";  
 		}
 	</script>
-		</div>
+	</div>
     	<div class="col-sm-5">
     	<div class="col-sm-12 content">
 		<form>
-		<br><br><br>
     	<table class="table">
+    		<tr align="left">
+    			<th colspan="2" align="left">
+   				    <c:set value="${requestScope.itemDetail }" var="item"></c:set>
+   					<h5 class="w3-center">${item.itemName }</h5>
+    			</th>
+    		</tr>
             <tr>
                 <th>카테고리</th>
 				<td>
@@ -73,7 +77,7 @@ h3 {
             </tr>
             <tr>
                 <th>브랜드</th>
-                <td>${item.itemBrand }</td>
+                <td>${item.itemBrand } ${item.itemModel }</td>
             </tr>
             <tr>
                 <th>모델</th>
