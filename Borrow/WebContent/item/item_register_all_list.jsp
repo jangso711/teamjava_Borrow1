@@ -47,7 +47,7 @@ input[type=number]{
 				<table class="table">
 					<thead>
 						<tr>
-							<th> </th><th>상품명</th><th>설명</th><th>가격</th><th>아이디</th>
+							<th> </th><th>이름</th><th>설명</th><th>가격</th><th>아이디</th>
 						</tr>
 					</thead>
 					<tbody>
