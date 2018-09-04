@@ -549,6 +549,7 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();			
+				item.setItemNo(rs.getString(2));
 				item.setPicList(getPictureList(rs.getString(2)));					
 				item.setItemName(rs.getString(3));
 				item.setItemPrice(rs.getInt(4));
@@ -633,7 +634,7 @@ public class ItemDAO {
 	
 	/**
 	 * 180902 yosep 진행중
-	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
+	 *  유저의 id를 받아 등록한 모든 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
 	 * 
 	 * @param id
 	 * @return

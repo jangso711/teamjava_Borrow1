@@ -34,28 +34,38 @@ input[type=number]{
 <div class="col-sm-12 bgheader">
 </div>
 <div class="col-sm-12 content" align="center">
-<h3>내가 등록한 상품 목록</h3>
-	<form>
-		<table class="table">
-			<thead>
-				<tr>
-					<th> </th><th>이름</th><th>설명</th><th>가격</th><th>아이디</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${requestScope.allItemList }" var="allItemList">
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemNo}" var="detailurl"></c:set>
-					<tr>
-						<td>							
-							<a href="${detailurl}"><img src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}" width="150" height="150" ></a>
-						</td>
-						<td><a href="${detailurl }">${allItemList.itemName }</a></td>
-						<td><pre>${allItemList.itemExpl }</pre></td>
-						<td>${allItemList.itemPrice }</td>
-						<td>${allItemList.memberVO.id }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</form>
+	<c:choose>
+		<c:when test="${empty requestScope.allItemList }">
+			<br>
+			<h3>등록 상품이 존재하지 않습니다!!</h3>
+			<br><br><br>
+		</c:when>	
+		<c:otherwise>
+			<h3>${requestScope.allItemList[0].memberVO.id }님의 등록 상품 내역</h3>
+			<form>
+				<table class="table">
+					<thead>
+						<tr>
+							<th> </th><th>이름</th><th>설명</th><th>가격</th><th>아이디</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${requestScope.allItemList }" var="allItemList">
+						<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemNo}" var="detailurl"></c:set>
+							<tr>
+								<td>							
+									<a href="${detailurl}"><img src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}" width="150" height="150" ></a>
+								</td>
+								<td><a href="${detailurl }">${allItemList.itemName }</a></td>
+								<td><pre>${allItemList.itemExpl }</pre></td>
+								<td>${allItemList.itemPrice }</td>
+								<td>${allItemList.memberVO.id }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</form>	
+		</c:otherwise>
+	</c:choose>
 </div>
+

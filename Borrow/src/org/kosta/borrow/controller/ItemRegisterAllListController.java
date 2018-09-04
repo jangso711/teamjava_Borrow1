@@ -14,9 +14,8 @@ public class ItemRegisterAllListController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session=request.getSession();
-		MemberVO user=(MemberVO) session.getAttribute("user");
-		String id=user.getId();		
+	
+		String id=request.getParameter("memberId");		
 		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemListById(id);
 		request.setAttribute("allItemList", allItemList);
 		request.setAttribute("url", "/item/item_register_all_list.jsp");
