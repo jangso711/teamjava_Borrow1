@@ -77,6 +77,8 @@ public class HandlerMapping {
 			controller=new MemberWithdrawPointController();
 		}else if(command.equals("MemberWithdrawPointForm")) {
 			controller=new MemberWithdrawPointFormController();
+		}else if(command.equals("ItemEarlyReturn")) {
+			controller=new ItemEarlyReturnController();
 		}
 		return controller;
 	}

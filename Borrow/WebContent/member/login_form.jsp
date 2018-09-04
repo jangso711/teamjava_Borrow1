@@ -33,20 +33,43 @@ input[type=text]{
 	height:160px;
 }
 </style>
+<%-- 로그인 실패  alert 추가 --%>
+<<script type="text/javascript">
+	$(document).ready(function(){
+		$("#loginCheck").click(function(){
+			$.ajax({
+				type:"post",
+				url:"${pageContext.request.contextPath}/front",
+				data:"command=Login&memberId="+$("#id").val()+"&memberPwd="+$("#pass").val(),
+				success:function(result){
+					if(result=="ok"){
+						alert("성공!");
+						location.href="index.jsp";
+					}else{
+						alert("로그인 실패");
+					}
+				}
+				
+			})
+		})//click
+	})//ready
+</script>
+
 <div class="col-sm-12 bgheader">
 </div>
 <div class="col-sm-12 logincontent">
-<form action="${pageContext.request.contextPath }/front"method="post">
+<%--<form action="${pageContext.request.contextPath }/front"method="post"> --%>
 <table align="center" cellpadding="3">
    <tr>
-      <td>아이디</td><td><input type="text"name="memberId"required="required"></td><td rowspan="2"><input class="btn btn_pk"type="submit"value="로그인"></td>
+      <td>아이디</td><td><input type="text"name="memberId" required="required" id="id"></td>
+      <td rowspan="2"><input class="btn btn_pk"type="submit"value="로그인" id="loginCheck"></td>
    </tr>
    <tr>
-      <td>비밀번호</td><td><input type="password"name="memberPwd"required="required"></td>
+      <td>비밀번호</td><td><input type="password"name="memberPwd" required="required" id="pass"></td>
    </tr>
 </table>
 <input type="hidden"name="command"value="Login">
-</form>
+<%--</form>--%>
 <br>
 <a style="color:#f6cac9"href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="">비밀번호를 잊으셨습니까?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

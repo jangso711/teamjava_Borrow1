@@ -550,6 +550,7 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();			
+				item.setItemNo(rs.getString(2));
 				item.setPicList(getPictureList(rs.getString(2)));					
 				item.setItemName(rs.getString(3));
 				item.setItemPrice(rs.getInt(4));
@@ -634,7 +635,7 @@ public class ItemDAO {
 	
 	/**
 	 * 180902 yosep 진행중
-	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
+	 *  유저의 id를 받아 등록한 모든 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
 	 * 
 	 * @param id
 	 * @return
@@ -676,7 +677,7 @@ public class ItemDAO {
 	{
 	 
 	     // String Type을 Date Type으로 캐스팅하면서 생기는 예외로 인해 여기서 예외처리 해주지 않으면 컴파일러에서 에러가 발생해서 컴파일을 할 수 없다.
-	        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	        SimpleDateFormat format = new SimpleDateFormat("yyyymmdd");
 	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
 	        Date FirstDate = format.parse(rentalDate);
 	        Date SecondDate = format.parse(returnDate);
@@ -763,10 +764,48 @@ public class ItemDAO {
 			closeAll(rs,pstmt,con);
 		}
 		
+	}
+
+	public ArrayList<String> getRentalUnavailableDateList(String itemNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			con = getConnection();
+			String sql = "select to_char(rental_date,'yyyymmdd'),to_char(return_date,'yyyymmdd') from rental_details where item_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int rentalDate = Integer.parseInt(rs.getString(1));
+				int returnDate = Integer.parseInt(rs.getString(2));
+				while(rentalDate<=returnDate) {
+					list.add(Integer.toString(rentalDate++));	
+				}
+			}
+		}finally {
+			
+		}
+		return list;
+}
+	public void itemEarlyReturn(String rentalNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con=getConnection();
+			String sql = "update rental_details set return_date=sysdate where rental_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rentalNo);
+			pstmt.executeUpdate();
+		}finally {
+			closeAll(pstmt, con);
+		}
+
+		
+
 	}    
-	        
-
-
+	 
 
 
 }
