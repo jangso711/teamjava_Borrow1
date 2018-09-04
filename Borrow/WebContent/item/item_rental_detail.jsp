@@ -80,7 +80,7 @@ td {
 		<tr>
 			<%-- 대여료 출력 조건 추가 --%>
 			<th>대여료</th>
-			<td><span id="infoSpan"><fmt:formatNumber>${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber></span>
+			<td><span id="infoSpan"><fmt:formatNumber>${requestScope.rvo.totalPayment}</fmt:formatNumber></span>
 				<c:choose>
 					<c:when test="${requestScope.check != null}">
 					<div id="friendImg" width="304" height="236"  style="none">
@@ -102,7 +102,7 @@ td {
 			</td>
 		</tr>
 	</table>
-	<br><br>
+	<br><br><br><br><br>
 	<table align="center">
    	 <tr>
       <td><input class="btn btn_pk" type="button" value="홈" onclick="location.href='${pageContext.request.contextPath}/index.jsp'"></td>
