@@ -141,6 +141,7 @@ h3 {
 	   		  			yearSuffix: '년',
 	   			 		dateFormat:"yymmdd",
 	   			 	 	minDate: 0,
+	   			 	 	ma
 	    				beforeShowDay: unavailable,
 	    				onSelect : function(selectedDate){
 	    					 var option = this.id == "from" ? "minDate" : "maxDate",
