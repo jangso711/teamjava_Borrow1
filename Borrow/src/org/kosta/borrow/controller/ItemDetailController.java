@@ -13,6 +13,7 @@ public class ItemDetailController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		String itemNo = request.getParameter("itemNo");
 		ItemVO itemVO = ItemDAO.getInstance().getDetailItemByNo(itemNo);
 		
@@ -21,7 +22,7 @@ public class ItemDetailController implements Controller {
 		JSONArray dateList = new JSONArray(rentalDetails);
 		request.setAttribute("dateList", dateList);
 		//180904 SOJEONG
-		
+
 		if(itemVO != null) {
 			request.setAttribute("itemDetail", itemVO);
 		}

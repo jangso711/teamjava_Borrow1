@@ -35,7 +35,7 @@ h3{
 				</c:when>
 				<c:otherwise>
 					<c:forEach items="${requestScope.itemCategorySearchList }" var="itemCategorySearchList">
-					<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${itemCategorySearchList.itemNo}" 
+					<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${itemCategorySearchList.itemNo}" 
 						var="detailurl"></c:set>
 						<tr>
 							<td><a href="${detailurl }">

@@ -92,8 +92,10 @@ ul{
 			$(this).parent().remove();
 		});
 	
-	
+		
 	});
+	
+
 	
 	
 	
