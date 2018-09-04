@@ -10,7 +10,7 @@ public class ItemDetailController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ItemVO itemVO = ItemDAO.getInstance().getDetailItemByNo(request.getParameter("itemSearchId"));
+		ItemVO itemVO = ItemDAO.getInstance().getDetailItemByNo(request.getParameter("itemNo"));
 		if(itemVO != null) {
 			request.setAttribute("itemDetail", itemVO);
 		}

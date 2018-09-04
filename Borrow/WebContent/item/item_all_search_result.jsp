@@ -26,7 +26,7 @@ h3{
 			<tbody>
 				<c:forEach items="${requestScope.allItemList }" var="allItemList">
 				<!-- 180831 MIRI 클릭시 향하는 url을 변수에 담음 -->
-				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemNo}" var="detailurl"></c:set>
+				<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${allItemList.itemNo}" var="detailurl"></c:set>
 					<tr>
 						<td>
 							<!-- 180902 yosep ItemDAO에서 처리 -->

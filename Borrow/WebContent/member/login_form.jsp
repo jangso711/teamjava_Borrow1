@@ -43,7 +43,6 @@ input[type=text]{
 				data:"command=Login&memberId="+$("#id").val()+"&memberPwd="+$("#pass").val(),
 				success:function(result){
 					if(result=="ok"){
-						alert("성공!");
 						location.href="index.jsp";
 					}else{
 						alert("로그인 실패");

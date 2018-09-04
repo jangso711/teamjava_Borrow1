@@ -429,7 +429,7 @@ public class ItemDAO {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select m.name, ");
 			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
-			sql.append("r.rental_no, r.rental_date, r.return_date ");
+			sql.append("r.rental_no, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD') ");
 			sql.append("from member m, item i, rental_details r ");
 			sql.append("where m.id = i.id ");
 			sql.append("and i.item_no = r.item_no ");

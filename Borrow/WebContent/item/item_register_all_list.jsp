@@ -51,7 +51,7 @@ input[type=number]{
 					</thead>
 					<tbody>
 						<c:forEach items="${requestScope.allItemList }" var="allItemList">
-						<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${allItemList.itemNo}" var="detailurl"></c:set>
+						<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${allItemList.itemNo}" var="detailurl"></c:set>
 							<tr>
 								<td>							
 									<a href="${detailurl}"><img src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}" width="150" height="150" ></a>
