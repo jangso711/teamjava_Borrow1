@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
@@ -27,10 +28,13 @@ h3 {
     <!-- 180904 MIRI 사진 슬라이드 기능 추가 -->
 	<div class="w3-content w3-display-container">
 		<c:forEach items="${itemDetail.picList }" var="picList">
-			<img class="mySlides" src="${pageContext.request.contextPath }/upload/${picList}" width="400" height="400">
+			<img class="mySlides" src="${pageContext.request.contextPath }/upload/${picList} " width="400" height="400">
 		</c:forEach>
-	    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-	    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+		<!-- 180904 MIRI 사진이 2장 이상일 때부터 버튼 보임 -->
+		<c:if test="${fn:length(itemDetail.picList) > 1}">
+		    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+		    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+		</c:if>
 	</div>  
 	<script>
 		var slideIndex = 1;
@@ -56,6 +60,7 @@ h3 {
     	<div class="col-sm-12 content">
 		<form>
     	<table class="table">
+    	<tr><th></th></tr>
             <tr>
                 <th>카테고리</th>
 				<td>
