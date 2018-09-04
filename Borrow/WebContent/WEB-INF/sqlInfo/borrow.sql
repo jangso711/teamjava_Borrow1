@@ -1,43 +1,51 @@
---1이 활성화 2가 비활성화 0이 삭제
---상품번호 : 10001~10999
---거래번호 : 200001~209999
---분류번호 : 3001~3020  
-create sequence item_no_seq start with 10001 nocache;
-create sequence rental_no_seq start with 200001 nocache;
-create sequence cat_no_seq start with 3001 nocache;
-
-
-
+--------------------------------
+-----------drop table----------
+--------------------------------
+drop table review;
+drop table rental_details;
+drop table picture;
+drop table item_category;
+drop table category;
+drop table item_add;
+drop table item;
+drop table member;
+--------------------------------
+--------drop sequence-----------
+--------------------------------
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
-drop table member;
-drop table item;
-drop table category;
-drop table picture;
-drop table item_add;
-drop table item_category;
-drop table rental_details;
+drop sequence review_no_seq;
+
+--------------------------------
+-------delete value--------------
+--------------------------------
+delete from member;
+delete from item;
+delete from item_add;
+delete from category;
+delete from item_category;
+delete from picture;
+delete from rental_details;
+delete from review;
+
+--------------------------------
+--------create table--------------
+--------------------------------
+-- 1.member --
+-- type : 0=관리자,1=회원
 create table member(
    id varchar2(100) primary key,
    pwd varchar2(100) not null,
    name varchar2(100) not null,
    address varchar2(100) not null,
    tel varchar2(100) not null,
-   point number default 0
+   point number default 0,
+   type number default 1
 );
 
-insert into member values('miri', '1234', '미리', '판교','031',10000);
-insert into member values('qqq', '1234', '동규', '수원','032',10000);
-insert into member values('yosep', '1234', '요셉', '강남','033',10000);
-insert into member values('lsy', '1234', '성열', '강남','034',10000);
-insert into member values('jangso711', '1234', '소정', '강남','035',10000);
-insert into member values('jb', '1234', '정빈', '강남','036',10000);
-
-select * from member;
-
-select add_months(sysdate,3) from dual;
-select * from item_category;
+-- 2.item --
+--1이 활성화 2가 비활성화 0이 삭제
 
 create table item(
    item_no number primary key,
@@ -49,6 +57,7 @@ create table item(
    item_regdate date not null,
    item_expdate date not null,
    item_status number default 1,   
+   item_expl clob not null,
    constraint fk_item_id foreign key(id) references member ON DELETE CASCADE
 );
 
@@ -108,14 +117,11 @@ select * from member;
 select * from picture;
 select * from item_category;
 select * from category;
-<<<<<<< HEAD
 
 insert into picture(item_no, picture_path) values(10010,'Glass.png');
 insert into picture(item_no, picture_path) values(10008,'Module1.png');
 
-=======
 select * from rental_details;
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 delete item where item_no=10020
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
@@ -129,25 +135,7 @@ create table item_add(
    grade number default 0,   
    constraint fk_item_add_item_no foreign key(item_no) references item ON DELETE CASCADE
 );
-
-create table rental_details(
-   rental_no number primary key,
-   item_no number not null,
-   id varchar2(100) not null,
-   rental_date date not null,
-   return_date date not null,   
-   constraint fk_rental_details_id foreign key(id) references member ON DELETE CASCADE,
-   constraint fk_rental_details_item_no foreign key(item_no) references item ON DELETE CASCADE
-);
-
-create table picture(
-   item_no number not null,
-   picture_path varchar2(200) not null,
-   
-   constraint fk_picture_item_no foreign key(item_no) references item ON DELETE CASCADE,
-   constraint pk_picture primary key(item_no,picture_path) 
-);
-
+-- 4.category --
 create table category(
    cat_no number primary key,
    cat_name varchar2(100) not null
@@ -181,94 +169,30 @@ create table item_category(
    constraint pk_item_category primary key(item_no,cat_no) 
 );
 
-insert into ITEM_CATEGORY(item_no, cat_no) values(10001,3003);  
-insert into ITEM_CATEGORY(item_no, cat_no) values(10002,3007);  
-insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3007);  
+-- 6. picture --
+create table picture(
+   item_no number not null,
+   picture_path varchar2(200) not null,
+   
+   constraint fk_picture_item_no foreign key(item_no) references item ON DELETE CASCADE,
+   constraint pk_picture primary key(item_no,picture_path) 
+);
 
+-- 7.rental_details--
+create table rental_details(
+   rental_no number primary key,
+   item_no number not null,
+   id varchar2(100) not null,
+   rental_date date not null,
+   return_date date not null, 
+   total_payment number not null,  
+   constraint fk_rental_details_id foreign key(id) references member ON DELETE CASCADE,
+   constraint fk_rental_details_item_no foreign key(item_no) references item ON DELETE CASCADE
+);
 
--- CONTENTS 추가
-alter table item add item_expl clob;
-alter table rental_details add total_payment number;
-select * from rental_details;
-
-insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3007);  
-insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status, item_expl) 
-values(item_no_seq.nextval, 'miri', '카시트', 'TEAMTEX', '페라리 코스모 SP', 25000, '2018/7/1', add_months('2018/7/1',3), 1,'어린아이 있는 집에 꼭 필요한 카시트입니다.');
-select * from item;
---RENTAL DETAILS 추가
-insert into rental_details(rental_no, item_no, id, rental_date, return_date)
-values (rental_no_seq.nextval, 10001, 'yosep', '2018/8/1' , '2018/8/2');
-insert into rental_details(rental_no, item_no, id, rental_date, return_date)
-values (rental_no_seq.nextval, 10003, 'yosep', '2018/8/2' , '2018/8/5');
---'yosep'의 대여내역 조회 
-select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  r.rental_date, r.return_date 
-from rental_details r, item i
-where r.item_no=i.item_no and r.id='yosep';
-
---'miri'의 등록아이템중 아이템 번호를 조회
-select i.item_no from item i where i.id='miri';
-
---'miri'의 등록내역 조회
-select r.* 
-from Rental_details r,(select i.item_no from item i where i.id='miri') a
-where r.item_no=a.item_no;
-
---'miri' 등록내역 상세 조회(조인)
- select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, r.rental_date, r.return_date
-from Rental_details r,(select i.item_no from item i where i.id='miri') a, item i
-where r.item_no=a.item_no and r.item_no=i.item_no;
-
-select * from item;
-
-select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,
-		to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, ic.cat_no, c.cat_name
-from item i, category c, item_category ic
-where i.item_status=1 and i.item_no=10004 and i.item_no=ic.item_no and ic.cat_no=c.cat_no
-
-select * from item_category;
-select * from picture;
-
-select * from item;
-
-select * from rental_details;
-insert into rental_details values(rental_no_seq.nextval,10001,'yosep',sysdate,(sysdate+10));
-insert into rental_details values(rental_no_seq.nextval,10001,'yosep',sysdate+10,sysdate+20);
-select sysdate,max(return_date) from rental_details where item_no=10001;
-select * from item where item_no=10013;
-update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10013;
-
-update member set pwd='1234',name='이동규',address='당진',tel='041' where id='qqq';
-select * from member;
-select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, r.rental_no, r.rental_date, r.return_date
-from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
-
-delete from picture where item_no = 10001
-<<<<<<< HEAD
-select picture_path from picture where item_no = 10002
-
-select pwd from member where id='qqq',name='이동규',tel='041'
-=======
-
-select picture_path from picture where item_no = 10002
-
-select to_char(rental_date,'yyyymmdd'),to_char(return_date,'yyyymmdd') from rental_details where item_no=10001;
-
-select picture_path from picture where item_no = 10002;
-
-select * from RENTAL_DETAILS;
-
-update rental_details set return_date=sysdate where rental_no=200005;
-
-select Max(return_date) from rental_details where item_no='10005';
-delete from RENTAL_DETAILS where item_no=?;
-
-<<<<<<< HEAD
-update rental_details set return_date=sysdate where rental_no=200005;
-
-create sequence review_no_seq start with 8001 nocache;
-select * from review;
+-- 8. review --
 create table review(
-	review_no varchar2(100) primary key,
+	review_no number primary key,
 	review_title varchar2(100) not null,
 	review_content clob not null,
 	review_grade number default 0,
@@ -278,20 +202,104 @@ create table review(
 	id varchar2(100) not null,
 	rental_no number default 0,
 	
-    
     constraint fk_review_id foreign key(id) references member ON DELETE CASCADE,
     constraint fk_review_item_no foreign key(item_no) references item ON DELETE CASCADE,
     constraint fk_review_rental_no foreign key(rental_no) references rental_details ON DELETE CASCADE
 );
-insert into review values(review_no_seq.nextval,'후기1','으하하하',0,0,sysdate,10003,'lsy',200005);
-drop table review;
 
-update rental_details set return_date=sysdate where rental_no=200005;
+---------------------------------------
+------------create sequence------------
+---------------------------------------
+--상품번호 : 10001~10999
+--거래번호 : 200001~209999
+--분류번호 : 3001~3020  
+--리뷰번호 : 4000001~
+create sequence item_no_seq start with 10001 nocache;
+create sequence rental_no_seq start with 200001 nocache;
+create sequence cat_no_seq start with 3001 nocache;
+create sequence review_no_seq start with 4000001 nocache;
 
-update item set item_status=0,item_expdate=to_date('2018-09-08','YYYY-MM-DD') where item_no=10018;
-select sysdate, to_char(max(return_date), 'yyyy-MM-DD') from rental_details where item_no=10018;
+---------------------------------------
+------------insert values------------
+---------------------------------------
 
-update rental_details set return_date=sysdate where rental_no=200005;
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+-- 1.member --
+insert into member(id,pwd,name,address,tel,point,type) values('miri', '1234', '미리', '판교','031',10000,1);
+insert into member(id,pwd,name,address,tel,point,type) values('qqq', '1234', '동규', '수원','032',10000,1);
+insert into member(id,pwd,name,address,tel,point,type) values('yosep', '1234', '요셉', '강남','033',10000,1);
+insert into member(id,pwd,name,address,tel,point,type) values('lsy', '1234', '성열', '강남','034',10000,1);
+insert into member(id,pwd,name,address,tel,point,type) values('jangso711', '1234', '소정', '강남','035',10000,1);
+insert into member(id,pwd,name,address,tel,point,type) values('jb', '1234', '정빈', '강남','036',10000,1);
+--관리자 아이디
+insert into member(id,pwd,name,address,tel,point,type) values('admin', 'admin', '관리자', '-','-',0,0);
+
+-- 2.item --
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status, item_expl) 
+values(item_no_seq.nextval, 'miri', '카시트', 'TEAMTEX', '페라리 코스모 SP', 25000, '2018/7/1', add_months('2018/7/1',3), 1,'어린아이 있는 집에 꼭 필요한 카시트입니다.');
+
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status, item_expl) 
+values(item_no_seq.nextval, 'yosep', '유모차', '드림아일랜드', '컴퍼트', 23000, sysdate, add_months(sysdate,3), 1,'럭셔리 끝판왕 유모차입니다');
+
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status, item_expl) 
+values(item_no_seq.nextval, 'miri', '모빌', '세도나', 'KOSTA', 11000, sysdate, add_months(sysdate,3), 1,'잠이 솔솔 모빌');
+
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status,item_expl) 
+values(item_no_seq.nextval, 'qqq', '뽀로로 유모차', '뽀로로친구들', '뽀롱뽀롱', 35000, sysdate, add_months(sysdate,3), 1,'아이들이 좋아하는 뽀로로 유모차입니다');
+
+-- 3.item_add --
+insert into item_add(item_no,rental_count,grade) values(10001,3,5);
+insert into item_add(item_no) values(10002);
+insert into item_add(item_no) values(10003);
+insert into item_add(item_no) values(10004);
+
+-- 4.category --
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '등산');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '물놀이');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '캠핑');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '낚시');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '여행');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '겨울스포츠');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '야외스포츠');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '유아/아동');
+insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '기타');
+
+-- 5.item_category --
+insert into ITEM_CATEGORY(item_no, cat_no) values(10001,3008);  
+insert into ITEM_CATEGORY(item_no, cat_no) values(10002,3008);  
+insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3008);  
+insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3008); 
+insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3009); 
+
+-- 6. picture --
+
+insert into picture(item_no,picture_path) values(10001,'carseat.jpg');
+insert into picture(item_no,picture_path) values(10001,'carseat2.jpg');
+insert into picture(item_no,picture_path) values(10002,'stroller.jpg');
+insert into picture(item_no,picture_path) values(10003,'mobile.jpg');
+insert into picture(item_no,picture_path) values(10004,'pororo.jpg');
+
+-- 7.rental_details--
+insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
+values (rental_no_seq.nextval, 10001, 'lsy', '2018/7/11' , '2018/7/15',100000);
+insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
+values (rental_no_seq.nextval, 10001, 'yosep', '2018/9/1' , '2018/9/15',350000);
+insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
+values (rental_no_seq.nextval, 10001, 'jangso711', '2018/10/1' , '2018/10/12',275000);
+
+-- 8. review --
+insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,'카시트 좋아요','조카가 잠깐와서 빌렸어요. 감사합니다.',5,0,'2018/07/18',10001,'lsy',200001);
+---------------------------------------
+------------select values------------
+---------------------------------------
+select * from member;
+select * from item;
+select * from item_add;
+select * from category;
+select * from item_category;
+select * from picture;
+select * from rental_details;
+select * from review;
+
+
+
+
