@@ -16,7 +16,7 @@ public class ItemRegisterController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		ItemVO ivo = new ItemVO();
-		int itemNo;
+		int itemNo=0;
 		String name = request.getParameter("itemName");
 		String brand = request.getParameter("itemBrand");
 		String model = request.getParameter("itemModel");
@@ -46,8 +46,8 @@ public class ItemRegisterController implements Controller {
 		 
 		
 		
-		//return "redirect:front?command=ItemDetail&";
-		return "redirect:index.jsp";
+		return "redirect:front?command=ItemDetail&itemNo="+itemNo;
+		//return "redirect:index.jsp";
 	}
 
 }

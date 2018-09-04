@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.kosta.borrow.model.ItemDAO;
-import org.kosta.borrow.model.RentalDetailVO;
 
 public class ItemEarlyReturnController implements Controller {
 
