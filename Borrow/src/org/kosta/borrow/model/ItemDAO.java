@@ -34,26 +34,24 @@ public class ItemDAO {
 		if(con!=null)con.close();
 	}
 
-	public void deleteItem(ItemVO vo,String dirPath) throws SQLException {
+	public void deleteItem(ItemVO vo,String flag) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ArrayList<String> picList= null;
 		try {
 			con=getConnection();
-			String sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
-			pstmt.executeUpdate();
-			pstmt.close();
-			picList = getPictureList(vo.getItemNo());
-			for(String fileName:picList) {
-				String path = dirPath+File.separator+fileName;
-				File f = new File(path);
-				f.delete();
+			String sql="";
+			if(flag=="true") {
+				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+			}else {
+				sql = "update item set item_status=0,item_expdate=? where item_no=?"; 
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, flag);
+				pstmt.setInt(2, Integer.parseInt(vo.getItemNo()));
 			}
-			pstmt = con.prepareStatement("delete from picture where item_no = ?");
-			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();	
 		}finally {
 			closeAll(pstmt, con);
 		}
@@ -572,11 +570,11 @@ public class ItemDAO {
 
 	}
 
-	public boolean deleteCheck(String itemNo) throws SQLException {
+	public String deleteCheck(String itemNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		boolean result = false;
+		String result = "true";
 		try {
 			con=getConnection();
 			String sql = "select sysdate,max(return_date) from rental_details where item_no=?";
@@ -587,8 +585,8 @@ public class ItemDAO {
 				Date today = rs.getDate(1);
 				Date returnDate = rs.getDate(2);
 				if(today.before(returnDate)) {
-					result = false;
-				}else result = true;
+					result = returnDate.toString();
+				}
 			}
 		}finally {
 			closeAll(pstmt, con);
