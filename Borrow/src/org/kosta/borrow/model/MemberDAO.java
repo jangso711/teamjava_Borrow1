@@ -223,6 +223,26 @@ public class MemberDAO {
 			closeAll(pstmt, con);			
 		}		
 	}
+	public MemberVO findPwd(String id,String name, String tel) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		MemberVO vo=null;
+		try {
+			con=dataSource.getConnection();
+			String sql="select pwd from member where id=? and name=? and tel=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, tel);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+				vo=new MemberVO(id,rs.getString(1),name,tel,null,0);
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return vo;
+	}
 	
 	
 }

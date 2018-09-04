@@ -16,7 +16,7 @@ public class ItemRegisterController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		ItemVO ivo = new ItemVO();
-		int itemNo;
+		int itemNo=0;
 		String name = request.getParameter("itemName");
 		String brand = request.getParameter("itemBrand");
 		String model = request.getParameter("itemModel");
@@ -46,8 +46,8 @@ public class ItemRegisterController implements Controller {
 		 
 		
 		
-		//return "redirect:front?command=ItemDetail&";
-		return "redirect:index.jsp";
+		return "redirect:front?command=ItemDetail&itemSearchId="+itemNo;//0903 동규 물품등록시 상품 상세정보로이동하게 수정
+		//return "redirect:index.jsp";
 	}
 
 }
