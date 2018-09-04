@@ -22,7 +22,7 @@
 			<span>빌려준 물품이 없습니다!! </span>
 		</c:when>
 		<c:otherwise>
-			<table class="col-sm-12">
+			<table class="table col-sm-12">
 				<tr>
 					<th>사진</th>
 					<th>거래번호</th>
@@ -30,7 +30,8 @@
 					<th>빌린 사람(id)</th>
 					<th>받은금액</th>
 					<th>대여날짜</th>
-					<th>반납날짜</th>					
+					<th>반납날짜</th>		
+					<th>반납상태</th>			
 				</tr>
 				<c:forEach items="${requestScope.registerlist}" var="registerdetail">
 					<fmt:parseDate value="${registerdetail.rentalDate}" var="strPlanDate" pattern="yyyy-MM-dd"/>
@@ -45,6 +46,7 @@
 						<td>${registerdetail.itemVO.itemPrice}원 x ${endDate-strDate}일 = ${registerdetail.itemVO.itemPrice*(endDate-strDate)}원</td>
 						<td>${registerdetail.rentalDate}</td>
 						<td>${registerdetail.returnDate}</td>
+						<td>이용중 / 반납완료</td>
 					</tr>
 				</c:forEach>
 			</table>

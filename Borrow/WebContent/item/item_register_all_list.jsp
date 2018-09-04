@@ -10,7 +10,7 @@ h3{
 input[type=text]{
 	size:50px;
 	height:40px;
-	width:250px;
+	width:250px;	
 	border-radius: 5px;
 	padding:5px;
 }
