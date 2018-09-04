@@ -1,31 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <style>
 h3{
 	padding-left:100px;
 	padding-top:30px;
 	font-weight: bold;
-}
-input[type=text]{
-	size:50px;
-	height:40px;
-	width:250px;
-	border-radius: 5px;
-	padding:5px;
-}
-input[type=number]{
-	size:50px;
-	height:40px;
-	width:250px;
-	border-radius: 5px;
-	padding:5px;
-}
-.formContent{
-	padding-top:20px;
-	padding-left:200px;
-	text-align:center;
 }
 .bgheader{
 
@@ -44,8 +24,8 @@ input[type=number]{
 				</tr>
 			</thead>
 			<tbody>
+				<!-- 180903 MIRI 검색어와 일치하는 상품이 없을 시 alert 띄우고 메인화면으로 이동 -->
 				<c:choose>
-					<!-- 180903 MIRI 검색어와 일치하는 상품이 없을 시 alert 띄우고 메인화면으로 이동 -->
 					<c:when test="${empty requestScope.itemSearchList  }">
 						<script>
 							alert("검색하신 '${param.searchtext}'에 해당하는 상품이 없습니다.");

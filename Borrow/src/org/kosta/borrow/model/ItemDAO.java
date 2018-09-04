@@ -162,7 +162,7 @@ public class ItemDAO {
 			sb.append(" select id, item_no, item_name, item_expl, item_price");
 			sb.append(" from item");
 			sb.append(" where item_status=1 and item_name like ?");
-			sb.append(" order by item_no asc");
+			sb.append(" order by item_no desc");	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
@@ -204,7 +204,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
 			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
-			sb.append(" where item_status=1 and item_no=? order by item_no asc");
+			sb.append(" where item_status=1 and item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
@@ -242,7 +242,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no asc";
+			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -346,7 +346,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name");
 			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			rs = pstmt.executeQuery();
@@ -462,7 +462,7 @@ public class ItemDAO {
 		return rvo;
 	}
 
-	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats,String expl) throws SQLException {
+	public int registerItem(MemberVO mvo,ItemVO ivo, String[] cats,String expl,int month) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
@@ -478,7 +478,7 @@ public class ItemDAO {
 			pstmt.setString(3,ivo.getItemBrand());
 			pstmt.setString(4, ivo.getItemModel());
 			pstmt.setInt(5, ivo.getItemPrice());
-			pstmt.setInt(6, 3);// default 3개월
+			pstmt.setInt(6, month);// default 3개월
 			pstmt.setString(7,expl);
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -693,6 +693,75 @@ public class ItemDAO {
 	        System.out.println("두 날짜의 날짜 차이: "+calDateDays);
 	        
 	        return (int) calDateDays;
+	}
+	public void updateItem(ItemVO ivo,String dirPath) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+	
+			String sql = "update item set item_name=?, item_brand=?,item_model=?,item_price=?,item_expdate=?,item_expl=? where item_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ivo.getItemName());
+			pstmt.setString(2, ivo.getItemBrand());
+			pstmt.setString(3,ivo.getItemModel());
+			pstmt.setInt(4, ivo.getItemPrice());
+			pstmt.setString(5, ivo.getItemExpDate());
+			pstmt.setString(6, ivo.getItemExpl());
+			pstmt.setInt(7, Integer.parseInt(ivo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			/*ArrayList<String> picList = getPictureList(ivo.getItemNo());
+			for(String fileName:picList) {
+				String path = dirPath+File.separator+fileName;
+				File f = new File(path);
+				f.delete();
+			}*/
+			
+			sql = "delete from item_category where item_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			sql = "delete from picture where item_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			ArrayList<CategoryVO> cats=ivo.getCatList();
+			for(int i=0;i<cats.size();i++) {
+			
+				sql="insert into item_category(item_no,cat_no) values(?,?)";
+				pstmt = con.prepareStatement(sql.toString());
+				pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+				pstmt.setInt(2, Integer.parseInt(cats.get(i).getCatNo()));
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+			//picture 저장
+			ArrayList<String>pics = ivo.getPicList();
+			for(int i=0;i<pics.size();i++) {
+				sql="insert into picture(item_no,picture_path) values(?,?)";
+				pstmt=con.prepareStatement(sql.toString());
+				pstmt.setInt(1, Integer.parseInt(ivo.getItemNo()));
+				pstmt.setString(2, pics.get(i));
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+
+			
+			
+			
+			
+			
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		
 	}    
 	        
 

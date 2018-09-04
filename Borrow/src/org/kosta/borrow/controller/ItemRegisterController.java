@@ -1,6 +1,6 @@
 package org.kosta.borrow.controller;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,59 +10,36 @@ import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
 import org.kosta.borrow.model.MemberVO;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 public class ItemRegisterController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-
-		//180831 MIRI Test 후 주석 수정
-		//String workspacePath="C:\\Users\\kosta\\git\\teamjava_Borrow1\\Borrow\\WebContent\\upload\\";
-//		String savePath = request.getServletContext().getRealPath("upload");
-//		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
-
-		// 파일 크기 10MB로 제한
-		int sizeLimit = 1024*1024*10;	
-		//String workspacePath="C:\\Users\\kosta\\git\\teamjava_Borrow1\\Borrow\\WebContent\\upload\\";
-		//MultipartRequest multi = new MultipartRequest(request, workspacePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
-		String savePath = request.getServletContext().getRealPath("upload");
-		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
-		
-			
-		/*String fileName = multi.getFilesystemName("img");*/
-		
-		
 		ItemVO ivo = new ItemVO();
 		int itemNo;
-		String name = multi.getParameter("itemName");
-		String brand = multi.getParameter("itemBrand");
-		String model = multi.getParameter("itemModel");
-		int price = Integer.parseInt(multi.getParameter("itemPrice"));
-		String[] cats= multi.getParameterValues("category");
-		String expl = multi.getParameter("itemExpl");
+		String name = request.getParameter("itemName");
+		String brand = request.getParameter("itemBrand");
+		String model = request.getParameter("itemModel");
+		int price = Integer.parseInt(request.getParameter("itemPrice"));
+		String[] cats= request.getParameterValues("category");
+		String expl = request.getParameter("itemExpl");
+		int month = Integer.parseInt(request.getParameter("duration"));
 		
 		ivo.setItemName(name);
 		ivo.setItemBrand(brand);
 		ivo.setItemModel(model);
 		ivo.setItemPrice(price);
-		
-		
-		Enumeration<String> fileNames = multi.getFileNames();
-		while(fileNames.hasMoreElements()) {
-			String fn = (String)fileNames.nextElement();
-			String fileName=multi.getFilesystemName(fn);
-			ivo.getPicList().add(fileName);
+		//pictureList 받아오는 코드 추가
+		String[] pics = request.getParameterValues("pics");
+		for(int i=0;i<pics.length;i++) {
+			ivo.getPicList().add(pics[i]);
 		}
-		
 		
 		HttpSession session = request.getSession(false);
 
 		if(session!=null&&session.getAttribute("user")!=null) {
 			MemberVO mvo = (MemberVO)session.getAttribute("user");
-			itemNo=ItemDAO.getInstance().registerItem(mvo,ivo,cats,expl);
+			itemNo=ItemDAO.getInstance().registerItem(mvo,ivo,cats,expl,month);
 		}else {
 			//세션만료
 		}

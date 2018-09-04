@@ -34,13 +34,10 @@ insert into member values('jangso711', '1234', '소정', '강남','035',10000);
 insert into member values('jb', '1234', '정빈', '강남','036',10000);
 
 select * from member;
-<<<<<<< HEAD
 
 select add_months(sysdate,3) from dual;
-=======
 select * from item_category;
 
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 create table item(
    item_no number primary key,
    id varchar2(100) not null,
@@ -110,6 +107,8 @@ select * from member;
 select * from picture;
 select * from item_category;
 select * from category;
+
+delete item where item_no=10012
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
 insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
@@ -199,10 +198,6 @@ where r.item_no=a.item_no;
 from Rental_details r,(select i.item_no from item i where i.id='miri') a, item i
 where r.item_no=a.item_no and r.item_no=i.item_no;
 
-
-
-
-
 select * from item;
 
 select i.id, i.item_name, i.item_brand, i.item_model, i.item_price,to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,
@@ -222,23 +217,10 @@ select sysdate,max(return_date) from rental_details where item_no=10001;
 select * from item where item_no=10013;
 update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10013;
 
-
-<<<<<<< HEAD
 update member set pwd='1234',name='이동규',address='당진',tel='041' where id='qqq';
 select * from member;
-=======
-
-
-
-
-
 select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, r.rental_no, r.rental_date, r.return_date
 from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
 
-
-
-
-
 delete from picture where item_no = 10001
 select picture_path from picture where item_no = 10002
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
