@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 h3{
 	padding-left:100px;
@@ -41,7 +42,7 @@ h3{
 								<img src="${pageContext.request.contextPath }/upload/${itemCategorySearchList.picList[0]}" width="150" height="150"></a></td>
 							<td><a href="${detailurl }">${itemCategorySearchList.itemName }(링크)</a></td>
 							<td><pre>${itemCategorySearchList.itemExpl }</pre></td>
-							<td>${itemCategorySearchList.itemPrice }</td>
+							<td><fmt:formatNumber>${itemCategorySearchList.itemPrice }</fmt:formatNumber></td>
 							<td>${itemCategorySearchList.memberVO.id }</td>
 						</tr>
 					</c:forEach>						

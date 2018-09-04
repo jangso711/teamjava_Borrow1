@@ -22,7 +22,7 @@
 			<span>대여하신 물품이 없습니다!! </span>
 		</c:when>
 		<c:otherwise>
-			<table class="col-sm-12">
+			<table class="table col-sm-12">
 				<tr>
 					<th>사진</th>
 					<th>거래번호</th>
@@ -43,7 +43,7 @@
 						<td>${rentaldetail.rentalNo}</td>
 						<td>${rentaldetail.itemVO.itemName}</td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
-						<td>${rentaldetail.itemVO.itemPrice}원 x ${endDate-strDate}일 = ${rentaldetail.itemVO.itemPrice*(endDate-strDate)}원</td>
+						<td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td>
 						<td>${rentaldetail.rentalDate}</td>
 						<td>${rentaldetail.returnDate}</td>
 						<td><button type="button" class="btn btn_center btn_pk" onclick="location.href=

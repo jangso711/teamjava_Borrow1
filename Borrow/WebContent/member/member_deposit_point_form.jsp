@@ -78,7 +78,7 @@ input[type=password] {
 <td>계좌비밀번호</td><td colspan="2"><input type="password" name="countPassword" required="required"></td>
 </tr>
 <tr>
-<td>충전 금액</td><td colspan="2"><input type="number" id="point" name="point" required="required"></td>
+<td>충전 금액</td><td colspan="2"><input type="number" pattern="[0-9]+([,\.][0-9]+)?" id="point" name="point" required="required"></td>
 </tr>
 </table>
 <button type="submit" class="btn btn_center btn_pk" id="submitBtn">충전하기</button>
