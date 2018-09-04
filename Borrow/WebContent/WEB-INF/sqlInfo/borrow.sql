@@ -7,6 +7,7 @@ create sequence rental_no_seq start with 200001 nocache;
 create sequence cat_no_seq start with 3001 nocache;
 
 
+
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
@@ -240,3 +241,24 @@ select Max(return_date) from rental_details where item_no='10005';
 delete from RENTAL_DETAILS where item_no=?;
 
 update rental_details set return_date=sysdate where rental_no=200005;
+
+create sequence review_no_seq start with 8001 nocache;
+select * from review;
+create table review(
+	review_no varchar2(100) primary key,
+	review_title varchar2(100) not null,
+	review_content clob not null,
+	review_grade number default 0,
+	review_hit number default 0,
+	review_regdate date not null,
+	item_no number default 0,
+	id varchar2(100) not null,
+	rental_no number default 0,
+	
+    
+    constraint fk_review_id foreign key(id) references member ON DELETE CASCADE,
+    constraint fk_review_item_no foreign key(item_no) references item ON DELETE CASCADE,
+    constraint fk_review_rental_no foreign key(rental_no) references rental_details ON DELETE CASCADE
+);
+insert into review values(review_no_seq.nextval,'후기1','으하하하',0,0,sysdate,10003,'lsy',200005);
+drop table review;

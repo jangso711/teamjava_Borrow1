@@ -78,6 +78,10 @@ public class HandlerMapping {
 			controller=new MemberWithdrawPointFormController();
 		}else if(command.equals("ItemEarlyReturn")) {
 			controller=new ItemEarlyReturnController();
+		}else if(command.equals("ReviewList")) {
+			controller=new ReviewListController();
+		}else if(command.equals("ReviewPost")) {
+			controller=new ReviewPostController();
 		}
 		return controller;
 	}
