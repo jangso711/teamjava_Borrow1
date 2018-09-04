@@ -61,74 +61,7 @@ create table item(
    constraint fk_item_id foreign key(id) references member ON DELETE CASCADE
 );
 
-insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status) 
-values(item_no_seq.nextval, 'miri', '카시트', 'TEAMTEX', '페라리 코스모 SP', 25000, sysdate, add_months(sysdate,3), 1);
-
-insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status) 
-values(item_no_seq.nextval, 'yosep', '유모차', '드림아일랜드', '컴퍼트', 23000, sysdate, add_months(sysdate,3), 1);
-
-insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status) 
-values(item_no_seq.nextval, 'miri', '모빌', '세도나', 'KOSTA', 11000, sysdate, add_months(sysdate,3), 1);
-
-insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status) 
-values(item_no_seq.nextval, 'qqq', '뽀로로 유모차', '뽀로로친구들', '뽀롱뽀롱', 35000, sysdate, add_months(sysdate,3), 1);
-
-update item set item_status=1 where item_no=10004;
-
-select item_no, item_name, item_price, id, item_expl, item_status from item where item_status=1;
-select item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate from item where item_status=1 and item_no=10001;
-
-select id, item_name, item_brand, item_model, item_price,
-	to_char(item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(item_expdate, 'yyyy-MM-dd') as item_expdate,
-	item_expl
-from item
-where item_status=1 and item_no=10008
-
-select i.item_no, i.item_name, i.item_price, i.id, i.item_expl, p.picture_path
-from item i, picture p
-where i.item_status=1;
-
-select c.cat_no, c.cat_name
-from item_category ic, category c
-where ic.cat_no=c.cat_no and ic.item_no=10008
-
-insert into picture values(10007,'Cutting.png');
-
-update item set item_expl='카시트~' where item_no=10001;
-update item set item_expl='유모롱롱' where item_no=10002;
-update item set item_expl='모비루쨩~' where item_no=10003;
-update item set item_expl='크롱크롱' where item_no=10004;
-
-select  i.item_no, i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate, to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, ic.cat_no, c.cat_name 
-from item i, category c, item_category ic 
-where i.item_status=1 and i.item_no=10001 and i.item_no=ic.item_no and ic.cat_no=c.cat_no;
-
-select id, item_no, item_name, item_expl, item_price
-from item
-where item_status=1 and item_name like '%유모차%'
-order by item_no asc;
-
-select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name
-from item i, item_category ic, category c
-where i.item_no=ic.item_no and ic.cat_no=3007 and ic.cat_no=c.cat_no
-
-select * from item;
-select * from member;
-select * from picture;
-select * from item_category;
-select * from category;
-
-insert into picture(item_no, picture_path) values(10010,'Glass.png');
-insert into picture(item_no, picture_path) values(10008,'Module1.png');
-
-select * from rental_details;
-delete item where item_no=10020
-
-insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
-insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
-insert into picture(item_no, picture_path) values(10004,'cell_selected.png');
-update picture set picture_path='EmptyTray.png' where item_no=10007;
-
+--3.item_add---
 create table item_add(
    item_no number primary key,
    rental_count number default 0,
@@ -141,25 +74,8 @@ create table category(
    cat_name varchar2(100) not null
 )
 
-update picture set picture_path='배경5.jpg' where picture_path='배경51.jpg'
 
-update item
-set item_expl='가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
-	||chr(13)||chr(10)||'가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
-	||chr(13)||chr(10)||'가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
-	||chr(13)||chr(10)||'가나다라마바사아자차카타파하가나다라마바사아자차카타파하'
-where item_no=10021;
-
-insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '등산용품');
-insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '물놀이용품');
-insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '캠핑용품');
-insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '겨울스포츠');
-insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '낚시용품');
-insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '야외스포츠');
-insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '유아용품');
-
-select * from category;
-
+-- 5. item_category
 create table item_category(
    item_no number not null,
    cat_no number not null,
@@ -246,12 +162,19 @@ values(item_no_seq.nextval, 'miri', '모빌', '세도나', 'KOSTA', 11000, sysda
 insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status,item_expl) 
 values(item_no_seq.nextval, 'qqq', '뽀로로 유모차', '뽀로로친구들', '뽀롱뽀롱', 35000, sysdate, add_months(sysdate,3), 1,'아이들이 좋아하는 뽀로로 유모차입니다');
 
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status,item_expl) 
+values(item_no_seq.nextval, 'jangso711', '최고급 낚시대', '-', '-', 5000, '2018/9/1', add_months('2018/9/1',2), 1,'구매한지 1달 된 거의 새 제품입니다.');
+
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status,item_expl) 
+values(item_no_seq.nextval, 'qqq', 'G GG DD 텐트', '-', '-', 15000, '2018/5/1', add_months('2018/5/1',2), 1,'2017년 히트상품으로 판매하던 인기 짱짱 텐트입니다. 캠핑장 최고의 텐트로 다른 캠핑족들의 부러움을 사는 멋쟁이 텐트입니다. 개인적인 사정으로 캠핑을 주자 가지 못하게되어 대여합니다.');
+
 -- 3.item_add --
 insert into item_add(item_no,rental_count,grade) values(10001,3,5);
 insert into item_add(item_no) values(10002);
 insert into item_add(item_no) values(10003);
 insert into item_add(item_no) values(10004);
-
+insert into item_add(item_no) values(10005);
+insert into item_add(item_no) values(10006);
 -- 4.category --
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '등산');
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '물놀이');
@@ -269,7 +192,12 @@ insert into ITEM_CATEGORY(item_no, cat_no) values(10002,3008);
 insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3008);  
 insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3008); 
 insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3009); 
-
+insert into ITEM_CATEGORY(item_no, cat_no) values(10005,3004); 
+insert into ITEM_CATEGORY(item_no, cat_no) values(10005,3007); 
+insert into ITEM_CATEGORY(item_no, cat_no) values(10006,3003); 
+insert into ITEM_CATEGORY(item_no, cat_no) values(10006,3004); 
+insert into ITEM_CATEGORY(item_no, cat_no) values(10006,3005); 
+insert into ITEM_CATEGORY(item_no, cat_no) values(10006,3007); 
 -- 6. picture --
 
 insert into picture(item_no,picture_path) values(10001,'carseat.jpg');
@@ -277,6 +205,9 @@ insert into picture(item_no,picture_path) values(10001,'carseat2.jpg');
 insert into picture(item_no,picture_path) values(10002,'stroller.jpg');
 insert into picture(item_no,picture_path) values(10003,'mobile.jpg');
 insert into picture(item_no,picture_path) values(10004,'pororo.jpg');
+insert into picture(item_no,picture_path) values(10005,'fishingrod.jpg');
+insert into picture(item_no,picture_path) values(10005,'rod.jpg');
+insert into picture(item_no,picture_path) values(10006,'tent.jpg');
 
 -- 7.rental_details--
 insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
@@ -285,6 +216,10 @@ insert into rental_details(rental_no, item_no, id, rental_date, return_date,tota
 values (rental_no_seq.nextval, 10001, 'yosep', '2018/9/1' , '2018/9/15',350000);
 insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
 values (rental_no_seq.nextval, 10001, 'jangso711', '2018/10/1' , '2018/10/12',275000);
+insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
+values (rental_no_seq.nextval, 10005, 'miri', '2018/9/20' , '2018/9/22',10000);
+insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
+values (rental_no_seq.nextval, 10006, 'jb', '2018/5/2' , '2018/5/4',30000);
 
 -- 8. review --
 insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,'카시트 좋아요','조카가 잠깐와서 빌렸어요. 감사합니다.',5,0,'2018/07/18',10001,'lsy',200001);
