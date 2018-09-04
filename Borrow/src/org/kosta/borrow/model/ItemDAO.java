@@ -762,6 +762,21 @@ public class ItemDAO {
 			closeAll(rs,pstmt,con);
 		}
 		
+	}
+	public void itemEarlyReturn(String rentalNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con=getConnection();
+			String sql = "update rental_details set return_date=sysdate where rental_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rentalNo);
+			pstmt.executeUpdate();
+		}finally {
+			closeAll(pstmt, con);
+		}
+
+		
 	}    
 	        
 
