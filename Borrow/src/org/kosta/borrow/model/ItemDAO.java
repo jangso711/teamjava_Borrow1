@@ -680,6 +680,7 @@ public class ItemDAO {
 	        SimpleDateFormat format = new SimpleDateFormat("yyyymmdd");
 	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
 	        Date FirstDate = format.parse(rentalDate);
+	        System.out.println(returnDate);
 	        Date SecondDate = format.parse(returnDate);
 	        
 	        // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
