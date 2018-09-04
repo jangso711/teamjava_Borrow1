@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
+
 h3{
 	padding-left:100px;
 	padding-top:30px;
@@ -46,6 +47,7 @@ input[type=password] {
 }
 </style>
 <script type="text/javascript">
+
 					$(document).ready(function() {
 						$("#id").keyup(function(){//아이디 중복확인
 							var le=$(this).val();
@@ -113,4 +115,5 @@ input[type=password] {
 		</table>
 		</div> 
 	</form>
+
 </div>

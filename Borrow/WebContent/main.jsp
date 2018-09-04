@@ -5,9 +5,9 @@
 	<form action="${pageContext.request.contextPath}/front">
 		<input type="hidden" name="command" value="ItemSearch"> <input
 			type="text" name="searchtext" placeholder="Search..."
-			style="width: 700px; height: 50px; letter-spacing: 2px" />
+			style="width: 600px; height: 35px; letter-spacing: 2px; margin-bottom: 9px"/>
 	</form>
-	<br> <br> <br> 
+	
 	<!-- 180903 MIRI 카테고리 url 작성 -->
 	<a href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=3004"><img id="wintersports"
 		height="150" width="150" src="${pageContext.request.contextPath }/img/겨울스포츠.png" alt="겨스"></a>
