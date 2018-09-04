@@ -199,24 +199,23 @@ input[data-readonly] {
 			        	$.ajax({
 			        		type:"post",
 			        		url:"${pageContext.request.contextPath}/front",
-			        		data:"command=ItemDeleteCheck&itemNo="+${requestScope.itemDetail.itemNo},
+			        		data:"command=ItemDeleteCheck&itemNo=${requestScope.itemDetail.itemNo}",
 			        		success: function(result){
 			        			$("#flag").val(result);
 			        			if(result=="true"){// 삭제 가능
 			        				
-			        				if(confirm("현재 대여중인 상품이 없습니다. 상품을 삭제하시겠습니까?")){
+			        				if(confirm("현재 대여중인 회원이 없습니다. 상품을 삭제하시겠습니까?")){
 			        					//location.href="${pageContext.request.contextPath}/front?command=ItemDelete&itemNo=${requestScope.itemDetail.itemNo}";
 			        					$("#deleteForm").submit();
 			        				}
 			        			}else{	//삭제 여부 묻기
 			      
-									if(confirm("현재 대여 중인 상품이 있습니다.\n삭제 예정일 : "+result+"\n삭제 신청하시겠습니까?")){
+									if(confirm("현재 대여 중인 회원이 있습니다.\n삭제 예정일 : "+result+"\n삭제 신청하시겠습니까?")){
 										//location.href="${pageContext.request.contextPath}/front?command=ItemDelete&itemNo=${requestScope.itemDetail.itemNo}&";
 										$("#deleteForm").submit();
 									}
-			        			}
-			        		}
-			        	});
+			        			}}
+			        		});
 			        });
 			  } );
 			</script>
