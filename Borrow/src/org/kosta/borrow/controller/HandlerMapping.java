@@ -53,6 +53,8 @@ public class HandlerMapping {
 			controller = new ItemUpdateController();
 		}else if(command.equals("ItemDelete")) {
 			controller = new ItemDeleteController();
+		}else if(command.equals("ItemDeleteResult")) {
+			controller = new ItemDeleteResultController();	//180904 SOJEONG 추가
 		}else if(command.equals("ItemRentDetail")) {
 			controller = new ItemRentDetailController();
 		}else if(command.equals("ItemRentalList")) {
@@ -76,16 +78,17 @@ public class HandlerMapping {
 			controller=new MemberWithdrawPointController();
 		}else if(command.equals("MemberWithdrawPointForm")) {
 			controller=new MemberWithdrawPointFormController();
-
 			//180904 동규 MemberFindPwdController 추가
 		}else if(command.equals("MemberFindPwd")) {
 			controller=new MemberFindPwdController();
 		}else if(command.equals("MemberFindPwdForm")) {
 			controller=new MemberFindPwdFormController();
-
 		}else if(command.equals("ItemEarlyReturn")) {
 			controller=new ItemEarlyReturnController();
-//github.com/jangso711/teamjava_Borrow1.git
+		}else if(command.equals("ReviewList")) {
+			controller=new ReviewListController();
+		}else if(command.equals("ReviewPost")) {
+			controller=new ReviewPostController();
 		}
 		return controller;
 	}
