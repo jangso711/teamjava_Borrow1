@@ -240,4 +240,3 @@ select Max(return_date) from rental_details where item_no='10005';
 delete from RENTAL_DETAILS where item_no=?;
 
 update rental_details set return_date=sysdate where rental_no=200005;
-
