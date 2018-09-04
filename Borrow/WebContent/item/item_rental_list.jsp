@@ -40,7 +40,8 @@
 					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
 					<tr>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rentaldetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${rentaldetail.itemVO.picList[0]}" width="150" height="150" ></a></td>						
-						<td>${rentaldetail.rentalNo}</td>
+						<%-- 2015-09-04 대여상세 링크 추가 --%>
+						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${rentaldetail.rentalNo} &check=a">${rentaldetail.rentalNo}</a></td>
 						<td>${rentaldetail.itemVO.itemName}</td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
 						<td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td>

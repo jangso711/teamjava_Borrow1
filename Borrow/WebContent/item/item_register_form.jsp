@@ -92,7 +92,7 @@ ul{
 			$(this).parent().remove();
 		});
 	
-		
+	
 	});
 	
 
