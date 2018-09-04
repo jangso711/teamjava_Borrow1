@@ -17,6 +17,9 @@ h3 {
 .mySlides {display:none;}
 .w3-theme-d1 {color:#fff !important;background-color:#f1a4a3 !important}
 .w3-theme-d2 {color:#fff !important;background-color:#aeacb7 !important}
+input[data-readonly] {
+  pointer-events: none;
+}
 </style>
 <div class="col-sm-12 bgheader"></div>
 	<h3>상세보기</h3>
@@ -124,41 +127,74 @@ h3 {
 					}
 				}
 				
-				/* 180904 SOJEONG 대여중인 날짜 비활성화 함수*/
-	  			function unavailable(date){
-		 			d = date.getFullYear()+("0"+(date.getMonth()+1)).slice(-2)+("0"+date.getDate()).slice(-2);
-		  			if($.inArray(d, ${requestScope.dateList})==-1){
-			  			return [true,""];
-		  			}else{
-			 		 	return [false,""];
-		  			}
-	  			}
-	  
-	 			 $( function() {
-	   				var dates = $( "#from,#to" ).datepicker({
-	   					prevText: '이전 달',
-	   				  	nextText: '다음 달',
-	   					monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	   			 		monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	   			 	  	dayNamesShort: ['일','월','화','수','목','금','토'],
-	   			   		dayNamesMin: ['일','월','화','수','목','금','토'],
-	   			 		showMonthAfterYear: true,
-	   		  			yearSuffix: '년',
-	   			 		dateFormat:"yymmdd",
-	   			 	 	minDate: 0,
-	   			 	 	ma
-	    				beforeShowDay: unavailable,
-	    				onSelect : function(selectedDate){
-	    					 var option = this.id == "from" ? "minDate" : "maxDate",
-	    						      instance = $( this ).data( "datepicker" ),
-	    						      date = $.datepicker.parseDate(
-	    						        instance.settings.dateFormat ||
-	    						        $.datepicker._defaults.dateFormat,
-	    						        selectedDate, instance.settings );
-	    						    dates.not( this ).datepicker( "option", option, date );
-	    				}
-	    			});
-	  			} );
+				  /* 180904 SOJEONG 대여중인 날짜 비활성화 */
+				  var dates = ${requestScope.dateList};
+			 	function getNextDisabledDate(date){
+			 		if(dates==null)return "no";
+				  var nextDisabledDate = "no";
+				  dates.sort();
+				  $.each(dates, function(i, d) {
+				  	if(date<d){
+				  		nextDisabledDate = d;
+				  		return false;
+				  	}
+				  });
+				  if(nextDisabledDate=="no") return "no";
+				  return getDateInstance(nextDisabledDate);
+			  	}
+				function unavailable(date){		
+					d = date.getFullYear()+("0"+(date.getMonth()+1)).slice(-2)+("0"+date.getDate()).slice(-2);
+					if($.inArray(d,dates )==-1){
+						return [true,""];
+					}else{
+					 	return [false,""];
+					}
+				}
+				function getDateInstance(date){
+					var y = Math.floor(date /10000);
+			    	var m = Math.floor((date%10000)/100)-1;
+			    	var d = (date%100);
+			    	return new Date(y,m,d);	
+				}
+				 $(function() {
+			        var dates = $( "#from,#to" ).datepicker({
+			      	  showOn:"button",
+			      	  buttonText:"cal",
+			           prevText: '이전 달',
+			             nextText: '다음 달',
+			           monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			              dayNamesShort: ['일','월','화','수','목','금','토'],
+			              dayNamesMin: ['일','월','화','수','목','금','토'],
+			            showMonthAfterYear: true,
+			             yearSuffix: '년',
+			            dateFormat:"yymmdd",
+			             minDate: 0,
+			             maxDate: new Date("${requestScope.itemDetail.itemExpDate}"),
+			         beforeShowDay: unavailable,
+			         onSelect : function(selectedDate){
+			      	  	if(this.id=="from"){
+				        	var selDate = getDateInstance(selectedDate);
+				      	   	var nextDate = new Date(selDate.getTime() + 24*60*60*1000);
+							var nextDisabledDate = getNextDisabledDate(selectedDate);
+			      	  		dates.not(this).datepicker("option","disabled",false);
+			      	  		dates.not(this).datepicker("option","minDate",nextDate);	//선택한 datepicker가 아닌 다른 datepicker의 옵션을 설정
+			      	  		if(nextDisabledDate!="no")
+			      	  			dates.not(this).datepicker("option","maxDate",nextDisabledDate);
+			      	  	}
+			         },
+			         beforeShow: function(){
+			        	// 시작 날짜버튼 클릭시 재설정
+			        	 if(this.id=="from"){
+			         		$(this).datepicker('setDate');	//reset date
+			         		$("#to").datepicker('setDate');	//reset date
+			         		$("#to").datepicker("option","disabled",true);
+			        	 }
+			         }
+			      });
+			        $("#to").datepicker("option","disabled",true);
+			        
+			  } );
 			</script>
 
 			<c:set value="${requestScope.itemDetail.itemNo}" var="itemNo"></c:set>
@@ -176,8 +212,8 @@ h3 {
 						<input type="hidden" name="command" value="ItemRental">
 						<input type="hidden" name="item_no" value="${itemNo}">
 						<!-- 180903 JB 대여일 조건 추가 위해 min/max 추가 -->
-						대여날짜 입력<input id="from"type="text" name="rentalDate" min="${item.itemRegDate}" max="${item.itemExpDate}" required="required"><br>
-						반납날짜 입력<input id="to"type="text"  name="returnDate" min="${item.itemRegDate}" max="${item.itemExpDate}" required="required" ><br>
+						대여날짜 입력<input id="from"type="text"name="rentalDate" value=""required="required" data-readonly><br>
+						반납날짜 입력<input id="to"type="text"name="returnDate" value=""required="required" data-readonly><br>
 						<input type="submit" value="대여하기">
 					</form>
 					</c:otherwise>
