@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 
 <style>
 h3 {
@@ -14,21 +15,21 @@ h3 {
 .bgheader {height:160px;}
 
 .mySlides {display:none;}
-
+.w3-theme-d1 {color:#fff !important;background-color:#f1a4a3 !important}
+.w3-theme-d2 {color:#fff !important;background-color:#aeacb7 !important}
 </style>
 <div class="col-sm-12 bgheader"></div>
 	<h3>상세보기</h3>
 <div class="container-fluid">
   <div class="row" align="center">
     <div class="col-sm-1"></div>
-    <div class="col-sm-5">
-    
+    <div class="col-sm-5 type">
     <c:set value="${requestScope.itemDetail }" var="item"></c:set>
     <h2 class="w3-center">${item.itemName }</h2>
     <!-- 180904 MIRI 사진 슬라이드 기능 추가 -->
 	<div class="w3-content w3-display-container">
 		<c:forEach items="${itemDetail.picList }" var="picList">
-			<img class="mySlides" src="${pageContext.request.contextPath }/upload/${picList} " width="400" height="400">
+			<img class="mySlides w3-round" src="${pageContext.request.contextPath }/upload/${picList} " width="400" height="400">
 		</c:forEach>
 		<!-- 180904 MIRI 사진이 2장 이상일 때부터 버튼 보임 -->
 		<c:if test="${fn:length(itemDetail.picList) > 1}">
@@ -59,8 +60,8 @@ h3 {
     	<div class="col-sm-5">
     	<div class="col-sm-12 content">
 		<form>
+		<br><br><br>
     	<table class="table">
-    	<tr><th></th></tr>
             <tr>
                 <th>카테고리</th>
 				<td>
@@ -99,7 +100,6 @@ h3 {
                 <td><pre>${item.itemExpl }</pre></td>
             </tr>
         </table>
-			<br><br>
 			<script type="text/javascript">
 				/* 180831 MIRI 게시글 수정 함수 */
 				function updateItem(upitem_no) {
@@ -166,8 +166,10 @@ h3 {
 			<c:if test="${!empty sessionScope.user}">   <!-- 로그인되어있으면 -->
 				<c:choose>
 					<c:when test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
-						<button type="button" name="update" onclick="updateItem(${itemNo})">수정</button>
-						<button type="button" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
+						<button type="button" class="w3-theme-d1 w3-button w3-round-large" name="update" onclick="updateItem(${itemNo})">수정</button>
+						&nbsp;&nbsp;&nbsp;
+						<button type="button" class="w3-theme-d2 w3-button w3-round-large" name="delete" onclick="deleteItem(${itemNo})">삭제</button>
+						<br><br><br>
 					</c:when>
 					<c:otherwise> 
 					<form action="front" method="post">
