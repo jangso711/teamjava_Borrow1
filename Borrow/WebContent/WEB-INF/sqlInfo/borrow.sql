@@ -241,4 +241,3 @@ delete from RENTAL_DETAILS where item_no=?;
 
 update rental_details set return_date=sysdate where rental_no=200005;
 
-das
