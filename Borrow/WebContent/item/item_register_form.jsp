@@ -79,7 +79,13 @@ ul{
 				$("#picAlert").text("*사진을 1장 이상 등록해주세요.").css("color", "red");
 				return false;
 			}
-			$("#registerForm").submit();
+			$("#registerForm").submit(function(){
+				
+				if(! $(this).valid()) {
+					alert("필수항목을 입력하세요.");
+					return false;
+					}
+			});
 			
 		});
 		$("#pictureList").on("click","button",function(){
@@ -91,7 +97,7 @@ ul{
 			$(this).parent().remove();
 		});
 	
-		
+	
 	});
 	
 
@@ -119,7 +125,7 @@ ul{
 	<td>상품가격*</td><td><input type="number"name="itemPrice"required="required"></td>
 	</tr>
 	<tr>
-	<td>대여기간</td>
+	<td>대여기간*</td>
 	<td><input type="radio"name="duration"id="2months"value="2">2개월&nbsp;
 		<input type="radio"name="duration"id="3months"value="3"checked="checked">3개월
 	</td>
@@ -135,7 +141,7 @@ ul{
 	</td>
 	</tr>
 	<tr>
-	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8"></textarea></td>
+	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8" required="required"></textarea></td>
 	</tr>
 	<tr>
 	<td>사진*</td><td><span id="picAlert"></span><ul id="pictureList"></ul></td>

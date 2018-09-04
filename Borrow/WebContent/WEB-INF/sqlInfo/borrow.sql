@@ -7,6 +7,7 @@ create sequence rental_no_seq start with 200001 nocache;
 create sequence cat_no_seq start with 3001 nocache;
 
 
+
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
@@ -107,10 +108,14 @@ select * from member;
 select * from picture;
 select * from item_category;
 select * from category;
+<<<<<<< HEAD
 
 insert into picture(item_no, picture_path) values(10010,'Glass.png');
 insert into picture(item_no, picture_path) values(10008,'Module1.png');
 
+=======
+select * from rental_details;
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 delete item where item_no=10020
 
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
@@ -183,10 +188,13 @@ insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3007);
 
 -- CONTENTS 추가
 alter table item add item_expl clob;
-select * from picture;
+alter table rental_details add total_payment number;
+select * from rental_details;
 
 insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3007);  
-
+insert into item(item_no, id, item_name, item_brand, item_model, item_price, item_regdate, item_expdate, item_status, item_expl) 
+values(item_no_seq.nextval, 'miri', '카시트', 'TEAMTEX', '페라리 코스모 SP', 25000, '2018/7/1', add_months('2018/7/1',3), 1,'어린아이 있는 집에 꼭 필요한 카시트입니다.');
+select * from item;
 --RENTAL DETAILS 추가
 insert into rental_details(rental_no, item_no, id, rental_date, return_date)
 values (rental_no_seq.nextval, 10001, 'yosep', '2018/8/1' , '2018/8/2');
@@ -235,6 +243,11 @@ select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no,
 from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
 
 delete from picture where item_no = 10001
+<<<<<<< HEAD
+select picture_path from picture where item_no = 10002
+
+select pwd from member where id='qqq',name='이동규',tel='041'
+=======
 
 select picture_path from picture where item_no = 10002
 
@@ -249,4 +262,36 @@ update rental_details set return_date=sysdate where rental_no=200005;
 select Max(return_date) from rental_details where item_no='10005';
 delete from RENTAL_DETAILS where item_no=?;
 
+<<<<<<< HEAD
 update rental_details set return_date=sysdate where rental_no=200005;
+
+create sequence review_no_seq start with 8001 nocache;
+select * from review;
+create table review(
+	review_no varchar2(100) primary key,
+	review_title varchar2(100) not null,
+	review_content clob not null,
+	review_grade number default 0,
+	review_hit number default 0,
+	review_regdate date not null,
+	item_no number default 0,
+	id varchar2(100) not null,
+	rental_no number default 0,
+	
+    
+    constraint fk_review_id foreign key(id) references member ON DELETE CASCADE,
+    constraint fk_review_item_no foreign key(item_no) references item ON DELETE CASCADE,
+    constraint fk_review_rental_no foreign key(rental_no) references rental_details ON DELETE CASCADE
+);
+insert into review values(review_no_seq.nextval,'후기1','으하하하',0,0,sysdate,10003,'lsy',200005);
+drop table review;
+
+update rental_details set return_date=sysdate where rental_no=200005;
+
+update item set item_status=0,item_expdate=to_date('2018-09-08','YYYY-MM-DD') where item_no=10018;
+select sysdate, to_char(max(return_date), 'yyyy-MM-DD') from rental_details where item_no=10018;
+
+update rental_details set return_date=sysdate where rental_no=200005;
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git

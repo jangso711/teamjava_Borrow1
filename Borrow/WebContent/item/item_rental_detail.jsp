@@ -33,9 +33,9 @@ td {
 	$(document).ready(function() {
 		$("#friendImg").hide();
 		$("#infoSpan").hover(function(){
-			$("#friendImg").show().css("background-color", "yellow");
+			$("#friendImg").show(1000).css("background-color", "#F5A9BC");
 		}, function(){
-			$("#friendImg").hide();
+			$("#friendImg").hide(1000);
 		});
 	});
 </script>
@@ -77,19 +77,33 @@ td {
 			<th>반납일</th><td>${requestScope.rvo.returnDate}</td>
 		</tr>
 		<tr>
-			<%-- 대여료 상세 추가 --%>
+			<%-- 대여료 출력 조건 추가 --%>
 			<th>대여료</th>
-			<td><span id="infoSpan"><fmt:formatNumber>${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber></span>
-				<div id="friendImg" width="304" height="236"  style="none">
+			<td><span id="infoSpan"><fmt:formatNumber>${requestScope.rvo.totalPayment}</fmt:formatNumber></span>
+				
+				</div>
+			</td>
+		</tr>
+	</table>
+	<table >
+		<c:choose>
+			<c:when test="${requestScope.check != null}">
+				<div id="friendImg" style="text-align:center">
+					대여료 상세 정보<br>
+					일대여료 : ${requestScope.rvo.itemVO.itemPrice}<br>
+					대여일수 : ${(endDate-strDate)}<br>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div id="friendImg" style="text-align:center">
 					대여료 상세 정보<br>
 					일대여료 : ${requestScope.rvo.itemVO.itemPrice}<br>
 					대여일수 : ${(endDate-strDate)}<br>
 					대여 전 포인트: ${requestScope.originalPoint}<br>
 					대여 후 포인트: ${requestScope.newPoint}<br>
-					
 				</div>
-			</td>
-		</tr>
+			</c:otherwise>
+		</c:choose>
 	</table>
 	<br><br>
 	<table align="center">
@@ -98,8 +112,5 @@ td {
       <td><input class="btn btn_pk" type="button" value="마이페이지" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberMypage'"></td>
    	 </tr>
 	</table>	
-	<br><br><br><br><br>
-	<br><br><br><br><br>
-	<br><br><br><br><br>
 	<br><br><br><br><br>
 </div>
