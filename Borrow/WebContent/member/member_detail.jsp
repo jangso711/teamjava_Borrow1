@@ -70,6 +70,6 @@ tr{
 	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
 	'${pageContext.request.contextPath}/front?command=MemberDepositPointForm'">포인트 충전</button>
 	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
-	'${pageContext.request.contextPath}/front?command=MemberWithdrawPointForm'">포인트 환급</button>
+	'${pageContext.request.contextPath}/front?command=MemberWithdrawPointForm&existingPoint=${vo.point}'">포인트 환급</button>
 	</div>
 </div>
