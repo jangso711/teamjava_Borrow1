@@ -42,7 +42,7 @@
 						<td>${registerdetail.rentalNo}</td>
 						<td>${registerdetail.itemVO.itemName}</td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${registerdetail.itemVO.memberVO.id}">${registerdetail.itemVO.memberVO.id}</a></td>
-						<td>${registerdetail.itemVO.itemPrice}원 x ${endDate-strDate}일 = ${registerdetail.itemVO.itemPrice*(endDate-strDate)}원</td>
+						<td><fmt:formatNumber>${registerdetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = ${registerdetail.itemVO.itemPrice*(endDate-strDate)}원</td>
 						<td>${registerdetail.rentalDate}</td>
 						<td>${registerdetail.returnDate}</td>
 					</tr>

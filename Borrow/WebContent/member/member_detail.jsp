@@ -1,6 +1,8 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <style>
 h3 {
@@ -60,7 +62,7 @@ tr{
 		</tr>
 		<tr>
 			<th>잔여 포인트</th>
-			<td>${vo.point}</td>
+			<td><fmt:formatNumber>${vo.point}</fmt:formatNumber></td>
 		</tr>
 
 	</table>
