@@ -108,6 +108,8 @@ select * from picture;
 select * from item_category;
 select * from category;
 
+delete item where item_no=10012
+
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
 insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
 insert into picture(item_no, picture_path) values(10004,'cell_selected.png');

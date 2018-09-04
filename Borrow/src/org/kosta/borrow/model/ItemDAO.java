@@ -162,7 +162,7 @@ public class ItemDAO {
 			sb.append(" select id, item_no, item_name, item_expl, item_price");
 			sb.append(" from item");
 			sb.append(" where item_status=1 and item_name like ?");
-			sb.append(" order by item_no asc");
+			sb.append(" order by item_no desc");	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
@@ -204,7 +204,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
 			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
-			sb.append(" where item_status=1 and item_no=? order by item_no asc");
+			sb.append(" where item_status=1 and item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
@@ -242,7 +242,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no asc";
+			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -346,7 +346,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name");
 			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			rs = pstmt.executeQuery();
