@@ -75,16 +75,19 @@ public class ItemDAO {
 				//잔액 부족시 exception 발생
 				throw new BalanceShortageException();				
 			}
-			
+			int totalDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
+			int totalPayment = price*totalDate;
+			System.out.println(totalPayment);
 			
 			con=getConnection();
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
-			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
+			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date, total_payment) VALUES (rental_no_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
 			pstmt.setString(2, vo.getMemberVO().getId());
 			pstmt.setString(3, vo.getRentalDate());
 			pstmt.setString(4, vo.getReturnDate());
+			pstmt.setInt(5, totalPayment);
 			pstmt.executeUpdate();
 			pstmt.close();
 			pstmt=con.prepareStatement("select rental_no_seq.currval from dual");
@@ -162,7 +165,7 @@ public class ItemDAO {
 			sb.append(" select id, item_no, item_name, item_expl, item_price");
 			sb.append(" from item");
 			sb.append(" where item_status=1 and item_name like ?");
-			sb.append(" order by item_no asc");
+			sb.append(" order by item_no desc");	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
@@ -204,7 +207,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
 			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
-			sb.append(" where item_status=1 and item_no=? order by item_no asc");
+			sb.append(" where item_status=1 and item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
@@ -242,7 +245,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no asc";
+			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -286,8 +289,9 @@ public class ItemDAO {
 			while(rs.next())
 				picList.add(rs.getString(1));
 			//180902 yosep 사진이 없을경우 기존 jsp에 있던 코드들 전부 주석처리하고 여기서 진행
-			if(picList.isEmpty())
-				picList.add("디폴트.png");
+			//180904 MIRI 사진 없으면 업로드 X
+			/*if(picList.isEmpty())
+				picList.add("디폴트.png");*/
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
@@ -346,7 +350,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name");
 			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			rs = pstmt.executeQuery();
@@ -429,7 +433,7 @@ public class ItemDAO {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select m.name, ");
 			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
-			sql.append("r.rental_no, r.rental_date, r.return_date ");
+			sql.append("r.rental_no, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD'),r.total_payment ");
 			sql.append("from member m, item i, rental_details r ");
 			sql.append("where m.id = i.id ");
 			sql.append("and i.item_no = r.item_no ");
@@ -453,6 +457,7 @@ public class ItemDAO {
 				rvo.setRentalNo(rs.getString(7));
 				rvo.setRentalDate(rs.getString(8));
 				rvo.setReturnDate(rs.getString(9));
+				rvo.setTotalPayment(rs.getInt(10));
 				
 				
 			}
@@ -549,6 +554,7 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();			
+				item.setItemNo(rs.getString(2));
 				item.setPicList(getPictureList(rs.getString(2)));					
 				item.setItemName(rs.getString(3));
 				item.setItemPrice(rs.getInt(4));
@@ -633,7 +639,7 @@ public class ItemDAO {
 	
 	/**
 	 * 180902 yosep 진행중
-	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
+	 *  유저의 id를 받아 등록한 모든 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
 	 * 
 	 * @param id
 	 * @return
@@ -675,9 +681,10 @@ public class ItemDAO {
 	{
 	 
 	     // String Type을 Date Type으로 캐스팅하면서 생기는 예외로 인해 여기서 예외처리 해주지 않으면 컴파일러에서 에러가 발생해서 컴파일을 할 수 없다.
-	        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	        SimpleDateFormat format = new SimpleDateFormat("yyyymmdd");
 	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
 	        Date FirstDate = format.parse(rentalDate);
+	        System.out.println(returnDate);
 	        Date SecondDate = format.parse(returnDate);
 	        
 	        // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
@@ -762,10 +769,48 @@ public class ItemDAO {
 			closeAll(rs,pstmt,con);
 		}
 		
+	}
+
+	public ArrayList<String> getRentalUnavailableDateList(String itemNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			con = getConnection();
+			String sql = "select to_char(rental_date,'yyyymmdd'),to_char(return_date,'yyyymmdd') from rental_details where item_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, itemNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int rentalDate = Integer.parseInt(rs.getString(1));
+				int returnDate = Integer.parseInt(rs.getString(2));
+				while(rentalDate<=returnDate) {
+					list.add(Integer.toString(rentalDate++));	
+				}
+			}
+		}finally {
+			
+		}
+		return list;
+}
+	public void itemEarlyReturn(String rentalNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con=getConnection();
+			String sql = "update rental_details set return_date=sysdate where rental_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rentalNo);
+			pstmt.executeUpdate();
+		}finally {
+			closeAll(pstmt, con);
+		}
+
+		
+
 	}    
-	        
-
-
+	 
 
 
 }

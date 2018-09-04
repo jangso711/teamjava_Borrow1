@@ -1,31 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
 h3{
 	padding-left:100px;
 	padding-top:30px;
 	font-weight: bold;
-}
-input[type=text]{
-	size:50px;
-	height:40px;
-	width:250px;
-	border-radius: 5px;
-	padding:5px;
-}
-input[type=number]{
-	size:50px;
-	height:40px;
-	width:250px;
-	border-radius: 5px;
-	padding:5px;
-}
-.formContent{
-	padding-top:20px;
-	padding-left:200px;
-	text-align:center;
 }
 .bgheader{
 
@@ -54,14 +35,14 @@ input[type=number]{
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${requestScope.itemSearchList }" var="itemSearchList">
-						<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemSearchId=${itemSearchList.itemNo}" 
+						<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${itemSearchList.itemNo}" 
 							var="detailurl"></c:set>
 							<tr>
 								<td><a href="${detailurl }">
 									<img src="${pageContext.request.contextPath }/upload/${itemSearchList.picList[0]}" width="150" height="150"></a></td>
 								<td><a href="${detailurl }">${itemSearchList.itemName }(링크)</a></td>
 								<td><pre>${itemSearchList.itemExpl }</pre></td>
-								<td>${itemSearchList.itemPrice }</td>
+								<td><fmt:formatNumber>${itemSearchList.itemPrice }</fmt:formatNumber></td>
 								<td>${itemSearchList.memberVO.id }</td>
 							</tr>
 						</c:forEach>					

@@ -45,8 +45,8 @@ public class ItemRegisterController implements Controller {
 		}
 		 
 		
-		
 		return "redirect:front?command=ItemDetail&itemSearchId="+itemNo;//0903 동규 물품등록시 상품 상세정보로이동하게 수정
+		//return "redirect:front?command=ItemDetail&itemNo="+itemNo;
 		//return "redirect:index.jsp";
 	}
 

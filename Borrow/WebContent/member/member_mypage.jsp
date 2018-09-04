@@ -32,6 +32,7 @@
 <br>
 <br>
 
+<<<<<<< HEAD
 <div class="col-sm-4 mypagecontent" align="right">
     <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 130pt; HEIGHT: 130pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList'" >나의 등록 물품</button><br><br><br><br>
     <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 130pt; HEIGHT: 130pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList'">나의 대여 목록</button>
@@ -39,5 +40,13 @@
    <div class="col-sm-4 mypagecontent" align="left">
     <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 130pt; HEIGHT: 130pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList'">내가 대여한 목록</button><br><br><br><br>
     <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 130pt; HEIGHT: 130pt" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">회원정보</button>
+=======
+  <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterForm'">물품 등록하기</button>
+    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${sessionScope.user.id}'" >등록 물품 목록</button>
+    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList'">빌려준 내역</button>
+    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList'">물품 대여 목록</button>
+    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">회원정보</button>
+
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 </div>
 

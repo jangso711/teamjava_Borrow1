@@ -108,6 +108,8 @@ select * from picture;
 select * from item_category;
 select * from category;
 
+delete item where item_no=10020
+
 insert into picture(item_no, picture_path) values(10002,'Cell Buffer.png');
 insert into picture(item_no, picture_path) values(10003,'Cell_2.png');
 insert into picture(item_no, picture_path) values(10004,'cell_selected.png');
@@ -143,6 +145,8 @@ create table category(
    cat_name varchar2(100) not null
 )
 
+update picture set picture_path='배경5.jpg' where picture_path='배경51.jpg'
+
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '등산용품');
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '물놀이용품');
 insert into category(cat_no, cat_name) values(cat_no_seq.nextval, '캠핑용품');
@@ -169,7 +173,8 @@ insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3007);
 
 -- CONTENTS 추가
 alter table item add item_expl clob;
-select * from picture;
+alter table rental_details add total_payment number;
+select * from rental_details;
 
 insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3007);  
 
@@ -221,6 +226,24 @@ select m.name, i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no,
 from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item_no and rental_no=200018
 
 delete from picture where item_no = 10001
+<<<<<<< HEAD
 select picture_path from picture where item_no = 10002
 
 select pwd from member where id='qqq',name='이동규',tel='041'
+=======
+
+select picture_path from picture where item_no = 10002
+
+select to_char(rental_date,'yyyymmdd'),to_char(return_date,'yyyymmdd') from rental_details where item_no=10001;
+
+select picture_path from picture where item_no = 10002;
+
+select * from RENTAL_DETAILS;
+
+update rental_details set return_date=sysdate where rental_no=200005;
+
+select Max(return_date) from rental_details where item_no='10005';
+delete from RENTAL_DETAILS where item_no=?;
+
+update rental_details set return_date=sysdate where rental_no=200005;
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git

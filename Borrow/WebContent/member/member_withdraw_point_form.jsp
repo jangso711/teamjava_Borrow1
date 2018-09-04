@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#withdrawForm").submit(function(){
 			if($("#point").val()<1000){
 				alert("1000포인트 이상부터 환급 가능합니다.");
+				return false;
+			}else if($("#point").val()>${requestScope.existingPoint}){
+				alert("포인트가 부족합니다.")	;
 				return false;
 			}else{
 				alert("포인트 환급이 완료되었습니다.");
@@ -77,7 +81,7 @@ input[type=password] {
 <td>계좌비밀번호</td><td colspan="2"><input type="password" name="countPassword" required="required"></td>
 </tr>
 <tr>
-<td>환급 받을 금액</td><td colspan="2"><input type="number" name="point" id="point" required="required"></td>
+<td>환급 받을 금액</td><td colspan="2"><input type="number" pattern="[0-9]+([,\.][0-9]+)?" name="point" id="point" required="required"></td>
 </tr>
 </table>
 <button type="submit" class="btn btn_center btn_pk" id="submitBtn">환급받기</button>
