@@ -6,7 +6,20 @@
 	<form action="${pageContext.request.contextPath}/front">
 		<input type="hidden" name="command" value="ItemSearch"> <input
 			type="text" name="searchtext" placeholder="Search..."
-			style="width: 600px; height: 35px; letter-spacing: 2px; margin-bottom: 9px"/>
+			style="width: 425px; height: 35px; letter-spacing: 2px; margin-bottom: 9px"/>
+			<a href="${pageContext.request.contextPath}/front?command=ItemRegisterForm"><img alt="상품등록" src="${pageContext.request.contextPath }/img/등버.png" id="registerBtn"></a>
+			<script type="text/javascript">
+			<c:choose>
+			<c:when test="${empty sessionScope.user }">
+			$(document).ready(function() {
+				$("#registerBtn").click(function() {
+					alert("로그인 후 사용 가능");
+					return false;
+				})//clicdk
+			})//ready
+			</c:when>
+			</c:choose>
+			</script>
 	</form>
 	
 	<!-- 180903 MIRI 카테고리 url 작성 -->

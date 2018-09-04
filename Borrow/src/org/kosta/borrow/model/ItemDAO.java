@@ -34,26 +34,24 @@ public class ItemDAO {
 		if(con!=null)con.close();
 	}
 
-	public void deleteItem(ItemVO vo,String dirPath) throws SQLException {
+	public void deleteItem(ItemVO vo,String flag) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ArrayList<String> picList= null;
 		try {
 			con=getConnection();
-			String sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
-			pstmt.executeUpdate();
-			pstmt.close();
-			picList = getPictureList(vo.getItemNo());
-			for(String fileName:picList) {
-				String path = dirPath+File.separator+fileName;
-				File f = new File(path);
-				f.delete();
+			String sql="";
+			if(flag.equals("true")) {
+				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+			}else {
+				sql = "update item set item_status=0,item_expdate=? where item_no=?"; 
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, flag);
+				pstmt.setInt(2, Integer.parseInt(vo.getItemNo()));
 			}
-			pstmt = con.prepareStatement("delete from picture where item_no = ?");
-			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();	
 		}finally {
 			closeAll(pstmt, con);
 		}
@@ -75,16 +73,19 @@ public class ItemDAO {
 				//잔액 부족시 exception 발생
 				throw new BalanceShortageException();				
 			}
-			
+			int totalDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
+			int totalPayment = price*totalDate;
+			System.out.println(totalPayment);
 			
 			con=getConnection();
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
-			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
+			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date, total_payment) VALUES (rental_no_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
 			pstmt.setString(2, vo.getMemberVO().getId());
 			pstmt.setString(3, vo.getRentalDate());
 			pstmt.setString(4, vo.getReturnDate());
+			pstmt.setInt(5, totalPayment);
 			pstmt.executeUpdate();
 			pstmt.close();
 			pstmt=con.prepareStatement("select rental_no_seq.currval from dual");
@@ -430,7 +431,7 @@ public class ItemDAO {
 			StringBuilder sql = new StringBuilder();
 			sql.append("select m.name, ");
 			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
-			sql.append("r.rental_no, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD') ");
+			sql.append("r.rental_no, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD'),r.total_payment ");
 			sql.append("from member m, item i, rental_details r ");
 			sql.append("where m.id = i.id ");
 			sql.append("and i.item_no = r.item_no ");
@@ -454,6 +455,7 @@ public class ItemDAO {
 				rvo.setRentalNo(rs.getString(7));
 				rvo.setRentalDate(rs.getString(8));
 				rvo.setReturnDate(rs.getString(9));
+				rvo.setTotalPayment(rs.getInt(10));
 				
 				
 			}
@@ -568,11 +570,11 @@ public class ItemDAO {
 
 	}
 
-	public boolean deleteCheck(String itemNo) throws SQLException {
+	public String deleteCheck(String itemNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		boolean result = false;
+		String result = null;
 		try {
 			con=getConnection();
 			String sql = "select sysdate,max(return_date) from rental_details where item_no=?";
@@ -582,9 +584,11 @@ public class ItemDAO {
 			if(rs.next()) {
 				Date today = rs.getDate(1);
 				Date returnDate = rs.getDate(2);
-				if(today.before(returnDate)) {
-					result = false;
-				}else result = true;
+				if(returnDate!=null && today.before(returnDate)) {
+					result = returnDate.toString();
+				}else {
+					result="true";
+				}
 			}
 		}finally {
 			closeAll(pstmt, con);
@@ -680,6 +684,7 @@ public class ItemDAO {
 	        SimpleDateFormat format = new SimpleDateFormat("yyyymmdd");
 	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
 	        Date FirstDate = format.parse(rentalDate);
+	        System.out.println(returnDate);
 	        Date SecondDate = format.parse(returnDate);
 	        
 	        // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
