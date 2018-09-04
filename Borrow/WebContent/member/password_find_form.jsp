@@ -3,23 +3,22 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 h3 {
-	padding-left: 100px;
-	padding-top: 30px;
+	padding-left: 450px;
+	padding-top: 40px;
 	font-weight: bold;
 }
-
-.btn_pk {
-	background-color: #f6cac9;
-	height: 40px;
-	margin: 10px;
+.btn_pk{
+	 background-color: #f6cac9;
+	 padding-top: 10px;
+	 padding-bottom: 10px;
+	 }
+.btn_pk1{
+	 background-color: #f6cac9;
+	 margin-left:160px;
+	  padding-top: 10px;
+	 padding-bottom: 10px;
 }
 
-.logincontent {
-	min-height: 300px;
-	text-align: center;
-	padding-top: 120px;
-	padding-bottom: 120px;
-}
 
 input[type=text] {
 	size: 50px;
@@ -40,11 +39,18 @@ input[type=password] {
 .bgheader {
 	height: 160px;
 }
-
+.formContent{
+	padding-top:20px;
+	padding-left:200px;
+	text-align:center;
+}
 .formContent {
 	padding-top: 20px;
-	padding-left: 200px;
-	text-align: center;
+	padding-left: 450px;
+	padding-bottom: 40px;
+}
+table{
+	font-size: 18px;	
 }
 </style>
 <script type="text/javascript">
@@ -70,19 +76,15 @@ $(document).ready(function() {
 		<div class="formContent">
 			<table cellpadding="3">
 				<tr>
-					<td>아이디</td>
-					<td><input type="text" name="id" id="id" required="required"></td>
+					<td><input type="text" name="id" id="id" required="required" placeholder="아이디"></td>
 				</tr>
 				<tr>
-					<td>이름</td>
-					<td><input type="text" name="name" id="name" required="required"></td>
+					<td><input type="text" name="name" id="name" required="required" placeholder="이름"></td>
 				</tr>
 				<tr>
-					<td>전화번호</td>
-					<td><input type="text" name="tel" id="tel" required="required"></td>
+					<td><input type="text" name="tel" id="tel" required="required"placeholder="전화번호"></td>
 				</tr>
 				<tr>
-					<td></td>
 					<td><input class="btn btn_pk" type="submit" id="findBtn"
 						value="비밀번호찾기"></td>
 				</tr>

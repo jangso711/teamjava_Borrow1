@@ -16,6 +16,20 @@
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
 	<br><h3>나의 대여 목록</h3><br>	
+<!-- 	현재 날짜 변수 저장 -->
+	<jsp:useBean id="currTime" class="java.util.Date" />	
+	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>	
+	현재 시간${curDate}<br>
+	
+	<fmt:parseDate value="2018-09-04" var="aaa" pattern="yyyy-MM-dd"/>
+	<fmt:parseNumber value="${aaa.time / (1000*60*60*24)}" integerOnly="false" var="aaa"></fmt:parseNumber>
+	9월4일 00시 ${aaa}<br>
+	<fmt:parseDate value="2018-09-05" var="bbb" pattern="yyyy-MM-dd"/>
+	<fmt:parseNumber value="${bbb.time / (1000*60*60*24)}" integerOnly="false" var="bbb"></fmt:parseNumber>
+	9월5일 00시 ${bbb}<br>
+	${curDate-aaa }
+	${bbb-aaa}
+	
 	
 	<c:choose>
 		<c:when test="${fn:length(requestScope.rentallist)==0}">
@@ -35,20 +49,23 @@
 				</tr>
 				<c:forEach items="${requestScope.rentallist}" var="rentaldetail">
 					<fmt:parseDate value="${rentaldetail.rentalDate}" var="strPlanDate" pattern="yyyy-MM-dd"/>
-					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
 					<fmt:parseDate value="${rentaldetail.returnDate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
-					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
 					<tr>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rentaldetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${rentaldetail.itemVO.picList[0]}" width="150" height="150" ></a></td>						
-						<%-- 2015-09-04 대여상세 링크 추가 --%>
+						<%-- 2018-09-04 대여상세 링크 추가 --%>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${rentaldetail.rentalNo} &check=a">${rentaldetail.rentalNo}</a></td>
 						<td>${rentaldetail.itemVO.itemName}</td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
 						<td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td>
 						<td>${rentaldetail.rentalDate}</td>
 						<td>${rentaldetail.returnDate}</td>
-						<td><button type="button" class="btn btn_center btn_pk" onclick="location.href=
-	'${pageContext.request.contextPath}/front?command=ItemEarlyReturn&rentalNo=${rentaldetail.rentalNo}'">반납하기</button></td>
+						<td>					
+							<%-- <c:choose>
+								<c:when test="${endDate-strDate}">
+								
+								</c:when>
+							<button type="button" class="btn btn_center btn_pk" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemEarlyReturn&rentalNo=${rentaldetail.rentalNo}'">반납하기</button></td>
+							</c:choose> --%>
 					</tr>
 				</c:forEach>
 			</table>
