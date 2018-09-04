@@ -162,7 +162,7 @@ public class ItemDAO {
 			sb.append(" select id, item_no, item_name, item_expl, item_price");
 			sb.append(" from item");
 			sb.append(" where item_status=1 and item_name like ?");
-			sb.append(" order by item_no desc");
+			sb.append(" order by item_no desc");	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();
@@ -204,7 +204,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
 			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
-			sb.append(" where item_status=1 and item_no=? order by item_no asc");
+			sb.append(" where item_status=1 and item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
@@ -242,7 +242,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no asc";
+			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -346,7 +346,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name");
 			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			rs = pstmt.executeQuery();
@@ -549,6 +549,7 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();			
+				item.setItemNo(rs.getString(2));
 				item.setPicList(getPictureList(rs.getString(2)));					
 				item.setItemName(rs.getString(3));
 				item.setItemPrice(rs.getInt(4));
@@ -633,7 +634,7 @@ public class ItemDAO {
 	
 	/**
 	 * 180902 yosep 진행중
-	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
+	 *  유저의 id를 받아 등록한 모든 물품을 조회해 리스트로 반환한다.(대여 안한 것도 전부)
 	 * 
 	 * @param id
 	 * @return
@@ -763,6 +764,7 @@ public class ItemDAO {
 		}
 		
 	}
+
 	public ArrayList<String> getRentalUnavailableDateList(String itemNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -785,6 +787,22 @@ public class ItemDAO {
 			
 		}
 		return list;
+}
+	public void itemEarlyReturn(String rentalNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con=getConnection();
+			String sql = "update rental_details set return_date=sysdate where rental_no=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rentalNo);
+			pstmt.executeUpdate();
+		}finally {
+			closeAll(pstmt, con);
+		}
+
+		
+
 	}    
 	 
 

@@ -34,10 +34,10 @@
 <div class="col-sm-12 bgheader"></div>
 <div align="center" class=" mypagecontent">
 
-  <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterForm'">내 물품 등록</button>
-    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList'" >내 등록 물품</button>
-    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList'">내 빌려준 목록</button>
-    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList'">내 대여 목록</button>
+  <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterForm'">물품 등록하기</button>
+    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${sessionScope.user.id}'" >등록 물품 목록</button>
+    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList'">빌려준 내역</button>
+    <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList'">물품 대여 목록</button>
     <button type="button" class="btn bg_gr btn-lg" style="WIDTH: 150pt; HEIGHT: 150pt" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">회원정보</button>
 
 </div>
