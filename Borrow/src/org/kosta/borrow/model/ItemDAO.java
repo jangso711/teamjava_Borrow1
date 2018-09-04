@@ -84,16 +84,19 @@ public class ItemDAO {
 				//잔액 부족시 exception 발생
 				throw new BalanceShortageException();				
 			}
-			
+			int totalDate = calDateBetweenAandB(vo.getRentalDate(), vo.getReturnDate());
+			int totalPayment = price*totalDate;
+			System.out.println(totalPayment);
 			
 			con=getConnection();
 			pstmt = con.prepareStatement("select item_regdate, item_expdate from item");
-			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date) VALUES (rental_no_seq.nextval, ?, ?, ?, ?)";
+			String sql = "INSERT INTO rental_details (rental_no, item_no, id, rental_date, return_date, total_payment) VALUES (rental_no_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getItemVO().getItemNo());
 			pstmt.setString(2, vo.getMemberVO().getId());
 			pstmt.setString(3, vo.getRentalDate());
 			pstmt.setString(4, vo.getReturnDate());
+			pstmt.setInt(5, totalPayment);
 			pstmt.executeUpdate();
 			pstmt.close();
 			pstmt=con.prepareStatement("select rental_no_seq.currval from dual");
@@ -696,6 +699,7 @@ public class ItemDAO {
 	        SimpleDateFormat format = new SimpleDateFormat("yyyymmdd");
 	        // date1, date2 두 날짜를 parse()를 통해 Date형으로 변환.
 	        Date FirstDate = format.parse(rentalDate);
+	        System.out.println(returnDate);
 	        Date SecondDate = format.parse(returnDate);
 	        
 	        // Date로 변환된 두 날짜를 계산한 뒤 그 리턴값으로 long type 변수를 초기화 하고 있다.
