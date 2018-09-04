@@ -20,10 +20,10 @@ h3{
 }
 
 .bgheader {
-	height: 160px;
+	height: 80px;
 }
 .bgfooter {
-	height: 170px;
+	height: 80px;
 }
 </style>
 <div class="col-sm-12 bgheader"></div>
@@ -44,7 +44,7 @@ h3{
 				<td>${rvo.reviewNo}</td>
 				<td>
 				<a href="${pageContext.request.contextPath}/front?command=ReviewPost&ReviewNo=${rvo.reviewNo}">
-					${rvo.reviewTitle}</a>${rvo.reviewTitle}</td>
+					${rvo.reviewTitle}</a></td>
 				<td>${rvo.memberVO.name}</td>
 				<td>${rvo.reviewRegdate}</td>
 				<td>${rvo.reviewHit}</td>
