@@ -54,7 +54,7 @@ h3{
 </table>
 <c:if test="${requestScope.rvo.pagingBean.previousPageGroup}">
 <ul class="pagination">
- <li><a href="front?command=List&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
+ <li><a href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
 </ul>
 </c:if>
 <c:forEach begin="${requestScope.rvo.pagingBean.startPageOfPageGroup}"
@@ -62,7 +62,7 @@ h3{
 	<ul class="pagination">
 	<c:choose>
 	<c:when test="${requestScope.rvo.pagingBean.nowPage!=pagenum}">	
-		<li><a href="front?command=List&pageNo=${pagenum}">${pagenum}</a></li>
+		<li><a href="front?command=ReviewList&pageNo=${pagenum}">${pagenum}</a></li>
 		</c:when>
 		<c:otherwise>
 		<li class="active"><a href="#">${pagenum}</a></li>

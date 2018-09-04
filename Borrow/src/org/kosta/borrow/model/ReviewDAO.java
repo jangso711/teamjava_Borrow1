@@ -209,4 +209,50 @@ import javax.sql.DataSource;
 			}
 			return totalCount;
 		}
+		public void updateHit(int no) throws SQLException {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			try{
+				con=getConnection(); 
+				String sql="update review set review_hit=review_bit+1 where review_no=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, no);	
+				pstmt.executeUpdate();			
+			}finally{
+				closeAll(pstmt,con);
+			}
+		}
+		public ReviewVO getPostingByNo(int no) throws SQLException {
+			ReviewVO rvo=null;
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try{
+				con=getConnection();
+				StringBuilder sql=new StringBuilder();
+				sql.append("select r.review_no,r.review_title,to_char(r.review_regdate,'YYYY.MM.DD  HH24:MI:SS') r.review_regdate ");
+				sql.append(",r.review_content,r.review_hit,r.id,m.name ");
+				sql.append(" from review r, member m ");
+				sql.append(" where r.id=m.id and r.review_no=?");		
+				pstmt=con.prepareStatement(sql.toString());
+				pstmt.setInt(1, no);
+				rs=pstmt.executeQuery();
+			
+				if(rs.next()){
+					rvo=new ReviewVO();
+					rvo.setReviewNo(rs.getString(1));
+					rvo.setReviewTitle(rs.getString(2));
+					rvo.setReviewContent(rs.getString(3));				
+					rvo.setReviewHit(rs.getShort(4));
+					rvo.setReviewRegdate(rs.getString(5));
+					MemberVO mvo=new MemberVO();
+					mvo.setId(rs.getString(6));
+					mvo.setName(rs.getString(7));
+					rvo.setMemberVO(mvo);
+				}
+			}finally{
+				closeAll(rs,pstmt,con);
+			}
+			return rvo;
+		}
 	}
