@@ -78,15 +78,17 @@ public class HandlerMapping {
 			controller=new MemberWithdrawPointController();
 		}else if(command.equals("MemberWithdrawPointForm")) {
 			controller=new MemberWithdrawPointFormController();
-
 			//180904 동규 MemberFindPwdController 추가
 		}else if(command.equals("MemberFindPwd")) {
 			controller=new MemberFindPwdController();
 		}else if(command.equals("MemberFindPwdForm")) {
 			controller=new MemberFindPwdFormController();
-
 		}else if(command.equals("ItemEarlyReturn")) {
 			controller=new ItemEarlyReturnController();
+		}else if(command.equals("ReviewList")) {
+			controller=new ReviewListController();
+		}else if(command.equals("ReviewPost")) {
+			controller=new ReviewPostController();
 		}
 		return controller;
 	}

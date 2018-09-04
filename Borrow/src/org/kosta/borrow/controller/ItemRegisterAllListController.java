@@ -4,16 +4,24 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
+import org.kosta.borrow.model.MemberVO;
 
 public class ItemRegisterAllListController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-		String id=request.getParameter("memberId");		
+		HttpSession session= request.getSession();
+		MemberVO mvo=(MemberVO)(session.getAttribute("user"));
+		String id=null;
+		if(mvo!=null) {
+			id=mvo.getId();			
+		}else
+			id=request.getParameter("memberId");
+		
 		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemListById(id);
 		request.setAttribute("allItemList", allItemList);
 		request.setAttribute("url", "/item/item_register_all_list.jsp");
