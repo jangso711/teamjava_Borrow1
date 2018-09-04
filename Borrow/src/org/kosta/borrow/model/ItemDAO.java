@@ -162,7 +162,7 @@ public class ItemDAO {
 			sb.append(" select id, item_no, item_name, item_expl, item_price");
 			sb.append(" from item");
 			sb.append(" where item_status=1 and item_name like ?");
-			sb.append(" order by item_no asc");
+			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
 			rs = pstmt.executeQuery();

@@ -7,25 +7,6 @@ h3{
 	padding-top:30px;
 	font-weight: bold;
 }
-input[type=text]{
-	size:50px;
-	height:40px;
-	width:250px;
-	border-radius: 5px;
-	padding:5px;
-}
-input[type=number]{
-	size:50px;
-	height:40px;
-	width:250px;
-	border-radius: 5px;
-	padding:5px;
-}
-.formContent{
-	padding-top:20px;
-	padding-left:200px;
-	text-align:center;
-}
 .bgheader{
 
 	height:160px;
