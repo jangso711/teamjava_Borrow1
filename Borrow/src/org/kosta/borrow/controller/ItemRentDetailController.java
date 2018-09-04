@@ -13,6 +13,7 @@ public class ItemRentDetailController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String rental_no = request.getParameter("rental_no");
+		String check = request.getParameter("check");
 		String originalPoint = request.getParameter("originalPoint");
 		String memberId=((MemberVO)(request.getSession().getAttribute("user"))).getId();
 		String newPoint = Integer.toString(MemberDAO.getInstance().getPointByMemberId(memberId));
@@ -21,7 +22,8 @@ public class ItemRentDetailController implements Controller {
 		RentalDetailVO result = ItemDAO.getInstance().itemRentDetail(vo);
 		request.setAttribute("rvo", result);
 		request.setAttribute("originalPoint", originalPoint);
-		request.setAttribute("newPoint", newPoint);		
+		request.setAttribute("newPoint", newPoint);	
+		request.setAttribute("check", check);
 		request.setAttribute("url", "/item/item_rental_detail.jsp");		
 		return "template/layout.jsp";
 	}

@@ -6,18 +6,20 @@ public class RentalDetailVO {
 	private String returnDate;
 	private ItemVO itemVO;
 	private MemberVO memberVO;
+	int totalPayment;
 	public RentalDetailVO() {
-		
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public RentalDetailVO(String rentalNo, String rentalDate, String returnDate, ItemVO itemVO, MemberVO memberVO) {
+	public RentalDetailVO(String rentalNo, String rentalDate, String returnDate, ItemVO itemVO, MemberVO memberVO,
+			int totalPayment) {
 		super();
 		this.rentalNo = rentalNo;
 		this.rentalDate = rentalDate;
 		this.returnDate = returnDate;
 		this.itemVO = itemVO;
 		this.memberVO = memberVO;
+		this.totalPayment = totalPayment;
 	}
 	public String getRentalNo() {
 		return rentalNo;
@@ -49,10 +51,16 @@ public class RentalDetailVO {
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
+	public int getTotalPayment() {
+		return totalPayment;
+	}
+	public void setTotalPayment(int totalPayment) {
+		this.totalPayment = totalPayment;
+	}
 	@Override
 	public String toString() {
 		return "RentalDetailVO [rentalNo=" + rentalNo + ", rentalDate=" + rentalDate + ", returnDate=" + returnDate
-				+ ", itemVO=" + itemVO + ", memberVO=" + memberVO + "]";
+				+ ", itemVO=" + itemVO + ", memberVO=" + memberVO + ", totalPayment=" + totalPayment + "]";
 	}
 	
 }

@@ -173,7 +173,8 @@ insert into ITEM_CATEGORY(item_no, cat_no) values(10003,3007);
 
 -- CONTENTS 추가
 alter table item add item_expl clob;
-select * from picture;
+alter table rental_details add total_payment number;
+select * from rental_details;
 
 insert into ITEM_CATEGORY(item_no, cat_no) values(10004,3007);  
 
