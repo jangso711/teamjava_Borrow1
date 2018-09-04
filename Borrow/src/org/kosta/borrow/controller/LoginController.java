@@ -15,12 +15,15 @@ public class LoginController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)  {
 		String id = request.getParameter("memberId");
 		String pwd = request.getParameter("memberPwd");
+		String result = null;
 		try {
 			MemberVO user = MemberDAO.getInstance().login(id,pwd);
 			if(user==null) {
-				//로그인 실패
+				result = "fail";
+				//return "member/login_fail.jsp";
 			}else {
 				//로그인 성공
+				result = "ok";
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 			}
@@ -28,7 +31,9 @@ public class LoginController implements Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:index.jsp";
+		request.setAttribute("responsebody", result);
+		return "AjaxView";
+		//return "redirect:index.jsp";
 	}
 
 }

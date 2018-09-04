@@ -224,3 +224,6 @@ from member m, item i, rental_details r where m.id = i.id and i.item_no = r.item
 
 delete from picture where item_no = 10001
 select picture_path from picture where item_no = 10002
+
+select * from RENTAL_DETAILS;
+update rental_details set return_date=sysdate where rental_no=200005;
