@@ -37,15 +37,24 @@ public class ItemDAO {
 	public void deleteItem(ItemVO vo,String dirPath) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ArrayList<String> picList= null;
+		//ArrayList<String> picList= null;
+		String lastRentalDate=null;
 		try {
 			con=getConnection();
-			String sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
+			String sql=null;
+			if((lastRentalDate=deleteCheck(vo.getItemNo()))!=null) { //삭제 대기				
+				sql = "update item set item_status=0,item_expdate=to_char("+lastRentalDate+ ",'YYYY-MM-DD') where item_no=?";
+			}else { 
+				//상태를 0, 만료 날짜를 현재 날짜로
+				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";				
+			}			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			pstmt.executeUpdate();
 			pstmt.close();
-			picList = getPictureList(vo.getItemNo());
+			
+		/* yosep - 180904 주석처리, 사진파일과 파일 경로 삭제 불필요
+		 * 	picList = getPictureList(vo.getItemNo());
 			for(String fileName:picList) {
 				String path = dirPath+File.separator+fileName;
 				File f = new File(path);
@@ -53,7 +62,7 @@ public class ItemDAO {
 			}
 			pstmt = con.prepareStatement("delete from picture where item_no = ?");
 			pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();*/			
 		}finally {
 			closeAll(pstmt, con);
 		}
@@ -568,11 +577,19 @@ public class ItemDAO {
 
 	}
 
-	public boolean deleteCheck(String itemNo) throws SQLException {
+	/**
+	 * itemNo에 해당하는 아이템을 빌린 내역 중 마지막 반납 날짜와 현재 날짜를 비교한다
+	 * 현재 날짜가 마지막 반납 날짜보다 이전이면 마지막 반납 날짜 반환 (삭제대기)
+	 * 현재 날짜가 마지막 반납 날짜보다 이후이면 null 반환 (삭제완료 가능)
+	 * @param itemNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public String deleteCheck(String itemNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		boolean result = false;
+		String result = null;
 		try {
 			con=getConnection();
 			String sql = "select sysdate,max(return_date) from rental_details where item_no=?";
@@ -582,9 +599,8 @@ public class ItemDAO {
 			if(rs.next()) {
 				Date today = rs.getDate(1);
 				Date returnDate = rs.getDate(2);
-				if(today.before(returnDate)) {
-					result = false;
-				}else result = true;
+				if(today.before(returnDate)) 
+					result = rs.getString(2);		//마지막 반납 날짜		
 			}
 		}finally {
 			closeAll(pstmt, con);

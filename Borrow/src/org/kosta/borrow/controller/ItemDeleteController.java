@@ -13,7 +13,9 @@ public class ItemDeleteController implements Controller {
 		String itemNo = request.getParameter("itemNo");
 		ItemVO vo=new ItemVO();
 		vo.setItemNo(itemNo);
-		String dirPath = request.getServletContext().getRealPath("upload");
+		//yosep - 180904 주석처리, 파일 경로 삭제 불필요
+		//String dirPath = request.getServletContext().getRealPath("upload");
+		String dirPath=null;
 		ItemDAO.getInstance().deleteItem(vo,dirPath);
 		
 		request.setAttribute("url", "/item/item_delete_result.jsp");

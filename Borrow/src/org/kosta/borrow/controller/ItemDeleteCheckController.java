@@ -9,10 +9,10 @@ public class ItemDeleteCheckController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String itemNo = request.getParameter("itemNo");
+		/*String itemNo = request.getParameter("itemNo");
 		boolean del = ItemDAO.getInstance().deleteCheck(itemNo);
 		
-		request.setAttribute("responsebody", del);
+		request.setAttribute("responsebody", del);*/
 		return	"/AjaxView";
 	}
 
