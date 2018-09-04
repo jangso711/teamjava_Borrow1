@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.kosta.borrow.exception.BalanceShortageException;
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
+import org.kosta.borrow.model.MemberDAO;
 import org.kosta.borrow.model.MemberVO;
 import org.kosta.borrow.model.RentalDetailVO;
 
@@ -25,6 +26,7 @@ public class ItemRentalController implements Controller {
 		vo.setReturnDate(returnDate);
 		vo.setItemVO(new ItemVO(item_no));
 		vo.setMemberVO(new MemberVO(id));
+		int originalPoint =MemberDAO.getInstance().getPointByMemberId(id);
 		try {
 		ItemDAO.getInstance().itemRental(vo);
 		}catch(BalanceShortageException e){  //금액 부족시
@@ -33,7 +35,7 @@ public class ItemRentalController implements Controller {
 			return "item/item_rental_fail.jsp";
 		}
 		String rental_no = vo.getRentalNo();
-		return "redirect:front?command=ItemRentDetail&rental_no="+rental_no;
+		return "redirect:front?command=ItemRentDetail&rental_no="+rental_no+"&originalPoint="+originalPoint;
 	}
 
 }
