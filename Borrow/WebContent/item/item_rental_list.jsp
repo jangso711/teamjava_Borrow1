@@ -22,7 +22,7 @@
 			<span>대여하신 물품이 없습니다!! </span>
 		</c:when>
 		<c:otherwise>
-			<table class="col-sm-12">
+			<table class="table col-sm-12">
 				<tr>
 					<th>사진</th>
 					<th>거래번호</th>

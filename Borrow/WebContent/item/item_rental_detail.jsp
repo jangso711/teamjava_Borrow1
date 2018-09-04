@@ -32,6 +32,7 @@ td {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#friendImg").hide();
 		$("#infoSpan").hover(function(){
 			$("#friendImg").show().css("background-color", "yellow");
 		}, function(){
@@ -80,10 +81,13 @@ td {
 			<%-- 대여료 상세 추가 --%>
 			<th>대여료</th>
 			<td><span id="infoSpan"><fmt:formatNumber>${requestScope.rvo.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber></span>
-				<div id="friendImg" width="304" height="236">
+				<div id="friendImg" width="304" height="236"  style="none">
 					대여료 상세 정보<br>
 					일대여료 : ${requestScope.rvo.itemVO.itemPrice}<br>
-					대여일수 : ${(endDate-strDate)}
+					대여일수 : ${(endDate-strDate)}<br>
+					대여 전 포인트: ${requestScope.originalPoint}<br>
+					대여 후 포인트: ${requestScope.newPoint}<br>
+					
 				</div>
 			</td>
 		</tr>
@@ -95,4 +99,8 @@ td {
       <td><input class="btn btn_pk" type="button" value="마이페이지" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberMypage'"></td>
    	 </tr>
 	</table>	
+	<br><br><br><br><br>
+	<br><br><br><br><br>
+	<br><br><br><br><br>
+	<br><br><br><br><br>
 </div>
