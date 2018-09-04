@@ -286,8 +286,9 @@ public class ItemDAO {
 			while(rs.next())
 				picList.add(rs.getString(1));
 			//180902 yosep 사진이 없을경우 기존 jsp에 있던 코드들 전부 주석처리하고 여기서 진행
-			if(picList.isEmpty())
-				picList.add("디폴트.png");
+			//180904 MIRI 사진 없으면 업로드 X
+			/*if(picList.isEmpty())
+				picList.add("디폴트.png");*/
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
