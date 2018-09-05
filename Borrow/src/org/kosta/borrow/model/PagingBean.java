@@ -6,7 +6,7 @@ public class PagingBean {
 
 	 private int postCountPerPage = 2;
 
-	 private int pageCountPerPageGroup = 4;
+	 private int pageCountPerPageGroup = 2;
 
 	 private int totalPostCount;
 
