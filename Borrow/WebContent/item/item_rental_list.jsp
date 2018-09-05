@@ -12,24 +12,37 @@
 }
 </style>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".rentalCancel").click(function(){
+			$.ajax({
+			type:"post",
+			url:"${pageContext.request.contextPath}/front",
+			data:"command=rentalCancel&rentalNo="+$(this).parent().find(".rNo").val()+"&itemNo="+$(this).parent().find(".iNo").val()+"&point="+$(this).parent().find(".point").val(),
+			success : function(result){
+				if(result=="ok"){
+					alert("대여취소를 했습니다");
+					 location.reload(true);
+				}else{
+					alert("대여취소를 할 수 없습니다");
+					 location.reload(true);
+				}
+			}
+			});//ajax
+		});//click
+	});//ready
+	
+
+
+</script>
+
 
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
 	<br><h3>내가 대여한 목록</h3><br>	
 <!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
-	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>	
-<%-- 	현재 시간${curDate}<br> --%>	
-<%-- 	<fmt:parseDate value="2018-09-04" var="aaa" pattern="yyyy-MM-dd"/>
-	<fmt:parseNumber value="${aaa.time / (1000*60*60*24)}" integerOnly="false" var="aaa"></fmt:parseNumber>
-	9월4일 00시 ${aaa}<br>
-	<fmt:parseDate value="2018-09-05" var="bbb" pattern="yyyy-MM-dd"/>
-	<fmt:parseNumber value="${bbb.time / (1000*60*60*24)}" integerOnly="false" var="bbb"></fmt:parseNumber>
-	9월5일 00시 ${bbb}<br>
-	${curDate-aaa }
-	${bbb-aaa} --%>
-	
-	
+	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>		
 	<c:choose>
 		<c:when test="${fn:length(requestScope.rentallist)==0}">
 			<span>대여하신 물품이 없습니다!! </span>
@@ -55,6 +68,7 @@
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rentaldetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${rentaldetail.itemVO.picList[0]}" width="150" height="150" ></a></td>						
 						<%-- 2018-09-04 대여상세 링크 추가 --%>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${rentaldetail.rentalNo} &check=a">${rentaldetail.rentalNo}</a></td>
+						
 						<td>${rentaldetail.itemVO.itemName}</td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
 						<%-- <td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td> --%>
@@ -62,13 +76,16 @@
 						<td>${rentaldetail.returnDate}</td>
 						<td>												
 							<c:choose>
-								<c:when test="${strDate-curDate>0}">
-									대여취소하기
+								<c:when test="${strDate-curDate>0}">						
+									<input type="button" value="대여취소" class="rentalCancel btn btn_center btn_pk">
+									<input type="hidden" class="rNo" value="${rentaldetail.rentalNo}">
+									<input type="hidden" class="iNo" value="${rentaldetail.itemVO.itemNo}">
+									<input type="hidden" class="point" value="${rentaldetail.totalPayment}">									
 								</c:when>
 								<c:otherwise>
 									<c:choose>
 										<c:when test="${endDate-curDate>0}">
-												<button type="button" class="btn btn_center btn_pk" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemEarlyReturn&rentalNo=${rentaldetail.rentalNo}'">반납하기</button>
+											<button type="button" class="btn btn_center btn_pk" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemEarlyReturn&rentalNo=${rentaldetail.rentalNo}'">반납하기</button>
 										</c:when>
 										<c:otherwise>
 											반납완료<br>
