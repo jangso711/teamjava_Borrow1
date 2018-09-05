@@ -35,14 +35,16 @@ input[data-readonly] {
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-1"></div>
-		<div class="col-sm-5 type">
+		<div class="col-sm-5" align="center">
+			<div class="product-information">
 			<!-- 180904 MIRI 사진 슬라이드 기능 추가 -->
-			<div class="w3-content w3-display-container" align="left">
+			<div class="w3-content w3-display-container">
 				<c:forEach items="${itemDetail.picList }" var="picList">
 					<img class="mySlides w3-round"
 						src="${pageContext.request.contextPath }/upload/${picList} "
 						width="400" height="400">
 				</c:forEach>
+			</div>
 				<!-- 180904 MIRI 사진이 2장 이상일 때부터 버튼 보임 -->
 				<c:if test="${fn:length(itemDetail.picList) > 1}">
 					<button class="w3-button w3-black w3-display-left"
@@ -51,7 +53,7 @@ input[data-readonly] {
 						onclick="plusDivs(1)">&#10095;</button>
 				</c:if>
 			</div>
-			<script>
+	<script>
 		var slideIndex = 1;
 		showDivs(slideIndex);
 		
@@ -245,9 +247,9 @@ input[data-readonly] {
 									<input type="hidden" name="item_no" value="${itemNo}">
 									<!-- 180903 JB 대여일 조건 추가 위해 min/max 추가 -->
 									<br>
-									대여날짜 입력
+									대여 일자
 									<input id="from" type="text" name="rentalDate" value="" required="required" data-readonly><br>
-									반납날짜 입력
+									반납 일자
 									<input id="to" type="text" name="returnDate" value="" required="required" data-readonly><br> 
 									<img src="${pageContext.request.contextPath }/template/e-shopper/images/product-details/share.png" class="share img-responsive"/>										
 									<hr>
@@ -279,6 +281,22 @@ input[data-readonly] {
 		</div>
 		<div class="col-sm-1"></div>
 	</div>
+	<div class="row">
+		<div class="col-sm-1">
+		
+		</div>
+		<div class="col-sm-10">
+			<div class="product-information">
+			
+			</div>
+		
+		</div>
+		<div class="col-sm-1">
+		
+		</div>
+	</div>
+</div>
+<div>
 </div>
 
 <form id="deleteForm" action="${pageContext.request.contextPath}/front"
