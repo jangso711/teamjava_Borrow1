@@ -83,12 +83,18 @@ public class HandlerMapping {
 			controller=new MemberFindPwdController();
 		}else if(command.equals("MemberFindPwdForm")) {
 			controller=new MemberFindPwdFormController();
+		}else if(command.equals("rentalCancel")) {
+			controller = new rentalCancelController();			
 		}else if(command.equals("ItemEarlyReturn")) {
 			controller=new ItemEarlyReturnController();
 		}else if(command.equals("ReviewList")) {
 			controller=new ReviewListController();
 		}else if(command.equals("ReviewPost")) {
 			controller=new ReviewPostController();
+		}else if(command.equals("ReviewRegisterForm")) {
+			controller=new ReviewRegisterFormController();	//180905 SOJEONG 추가
+		}else if(command.equals("ReviewRegister")) {
+			controller=new ReviewRegisterController();	//180905 SOJEONG 추가
 		}
 		return controller;
 	}

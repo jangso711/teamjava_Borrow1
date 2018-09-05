@@ -2,10 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-
 h3 {
-	padding-left: 100px;
-	/* padding-top: 30px; */
+	padding-left: 450px;
+	padding-top: 55px;
 	font-weight: bold;
 }
 .btn_pk{
@@ -36,19 +35,15 @@ input[type=password] {
 	border-radius: 5px;
 	padding: 5px;
 }
-.bgheader {
-	height: 50px;
-}
+
+
 .formContent{
-	padding-top:20px;
-	padding-left:200px;
+	padding-top:10px;
+	padding-bottom:20px;
+	padding-left:450px;
 	text-align:center;
 }
-.formContent {
-	padding-top: 20px;
-	padding-left: 450px;
-	padding-bottom: 40px;
-}
+
 table{
 	font-size: 18px;	
 }

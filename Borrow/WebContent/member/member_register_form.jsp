@@ -2,10 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-
-h3{
-	padding-left:100px;
-	/* padding-top:30px; */
+h3 {
+	padding-left: 450px;
+	padding-top: 55px;
 	font-weight: bold;
 }
 .btn_pk{
@@ -37,19 +36,14 @@ input[type=password] {
 	padding: 5px;
 }
 
-.bgheader {
-	height: 50px;
-}
+
 .formContent{
-	padding-top:20px;
-	padding-left:200px;
+	padding-top:10px;
+	padding-bottom:20px;
+	padding-left:450px;
 	text-align:center;
 }
-.formContent {
-	padding-top: 20px;
-	padding-left: 450px;
-	padding-bottom: 40px;
-}
+
 table{
 	font-size: 18px;	
 }
@@ -101,13 +95,13 @@ table{
 		<table cellpadding="3">
 		<tr>
 		<td><input type="text" name="id" id="id" required="required" placeholder="아이디"></td><td><span id="idCheckResult"></span></td>
-		</tr>
+		</tr>	
 		<tr>
 		<td><input type="password" name="pwd" id="pwd" required="required" placeholder="비밀번호"></td>
 		</tr>
 		 <tr>
 		 <td><input type="password" name="repwd" id="repwd" required="required"placeholder="비밀번호확인"></td><td><span id="pwdcheckResult"></span></td>
-		 </tr>
+		 </tr>	 
 		<tr>
 		<td><input type="text" name="name" required="required" placeholder="이름"></td>
 		</tr>

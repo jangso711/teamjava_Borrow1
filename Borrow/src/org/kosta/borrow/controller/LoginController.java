@@ -1,7 +1,6 @@
 package org.kosta.borrow.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

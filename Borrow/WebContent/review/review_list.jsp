@@ -32,6 +32,7 @@ h3{
 	<thead>
 		<tr class="success">
 			<th>번호</th>
+			<th>상품정보</th>
 			<th class="title">제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
@@ -42,6 +43,7 @@ h3{
 		<c:forEach var="rvo" items="${requestScope.rvo.list}">
 			<tr>
 				<td>${rvo.reviewNo}</td>
+				<td>${rvo.rentalDetailVO.itemVO.itemName}</td>
 				<td>
 				<a href="${pageContext.request.contextPath}/front?command=ReviewPost&reviewNo=${rvo.reviewNo}">
 					${rvo.reviewTitle}</a></td>
@@ -72,7 +74,7 @@ h3{
 </c:forEach>
 <c:if test="${requestScope.rvo.pagingBean.nextPageGroup}">
 <ul class="pagination">
- <li><a href="front?command=List&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
+ <li><a href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
 </ul>
 </c:if>
 </div>
