@@ -68,9 +68,16 @@ ul{
 		});
 		$("#registerBtn").click(function(){
 			$("#catAlert").text("")
+			var flag = true;
 			var cats = $(".category:checkbox:checked");
 			var pics = $("#pictureList li").length;
-			
+			$(".required").each(function(){
+				if($(this).val().length==0){
+					flag=false;
+					return false;
+				}
+			});
+			if(!flag) {alert("필수항목(*)을 입력하세요.");return false;}
 			if(cats.length==0){
 				$("#catAlert").text("*카테고리를 1개 이상 선택해주세요.").css("color","red");
 				return false;
@@ -79,13 +86,9 @@ ul{
 				$("#picAlert").text("*사진을 1장 이상 등록해주세요.").css("color", "red");
 				return false;
 			}
-			$("#registerForm").submit(function(){
-				
-				if(! $(this).valid()) {
-					alert("필수항목을 입력하세요.");
-					return false;
-					}
-			});
+			
+			$("#registerForm").submit();
+			
 			
 		});
 		$("#pictureList").on("click","button",function(){
@@ -113,7 +116,7 @@ ul{
 <input type="hidden"name="command"value="ItemRegister">
 <table cellpadding="3">
 	<tr>
-	<td>상품이름*</td><td><input type="text"name="itemName"required="required"></td>
+	<td>상품이름*</td><td><input type="text"name="itemName"class="required"></td>
 	</tr>
 	<tr>
 	<td>제조사</td><td><input type="text"name="itemBrand"></td>
@@ -122,7 +125,7 @@ ul{
 	<td>모델명(번호)</td><td><input type="text"name="itemModel"></td>
 	</tr>
 	<tr>
-	<td>상품가격*</td><td><input type="number"name="itemPrice"required="required"></td>
+	<td>상품가격*</td><td><input type="number"name="itemPrice"class="required"></td>
 	</tr>
 	<tr>
 	<td>대여기간*</td>
@@ -141,7 +144,7 @@ ul{
 	</td>
 	</tr>
 	<tr>
-	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8" required="required"></textarea></td>
+	<td>상품설명*</td><td><textarea name="itemExpl"cols="50"rows="8" class="required"></textarea></td>
 	</tr>
 	<tr>
 	<td>사진*</td><td><span id="picAlert"></span><ul id="pictureList"></ul></td>
