@@ -14,6 +14,20 @@ public class ReviewVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ReviewVO(String reviewNo, String reviewTitle, String reviewContent, int reviewGrade, int reviewHit,
+			String reviewRegdate, ItemVO itemVO, MemberVO memberVO) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewTitle = reviewTitle;
+		this.reviewContent = reviewContent;
+		this.reviewGrade = reviewGrade;
+		this.reviewHit = reviewHit;
+		this.reviewRegdate = reviewRegdate;
+		this.itemVO = itemVO;
+		this.memberVO = memberVO;
+	}
+
 	public ReviewVO(String reviewNo, String reviewTitle, String reviewContent, int reviewGrade, int reviewHit,
 			String reviewRegdate, ItemVO itemVO, MemberVO memberVO, RentalDetailVO rentalDetailVO) {
 		super();

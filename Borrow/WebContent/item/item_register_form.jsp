@@ -86,9 +86,13 @@ ul{
 				$("#picAlert").text("*사진을 1장 이상 등록해주세요.").css("color", "red");
 				return false;
 			}
+<<<<<<< HEAD
 			
 			$("#registerForm").submit();
 			
+=======
+			$("#registerForm").submit();
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 			
 		});
 		$("#pictureList").on("click","button",function(){

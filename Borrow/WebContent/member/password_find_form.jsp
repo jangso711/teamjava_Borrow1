@@ -4,7 +4,7 @@
 <style>
 h3 {
 	padding-left: 450px;
-	padding-top: 40px;
+	padding-top: 55px;
 	font-weight: bold;
 }
 .btn_pk{
@@ -36,19 +36,14 @@ input[type=password] {
 	padding: 5px;
 }
 
-.bgheader {
-	height: 160px;
-}
+
 .formContent{
-	padding-top:20px;
-	padding-left:200px;
+	padding-top:10px;
+	padding-bottom:55px;
+	padding-left:450px;
 	text-align:center;
 }
-.formContent {
-	padding-top: 20px;
-	padding-left: 450px;
-	padding-bottom: 40px;
-}
+
 table{
 	font-size: 18px;	
 }

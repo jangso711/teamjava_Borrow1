@@ -12,6 +12,7 @@ drop table member;
 --------------------------------
 --------drop sequence-----------
 --------------------------------
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
@@ -123,6 +124,13 @@ create table review(
     constraint fk_review_rental_no foreign key(rental_no) references rental_details ON DELETE CASCADE
 );
 
+update item set item_status=0,item_expdate=to_date('2018-09-08','YYYY-MM-DD') where item_no=10018;
+select sysdate, to_char(max(return_date), 'yyyy-MM-DD') from rental_details where item_no=10018;
+
+update rental_details set return_date=sysdate where rental_no=200005;
+
+select r.review_no,r.review_title,to_char(r.review_regdate,'yyyy-MM-DD'), r.review_content,r.review_hit,m.id,m.name from review r, member m where r.id=m.id and r.review_no=8002;
+=======
 ---------------------------------------
 ------------create sequence------------
 ---------------------------------------
@@ -237,7 +245,3 @@ select * from item_category;
 select * from picture;
 select * from rental_details;
 select * from review;
-
-
-
-

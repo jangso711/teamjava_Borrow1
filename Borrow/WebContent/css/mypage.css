@@ -35,23 +35,31 @@ a{
 	z-index: 2;
 }
 .maincontent{
-	padding-top:20px;
-	padding-bottom:20px;
+margin-top:12px;
+	margin-bottom:10px;
 }
 .content{
-	margin-top:auto;
-	margin-bottom:auto;
+margin-top:12px;
+	margin-bottom:10px;
 	
 }
-.mainfooter{
-	height: 160px;
+/*     .mainfooter{
+	
+margin-top:20px;
+margin-bottom: 0px;
+	height:110px;
 	background-color: #7dc4c6;
-}
-.footer{
-	height: 160px;
-	background-color: #7dc4c6;
-}
+	
+}   */
+ .footer{
+	
+	margin-top:16px;
 
+	height:110px;
+	background-color: #7dc4c6;
+		
+}  
+ 
 #logo{
 	display : inline-block;
 	width: 250px;
