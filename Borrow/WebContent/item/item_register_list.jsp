@@ -37,9 +37,9 @@
 				</tr>
 				<c:forEach items="${requestScope.registerlist}" var="registerdetail">
 					<fmt:parseDate value="${registerdetail.rentalDate}" var="strPlanDate" pattern="yyyy-MM-dd"/>
-					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
+					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="false" var="strDate"></fmt:parseNumber>
 					<fmt:parseDate value="${registerdetail.returnDate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
-					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
+					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="false" var="endDate"></fmt:parseNumber>
 					<tr>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${registerdetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${registerdetail.itemVO.picList[0]}" width="150" height="150" ></a></td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${registerdetail.rentalNo} &check=a">${registerdetail.rentalNo} </a> </td>

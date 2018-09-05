@@ -241,3 +241,18 @@ select * from item_category;
 select * from picture;
 select * from rental_details;
 select * from review;
+
+--9. test --
+select b.post_no, b.hits, b.title, b.regdate, m.name
+from(select row_number() over(order by post_no desc) as rnum, post_no, title, to_char(regdate, 'YYYY.MM.DD') as regdate, hits, id
+from post) b, boardmember m 
+where rnum between 1 and 5 and b.id=m.id;	
+
+select rental_no, item_no, item_name, id, rental_date, return_date
+from( select row_number() over(order by r.rental_no asc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date
+from rental_details r, item i where r.item_no=i.item_no and r.id='miri')  where rnum between 2 and 5;
+
+select count(*)
+from rental_details r, item i 
+where r.item_no=i.item_no and r.id='miri'
+

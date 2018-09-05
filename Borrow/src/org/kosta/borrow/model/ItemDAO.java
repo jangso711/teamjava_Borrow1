@@ -535,18 +535,20 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<RentalDetailVO> getAllRentalDetailById(String id) throws SQLException {
+	public ArrayList<RentalDetailVO> getAllRentalDetailById(String id, PagingBean pagingBean) throws SQLException {
 		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD') \r\n" + 
-					"from rental_details r, item i \r\n" + 
-					"where r.item_no=i.item_no and r.id=?";
+			String sql="select rental_no, item_no, item_name, id, rental_date, return_date\r\n" + 
+					"from( select row_number() over(order by r.rental_no asc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date\r\n" + 
+					"from rental_details r, item i where r.item_no=i.item_no and r.id=?)  where rnum between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, pagingBean.getStartRowNumber());
+			pstmt.setInt(3, pagingBean.getEndRowNumber());
 			rs = pstmt.executeQuery();			
 			while(rs.next()) {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
@@ -554,12 +556,11 @@ public class ItemDAO {
 				ItemVO item= new ItemVO();			
 				item.setItemNo(rs.getString(2));
 				item.setPicList(getPictureList(rs.getString(2)));					
-				item.setItemName(rs.getString(3));
-				item.setItemPrice(rs.getInt(4));
-				item.getMemberVO().setId(rs.getString(5));				
+				item.setItemName(rs.getString(3));				
+				item.getMemberVO().setId(rs.getString(4));				
 				rentalDetailVo.setItemVO(item);
-				rentalDetailVo.setRentalDate(rs.getString(6));
-				rentalDetailVo.setReturnDate(rs.getString(7));			
+				rentalDetailVo.setRentalDate(rs.getString(5));
+				rentalDetailVo.setReturnDate(rs.getString(6));			
 				list.add(rentalDetailVo);			
 			}
 				
@@ -569,6 +570,29 @@ public class ItemDAO {
 		return list;
 
 	}
+	
+	public int getAllRentalListCountById(String id) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int totalCount=0;
+		try {
+			con = getConnection();
+			String sql="select count(*) " + 
+					"from rental_details r, item i \r\n" + 
+					"where r.item_no=i.item_no and r.id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();			
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}				
+		}finally {
+			closeAll(rs,pstmt,con);
+		}		
+		return totalCount;
+	}    
+	
 
 	public String deleteCheck(String itemNo) throws SQLException {
 		Connection con = null;
@@ -809,7 +833,8 @@ public class ItemDAO {
 
 		
 
-	}    
+	}
+	
 	 
 
 

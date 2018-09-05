@@ -19,17 +19,6 @@
 <!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>	
-<%-- 	현재 시간${curDate}<br> --%>	
-<%-- 	<fmt:parseDate value="2018-09-04" var="aaa" pattern="yyyy-MM-dd"/>
-	<fmt:parseNumber value="${aaa.time / (1000*60*60*24)}" integerOnly="false" var="aaa"></fmt:parseNumber>
-	9월4일 00시 ${aaa}<br>
-	<fmt:parseDate value="2018-09-05" var="bbb" pattern="yyyy-MM-dd"/>
-	<fmt:parseNumber value="${bbb.time / (1000*60*60*24)}" integerOnly="false" var="bbb"></fmt:parseNumber>
-	9월5일 00시 ${bbb}<br>
-	${curDate-aaa }
-	${bbb-aaa} --%>
-	
-	
 	<c:choose>
 		<c:when test="${fn:length(requestScope.rentallist)==0}">
 			<span>대여하신 물품이 없습니다!! </span>
@@ -81,6 +70,32 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<c:set var="pb" value="${requestScope.pagingBean}" />
+				<div class="col-sm-12 center">
+					
+						<ul class="pagination">
+						<c:if test="${pb.previousPageGroup }">
+							<li><a
+								href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
+						</c:if>
+						<c:forEach begin="${pb.startPageOfPageGroup}"
+							end="${pb.endPageOfPageGroup}" var="pagenum">
+							<c:choose>
+								<c:when test="${pagenum==pb.nowPage}">
+									<li class="active"><a href="#">${pagenum}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pagenum}">${pagenum}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${pb.nextPageGroup }">
+							<li><a
+								href="${pageContext.request.contextPath}/ffront?command=ItemRentalList&nowPage=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
+						</c:if>
+					</ul>				
+			</div>
 		</c:otherwise>
 	</c:choose>
 </div>

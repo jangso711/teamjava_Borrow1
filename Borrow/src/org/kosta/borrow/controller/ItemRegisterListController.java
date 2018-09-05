@@ -19,8 +19,9 @@ public class ItemRegisterListController implements Controller {
 		String id=user.getId();		
 		
 		ArrayList<RentalDetailVO> registerlist = ItemDAO.getInstance().getAllRegisterListById(id);
-		request.setAttribute("registerlist", registerlist);		
-				
+		
+		
+		request.setAttribute("registerlist", registerlist);					
 		request.setAttribute("url", "/item/item_register_list.jsp");
 		
 		return "template/layout.jsp";
