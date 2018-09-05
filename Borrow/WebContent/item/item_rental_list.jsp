@@ -123,7 +123,7 @@
 						</c:forEach>
 						<c:if test="${pb.nextPageGroup }">
 							<li><a
-								href="${pageContext.request.contextPath}/ffront?command=ItemRentalList&nowPage=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
+								href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
 						</c:if>
 					</ul>				
 			</div>

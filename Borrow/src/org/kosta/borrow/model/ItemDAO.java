@@ -47,11 +47,21 @@ public class ItemDAO {
 				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+				// 180905 JB 상품삭제시 후기 삭제 추가
+				pstmt.close();
+				sql = "delete from review where item_no = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			}else {
 				sql = "update item set item_status=0,item_expdate=? where item_no=?"; 
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, flag);
 				pstmt.setInt(2, Integer.parseInt(vo.getItemNo()));
+				// 180905 JB 상품삭제시 후기 삭제 추가
+				pstmt.close();
+				sql = "delete from review where item_no = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			}
 			pstmt.executeUpdate();	
 		}finally {
@@ -59,8 +69,6 @@ public class ItemDAO {
 		}
 
 	}
-	
-	
 	
 	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException, BalanceShortageException {
 		Connection con = null;
@@ -431,7 +439,7 @@ public class ItemDAO {
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("select m.name, ");
+			sql.append("select m.id, ");
 			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
 			sql.append("r.rental_no, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD'),r.total_payment ");
 			sql.append("from member m, item i, rental_details r ");
@@ -445,7 +453,7 @@ public class ItemDAO {
 				rvo = new RentalDetailVO();
 				ivo = new ItemVO();
 				mvo = new MemberVO();
-				mvo.setName(rs.getString(1));
+				mvo.setId(rs.getString(1));
 				rvo.setMemberVO(mvo);
 				ivo.setItemName(rs.getString(2));
 				ivo.setItemBrand(rs.getString(3));
@@ -538,7 +546,7 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<RentalDetailVO> getAllRentalDetailById(String id, PagingBean pagingBean) throws SQLException {
+	public ArrayList<RentalDetailVO> getAllRentalListById(String id, PagingBean pagingBean) throws SQLException {
 		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -625,13 +633,53 @@ public class ItemDAO {
 }
 	/**
 	 * 180901 yosep 진행중
-	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 해준 것만)
+	 * 주어진 id로 등록 물품을 조회해 리스트로 반환한다.(대여 해준 것만)
 	 * 
 	 * @param id
 	 * @return
 	 * @throws SQLException 
 	 */	 
-	public ArrayList<RentalDetailVO> getAllRegisterListById(String id) throws SQLException {
+	public ArrayList<RentalDetailVO> getAllRegisterListById(String id, PagingBean pagingBean) throws SQLException {
+		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date, 'yyyy-MM-DD')" + 
+					"from Rental_details r,(select i.item_no from item i where i.id=?) a, item i " + 
+					"where r.item_no=a.item_no and r.item_no=i.item_no";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();			
+			while(rs.next()) {
+				RentalDetailVO rentalDetailVo= new RentalDetailVO();
+				rentalDetailVo.setRentalNo(rs.getString(1));
+				ItemVO item= new ItemVO();
+				item.setPicList(getPictureList(rs.getString(2)));				
+				item.setItemName(rs.getString(3));
+				item.getMemberVO().setId(rs.getString(4));				
+				rentalDetailVo.setItemVO(item);
+				rentalDetailVo.setRentalDate(rs.getString(6));
+				rentalDetailVo.setReturnDate(rs.getString(7));						
+				list.add(rentalDetailVo);			
+			}
+				
+		}finally {
+			closeAll(rs,pstmt,con);
+		}		
+		return list;
+
+	}
+	/**
+	 * 180905 정빈 진행중
+	 * id에 해당하는 사용자가 대여하고있는 상품의 수를 반환(대여 해준 것만)
+	 * 
+	 * @param id
+	 * @return
+	 * @throws SQLException 
+	 */	 
+	public ArrayList<RentalDetailVO> getAllRegisterListCountById(String id) throws SQLException {
 		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
 		Connection con = null;
 		PreparedStatement pstmt = null;

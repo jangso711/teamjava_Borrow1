@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.MemberVO;
+import org.kosta.borrow.model.PagingBean;
 import org.kosta.borrow.model.RentalDetailVO;
 
 public class ItemRegisterListController implements Controller {
@@ -18,7 +19,9 @@ public class ItemRegisterListController implements Controller {
 		MemberVO user=(MemberVO) session.getAttribute("user");
 		String id=user.getId();		
 		
-		ArrayList<RentalDetailVO> registerlist = ItemDAO.getInstance().getAllRegisterListById(id);
+		PagingBean pagingBean=new PagingBean();
+		
+		ArrayList<RentalDetailVO> registerlist = ItemDAO.getInstance().getAllRegisterListById(id, pagingBean);
 		
 		
 		request.setAttribute("registerlist", registerlist);					
