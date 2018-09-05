@@ -23,7 +23,7 @@
 	<a href="${pageContext.request.contextPath }/front?command=MemberMypage">MyPage</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="${pageContext.request.contextPath }/front?command=FAQ">FAQ</a>&nbsp;&nbsp;
 	<a href="${pageContext.request.contextPath }/front?command=ItemRegisterForm">register</a>&nbsp;&nbsp;
-	<a href="${pageContext.request.contextPath }/front?command=ReviewList">Review</a>&nbsp;&nbsp;
+	<a href="${pageContext.request.contextPath }/front?command=ReviewList&pageNo=1">Review</a>&nbsp;&nbsp;
 
 </c:otherwise>
 </c:choose>
