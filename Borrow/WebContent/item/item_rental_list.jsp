@@ -31,7 +31,10 @@
 			});//ajax
 		});//click
 	});//ready
-	
+	function reviewForm(rentalNo){
+		$("#reviewViewForm").find("#rentalNo").val(rentalNo);
+		$("#reviewViewForm").submit();
+	}
 
 
 </script>
@@ -89,7 +92,7 @@
 										</c:when>
 										<c:otherwise>
 											반납완료<br>
-											<button type="button" class="btn btn_center btn_pk" onclick="">후기 작성</button>											
+											<button type="button" class="btn btn_center btn_pk" onclick="reviewForm(${rentaldetail.rentalNo})">후기 작성</button>											
 										</c:otherwise>
 									</c:choose>								
 								</c:otherwise>								
@@ -128,3 +131,7 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+<form id="reviewViewForm"action="${pageContext.request.contextPath }/front"method="post">
+<input type="hidden"name="command"value="ReviewRegisterForm">
+<input type="hidden"name="rentalNo"id="rentalNo">
+</form>

@@ -145,4 +145,51 @@ import javax.sql.DataSource;
 			}
 			return rvo;
 		}
+		public int registerReview(ReviewVO review) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt =null;
+			ResultSet rs = null;
+			int reviewNo = 0;
+			int reviewCount = 0;
+			try {
+				con = getConnection();
+				String sql = "insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,?,?,?,0,sysdate,?,?,?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1,review.getReviewTitle());
+				pstmt.setString(2, review.getReviewContent());
+				pstmt.setInt(3, review.getReviewGrade());
+				pstmt.setInt(4, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
+				pstmt.setString(5, review.getMemberVO().getId());
+				pstmt.setInt(6, Integer.parseInt(review.getRentalDetailVO().getRentalNo()));
+				pstmt.executeUpdate();
+				pstmt.close();
+				
+				sql = "select review_no_seq.currval from dual";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					reviewNo = rs.getInt(1);
+				}
+				rs.close();
+				pstmt.close();
+				sql = "select count(*) from review where item_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					reviewCount = rs.getInt(1);
+				}
+				sql = "update item_add set grade=((grade*?)+?)/? where item_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, reviewCount-1);
+				pstmt.setInt(2, review.getReviewGrade());
+				pstmt.setInt(3, reviewCount);
+				pstmt.setInt(4, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
+				pstmt.executeUpdate();
+				
+			}finally {
+				closeAll(rs,pstmt,con);
+			}
+			return reviewNo;
+		}
 	}

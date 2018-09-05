@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.MemberVO;
+import org.kosta.borrow.model.RentalDetailVO;
 import org.kosta.borrow.model.ReviewDAO;
 import org.kosta.borrow.model.ReviewVO;
 /**
@@ -26,15 +27,17 @@ public class ReviewRegisterController implements Controller {
 			String grade= request.getParameter("grade");
 			String rentalNo = request.getParameter("rentalNo");
 			ReviewVO review = new ReviewVO();
+			RentalDetailVO rvo = new RentalDetailVO();
+			rvo.setRentalNo(request.getParameter("rentalNo"));
 			review.setReviewTitle(title);
 			review.setReviewContent(contents);
 			review.setMemberVO(user);
 			review.setReviewGrade(Integer.parseInt(grade));
-			//review.setRentalDetailVO(ItemDAO.getInstance());
-			//int reviewNo = ReviewDAO.getInstance().registerReview(review);
+			review.setRentalDetailVO(ItemDAO.getInstance().itemRentDetail(rvo));
+			int reviewNo = ReviewDAO.getInstance().registerReview(review);
 			//정상등록 시 후기 상세보기 페이지로 이동
 			//등록 뒤 상세보기 페이지 방문 시에는 조회수 올리지 않기 처리 추가필요!!!!!!!!
-			return "redirect:front?command=ReviewPost&ReviewNo=";//+reviewNo;
+			return "redirect:front?command=ReviewPost&reviewNo="+reviewNo;
 		}else {
 			//세션만료는 로그인 창으로 다시가기
 			return "redirect:front?command=LoginForm";
