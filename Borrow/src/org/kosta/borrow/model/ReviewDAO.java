@@ -124,6 +124,7 @@ import javax.sql.DataSource;
 					ItemVO ivo=new ItemVO();
 					ivo.setItemNo(rs.getString(8));
 					ivo.setItemName(rs.getString(9));
+					rvo.setItemVO(ivo);
 				}
 			}finally{
 				closeAll(rs,pstmt,con);
