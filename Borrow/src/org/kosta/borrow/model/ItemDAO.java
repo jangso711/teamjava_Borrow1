@@ -47,11 +47,21 @@ public class ItemDAO {
 				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+				// 180905 JB 상품삭제시 후기 삭제 추가
+				pstmt.close();
+				sql = "delete from review where item_no = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			}else {
 				sql = "update item set item_status=0,item_expdate=? where item_no=?"; 
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, flag);
 				pstmt.setInt(2, Integer.parseInt(vo.getItemNo()));
+				// 180905 JB 상품삭제시 후기 삭제 추가
+				pstmt.close();
+				sql = "delete from review where item_no = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			}
 			pstmt.executeUpdate();	
 		}finally {
@@ -431,7 +441,7 @@ public class ItemDAO {
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("select m.name, ");
+			sql.append("select m.id, ");
 			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
 			sql.append("r.rental_no, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD'),r.total_payment ");
 			sql.append("from member m, item i, rental_details r ");
@@ -445,7 +455,7 @@ public class ItemDAO {
 				rvo = new RentalDetailVO();
 				ivo = new ItemVO();
 				mvo = new MemberVO();
-				mvo.setName(rs.getString(1));
+				mvo.setId(rs.getString(1));
 				rvo.setMemberVO(mvo);
 				ivo.setItemName(rs.getString(2));
 				ivo.setItemBrand(rs.getString(3));
