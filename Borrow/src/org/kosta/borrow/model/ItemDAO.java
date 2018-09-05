@@ -451,6 +451,7 @@ public class ItemDAO {
 				ivo.setItemBrand(rs.getString(3));
 				ivo.setItemModel(rs.getString(4));
 				ivo.setItemPrice(rs.getInt(5));
+				ivo.setItemNo(rs.getString(6));	//180905 SOJEONG 추가
 				ivo.setPicList(getPictureList(rs.getString(6)));
 				System.out.println(ivo);
 				rvo.setItemVO(ivo);
