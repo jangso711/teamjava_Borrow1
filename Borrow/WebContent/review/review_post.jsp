@@ -1,3 +1,4 @@
+<%@page import="org.kosta.borrow.model.ReviewVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -32,17 +33,19 @@ h3{
 function sendList(){
 	location.href="${pageContext.request.contextPath}/index.jsp";
 }
-function deletePost(){
+function deleteReview(){
 	if(confirm("게시글을 삭제하시겠습니까?")){
 		document.deleteForm.submit();
 	}
 }
-function updatePost(){
+function updateReview(){
 	if(confirm("게시글을 수정하시겠습니까?")){
-		location.href="${pageContext.request.contextPath}/front?command=UpdatePostForm&no=${requestScope.pvo.no}";
+		location.href="${pageContext.request.contextPath}/front?command=UpdateReviewForm&reviewNo=${requestScope.rvo.reviewNo}";
 	}
 }
 </script>
+
+
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12" align="center">
 <table class="table table-bordered  table-hover boardlist">
@@ -63,11 +66,11 @@ function updatePost(){
 			<td colspan="6" class="btnArea">
 			 <c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
 			 <form name="deleteForm" action="${pageContext.request.contextPath}/front" method="post">
-			 	<input type="hidden" name="command" value="DeletePost">
-			 	<input type="hidden" name="no" value="${requestScope.rvo.reviewNo}">
+			 	<input type="hidden" name="command" value="DeleteReview">
+			 	<input type="hidden" name="reviewNo" value="${requestScope.rvo.reviewNo}">
 			 </form>
-			 <button type="button" class="btn" onclick="deletePost()">삭제</button>
-			 <button type="button" class="btn" onclick="updatePost()">수정</button>
+			 <button type="button" class="btn" onclick="deleteReview()">삭제</button>
+			 <button type="button" class="btn" onclick="updateReview()">수정</button>
 			 </c:if>
 			 </td>
 		</tr>
