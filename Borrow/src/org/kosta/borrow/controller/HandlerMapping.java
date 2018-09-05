@@ -83,6 +83,8 @@ public class HandlerMapping {
 			controller=new MemberFindPwdController();
 		}else if(command.equals("MemberFindPwdForm")) {
 			controller=new MemberFindPwdFormController();
+		}else if(command.equals("rentalCancel")) {
+			controller = new rentalCancelController();			
 		}else if(command.equals("ItemEarlyReturn")) {
 			controller=new ItemEarlyReturnController();
 		}else if(command.equals("ReviewList")) {
