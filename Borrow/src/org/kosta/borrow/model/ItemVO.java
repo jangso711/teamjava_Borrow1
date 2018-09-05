@@ -16,12 +16,14 @@ public class ItemVO {
 	private MemberVO memberVO;
 	private ArrayList<String> picList ;
 	private ArrayList<CategoryVO> catList;
+	private PagingBean pagingBean;
 	//private CategoryVO categoryVO;
 	public ItemVO() {
 		memberVO=new MemberVO();
 		picList = new ArrayList<String>();
 		catList = new ArrayList<CategoryVO>();
 	}
+	
 	
 	public ItemVO(String itemNo, String itemName, String itemExpl, int itemPrice, MemberVO memberVO) {
 		super();
@@ -32,6 +34,18 @@ public class ItemVO {
 		this.memberVO = memberVO;
 		picList = new ArrayList<String>();
 		catList = new ArrayList<CategoryVO>();
+	}
+	
+	public ItemVO(String itemNo, String itemName, String itemExpl, int itemPrice, MemberVO memberVO, PagingBean pagingBean) {
+		super();
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemExpl = itemExpl;
+		this.itemPrice = itemPrice;
+		this.memberVO = memberVO;
+		picList = new ArrayList<String>();
+		catList = new ArrayList<CategoryVO>();
+		this.pagingBean = pagingBean;
 	}
 	
 	public ItemVO(String itemNo, String itemName, String itemBrand, String itemModel, int itemPrice, String itemRegDate,
@@ -134,7 +148,17 @@ public class ItemVO {
       this.itemExpl = itemExpl;
    }
 
-   @Override
+public PagingBean getPagingBean() {
+	return pagingBean;
+}
+
+
+public void setPagingBean(PagingBean pagingBean) {
+	this.pagingBean = pagingBean;
+}
+
+
+@Override
    public String toString() {
       return "ItemVO [itemNo=" + itemNo + ", itemName=" + itemName + ", itemBrand=" + itemBrand + ", itemModel="
             + itemModel + ", itemPrice=" + itemPrice + ", itemRegDate=" + itemRegDate + ", itemExpDate="

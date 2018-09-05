@@ -261,4 +261,14 @@ select count(*)
 from rental_details r, item i 
 where r.item_no=i.item_no and r.id='miri'
 
+select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id 
+from item 
+where item_status=1
+order by item_no desc
 
+select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id
+	from (
+	select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id 
+from item) r, member m
+where r.rnum between 2 and 4 and r.id=m.id
+order by item_no desc

@@ -149,6 +149,31 @@ public class ItemDAO {
 		}		
 		return ownerId;		
 	}
+	
+	/**
+	 * 180905 MIRI 진행중
+	 * Item table에 있는 item의 총 개수를 반환한다.
+	 * @param itemNo
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getTotalItemCount() throws SQLException {
+		int totItemCnt = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql="select count(*) from item";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next())
+				totItemCnt = rs.getInt(1);
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+		return totItemCnt;
+	}
 
 	/**
 	 * 180831 MIRI 진행중
@@ -243,25 +268,35 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<ItemVO> getAllItemList() throws SQLException {
+	public ArrayList<ItemVO> getAllItemList(PagingBean pagingBean) throws SQLException {
 		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = new ItemVO();
 		MemberVO memberVO = null;
+		StringBuilder sb = new StringBuilder();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
-			pstmt = con.prepareStatement(sql);
+			sb.append(" select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id");
+			sb.append(" from (");
+			sb.append(" select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id");
+			sb.append(" from item) r, member m");
+			sb.append(" where r.rnum between ? and ? and r.id=m.id");
+			sb.append(" order by item_no desc");
+			/*String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
+			pstmt = con.prepareStatement(sql);*/
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, pagingBean.getStartRowNumber());
+			pstmt.setInt(2, pagingBean.getEndRowNumber());
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(5));
-				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
-				picList = getPictureList(rs.getString(1));
+				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),  memberVO);
+				picList = getPictureList(rs.getString(2));
 				if(picList != null) 
 					itemVO.setPicList(picList);
 				list.add(itemVO);
