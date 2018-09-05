@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
 .btn_pk {
 	background-color: #f6cac9;
@@ -43,7 +44,8 @@ function updatePost(){
 }
 </script>
 <div class="col-sm-12 bgheader"></div>
-	<table class="table">
+<div class="col-sm-12" align="center">
+<table class="table table-bordered  table-hover boardlist">
 		<tr >
 			<td>글번호 ${requestScope.rvo.reviewNo}</td>
 			<td>제목: ${requestScope.rvo.reviewTitle} </td>
@@ -69,6 +71,7 @@ function updatePost(){
 			 </td>
 		</tr>
 	</table>
+	</div>
 	
 	
 	
