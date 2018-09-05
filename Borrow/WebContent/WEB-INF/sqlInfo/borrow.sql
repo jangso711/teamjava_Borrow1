@@ -231,6 +231,9 @@ values (rental_no_seq.nextval, 10006, 'jb', '2018/5/2' , '2018/5/4',30000);
 
 -- 8. review --
 insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,'카시트 좋아요','조카가 잠깐와서 빌렸어요. 감사합니다.',5,0,'2018/07/18',10001,'lsy',200001);
+insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,'텐트 최고에요','대가족이 모두 들어가서 잘 수 있는 정도의 크기에요! 다음에 또 대여하겠습니다. 감사합니다.',4,0,'2018/09/02',10001,'jb',200005);
+
+
 ---------------------------------------
 ------------select values------------
 ---------------------------------------
