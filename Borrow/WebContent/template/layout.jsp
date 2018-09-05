@@ -12,9 +12,9 @@
  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	<!-- 180904 MIRI 추가 -->
 
  <!-- Bootstrap core CSS -->
-<link href="${pageContext.request.contextPath }/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/template/portfolio/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
-<link href="${pageContext.request.contextPath }/css/item_all_search.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/template/portfolio/css/2-col-portfolio.css" rel="stylesheet">
 
  <!--------------------------------------------------------->  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
