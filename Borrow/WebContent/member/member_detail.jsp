@@ -7,16 +7,22 @@
 
 <style>
 h3 {
-	padding-left: 450px;
-	padding-top: 55px;
+	padding-left: 465px;
+	padding-top: 32px;
 	font-weight: bold;
 }
-
-.btn_pk {
-	background-color: #f6cac9;
-	padding-top: 10px;
-	padding-bottom: 10px;
+.btn_pk{
+	 background-color: #f6cac9;
+	 padding-top: 10px;
+	 padding-bottom: 10px;
+	 }
+.btn_pk1{
+	 background-color: #f6cac9;
+	 margin-left:160px;
+	  padding-top: 10px;
+	 padding-bottom: 10px;
 }
+
 
 input[type=text] {
 	size: 50px;
@@ -34,23 +40,25 @@ input[type=password] {
 	padding: 5px;
 }
 
-.formContent {
-	padding-top: 10px;
-	padding-bottom: 20px;
-	padding-left: 450px;
-	text-align: center;
+
+.formContent{
+	padding-top:10px;
+	padding-bottom:20px;
+	padding-left:450px;
+	text-align:center;
 }
 
-table {
+table{
 	font-size: 18px;
-	text-align: left;
+ border-spacing: 12px;
+  border-collapse: separate;
 }
+
+
 </style>
-<div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12 ">
 	<h3>회원 정보</h3>
-	<div class="formContent">
-		<table cellpadding="15">
+	<div class="col-sm-12 formContent">
+		<table>
 
 
 			<tr>
