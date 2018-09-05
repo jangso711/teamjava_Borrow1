@@ -1,5 +1,6 @@
 package org.kosta.borrow.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,14 +11,12 @@ public class ReviewPostController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		/*HttpSession session=request.getSession();*/
-		
+
 		int no=Integer.parseInt(request.getParameter("reviewNo"));
-		/*@SuppressWarnings("unchecked")
-		ArrayList<Integer> noList=(ArrayList<Integer>) session.getAttribute("noList");
-		if(noList.contains(no)==false) {
+		
+		/*if(cookies.length>) {
 			ReviewDAO.getInstance().updateHit(no);
-			noList.add(no);
+			
 		} */
 		ReviewVO rvo = ReviewDAO.getInstance().getPostingByNo(no);	
 		request.setAttribute("rvo", rvo);

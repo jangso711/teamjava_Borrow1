@@ -9,6 +9,7 @@ public class LogoutController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession(false);
+
 		if(session!=null&&session.getAttribute("user")!=null) {
 			session.invalidate();
 		}

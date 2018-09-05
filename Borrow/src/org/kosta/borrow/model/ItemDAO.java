@@ -923,7 +923,7 @@ public class ItemDAO {
 
 	}
 
-	public RentalDetailVO rentalCancel(String rentalNo, String itemNo, String point) throws SQLException, ParseException {
+	public RentalDetailVO rentalCancel(String rentalNo, String point) throws SQLException, ParseException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.kosta.borrow.model.PagingBean;
 import org.kosta.borrow.model.ReviewDAO;
@@ -19,7 +20,7 @@ public class ReviewListController implements Controller {
 		PagingBean pagingBean=new PagingBean(totalPostCount, pageNo);
 		ArrayList<ReviewVO> list=ReviewDAO.getInstance().getPostingList(pagingBean);
 		ReviewListVO rvo=new ReviewListVO(list, pagingBean);
-	
+
 		request.setAttribute("url", "/review/review_list.jsp");
 		request.setAttribute("rvo", rvo);
 		return "/template/layout.jsp";

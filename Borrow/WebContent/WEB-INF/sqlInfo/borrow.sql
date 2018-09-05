@@ -272,3 +272,4 @@ select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id
 from item) r, member m
 where r.rnum between 2 and 4 and r.id=m.id
 order by item_no desc
+
