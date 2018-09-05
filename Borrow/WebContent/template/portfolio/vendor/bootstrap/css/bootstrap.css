@@ -168,8 +168,7 @@ a {
 }
 
 /* a:hover {
-  color: #0056b3;
-  text-decoration: underline;
+  color: #46a2ac;
 } */
 
 a:not([href]):not([tabindex]) {

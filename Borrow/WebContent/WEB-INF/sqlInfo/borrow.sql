@@ -12,7 +12,7 @@ drop table member;
 --------------------------------
 --------drop sequence-----------
 --------------------------------
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
@@ -177,7 +177,7 @@ insert into item(item_no, id, item_name, item_brand, item_model, item_price, ite
 values(item_no_seq.nextval, 'qqq', 'G GG DD 텐트', '-', '-', 15000, '2018/5/1', add_months('2018/5/1',2), 1,'2017년 히트상품으로 판매하던 인기 짱짱 텐트입니다. 캠핑장 최고의 텐트로 다른 캠핑족들의 부러움을 사는 멋쟁이 텐트입니다. 개인적인 사정으로 캠핑을 주자 가지 못하게되어 대여합니다.');
 
 -- 3.item_add --
-insert into item_add(item_no,rental_count,grade) values(10001,3,5);
+insert into item_add(item_no,rental_count,grade) values(10001,3,4.5);
 insert into item_add(item_no) values(10002);
 insert into item_add(item_no) values(10003);
 insert into item_add(item_no) values(10004);
@@ -247,3 +247,18 @@ select * from rental_details;
 select * from review;
 
 
+--9. test --
+select b.post_no, b.hits, b.title, b.regdate, m.name
+from(select row_number() over(order by post_no desc) as rnum, post_no, title, to_char(regdate, 'YYYY.MM.DD') as regdate, hits, id
+from post) b, boardmember m 
+where rnum between 1 and 5 and b.id=m.id;	
+
+select rental_no, item_no, item_name, id, rental_date, return_date
+from( select row_number() over(order by r.rental_no asc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date
+from rental_details r, item i where r.item_no=i.item_no and r.id='miri')  where rnum between 2 and 5;
+
+select count(*)
+from rental_details r, item i 
+where r.item_no=i.item_no and r.id='miri'
+
+select avg(review_grade) from review where item_no=10001;

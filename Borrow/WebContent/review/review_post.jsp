@@ -34,13 +34,13 @@ function sendList(){
 	location.href="${pageContext.request.contextPath}/index.jsp";
 }
 function deleteReview(){
-	if(confirm("게시글을 삭제하시겠습니까?")){
-		document.deleteForm.submit();
+	if(confirm("후기를 삭제하시겠습니까?")){
+		$("#deleteReviewForm").submit();		//180905 SOJEONG 수정
 	}
 }
 function updateReview(){
-	if(confirm("게시글을 수정하시겠습니까?")){
-		location.href="${pageContext.request.contextPath}/front?command=UpdateReviewForm&reviewNo=${requestScope.rvo.reviewNo}";
+	if(confirm("후기를 수정하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/front?command=ReviewUpdateForm&reviewNo=${requestScope.rvo.reviewNo}";
 	}
 }
 
@@ -76,11 +76,11 @@ function updateReview(){
 		</tr>
 	</table>
 	</div>
-	
-	
-	
-	
-	
+<form id="deleteReviewForm"action="${pageContext.request.contextPath}/front"method="post">
+	<input type="hidden" name="command" value="ReviewDelete">
+	<input type="hidden" name="reviewNo" value="${requestScope.rvo.reviewNo}">
+	<input type="hidden" name="itemNo" value="${requestScope.rvo.rentalDetailVO.itemVO.itemNo}">
+</form>
 	
 	
 	

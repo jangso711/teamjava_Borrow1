@@ -31,7 +31,10 @@
 			});//ajax
 		});//click
 	});//ready
-	
+	function reviewForm(rentalNo){
+		$("#reviewViewForm").find("#rentalNo").val(rentalNo);
+		$("#reviewViewForm").submit();
+	}
 
 
 </script>
@@ -89,7 +92,7 @@
 										</c:when>
 										<c:otherwise>
 											반납완료<br>
-											<button type="button" class="btn btn_center btn_pk" onclick="">후기 작성</button>											
+											<button type="button" class="btn btn_center btn_pk" onclick="reviewForm(${rentaldetail.rentalNo})">후기 작성</button>											
 										</c:otherwise>
 									</c:choose>								
 								</c:otherwise>								
@@ -98,6 +101,37 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<c:set var="pb" value="${requestScope.pagingBean}" />
+				<div class="col-sm-12 center">
+					
+						<ul class="pagination">
+						<c:if test="${pb.previousPageGroup }">
+							<li><a
+								href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
+						</c:if>
+						<c:forEach begin="${pb.startPageOfPageGroup}"
+							end="${pb.endPageOfPageGroup}" var="pagenum">
+							<c:choose>
+								<c:when test="${pagenum==pb.nowPage}">
+									<li class="active"><a href="#">${pagenum}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pagenum}">${pagenum}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${pb.nextPageGroup }">
+							<li><a
+								href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
+						</c:if>
+					</ul>				
+			</div>
+			
 		</c:otherwise>
 	</c:choose>
 </div>
+<form id="reviewViewForm"action="${pageContext.request.contextPath }/front"method="post">
+<input type="hidden"name="command"value="ReviewRegisterForm">
+<input type="hidden"name="rentalNo"id="rentalNo">
+</form>

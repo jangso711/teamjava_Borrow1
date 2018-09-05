@@ -115,7 +115,7 @@ import javax.sql.DataSource;
 				con=getConnection();
 				StringBuilder sql=new StringBuilder();
 				sql.append("select r.review_no,r.review_title,r.review_content,r.review_hit,\r\n" + 
-						"to_char(r.review_regdate,'yyyy-MM-DD'),m.id,m.name,i.item_no,i.item_name\r\n" + 
+						"to_char(r.review_regdate,'yyyy-MM-DD'),m.id,m.name,i.item_no,i.item_name,r.review_grade\r\n" + 
 						"from review r, member m, item i\r\n" + 
 						"where r.id=m.id and r.item_no=i.item_no and r.review_no=?");		
 				pstmt=con.prepareStatement(sql.toString());
@@ -136,6 +136,7 @@ import javax.sql.DataSource;
 					ItemVO ivo = new ItemVO();
 					ivo.setItemNo(rs.getString(8));
 					ivo.setItemName(rs.getString(9));
+					rvo.setReviewGrade(rs.getInt(10));	// 180905 review_grade 저장 추가 SOJEONG 
 					RentalDetailVO rv = new RentalDetailVO();
 					rv.setItemVO(ivo);
 					rvo.setRentalDetailVO(rv);
@@ -144,5 +145,98 @@ import javax.sql.DataSource;
 				closeAll(rs,pstmt,con);
 			}
 			return rvo;
+		}
+		public int registerReview(ReviewVO review) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt =null;
+			ResultSet rs = null;
+			int reviewNo = 0;
+			double avg = 0;
+			try {
+				con = getConnection();
+				String sql = "insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,?,?,?,0,sysdate,?,?,?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1,review.getReviewTitle());
+				pstmt.setString(2, review.getReviewContent());
+				pstmt.setInt(3, review.getReviewGrade());
+				pstmt.setInt(4, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
+				pstmt.setString(5, review.getMemberVO().getId());
+				pstmt.setInt(6, Integer.parseInt(review.getRentalDetailVO().getRentalNo()));
+				pstmt.executeUpdate();
+				pstmt.close();
+				
+				sql = "select review_no_seq.currval from dual";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					reviewNo = rs.getInt(1);
+				}
+				rs.close();
+				pstmt.close();
+				sql = "select avg(review_grade) from review where item_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					avg = rs.getDouble(1);
+				}
+				sql = "update item_add set grade=? where item_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setDouble(1, avg);
+				pstmt.setInt(2, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
+				pstmt.executeUpdate();
+				
+			}finally {
+				closeAll(rs,pstmt,con);
+			}
+			return reviewNo;
+		}
+		public void updateReview(String title, String contents,String reviewNo) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try {
+				con = getConnection();
+				String sql = "update review set review_title=?,review_content=? where review_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, title);
+				pstmt.setString(2, contents);
+				pstmt.setInt(3, Integer.parseInt(reviewNo));
+				pstmt.executeUpdate();
+			}finally {
+				closeAll(pstmt,con);
+			}
+			
+		}
+		public void deleteReview(String reviewNo,String itemNo) throws NumberFormatException, SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			double avg = 0;
+			try {
+				con = getConnection();
+				String sql = "delete from review where review_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(reviewNo));
+				pstmt.executeUpdate();
+				pstmt.close();
+				
+				sql = "select avg(review_grade) from review where item_no=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(itemNo));
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					avg = rs.getDouble(1);
+				}
+				pstmt.close();
+				
+				sql = "update item_add set grade=? where item_no=?";	
+				pstmt = con.prepareStatement(sql);
+				pstmt.setDouble(1, avg);
+				pstmt.setInt(2, Integer.parseInt(itemNo));
+				pstmt.executeUpdate();
+			}finally {
+				closeAll(rs,pstmt,con);
+			}
+			
 		}
 	}
