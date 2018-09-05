@@ -12,9 +12,8 @@ h1 {
 table{
 	text-align: center;
 }
-.bgheader{
-
-	height:160px;
+.bgheader {
+	height: 50px;
 }
  .btn_pk{
    background-color: #f6cac9;

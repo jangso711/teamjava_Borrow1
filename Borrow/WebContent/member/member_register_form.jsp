@@ -2,24 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-
-h3{
-	padding-left:100px;
-	padding-top:30px;
+h3 {
+	padding-left: 450px;
+	padding-top: 55px;
 	font-weight: bold;
 }
-.btn_pk {
-	background-color: #f6cac9;
-	height: 40px;
-	margin: 10px;
+.btn_pk{
+	 background-color: #f6cac9;
+	 padding-top: 10px;
+	 padding-bottom: 10px;
+	 }
+.btn_pk1{
+	 background-color: #f6cac9;
+	 margin-left:160px;
+	  padding-top: 10px;
+	 padding-bottom: 10px;
 }
 
-.logincontent {
-	min-height: 300px;
-	text-align: center;
-	padding-top: 120px;
-	padding-bottom: 120px;
-}
 
 input[type=text] {
 	size: 50px;
@@ -37,13 +36,16 @@ input[type=password] {
 	padding: 5px;
 }
 
-.bgheader {
-	height: 160px;
-}
+
 .formContent{
-	padding-top:20px;
-	padding-left:200px;
+	padding-top:10px;
+	padding-bottom:20px;
+	padding-left:450px;
 	text-align:center;
+}
+
+table{
+	font-size: 18px;	
 }
 </style>
 <script type="text/javascript">
@@ -92,25 +94,25 @@ input[type=password] {
 		<div class="formContent">
 		<table cellpadding="3">
 		<tr>
-		<td>아이디</td><td><input type="text" name="id" id="id" required="required"></td><td><span id="idCheckResult"></span></td>
-		</tr>
+		<td><input type="text" name="id" id="id" required="required" placeholder="아이디"></td><td><span id="idCheckResult"></span></td>
+		</tr>	
 		<tr>
-		<td>비밀번호</td><td><input type="password" name="pwd" id="pwd" required="required"></td>
+		<td><input type="password" name="pwd" id="pwd" required="required" placeholder="비밀번호"></td>
 		</tr>
 		 <tr>
-		 <td>비밀번호 확인</td><td><input type="password" name="repwd" id="repwd" required="required"></td><td><span id="pwdcheckResult"></span></td>
-		 </tr>
+		 <td><input type="password" name="repwd" id="repwd" required="required"placeholder="비밀번호확인"></td><td><span id="pwdcheckResult"></span></td>
+		 </tr>	 
 		<tr>
-		<td>이름</td><td><input type="text" name="name" required="required"></td>
+		<td><input type="text" name="name" required="required" placeholder="이름"></td>
 		</tr>
 		<tr>
-		<td>주소</td><td><input type="text" name="address" required="required"></td>
+		<td><input type="text" name="address" required="required" placeholder="주소"></td>
 		</tr>
 		<tr>
-		<td>전화번호</td><td><input type="text" name="tel" required="required"></td>
+		<td><input type="text" name="tel" required="required" placeholder="전화번호"></td>
 		</tr>
 		<tr>
-		<td></td><td><input class="btn btn_pk" type="submit" value="회원가입" id="registerBtn"></td>
+		<td><input class="btn btn_pk" type="submit" value="회원가입" id="registerBtn"></td>
 		</tr>
 		</table>
 		</div> 

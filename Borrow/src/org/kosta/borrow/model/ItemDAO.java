@@ -1,6 +1,5 @@
 package org.kosta.borrow.model;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.sql.DataSource;
+
 import org.kosta.borrow.exception.BalanceShortageException;
 
 public class ItemDAO {
@@ -43,7 +43,7 @@ public class ItemDAO {
 		try {
 			con=getConnection();
 			String sql="";
-			if(flag=="true") {
+			if(flag.equals("true")) {
 				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
@@ -577,7 +577,7 @@ public class ItemDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String result = "true";
+		String result = null;
 		try {
 			con=getConnection();
 			String sql = "select sysdate,max(return_date) from rental_details where item_no=?";
@@ -587,8 +587,10 @@ public class ItemDAO {
 			if(rs.next()) {
 				Date today = rs.getDate(1);
 				Date returnDate = rs.getDate(2);
-				if(today.before(returnDate)) {
+				if(returnDate!=null && today.before(returnDate)) {
 					result = returnDate.toString();
+				}else {
+					result="true";
 				}
 			}
 		}finally {

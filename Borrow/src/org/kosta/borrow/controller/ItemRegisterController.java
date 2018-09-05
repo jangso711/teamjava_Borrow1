@@ -1,7 +1,5 @@
 package org.kosta.borrow.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,7 +39,7 @@ public class ItemRegisterController implements Controller {
 			MemberVO mvo = (MemberVO)session.getAttribute("user");
 			itemNo=ItemDAO.getInstance().registerItem(mvo,ivo,cats,expl,month);
 		}else {
-			//세션만료
+			return "redirect:index.jsp";
 		}
 		 
 		

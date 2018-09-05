@@ -25,18 +25,20 @@ function showhide(num)    {
 <style>
 
 h3 {
-    text-align: center;
-   	padding:20px;
+	align-content:center;
+	align-items: center;
+	font-weight: bold;
+	padding-bottom:50px;
 }
 table{
 	text-align: center;
 }
 .bgheader {
-	height: 160px;
+	height: 50px;
 }
 </style>
 <div class="col-sm-12 bgheader"></div>
-<div class="container">
+<div class="container" align="center">
 <h3>자주 묻는 질문(FAQ)</h3>
 	<table class="table table-hover table table-bordered">
 		<tr class="table-primary">

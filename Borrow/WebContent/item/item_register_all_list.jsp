@@ -27,9 +27,8 @@ input[type=number]{
 	padding-left:200px;
 	text-align:center;
 }
-.bgheader{
-
-	height:160px;
+.bgheader {
+	height: 50px;
 }
 </style>
 <div class="col-sm-12 bgheader">

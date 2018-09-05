@@ -1,91 +1,101 @@
 package org.kosta.borrow.model;
 
 public class PagingBean {
-	private int nowPage = 1;
-	private int postCountPerPage = 5;
-	private int pageCountPerPageGroup = 4;
-	private int totalPostCount;
 
-	public PagingBean(int totalPostCount) {
-		this.totalPostCount = totalPostCount;
-	}
+	 private int nowPage = 1;
 
-	public PagingBean(int totalPostCount, int nowPage) {
-		this.totalPostCount = totalPostCount;
-		this.nowPage = nowPage;
-	}
+	 private int postCountPerPage = 2;
 
-	public int getNowPage() {
-		return nowPage;
-	}
+	 private int pageCountPerPageGroup = 4;
 
-	public int getStartRowNumber() {
-		return (nowPage - 1) * postCountPerPage + 1;
-	}
+	 private int totalPostCount;
 
-	public int getEndRowNumber() {
-		int endRowNumber = nowPage * postCountPerPage;
-		if (totalPostCount < endRowNumber)
-			endRowNumber = totalPostCount;
-		return endRowNumber;
-	}
+	 public PagingBean() {
+	 }
 
-	private int getTotalPage() {
-		int num = totalPostCount % postCountPerPage;
-		int totalPage = 0;
-		if (num == 0) {
-			totalPage = totalPostCount / postCountPerPage;
-		} else {
-			totalPage = totalPostCount / postCountPerPage + 1;
-		}
-		return totalPage;
-	}
+	 public PagingBean(int totalPostCount) {
+	  this.totalPostCount = totalPostCount;
+	 }
 
-	private int getTotalPageGroup() {
-		int num = getTotalPage() % pageCountPerPageGroup;
-		int totalPageGroup = 0;
-		if (num == 0) {
-			totalPageGroup = getTotalPage() / pageCountPerPageGroup;
-		} else {
-			totalPageGroup = getTotalPage() / pageCountPerPageGroup + 1;
-		}
-		return totalPageGroup;
-	}
+	 public PagingBean(int totalPostCount, int nowPage) {
+	  this.totalPostCount = totalPostCount;
+	  this.nowPage = nowPage;
+	 }
+	 	
+	 public int getNowPage() {
+	  return nowPage;
+	 }
 
-	private int getNowPageGroup() {
-		int num = nowPage % pageCountPerPageGroup;
-		int nowPageGroup = 0;
-		if (num == 0) {
-			nowPageGroup = nowPage / pageCountPerPageGroup;
-		} else {
-			nowPageGroup = nowPage / pageCountPerPageGroup + 1;
-		}
-		return nowPageGroup;
-	}
+	 public int getStartRowNumber() {
+	  return (nowPage-1)*postCountPerPage+1;
+	 }
 
-	public int getStartPageOfPageGroup() {
-		return pageCountPerPageGroup * (getNowPageGroup() - 1) + 1;
-	}
+	 public int getEndRowNumber() {
+		 int endRowNumber=nowPage*postCountPerPage;
+		 if(totalPostCount<endRowNumber) {
+			 endRowNumber=totalPostCount;
+		 }
+	  return endRowNumber;
+	 }
 
-	public int getEndPageOfPageGroup() {
-		int num = getNowPageGroup() * pageCountPerPageGroup;
-		if (num > getTotalPage()) {
-			num = getTotalPage();
-		}
-		return num;
-	}
+	 private int getTotalPage() {  
+		 int num=totalPostCount%postCountPerPage;
+		 int totalPage=0;
+		 if(num==0) {
+			 totalPage=totalPostCount/postCountPerPage;
+		 }else {
+			 totalPage=totalPostCount/postCountPerPage+1;
+		 }
+	  return totalPage;
+	 }
 
-	public boolean isPreviousPageGroup() {
-		boolean flag = false;
-		if (getNowPageGroup() > 1)
-			flag = true;
-		return flag;
-	}
+	 private int getTotalPageGroup() { 
+		 int num=getTotalPage()%pageCountPerPageGroup;
+		 int totalPageGroup=0;
+		 if(num==0) {
+			 totalPageGroup=getTotalPage()/pageCountPerPageGroup;
+		 }else {
+			 totalPageGroup=getTotalPage()/pageCountPerPageGroup+1;
+		 }
+	  return totalPageGroup;
+	 }
 
-	public boolean isNextPageGroup() {
-		boolean flag = false;
-		if (getNowPageGroup() < getTotalPageGroup())
-			flag = true;
-		return flag;
-	}
+	 private int getNowPageGroup() {
+		 int num=nowPage%pageCountPerPageGroup;
+		 int nowPageGroup=0;
+		 if(num==0) {
+			 nowPageGroup=nowPage/pageCountPerPageGroup;
+		 }else {
+			 nowPageGroup=nowPage/pageCountPerPageGroup+1;
+		 }
+	  return nowPageGroup;
+	 }
+
+	 public int getStartPageOfPageGroup() {  
+	  return pageCountPerPageGroup*(getNowPageGroup()-1)+1;
+	 }
+
+	 public int getEndPageOfPageGroup() {
+	  int num=getNowPageGroup()*pageCountPerPageGroup;
+	  if(num>getTotalPage()) {
+		  num=getTotalPage();
+	  }
+	  return num;
+	 }
+
+	 public boolean isPreviousPageGroup() {
+	  boolean flag = false;
+	  if(getNowPageGroup()>1) {
+		  flag=true;
+	  }
+	  return flag;
+	 }
+
+	 public boolean isNextPageGroup() {
+	  boolean flag = false;
+	  if(getTotalPageGroup()>getNowPageGroup()) {
+		  flag=true;
+	  }
+	  return flag;
+	 }
 }

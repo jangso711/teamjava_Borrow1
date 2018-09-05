@@ -18,52 +18,59 @@
 	});
 </script>
 <style>
-.btn_pk {
-	background-color: #f6cac9;
-	height: 45px;
-	margin: 10px;
-	
-}
-h3{
-	
-	padding-top: 50px;
+h3 {
+	padding-left: 450px;
+	padding-top: 55px;
 	font-weight: bold;
-	text-align:center;
-	font-weight:bold;
- 	text-shadow: 0 0 2px #000;
- 	color:#A9D0F5;
-
+}
+.btn_pk{
+	 background-color: #f6cac9;
+	 padding-top: 10px;
+	 padding-bottom: 10px;
+	 }
+.btn_pk1{
+	 background-color: #f6cac9;
+	 margin-left:160px;
+	  padding-top: 10px;
+	 padding-bottom: 10px;
 }
 
-input[type=number] {
-	size: 50px;
-	height: 40px;
-	width: 250px;
-	border-radius: 5px;
-}
+
 input[type=text] {
 	size: 50px;
 	height: 40px;
-	width: 250px;
+	width: 400px;
 	border-radius: 5px;
+	padding: 5px;
 }
+
 input[type=password] {
 	size: 50px;
 	height: 40px;
-	width: 250px;
+	width: 400px;
 	border-radius: 5px;
+	padding: 5px;
+}
+input[type=number] {
+	size: 50px;
+	height: 40px;
+	width: 400px;
+	border-radius: 5px;
+	padding: 5px;
 }
 
-.bgheader {
-	height: 160px;
+.formContent{
+	padding-top:10px;
+	padding-bottom:8px;
+	padding-left:450px;
+	text-align:center;
 }
-.bgfooter {
-	height: 100px;
-}
+
 </style>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12" align="center">
 <h3>포인트 환급</h3>
+<div class="col-sm-12 formContent">
+
 
 <form action="front" method="post" id="withdrawForm">
 <input type="hidden" name="command" value="MemberWithdrawPoint">
@@ -83,8 +90,9 @@ input[type=password] {
 <tr>
 <td>환급 받을 금액</td><td colspan="2"><input type="number" pattern="[0-9]+([,\.][0-9]+)?" name="point" id="point" required="required"></td>
 </tr>
+<tr>
+<td></td><td><button type="submit" class="btn btn_center btn_pk" id="submitBtn">환급받기</button></td>
+</tr>
 </table>
-<button type="submit" class="btn btn_center btn_pk" id="submitBtn">환급받기</button>
 </form>
 </div>
-<div class="col-sm-12 bgfooter"></div>

@@ -14,7 +14,7 @@ public class ItemAllSearchController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemList();
 		request.setAttribute("allItemList", allItemList);
-
+		
 		request.setAttribute("url", "/item/item_all_search_result.jsp");
 		return "template/layout.jsp";
 	}

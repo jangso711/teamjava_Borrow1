@@ -12,8 +12,8 @@
    
    min-height: 300px;
    text-align:center;
-   padding-top:120px;
-   padding-bottom:120px;
+   padding-top:103px;
+   padding-bottom:103px;
 }
 input[type=text]{
    size:50px;
@@ -28,10 +28,9 @@ input[type=text]{
    border-radius: 5px;
    padding:5px;
 }
-.bgheader{
-
-	height:160px;
-}
+/* .bgheader {
+	height: 50px;
+} */
 </style>
 <%-- 로그인 실패  alert 추가 --%>
 <<script type="text/javascript">
