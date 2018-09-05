@@ -277,4 +277,4 @@ select sysdate, to_char(max(return_date), 'yyyy-MM-DD') from rental_details wher
 
 update rental_details set return_date=sysdate where rental_no=200005;
 
-select r.review_no,r.review_title,to_char(r.review_regdate,'yyyy-MM-DD'), r.review_content,r.review_hit,m.id,m.name from review r, member m where r.id=m.id and r.review_no=
+select r.review_no,r.review_title,to_char(r.review_regdate,'yyyy-MM-DD'), r.review_content,r.review_hit,m.id,m.name from review r, member m where r.id=m.id and r.review_no=8002;
