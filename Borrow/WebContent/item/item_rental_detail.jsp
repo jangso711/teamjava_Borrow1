@@ -75,7 +75,7 @@ h3 {
 			<th>모델명</th><td>${requestScope.rvo.itemVO.itemModel}</td>
 		</tr>
 		<tr>
-			<th>등록자</th><td>${requestScope.rvo.memberVO.name}</td>
+			<th>등록자</th><td>${requestScope.rvo.memberVO.id}</td>
 		</tr>
 		<tr>
 			<th>대여일</th><td>${requestScope.rvo.rentalDate}</td>
