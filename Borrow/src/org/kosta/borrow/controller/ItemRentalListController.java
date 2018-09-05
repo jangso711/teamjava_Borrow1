@@ -22,7 +22,7 @@ public class ItemRentalListController implements Controller {
 		String id=user.getId();		
 		int nowPage= Integer.parseInt(request.getParameter("nowPage"));	
 		PagingBean pagingBean= new PagingBean(ItemDAO.getInstance().getAllRentalListCountById(id), nowPage);		
-		ArrayList<RentalDetailVO> rentallist = ItemDAO.getInstance().getAllRentalDetailById(id,pagingBean);
+		ArrayList<RentalDetailVO> rentallist = ItemDAO.getInstance().getAllRentalListById(id,pagingBean);
 		request.setAttribute("rentallist", rentallist);
 		request.setAttribute("pagingBean", pagingBean);
 				
