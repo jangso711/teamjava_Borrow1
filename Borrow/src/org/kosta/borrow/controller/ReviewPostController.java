@@ -20,8 +20,7 @@ public class ReviewPostController implements Controller {
 		if(noList.contains(no)==false) {
 			ReviewDAO.getInstance().updateHit(no);
 			noList.add(no);
-		}*/
-		// 개별 게시물 조회  
+		}*/ 
 		ReviewVO rvo = ReviewDAO.getInstance().getPostingByNo(no);	
 		request.setAttribute("rvo", rvo);
 		request.setAttribute("url", "/review/review_post.jsp");

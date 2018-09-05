@@ -72,7 +72,7 @@ h3{
 </c:forEach>
 <c:if test="${requestScope.rvo.pagingBean.nextPageGroup}">
 <ul class="pagination">
- <li><a href="front?command=List&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
+ <li><a href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
 </ul>
 </c:if>
 </div>
