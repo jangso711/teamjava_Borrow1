@@ -38,7 +38,7 @@ input[type=password] {
 
 
 .formContent{
-	padding-top:10px;
+	padding-top:18px;
 	padding-bottom:55px;
 	padding-left:450px;
 	text-align:center;
