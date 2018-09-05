@@ -43,8 +43,8 @@ function updateReview(){
 		location.href="${pageContext.request.contextPath}/front?command=UpdateReviewForm&reviewNo=${requestScope.rvo.reviewNo}";
 	}
 }
-</script>
 
+</script>
 
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12" align="center">
@@ -53,7 +53,7 @@ function updateReview(){
 			<td>글번호 : ${requestScope.rvo.reviewNo}</td>
 			<td>상품정보 : ${requestScope.rvo.rentalDetailVO.itemVO.itemName}</td>
 			<td>제목 : ${requestScope.rvo.reviewTitle} </td>
-			<td>작성자 : ${requestScope.rvo.memberVO.name}</td>
+			<td>작성자 : ${requestScope.rvo.memberVO.id}</td>
 			<td>조회수 : ${requestScope.rvo.reviewHit}</td>
 			<td>작성일 : ${requestScope.rvo.reviewRegdate}</td>
 		</tr>		

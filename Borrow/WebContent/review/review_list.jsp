@@ -47,7 +47,7 @@ h3{
 				<td>
 				<a href="${pageContext.request.contextPath}/front?command=ReviewPost&reviewNo=${rvo.reviewNo}">
 					${rvo.reviewTitle}</a></td>
-				<td>${rvo.memberVO.name}</td>
+				<td>${rvo.memberVO.id}</td>
 				<td>${rvo.reviewRegdate}</td>
 				<td>${rvo.reviewHit}</td>
 			</tr>
