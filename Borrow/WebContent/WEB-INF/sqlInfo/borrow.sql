@@ -12,6 +12,7 @@ drop table member;
 --------------------------------
 --------drop sequence-----------
 --------------------------------
+
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
@@ -123,6 +124,13 @@ create table review(
     constraint fk_review_rental_no foreign key(rental_no) references rental_details ON DELETE CASCADE
 );
 
+update item set item_status=0,item_expdate=to_date('2018-09-08','YYYY-MM-DD') where item_no=10018;
+select sysdate, to_char(max(return_date), 'yyyy-MM-DD') from rental_details where item_no=10018;
+
+update rental_details set return_date=sysdate where rental_no=200005;
+
+select r.review_no,r.review_title,to_char(r.review_regdate,'yyyy-MM-DD'), r.review_content,r.review_hit,m.id,m.name from review r, member m where r.id=m.id and r.review_no=8002;
+=======
 ---------------------------------------
 ------------create sequence------------
 ---------------------------------------
@@ -169,7 +177,7 @@ insert into item(item_no, id, item_name, item_brand, item_model, item_price, ite
 values(item_no_seq.nextval, 'qqq', 'G GG DD 텐트', '-', '-', 15000, '2018/5/1', add_months('2018/5/1',2), 1,'2017년 히트상품으로 판매하던 인기 짱짱 텐트입니다. 캠핑장 최고의 텐트로 다른 캠핑족들의 부러움을 사는 멋쟁이 텐트입니다. 개인적인 사정으로 캠핑을 주자 가지 못하게되어 대여합니다.');
 
 -- 3.item_add --
-insert into item_add(item_no,rental_count,grade) values(10001,3,5);
+insert into item_add(item_no,rental_count,grade) values(10001,3,4.5);
 insert into item_add(item_no) values(10002);
 insert into item_add(item_no) values(10003);
 insert into item_add(item_no) values(10004);
@@ -223,6 +231,9 @@ values (rental_no_seq.nextval, 10006, 'jb', '2018/5/2' , '2018/5/4',30000);
 
 -- 8. review --
 insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,'카시트 좋아요','조카가 잠깐와서 빌렸어요. 감사합니다.',5,0,'2018/07/18',10001,'lsy',200001);
+insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,'텐트 최고에요','대가족이 모두 들어가서 잘 수 있는 정도의 크기에요! 다음에 또 대여하겠습니다. 감사합니다.',4,0,'2018/09/02',10001,'jb',200005);
+
+
 ---------------------------------------
 ------------select values------------
 ---------------------------------------
@@ -236,5 +247,18 @@ select * from rental_details;
 select * from review;
 
 
+--9. test --
+select b.post_no, b.hits, b.title, b.regdate, m.name
+from(select row_number() over(order by post_no desc) as rnum, post_no, title, to_char(regdate, 'YYYY.MM.DD') as regdate, hits, id
+from post) b, boardmember m 
+where rnum between 1 and 5 and b.id=m.id;	
+
+select rental_no, item_no, item_name, id, rental_date, return_date
+from( select row_number() over(order by r.rental_no asc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date
+from rental_details r, item i where r.item_no=i.item_no and r.id='miri')  where rnum between 2 and 5;
+
+select count(*)
+from rental_details r, item i 
+where r.item_no=i.item_no and r.id='miri'
 
 

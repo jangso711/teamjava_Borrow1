@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.sql.DataSource;
 
@@ -45,11 +47,21 @@ public class ItemDAO {
 				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+				// 180905 JB 상품삭제시 후기 삭제 추가
+				pstmt.close();
+				sql = "delete from review where item_no = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			}else {
 				sql = "update item set item_status=0,item_expdate=? where item_no=?"; 
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, flag);
 				pstmt.setInt(2, Integer.parseInt(vo.getItemNo()));
+				// 180905 JB 상품삭제시 후기 삭제 추가
+				pstmt.close();
+				sql = "delete from review where item_no = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
 			}
 			pstmt.executeUpdate();	
 		}finally {
@@ -427,7 +439,7 @@ public class ItemDAO {
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("select m.name, ");
+			sql.append("select m.id, ");
 			sql.append("i.item_name, i.item_brand, i.item_model, i.item_price, i.item_no, ");
 			sql.append("r.rental_no, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD'),r.total_payment ");
 			sql.append("from member m, item i, rental_details r ");
@@ -441,12 +453,13 @@ public class ItemDAO {
 				rvo = new RentalDetailVO();
 				ivo = new ItemVO();
 				mvo = new MemberVO();
-				mvo.setName(rs.getString(1));
+				mvo.setId(rs.getString(1));
 				rvo.setMemberVO(mvo);
 				ivo.setItemName(rs.getString(2));
 				ivo.setItemBrand(rs.getString(3));
 				ivo.setItemModel(rs.getString(4));
 				ivo.setItemPrice(rs.getInt(5));
+				ivo.setItemNo(rs.getString(6));	//180905 SOJEONG 추가
 				ivo.setPicList(getPictureList(rs.getString(6)));
 				System.out.println(ivo);
 				rvo.setItemVO(ivo);
@@ -533,31 +546,33 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<RentalDetailVO> getAllRentalDetailById(String id) throws SQLException {
+	public ArrayList<RentalDetailVO> getAllRentalListById(String id, PagingBean pagingBean) throws SQLException {
 		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select r.rental_no, i.item_no, i.item_name, i.item_price, i.id,  to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date,'yyyy-MM-DD') \r\n" + 
-					"from rental_details r, item i \r\n" + 
-					"where r.item_no=i.item_no and r.id=?";
+			String sql="select rental_no, item_no, item_name, id, rental_date, return_date\r\n" + 
+					"from( select row_number() over(order by r.rental_no asc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date\r\n" + 
+					"from rental_details r, item i where r.item_no=i.item_no and r.id=?)  where rnum between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, pagingBean.getStartRowNumber());
+			pstmt.setInt(3, pagingBean.getEndRowNumber());
 			rs = pstmt.executeQuery();			
 			while(rs.next()) {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
+				rentalDetailVo.setTotalPayment(rs.getInt(2));
 				ItemVO item= new ItemVO();			
 				item.setItemNo(rs.getString(2));
 				item.setPicList(getPictureList(rs.getString(2)));					
-				item.setItemName(rs.getString(3));
-				item.setItemPrice(rs.getInt(4));
-				item.getMemberVO().setId(rs.getString(5));				
+				item.setItemName(rs.getString(3));				
+				item.getMemberVO().setId(rs.getString(4));	
 				rentalDetailVo.setItemVO(item);
-				rentalDetailVo.setRentalDate(rs.getString(6));
-				rentalDetailVo.setReturnDate(rs.getString(7));			
+				rentalDetailVo.setRentalDate(rs.getString(5));
+				rentalDetailVo.setReturnDate(rs.getString(6));			
 				list.add(rentalDetailVo);			
 			}
 				
@@ -567,6 +582,29 @@ public class ItemDAO {
 		return list;
 
 	}
+	
+	public int getAllRentalListCountById(String id) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int totalCount=0;
+		try {
+			con = getConnection();
+			String sql="select count(*) " + 
+					"from rental_details r, item i \r\n" + 
+					"where r.item_no=i.item_no and r.id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();			
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}				
+		}finally {
+			closeAll(rs,pstmt,con);
+		}		
+		return totalCount;
+	}    
+	
 
 	public String deleteCheck(String itemNo) throws SQLException {
 		Connection con = null;
@@ -595,19 +633,60 @@ public class ItemDAO {
 }
 	/**
 	 * 180901 yosep 진행중
-	 * 로그인되어있는 자신의 id로 등록 물품을 조회해 리스트로 반환한다.(대여 해준 것만)
+	 * 주어진 id로 등록 물품을 조회해 리스트로 반환한다.(대여 해준 것만)
 	 * 
 	 * @param id
 	 * @return
 	 * @throws SQLException 
 	 */	 
-	public ArrayList<RentalDetailVO> getAllRegisterListById(String id) throws SQLException {
+	public ArrayList<RentalDetailVO> getAllRegisterListById(String id, PagingBean pagingBean) throws SQLException {
 		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
+			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date, 'yyyy-MM-DD')" + 
+					"from Rental_details r,(select i.item_no from item i where i.id=?) a, item i " + 
+					"where r.item_no=a.item_no and r.item_no=i.item_no";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();			
+			while(rs.next()) {
+				RentalDetailVO rentalDetailVo= new RentalDetailVO();
+				rentalDetailVo.setRentalNo(rs.getString(1));
+				ItemVO item= new ItemVO();
+				item.setPicList(getPictureList(rs.getString(2)));				
+				item.setItemName(rs.getString(3));
+				item.getMemberVO().setId(rs.getString(4));				
+				rentalDetailVo.setItemVO(item);
+				rentalDetailVo.setRentalDate(rs.getString(6));
+				rentalDetailVo.setReturnDate(rs.getString(7));						
+				list.add(rentalDetailVo);			
+			}
+				
+		}finally {
+			closeAll(rs,pstmt,con);
+		}		
+		return list;
+
+	}
+	/**
+	 * 180905 정빈 진행중
+	 * id에 해당하는 사용자가 대여하고있는 상품의 수를 반환(대여 해준 것만)
+	 * 
+	 * @param id
+	 * @return
+	 * @throws SQLException 
+	 */	 
+	public ArrayList<RentalDetailVO> getAllRegisterListCountById(String id) throws SQLException {
+		ArrayList<RentalDetailVO> list = new ArrayList<RentalDetailVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			//JB 180905 총결제액 추가
 			String sql=" select r.rental_no, r.item_no, i.item_name, r.id, i.item_price, to_char(r.rental_date,'yyyy-MM-DD'), to_char(r.return_date, 'yyyy-MM-DD')" + 
 					"from Rental_details r,(select i.item_no from item i where i.id=?) a, item i " + 
 					"where r.item_no=a.item_no and r.item_no=i.item_no";
@@ -807,7 +886,63 @@ public class ItemDAO {
 
 		
 
+	}
+
+	public RentalDetailVO rentalCancel(String rentalNo, String itemNo, String point) throws SQLException, ParseException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		RentalDetailVO rentalTime = null;
+		String currentTime = null;
+		Date rDate = null;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		Date time = new Date();
+		Date cDate = new Date();
+		currentTime = dateFormat.format(time);
+		MemberVO withdrawId = new MemberVO();
+		MemberVO depositId = new MemberVO();
+		try {
+			con = getConnection();
+			String sql = "select rental_date from RENTAL_DETAILS where rental_no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rentalNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				rentalTime = new RentalDetailVO();
+				rentalTime.setRentalDate(rs.getString(1));
+				rDate = dateFormat.parse(rentalTime.getRentalDate());
+				cDate = dateFormat.parse(currentTime);
+				int compare = cDate.compareTo(rDate);
+				pstmt.close();
+				if(compare<0) {
+					StringBuilder sql2 = new StringBuilder();
+					sql2.append("select i.id, r.id ");
+					sql2.append("from item i, rental_details r, member m ");
+					sql2.append("where m.id = r.id and i.item_no = r.item_no ");
+					sql2.append("and rental_no = ? ");
+					pstmt = con.prepareStatement(sql2.toString());
+					pstmt.setString(1, rentalNo);
+					rs2 = pstmt.executeQuery();
+					if(rs2.next()) {
+						depositId.setId(rs2.getString(1));
+						withdrawId.setId(rs2.getString(2));
+					}
+					MemberDAO.getInstance().depositPoint(withdrawId.getId(), Integer.parseInt(point));//빌린자
+					MemberDAO.getInstance().withdrawPoint(depositId.getId(), Integer.parseInt(point));//빌려준자
+					pstmt.close();
+					pstmt = con.prepareStatement("delete from rental_details where rental_no = ? ");
+					pstmt.setString(1, rentalNo);
+					pstmt.executeUpdate();
+					return rentalTime;
+				}
+			}
+		}finally {
+			closeAll(rs,pstmt,con);
+		}
+		return null;
 	}    
+
 	 
 
 

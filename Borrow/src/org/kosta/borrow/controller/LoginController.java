@@ -26,7 +26,11 @@ public class LoginController implements Controller {
 				result = "ok";
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
+				
 			}
+			/*HttpSession session = request.getSession();
+			//조회수 체크를 위해 noList를 추가한다 
+			session.setAttribute("noList",new ArrayList<Integer>());*/
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -7,7 +7,7 @@
 
 }
 .mypagecontent{
-	margin-top:170px;
+	margin-top:30px;
 	margin-bottom:30px;
 	margin-left:auto;
 	margin-right:auto;
@@ -43,13 +43,15 @@ margin-top:30px;
 
 
 <div class="col-sm-12 mypagecontent" align="center">
-    <button type="button" class="btn bg_gr" style="WIDTH: 80pt; HEIGHT: 80pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList'" >나의<br>등록 물품</button>
+    <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList'" >나의<br>등록 물품</button>
   
-    <button type="button" class="btn bg_gr" style="WIDTH: 80pt; HEIGHT: 80pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList'">나의<br>대여 목록</button><br>
+    <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList'">나의<br>대여 목록</button><br>
 
-    <button type="button" class="btn bg_gr" style="WIDTH: 80pt; HEIGHT: 80pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList'">내가<br>대여한<br>목록</button>
+    <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=1'">내가<br>대여한<br>목록</button>
 
-    <button type="button" class="btn bg_gr" style="WIDTH: 80pt; HEIGHT: 80pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">회원정보</button>
 
+    <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">회원정보</button>
+	
+	<button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">나의<br>등록 후기</button>
 </div>
 

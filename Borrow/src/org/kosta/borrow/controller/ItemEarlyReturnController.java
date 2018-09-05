@@ -11,7 +11,7 @@ public class ItemEarlyReturnController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String rentalNo=request.getParameter("rentalNo");
 		ItemDAO.getInstance().itemEarlyReturn(rentalNo);
-		return "redirect:front?command=ItemRentalList";
+		return "redirect:front?command=ItemRentalList&nowPage=1";
 	}
 
 }
