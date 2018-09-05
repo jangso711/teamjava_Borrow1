@@ -40,9 +40,9 @@ import javax.sql.DataSource;
 			try{
 				con=getConnection(); 
 				StringBuilder sql=new StringBuilder();
-				sql.append("SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD ') as review_regdate,r.review_hit,m.id,m.name ");
-				sql.append("FROM review r , member m ");
-				sql.append("WHERE r.id=m.id ");		
+				sql.append("SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD '),r.review_hit,m.id,m.name,i.item_no,i.item_name ");
+				sql.append("FROM review r , member m, item i ");
+				sql.append("WHERE r.id=m.id and r.item_no=i.item_no ");		
 				sql.append("order by review_no desc");
 				pstmt=con.prepareStatement(sql.toString());		
 				rs=pstmt.executeQuery();	
@@ -58,6 +58,12 @@ import javax.sql.DataSource;
 					mvo.setId(rs.getString(5));
 					mvo.setName(rs.getString(6));
 					rvo.setMemberVO(mvo);
+					ItemVO ivo = new ItemVO();
+					ivo.setItemNo(rs.getString(7));
+					ivo.setItemName(rs.getString(8));
+					RentalDetailVO rv = new RentalDetailVO();
+					rv.setItemVO(ivo);
+					rvo.setRentalDetailVO(rv);
 					list.add(rvo);
 				}			
 			}finally{
@@ -105,7 +111,10 @@ import javax.sql.DataSource;
 			try{
 				con=getConnection();
 				StringBuilder sql=new StringBuilder();
-				sql.append("select r.review_no,r.review_title,r.review_content,r.review_hit,to_char(r.review_regdate,'yyyy-MM-DD'),m.id,m.name,i.item_no,i.item_name from review r, member m, item i where r.id=m.id and r.id=i.id and r.review_no=?");		
+				sql.append("select r.review_no,r.review_title,r.review_content,r.review_hit,\r\n" + 
+						"to_char(r.review_regdate,'yyyy-MM-DD'),m.id,m.name,i.item_no,i.item_name\r\n" + 
+						"from review r, member m, item i\r\n" + 
+						"where r.id=m.id and r.item_no=i.item_no and r.review_no=?");		
 				pstmt=con.prepareStatement(sql.toString());
 				pstmt.setInt(1, no);
 				rs=pstmt.executeQuery();
@@ -121,10 +130,13 @@ import javax.sql.DataSource;
 					mvo.setId(rs.getString(6));
 					mvo.setName(rs.getString(7));
 					rvo.setMemberVO(mvo);
-					ItemVO ivo=new ItemVO();
+					//ItemVO ivo=new RentalDetailVO().getItemVO();
+					ItemVO ivo = new ItemVO();
 					ivo.setItemNo(rs.getString(8));
 					ivo.setItemName(rs.getString(9));
-					rvo.setItemVO(ivo);
+					RentalDetailVO rv = new RentalDetailVO();
+					rv.setItemVO(ivo);
+					rvo.setRentalDetailVO(rv);
 				}
 			}finally{
 				closeAll(rs,pstmt,con);

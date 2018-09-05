@@ -47,19 +47,20 @@ function updatePost(){
 <div class="col-sm-12" align="center">
 <table class="table table-bordered  table-hover boardlist">
 		<tr >
-			<td>글번호 ${requestScope.rvo.reviewNo}</td>
-			<td>제목: ${requestScope.rvo.reviewTitle} </td>
-			<td>작성자 :  ${requestScope.rvo.memberVO.name}</td>
+			<td>글번호 : ${requestScope.rvo.reviewNo}</td>
+			<td>상품정보 : ${requestScope.rvo.rentalDetailVO.itemVO.itemName}</td>
+			<td>제목 : ${requestScope.rvo.reviewTitle} </td>
+			<td>작성자 : ${requestScope.rvo.memberVO.name}</td>
 			<td>조회수 : ${requestScope.rvo.reviewHit}</td>
-			<td>${requestScope.rvo.reviewRegdate}</td>
+			<td>작성일 : ${requestScope.rvo.reviewRegdate}</td>
 		</tr>		
 		<tr>
-			<td colspan="5" >
+			<td colspan="6" >
 			<pre>${requestScope.rvo.reviewContent}</pre>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5" class="btnArea">
+			<td colspan="6" class="btnArea">
 			 <c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
 			 <form name="deleteForm" action="${pageContext.request.contextPath}/front" method="post">
 			 	<input type="hidden" name="command" value="DeletePost">
