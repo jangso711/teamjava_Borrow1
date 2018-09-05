@@ -79,13 +79,7 @@ ul{
 				$("#picAlert").text("*사진을 1장 이상 등록해주세요.").css("color", "red");
 				return false;
 			}
-			$("#registerForm").submit(function(){
-				
-				if(! $(this).valid()) {
-					alert("필수항목을 입력하세요.");
-					return false;
-					}
-			});
+			$("#registerForm").submit();
 			
 		});
 		$("#pictureList").on("click","button",function(){
