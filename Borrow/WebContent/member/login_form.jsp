@@ -12,7 +12,7 @@
    
    min-height: 300px;
    text-align:center;
-   padding-top:103px;
+   padding-top:115px;
    padding-bottom:103px;
 }
 input[type=text]{
