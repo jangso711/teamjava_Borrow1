@@ -51,8 +51,6 @@ import javax.sql.DataSource;
 				pstmt.setInt(1, pagingBean.getStartRowNumber());
 				pstmt.setInt(2, pagingBean.getEndRowNumber());
 				rs=pstmt.executeQuery();	
-				//목록에서 게시물 content는 필요없으므로 null로 setting
-				//select no,title,time_posted,hits,id,name
 				while(rs.next()){		
 					ReviewVO rvo=new ReviewVO();
 					rvo.setReviewNo(rs.getString(1));
@@ -123,7 +121,6 @@ import javax.sql.DataSource;
 				pstmt=con.prepareStatement(sql.toString());
 				pstmt.setInt(1, no);
 				rs=pstmt.executeQuery();
-			
 				if(rs.next()){
 					rvo=new ReviewVO();
 					rvo.setReviewNo(rs.getString(1));
