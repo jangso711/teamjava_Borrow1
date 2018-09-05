@@ -12,7 +12,7 @@ drop table member;
 --------------------------------
 --------drop sequence-----------
 --------------------------------
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
