@@ -261,4 +261,4 @@ select count(*)
 from rental_details r, item i 
 where r.item_no=i.item_no and r.id='miri'
 
-
+select avg(review_grade) from review where item_no=10001;
