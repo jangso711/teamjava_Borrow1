@@ -7,7 +7,6 @@ public class ReviewVO {
 	private int reviewGrade;
 	private int reviewHit;
 	private String reviewRegdate;
-	private ItemVO itemVO;
 	private MemberVO memberVO;
 	private RentalDetailVO rentalDetailVO;
 	public ReviewVO() {
@@ -15,21 +14,13 @@ public class ReviewVO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ReviewVO(String reviewNo, String reviewTitle, String reviewContent, int reviewGrade, int reviewHit,
-			String reviewRegdate, ItemVO itemVO, MemberVO memberVO) {
+	public ReviewVO(RentalDetailVO rentalDetailVO) {
 		super();
-		this.reviewNo = reviewNo;
-		this.reviewTitle = reviewTitle;
-		this.reviewContent = reviewContent;
-		this.reviewGrade = reviewGrade;
-		this.reviewHit = reviewHit;
-		this.reviewRegdate = reviewRegdate;
-		this.itemVO = itemVO;
-		this.memberVO = memberVO;
+		this.rentalDetailVO = rentalDetailVO;
 	}
 
 	public ReviewVO(String reviewNo, String reviewTitle, String reviewContent, int reviewGrade, int reviewHit,
-			String reviewRegdate, ItemVO itemVO, MemberVO memberVO, RentalDetailVO rentalDetailVO) {
+			String reviewRegdate, MemberVO memberVO, RentalDetailVO rentalDetailVO) {
 		super();
 		this.reviewNo = reviewNo;
 		this.reviewTitle = reviewTitle;
@@ -37,7 +28,6 @@ public class ReviewVO {
 		this.reviewGrade = reviewGrade;
 		this.reviewHit = reviewHit;
 		this.reviewRegdate = reviewRegdate;
-		this.itemVO = itemVO;
 		this.memberVO = memberVO;
 		this.rentalDetailVO = rentalDetailVO;
 	}
@@ -77,12 +67,6 @@ public class ReviewVO {
 	public void setReviewRegdate(String reviewRegdate) {
 		this.reviewRegdate = reviewRegdate;
 	}
-	public ItemVO getItemVO() {
-		return itemVO;
-	}
-	public void setItemVO(ItemVO itemVO) {
-		this.itemVO = itemVO;
-	}
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}
@@ -94,12 +78,6 @@ public class ReviewVO {
 	}
 	public void setRentalDetailVO(RentalDetailVO rentalDetailVO) {
 		this.rentalDetailVO = rentalDetailVO;
-	}
-	@Override
-	public String toString() {
-		return "ReviewVO [reviewNo=" + reviewNo + ", reviewTitle=" + reviewTitle + ", reviewContent=" + reviewContent
-				+ ", reviewGrade=" + reviewGrade + ", reviewHit=" + reviewHit + ", reviewRegdate=" + reviewRegdate
-				+ ", itemVO=" + itemVO + ", memberVO=" + memberVO + ", rentalDetailVO=" + rentalDetailVO + "]";
 	}
 	
 }

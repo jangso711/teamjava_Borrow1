@@ -819,7 +819,6 @@ public class ItemDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-		ResultSet rs3 = null;
 		RentalDetailVO rentalTime = null;
 		String currentTime = null;
 		Date rDate = null;
@@ -843,26 +842,19 @@ public class ItemDAO {
 				int compare = cDate.compareTo(rDate);
 				pstmt.close();
 				if(compare<0) {
-					pstmt = con.prepareStatement("update item_add set rental_count = RENTAL_count -1 where item_no = ?");
-					pstmt.setString(1, itemNo);
-					pstmt.executeUpdate();
-					pstmt.close();
-					pstmt = con.prepareStatement("select id from rental_details where rental_no = ?");
-					pstmt.setInt(1, Integer.parseInt(rentalNo));
-					System.out.println(rentalNo);
+					StringBuilder sql2 = new StringBuilder();
+					sql2.append("select i.id, r.id ");
+					sql2.append("from item i, rental_details r, member m ");
+					sql2.append("where m.id = r.id and i.item_no = r.item_no ");
+					sql2.append("and rental_no = ? ");
+					pstmt = con.prepareStatement(sql2.toString());
+					pstmt.setString(1, rentalNo);
 					rs2 = pstmt.executeQuery();
-						if(rs2.next()) {
-							withdrawId.setId(rs2.getString(1));
-						}				
-						System.out.println(withdrawId);
+					if(rs2.next()) {
+						depositId.setId(rs2.getString(1));
+						withdrawId.setId(rs2.getString(2));
+					}
 					MemberDAO.getInstance().depositPoint(withdrawId.getId(), Integer.parseInt(point));//빌린자
-					pstmt.close();
-					pstmt = con.prepareStatement("select id from item where item_no = ? ");
-					pstmt.setString(1, itemNo);
-					rs3 = pstmt.executeQuery();
-						if(rs3.next()) {
-							depositId.setId(rs3.getString(1));
-						}
 					MemberDAO.getInstance().withdrawPoint(depositId.getId(), Integer.parseInt(point));//빌려준자
 					pstmt.close();
 					pstmt = con.prepareStatement("delete from rental_details where rental_no = ? ");

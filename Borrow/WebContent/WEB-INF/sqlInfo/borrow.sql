@@ -245,3 +245,5 @@ select * from item_category;
 select * from picture;
 select * from rental_details;
 select * from review;
+
+

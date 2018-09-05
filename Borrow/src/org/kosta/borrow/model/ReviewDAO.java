@@ -32,7 +32,7 @@ import javax.sql.DataSource;
 			closeAll(pstmt,con);
 		}	
 		
-		public ArrayList<ReviewVO> getPostingList() throws SQLException{
+		public ArrayList<ReviewVO> getPostingList(PagingBean pagingBean) throws SQLException{
 			ArrayList<ReviewVO> list=new ArrayList<ReviewVO>();
 			Connection con=null;
 			PreparedStatement pstmt=null;
@@ -40,14 +40,17 @@ import javax.sql.DataSource;
 			try{
 				con=getConnection(); 
 				StringBuilder sql=new StringBuilder();
-				sql.append("SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD ') as review_regdate,r.review_hit,m.id,m.name ");
-				sql.append("FROM review r , member m ");
-				sql.append("WHERE r.id=m.id ");		
-				sql.append("order by review_no desc");
-				pstmt=con.prepareStatement(sql.toString());		
+				sql.append("SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD')\r\n" + 
+						",r.review_hit,m.id,m.name,i.item_no,i.item_name\r\n" + 
+						"FROM(select row_number() over(ORDER BY review_no DESC)\r\n" + 
+						"as rnum,review_no,review_title,to_char(review_regdate,'YYYY.MM.DD')\r\n" + 
+						",review_hit FROM review) rn, review r, member m, item i\r\n" + 
+						"WHERE r.id=m.id and r.item_no=i.item_no and rn.review_no=r.review_no AND\r\n" + 
+						"rnum BETWEEN ? AND ? ORDER BY review_no DESC");
+				pstmt=con.prepareStatement(sql.toString());	
+				pstmt.setInt(1, pagingBean.getStartRowNumber());
+				pstmt.setInt(2, pagingBean.getEndRowNumber());
 				rs=pstmt.executeQuery();	
-				//목록에서 게시물 content는 필요없으므로 null로 setting
-				//select no,title,time_posted,hits,id,name
 				while(rs.next()){		
 					ReviewVO rvo=new ReviewVO();
 					rvo.setReviewNo(rs.getString(1));
@@ -58,6 +61,12 @@ import javax.sql.DataSource;
 					mvo.setId(rs.getString(5));
 					mvo.setName(rs.getString(6));
 					rvo.setMemberVO(mvo);
+					ItemVO ivo = new ItemVO();
+					ivo.setItemNo(rs.getString(7));
+					ivo.setItemName(rs.getString(8));
+					RentalDetailVO rv = new RentalDetailVO();
+					rv.setItemVO(ivo);
+					rvo.setRentalDetailVO(rv);
 					list.add(rvo);
 				}			
 			}finally{
@@ -105,11 +114,13 @@ import javax.sql.DataSource;
 			try{
 				con=getConnection();
 				StringBuilder sql=new StringBuilder();
-				sql.append("select r.review_no,r.review_title,r.review_content,r.review_hit,to_char(r.review_regdate,'yyyy-MM-DD'),m.id,m.name,i.item_no,i.item_name from review r, member m, item i where r.id=m.id and r.id=i.id and r.review_no=?");		
+				sql.append("select r.review_no,r.review_title,r.review_content,r.review_hit,\r\n" + 
+						"to_char(r.review_regdate,'yyyy-MM-DD'),m.id,m.name,i.item_no,i.item_name\r\n" + 
+						"from review r, member m, item i\r\n" + 
+						"where r.id=m.id and r.item_no=i.item_no and r.review_no=?");		
 				pstmt=con.prepareStatement(sql.toString());
 				pstmt.setInt(1, no);
 				rs=pstmt.executeQuery();
-			
 				if(rs.next()){
 					rvo=new ReviewVO();
 					rvo.setReviewNo(rs.getString(1));
@@ -121,10 +132,13 @@ import javax.sql.DataSource;
 					mvo.setId(rs.getString(6));
 					mvo.setName(rs.getString(7));
 					rvo.setMemberVO(mvo);
-					ItemVO ivo=new ItemVO();
+					//ItemVO ivo=new RentalDetailVO().getItemVO();
+					ItemVO ivo = new ItemVO();
 					ivo.setItemNo(rs.getString(8));
 					ivo.setItemName(rs.getString(9));
-					rvo.setItemVO(ivo);
+					RentalDetailVO rv = new RentalDetailVO();
+					rv.setItemVO(ivo);
+					rvo.setRentalDetailVO(rv);
 				}
 			}finally{
 				closeAll(rs,pstmt,con);
