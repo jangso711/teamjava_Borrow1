@@ -17,6 +17,7 @@
 	<a href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">Join Us</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="${pageContext.request.contextPath }/front?command=FAQ">FAQ</a>&nbsp;&nbsp;
 	<a href="${pageContext.request.contextPath }/front?command=ReviewList&pageNo=1">Review</a>&nbsp;&nbsp;
+	
 </c:when>
 	<c:otherwise>
 		<a href="${pageContext.request.contextPath }/front?command=Logout">Logout</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -24,6 +25,7 @@
 	<a href="${pageContext.request.contextPath }/front?command=FAQ">FAQ</a>&nbsp;&nbsp;
 	<a href="${pageContext.request.contextPath }/front?command=ItemRegisterForm">register</a>&nbsp;&nbsp;
 	<a href="${pageContext.request.contextPath }/front?command=ReviewList">Review</a>&nbsp;&nbsp;
+	<a href="${pageContext.request.contextPath }/front?command=ReviewRegisterForm&rentalNo=200001">후기작성(테스트용)</a>&nbsp;&nbsp;
 
 </c:otherwise>
 </c:choose>

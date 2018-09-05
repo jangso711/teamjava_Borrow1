@@ -89,6 +89,10 @@ public class HandlerMapping {
 			controller=new ReviewListController();
 		}else if(command.equals("ReviewPost")) {
 			controller=new ReviewPostController();
+		}else if(command.equals("ReviewRegisterForm")) {
+			controller=new ReviewRegisterFormController();	//180905 SOJEONG 추가
+		}else if(command.equals("ReviewRegister")) {
+			controller=new ReviewRegisterController();	//180905 SOJEONG 추가
 		}
 		return controller;
 	}
