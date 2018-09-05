@@ -69,7 +69,7 @@ input[type=text]{
 <input type="hidden"name="command"value="Login">
 <%--</form>--%>
 <br>
-<a style="color:#f6cac9"href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a style="color:#f6cac9"href="${pageContext.request.contextPath }/front?command=MemberFindPwdForm">비밀번호를 잊으셨습니까?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a style="color:#ff99cc;font-weight: 900;"href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a style="color:#ff99cc;font-weight: 900; "href="${pageContext.request.contextPath }/front?command=MemberFindPwdForm">비밀번호를 잊으셨습니까?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 </div>
