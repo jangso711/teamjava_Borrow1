@@ -70,8 +70,6 @@ public class ItemDAO {
 
 	}
 	
-	
-	
 	public RentalDetailVO itemRental(RentalDetailVO vo) throws SQLException, java.text.ParseException, BalanceShortageException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
