@@ -47,7 +47,7 @@ margin-top:30px;
   
     <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList'">나의<br>대여 목록</button><br>
 
-    <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList'">내가<br>대여한<br>목록</button>
+    <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=1'">내가<br>대여한<br>목록</button>
 
 
     <button type="button" class="btn bg_gr" style="WIDTH: 93pt; HEIGHT: 93pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">회원정보</button>
