@@ -12,6 +12,30 @@
 }
 </style>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".rentalCancel").click(function(){
+			$.ajax({
+			type:"post",
+			url:"${pageContext.request.contextPath}/front",
+			data:"command=rentalCancel&rentalNo="+$(this).parent().find(".rNo").val()+"&itemNo="+$(this).parent().find(".iNo").val()+"&point="+$(this).parent().find(".point").val(),
+			success : function(result){
+				if(result=="ok"){
+					alert("대여취소를 했습니다");
+					 location.reload(true);
+				}else{
+					alert("대여취소를 할 수 없습니다");
+					 location.reload(true);
+				}
+			}
+			});//ajax
+		});//click
+	});//ready
+	
+
+
+</script>
+
 
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
@@ -42,13 +66,20 @@
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rentaldetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${rentaldetail.itemVO.picList[0]}" width="150" height="150" ></a></td>						
 						<%-- 2015-09-04 대여상세 링크 추가 --%>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${rentaldetail.rentalNo} &check=a">${rentaldetail.rentalNo}</a></td>
+						
 						<td>${rentaldetail.itemVO.itemName}</td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
 						<td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td>
 						<td>${rentaldetail.rentalDate}</td>
 						<td>${rentaldetail.returnDate}</td>
 						<td><button type="button" class="btn btn_center btn_pk" onclick="location.href=
-	'${pageContext.request.contextPath}/front?command=ItemEarlyReturn&rentalNo=${rentaldetail.rentalNo}'">반납하기</button></td>
+							'${pageContext.request.contextPath}/front?command=ItemEarlyReturn&rentalNo=${rentaldetail.rentalNo}'">반납하기</button><br>
+							<%-- 대여취소 추가 --%>
+							<input type="button" value="대여취소" class="rentalCancel">
+							<input type="hidden" class="rNo" value="${rentaldetail.rentalNo}">
+							<input type="hidden" class="iNo" value="${rentaldetail.itemVO.itemNo}">
+							<input type="hidden" class="point" value="${rentaldetail.totalPayment}">
+						</td>
 					</tr>
 				</c:forEach>
 			</table>

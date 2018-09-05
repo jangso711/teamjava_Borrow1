@@ -13,6 +13,7 @@
 </style>
 
 
+
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
 	<br><h3>나의 빌려준 물품 목록</h3><br>	
@@ -46,7 +47,9 @@
 						<td><fmt:formatNumber>${registerdetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = ${registerdetail.itemVO.itemPrice*(endDate-strDate)}원</td>
 						<td>${registerdetail.rentalDate}</td>
 						<td>${registerdetail.returnDate}</td>
-						<td>이용중 / 반납완료</td>
+						<td>이용중 / 반납완료<br>
+							
+						</td>
 					</tr>
 				</c:forEach>
 			</table>

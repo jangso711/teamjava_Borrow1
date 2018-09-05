@@ -85,7 +85,9 @@ public class HandlerMapping {
 
 		}else if(command.equals("ItemEarlyReturn")) {
 			controller=new ItemEarlyReturnController();
-//github.com/jangso711/teamjava_Borrow1.git
+		//180904 JB 등록취소
+		}else if(command.equals("rentalCancel")) {
+			controller = new rentalCancelController();
 		}
 		return controller;
 	}

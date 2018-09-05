@@ -6,7 +6,6 @@ create sequence item_no_seq start with 10001 nocache;
 create sequence rental_no_seq start with 200001 nocache;
 create sequence cat_no_seq start with 3001 nocache;
 
-
 drop sequence item_no_seq;
 drop sequence rental_no_seq;
 drop sequence cat_no_seq;
