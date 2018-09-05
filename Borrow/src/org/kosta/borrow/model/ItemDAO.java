@@ -1,6 +1,5 @@
 package org.kosta.borrow.model;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.sql.DataSource;
+
 import org.kosta.borrow.exception.BalanceShortageException;
 
 public class ItemDAO {

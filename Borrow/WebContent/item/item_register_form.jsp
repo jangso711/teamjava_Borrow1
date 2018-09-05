@@ -4,7 +4,7 @@
 <style>
 h3{
 	padding-left:100px;
-	padding-top:30px;
+	/* padding-top:30px; */
 	font-weight: bold;
 }
 input[type=text]{
@@ -33,9 +33,8 @@ input[type=number]{
 	padding-bottom:20px;
 	
 }
-.bgheader{
-
-	height:160px;
+.bgheader {
+	height: 50px;
 }
 tr{
 	border-top: 1px;

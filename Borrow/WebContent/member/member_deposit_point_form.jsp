@@ -40,7 +40,7 @@ input[type=number] {
 }
 
 .bgheader {
-	height: 160px;
+	height: 50px;
 }
 .bgfooter {
 	height: 170px;

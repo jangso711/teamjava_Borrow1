@@ -5,12 +5,11 @@
 <style>
 h3{
 	padding-left:100px;
-	padding-top:30px;
+	/* padding-top:30px; */
 	font-weight: bold;
 }
-.bgheader{
-
-	height:160px;
+.bgheader {
+	height: 50px;
 }
 </style>
 <div class="col-sm-12 bgheader">

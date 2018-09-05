@@ -7,14 +7,14 @@
 <style>
 h3 {
 	padding-left: 100px;
-	padding-top: 30px;
+	/* padding-top: 30px; */
 	font-weight: bold;
 }
 .bgheader {
-	height: 160px;
+	height: 50px;
 }
 .membercontent {
-	padding-top: 20px;
+	/* padding-top: 20px; */
 	padding-left: 200px;
 	padding-bottom: 20px;
 }
@@ -23,17 +23,23 @@ table{
 }
 td{
 width: 75%;
+
 }
 tr{
- 	border-bottom: 2px solid #e0e0e0;
-    border-top: 2px solid #e0e0e0;
+border: ="none"
 }
-.btn_center{
-
-} 
 .btn_pk{
 	 background-color: #f6cac9;
+	 padding-top: 10px;
+	 padding-bottom: 10px;
+	 }
+.btn_pk1{
+	 background-color: #f6cac9;
+	 margin-left:160px;
+	  padding-top: 10px;
+	 padding-bottom: 10px;
 }
+
 </style>
 <br>
 <br>
@@ -43,7 +49,9 @@ tr{
 <div class="col-sm-12 ">
 	<h3>회원 정보</h3>
 	<div class="membercontent">
-	<table cellpadding="15">
+	  <table cellpadding="15">
+	
+	
 		<tr>
 			<th>아이디</th>
 			<td>${vo.id}</td>
@@ -64,14 +72,15 @@ tr{
 			<th>잔여 포인트</th>
 			<td><fmt:formatNumber>${vo.point}</fmt:formatNumber></td>
 		</tr>
-
-	</table>
-	<br>
-	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
-	'${pageContext.request.contextPath}/front?command=MemberUpdateForm'">회원 정보 수정</button>
-	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
-	'${pageContext.request.contextPath}/front?command=MemberDepositPointForm'">포인트 충전</button>
-	<button type="button" class="btn btn_center btn_pk" onclick="location.href=
+		</table>
+		<br>
+		<button type="button" class="btn btn_pk1" onclick="location.href=
+	'${pageContext.request.contextPath}/front?command=MemberUpdateForm'">회원 정보 수정</button>		
+		<button type="button" class="btn btn_pk" onclick="location.href=
+	'${pageContext.request.contextPath}/front?command=MemberDepositPointForm'">포인트 충전</button>		
+		<button type="button" class="btn  btn_pk" onclick="location.href=
 	'${pageContext.request.contextPath}/front?command=MemberWithdrawPointForm&existingPoint=${vo.point}'">포인트 환급</button>
+		 
+	
 	</div>
 </div>

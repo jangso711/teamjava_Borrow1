@@ -53,9 +53,8 @@ input[type=password] {
 	width: 250px;
 	border-radius: 5px;
 }
-
 .bgheader {
-	height: 160px;
+	height: 50px;
 }
 .bgfooter {
 	height: 100px;
