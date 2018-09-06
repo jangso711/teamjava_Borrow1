@@ -69,6 +69,35 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<c:set var="pb" value="${requestScope.pagingBean }" />
+				<div class = "col-sm-12 center">
+					<ul class = "pagination">
+					<c:if test = "${pb.previousPageGroup}">
+						<li>
+							<a href = "${pageContext.request.contextPath}/front?command=ItemRegisterList&nowPage=${pb.startPageOfPageGroup-1}">&laquo;</a>
+						</li>
+					</c:if>
+					<c:forEach begin="${pb.startPageOfPageGroup}" end="${pb.endPageOfPageGroup}" var="pagenum">
+						<c:choose>
+							<c:when test="${pagenum==pb.nowPage}">
+								<li class="active">
+									<a href="#">${pagenum}</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+									<a href="${pageContext.request.contextPath}/front?command=ItemRegisterList&nowPage=${pagenum}">${pagenum}</a>
+								</li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${pb.nextPageGroup}">
+						<li>
+							<a href="${pageContext.request.contextPath}/front?command=ItemRegisterList&nowPage=${pb.endPageOfPageGroup+1}">&raquo;</a>
+						</li>
+					</c:if>
+					</ul>
+				</div>
 		</c:otherwise>
 	</c:choose>
 </div>
