@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 h3{
-	padding-left:100px;
+
 	/* padding-top:30px; */
 	font-weight: bold;
 }
@@ -24,9 +24,9 @@ input[type=number]{
 .formContent{
 	padding-top:20px;
 	padding-bottom:20px;
-	padding-left:200px;
+	padding-left:400px;
 	text-align:center;
-	align:center;
+
 }
 .southContent{
 	padding-left:200px;
@@ -98,11 +98,7 @@ ul{
 			});
 			$(this).parent().remove();
 		});
-	
-	
-	});
-	
-
+	});	
 </script>
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12 content">

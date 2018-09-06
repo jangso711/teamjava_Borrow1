@@ -1,5 +1,18 @@
 @charset "UTF-8";
-
+html {
+	height: 100%;
+}
+body {
+	margin: 0;
+	padding: 10;
+	height: 100%; /* needed for container min-height */
+}
+div#MyContainer {
+	position: relative;
+	min-height: 736px;
+	width: 1300px;
+	margin: auto;
+}
 .mainmenubar{
 	height:25px;
 	background-color: #e0e0e0;
@@ -15,7 +28,6 @@
 	text-align:right;
 	z-index: 2;
 }
-
 a{
 	/* color:#000000; */
 }
@@ -27,7 +39,6 @@ a{
 }
 .header{
 	position:fixed;
-	left: 15px;
 	/* top:25px; */	
 	height: 110px;
 	background-color: #7dc4c6;
@@ -35,23 +46,16 @@ a{
 	z-index: 2;
 }
 .maincontent{
-margin-top:12px;
-	margin-bottom:10px;
+	padding-top:60px;
+	height:470px;
 }
 .content{
-margin-top:12px;
+	margin-top:12px;
 	margin-bottom:10px;
+	text-align:center;
 	
 }
-/*     .mainfooter{
-	
-margin-top:20px;
-margin-bottom: 0px;
-	height:110px;
-	background-color: #7dc4c6;
-	
-}   */
- .footer{
+.footer{
 	
 	margin-top:16px;
 
@@ -59,7 +63,6 @@ margin-bottom: 0px;
 	background-color: #7dc4c6;
 		
 }  
- 
 #logo{
 	display : inline-block;
 	width: 250px;

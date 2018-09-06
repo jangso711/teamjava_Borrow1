@@ -10,7 +10,7 @@
 
 .logincontent{
    
-   min-height: 300px;
+   min-height: 450px;
    text-align:center;
    padding-top:115px;
    padding-bottom:103px;
