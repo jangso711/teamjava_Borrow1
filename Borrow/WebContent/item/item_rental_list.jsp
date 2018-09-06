@@ -123,7 +123,8 @@
 											반납완료<br>
 											<c:choose>
 												<c:when test="${rentaldetail.review_status==1}">
-													후기 작성 완료<br>													
+													후기 작성 완료<br>
+													<a href="${pageContext.request.contextPath}/front?command=ReviewPostByRentalNo&rentalNo=${rentaldetail.rentalNo}" style="color:blue;">내 후기 보러가기</a>													
 												</c:when>
 												<c:otherwise>
 													<button type="button" class="btn btn_center btn_pk" onclick="reviewForm(${rentaldetail.rentalNo})">후기 작성하기</button>																						

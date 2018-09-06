@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 
 <style>
 h4 {
@@ -31,7 +28,7 @@ h4 {
 
 <!-- Page Content -->
 <div class="container">
-	<h3> 전체 상품 목록 </h3><br>
+	<h4> 전체 상품 목록 </h4><br>
 	<form action="front">
 		<input type="hidden" name="command" value="ItemRegisterAllList">
 		id로 상품 검색<input type="text" name="memberId" required="required">
@@ -72,19 +69,13 @@ h4 {
 	<ul class="pagination justify-content-center pagination">
 		<c:set value="${requestScope.pagingBean }" var="pb"></c:set>
 		<!-- PrevPage -->
-		<c:choose>
-			<c:when test="${pb.previousPageGroup }">
+			<c:if test="${pb.previousPageGroup }">
 				<li class="page-item"><a class="page-link" 
 					href="${pageContext.request.contextPath }/front?command=ItemAllSearch&pageNum=${pb.startPageOfPageGroup-1}"
 					aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
 					class="sr-only">Previous</span>
 				</a></li>&nbsp;&nbsp;
-			</c:when>
-			<c:otherwise>
-				<li class="page-item"><a class="page-link" aria-label="Previous"> 
-				<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span></a></li>&nbsp;&nbsp;
-			</c:otherwise>
-		</c:choose>
+			</c:if>
 		<!-- PageNum -->
 		<c:forEach begin="${pb.startPageOfPageGroup}"
 			end="${pb.endPageOfPageGroup}" var="pageNum">
@@ -99,18 +90,12 @@ h4 {
 			</c:choose>
 		</c:forEach>
 		<!-- NextPage -->
-		<c:choose>
-			<c:when test="${pb.nextPageGroup }">
+			<c:if test="${pb.nextPageGroup }">
 				<li class="page-item"><a class="page-link" 
 					href="${pageContext.request.contextPath }/front?command=ItemAllSearch&pageNum=${pb.endPageOfPageGroup+1}"
 					aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
 					class="sr-only">Next</span>
 				</a></li>&nbsp;&nbsp;
-			</c:when>
-			<c:otherwise>
-				<li class="page-item"><a class="page-link" aria-label="Next"> 
-				<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span></a></li>&nbsp;&nbsp;
-			</c:otherwise>
-		</c:choose>
+			</c:if>
 	</ul>
 </div>

@@ -37,7 +37,7 @@ public class ReviewRegisterController implements Controller {
 			int reviewNo = ReviewDAO.getInstance().registerReview(review);
 			//정상등록 시 후기 상세보기 페이지로 이동
 			//등록 뒤 상세보기 페이지 방문 시에는 조회수 올리지 않기 처리 추가필요!!!!!!!!
-			return "redirect:front?command=ReviewPost&reviewNo="+reviewNo;
+			return "redirect:front?command=ReviewPostByReviewNo&reviewNo="+reviewNo;
 		}else {
 			//세션만료는 로그인 창으로 다시가기
 			return "redirect:front?command=LoginForm";

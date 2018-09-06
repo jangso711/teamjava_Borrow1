@@ -60,7 +60,15 @@
 											이용 중
 										</c:when>
 										<c:otherwise>
-											반납완료<br>											
+											반납완료<br>
+											<c:choose>
+												<c:when test="${registerdetail.review_status==1}">													
+													<a href="${pageContext.request.contextPath}/front?command=ReviewPostByRentalNo&rentalNo=${registerdetail.rentalNo}" style="color:blue;">사용자 후기 보러가기</a>													
+												</c:when>
+												<c:otherwise>
+													사용자가 아직 후기 작성안함															
+												</c:otherwise>			
+											</c:choose>																															
 										</c:otherwise>
 									</c:choose>								
 								</c:otherwise>								

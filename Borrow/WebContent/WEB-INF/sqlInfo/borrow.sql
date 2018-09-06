@@ -273,7 +273,6 @@ order by item_no desc
 select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id
 	from (
 	select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id 
-<<<<<<< HEAD
 from item) r, member m
 where r.rnum between 2 and 4 and r.id=m.id
 order by item_no desc
@@ -285,7 +284,6 @@ SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD')
 						,review_hit FROM review where id='qqq') rn, review r, member m, item i 
 						WHERE r.id=m.id and r.item_no=i.item_no and rn.review_no=r.review_no AND
 						rnum BETWEEN 1 AND 5 ORDER BY review_no DESC
-=======
 from item) r
 where r.rnum between 2 and 4
 order by item_no desc
@@ -303,17 +301,21 @@ from (
 where rnum between 2 and 4
 order by item_no desc
 
+select id, item_no, item_name, item_expl, item_price
+from item
+where item_status=1 and item_name like'%테%'
+order by item_no desc
+
+select r.rnum, r.id, r.item_no, r.item_name, r.item_expl, r.item_price
+from(
+	select row_number() over(order by item_no desc) as rnum, id, item_no, item_name, item_expl, item_price
+	from item
+	where item_status=1 and item_name like '%테%'
+) r
+where r.rnum between 2 and 4
+order by item_no desc
 
 
 
 
 
-
-
-
-
-
-
-
-
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git

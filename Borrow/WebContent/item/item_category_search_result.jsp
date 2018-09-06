@@ -63,19 +63,13 @@ h4 {
 		<c:set value="${requestScope.pagingBean }" var="pb"></c:set>
 		<c:set value="${requestScope.categoryVO.catNo }" var="catNo"></c:set>
 		<!-- PrevPage -->
-		<c:choose>
-			<c:when test="${pb.previousPageGroup }">
+			<c:if test="${pb.previousPageGroup }">
 				<li class="page-item"><a class="page-link" 
 					href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=${catNo}&pageNum=${pb.startPageOfPageGroup-1}"
 					aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
 					class="sr-only">Previous</span>
 				</a></li>&nbsp;&nbsp;
-			</c:when>
-			<c:otherwise>
-				<li class="page-item"><a class="page-link" aria-label="Previous"> 
-				<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span></a></li>&nbsp;&nbsp;
-			</c:otherwise>
-		</c:choose>
+			</c:if>
 		<!-- PageNum -->
 		<c:forEach begin="${pb.startPageOfPageGroup}"
 			end="${pb.endPageOfPageGroup}" var="pageNum">
@@ -90,19 +84,13 @@ h4 {
 			</c:choose>
 		</c:forEach>
 		<!-- NextPage -->
-		<c:choose>
-			<c:when test="${pb.nextPageGroup }">
+			<c:if test="${pb.nextPageGroup }">
 				<li class="page-item"><a class="page-link" 
 					href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=${catNo}&pageNum=${pb.endPageOfPageGroup+1}"
 					aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
 					class="sr-only">Next</span>
 				</a></li>&nbsp;&nbsp;
-			</c:when>
-			<c:otherwise>
-				<li class="page-item"><a class="page-link" aria-label="Next"> 
-				<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span></a></li>&nbsp;&nbsp;
-			</c:otherwise>
-		</c:choose>
+			</c:if>
 	</ul>
 </div>
 <!-- /.container -->

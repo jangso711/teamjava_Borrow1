@@ -53,7 +53,7 @@ table{
 				<a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rvo.rentalDetailVO.itemVO.itemNo}">
 				${rvo.rentalDetailVO.itemVO.itemName}</a></td>
 				<td style="width:28%">
-				<a href="${pageContext.request.contextPath}/front?command=ReviewPost&reviewNo=${rvo.reviewNo}">
+				<a href="${pageContext.request.contextPath}/front?command=ReviewPostByReviewNo&reviewNo=${rvo.reviewNo}">
 					${rvo.reviewTitle}</a></td>
 				<td style="width:5%">${rvo.memberVO.id}</td>
 				<td style="width:7%">${rvo.reviewRegdate}</td>
