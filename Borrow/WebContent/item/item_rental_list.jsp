@@ -98,7 +98,7 @@
 						<td>${rentaldetail.itemVO.itemName}</td>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
 						<%-- <td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td> --%>
-						<td>${rentaldetail.rentalDate}</td>
+						<td >${rentaldetail.rentalDate}</td>
 						<td>${rentaldetail.returnDate}</td>
 						<td>												
 							<c:choose>
