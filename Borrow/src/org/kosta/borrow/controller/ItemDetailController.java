@@ -19,15 +19,13 @@ public class ItemDetailController implements Controller {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String itemNo = request.getParameter("itemNo");
-		String pageNosting=request.getParameter("pageNo");
+		String pageNostring=request.getParameter("pageNo");
 		int pageNoint=0;
-		if(pageNosting==null) {
+		if(pageNostring==null) {
 			pageNoint=1;
 		}else {
-			pageNoint=Integer.parseInt(pageNosting);
+			pageNoint=Integer.parseInt(pageNostring);
 		}
-		//int pageNo=Integer.parseInt();
-		int pageNo=1;
 		int totalPostCount=ReviewDAO.getInstance().getItemNoPostCount(itemNo);
 		PagingBean pagingBean=new PagingBean(totalPostCount, pageNoint);
 		ArrayList<ReviewVO> list=ReviewDAO.getInstance().getPostingMyItemNoList(pagingBean, itemNo);

@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
 h3{
-	padding-left:100px;
 	padding-top:30px;
 	font-weight: bold;
 }
@@ -24,7 +23,7 @@ input[type=number]{
 }
 .formContent{
 	padding-top:20px;
-	padding-left:200px;
+	padding-left:400px;
 	text-align:center;
 }
 .southContent{
@@ -44,7 +43,7 @@ ul{
 }
 </style>
 <script>
-
+	
 	$(document).ready(function(){
 		var clist = ${requestScope.clist};
 		for(i=0;i<clist.length;i++){
@@ -73,15 +72,18 @@ ul{
 			});
 		});
 		$("#pictureList").on("click","button",function(){
+			if($(this).parent().hasClass("oldList")){
+				$(this).parent().remove();	//li에서만 삭제
+				return false;
+			}
 			$.ajax({
 				type:"post",
 				url:"${pageContext.request.contextPath}/front",
 				data:"command=DeleteServerPicture&fileName="+$(this).parent().find(":hidden").val(),
-			});
+			}); 
 			$(this).parent().remove();
 		});
 		$("#updateBtn").click(function(){
-			alert("click");
 			$("#catAlert").text("")
 			var flag = true;
 			var cats = $(".category:checkbox:checked");
@@ -104,7 +106,8 @@ ul{
 			$("#updateForm").submit();
 			
 		});
-		
+
+	
 	});
 	
 </script>
@@ -153,7 +156,7 @@ ul{
 	<td><span id="picAlert"></span>
 	<ul id="pictureList">
 	<c:forEach items="${i.picList}" var="picName" varStatus="info">
-	<li >${picName }<input type="hidden"name="pics"value="${picName}"><button class='deleteBtn'>x</button></li>	
+	<li class="oldList">${picName }<input type="hidden"name="pics"value="${picName}"><button class='deleteBtn'>x</button></li>	
 	</c:forEach>
 	</ul>
 	</td>
