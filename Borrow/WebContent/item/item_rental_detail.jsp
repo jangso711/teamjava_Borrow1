@@ -34,25 +34,20 @@ table#info {
 	height: 30px;
 	margin: 10px;
 }
-
 .mySlides {
 	display: none;
 }
-
 .w3-theme-d1 {
 	color: #fff !important;
 	background-color: #f1a4a3 !important
 }
-
 .w3-theme-d2 {
 	color: #fff !important;
 	background-color: #aeacb7 !important
 }
-
 input[data-readonly] {
 	pointer-events: none;
 }
-
 th {
 	text-align: center;
 }
@@ -60,17 +55,14 @@ th {
 td {
 	text-align: center;
 }
-
 td#test {
 	width: 400px;
 }
-
 h3 {
 	padding-left: 100px;
 	padding-top: 30px;
 	font-weight: bold;
 }
-
 h5 {
 	font-weight: bold;
 }
