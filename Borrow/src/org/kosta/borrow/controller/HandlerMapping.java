@@ -105,6 +105,8 @@ public class HandlerMapping {
 			controller=new ReviewDeleteController();	//180905 SOJEONG 추가
 		}else if(command.equals("ReviewMyList")) {
 			controller=new ReviewMyListController();	//180906 동규 추가
+		}else if(command.equals("ReviewFindItemName")) {
+			controller=new ReviewFindItemNameController();//180906 성열
 		}
 		return controller;
 	}
