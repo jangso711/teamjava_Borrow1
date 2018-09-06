@@ -130,7 +130,7 @@
 						
 			<c:set var="pb" value="${requestScope.pagingBean}" />
 				<div class="col-sm-12 center" align="center">					
-						<ul class="pagination pagination justify-content-center">
+						<ul class="pagination justify-content-center">
 						<c:if test="${pb.previousPageGroup }">
 							<li class="page-item"><a class="page-link"
 								href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
