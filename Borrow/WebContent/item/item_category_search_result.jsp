@@ -74,7 +74,7 @@ h4 {
 			end="${pb.endPageOfPageGroup}" var="pageNum">
 			<c:choose>
 				<c:when test="${pb.nowPage == pageNum }">
-					<li class="active"><a class="page-link-active">${pageNum }</a></li>&nbsp;&nbsp;
+					<li class="page-item active"><a class="page-link">${pageNum }</a></li>&nbsp;&nbsp;
 				</c:when>
 				<c:otherwise>
 					<li><a class="page-link"

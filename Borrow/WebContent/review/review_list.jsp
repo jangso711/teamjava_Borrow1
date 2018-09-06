@@ -33,7 +33,7 @@ table{
 <div class="col-sm-7" align="center"></div>
 <div class="col-sm-3" align="center">
 <form action="front">
-		<input type="hidden" name="command" value="ReviewFindItemName">
+		<input type="hid	den" name="command" value="ReviewFindItemName">
 		상품 이름으로 검색<input type="text" name="itemName" required="required">
 		<input type="submit" value="검색">
 	</form>

@@ -343,10 +343,10 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id");
-			sb.append(" from (");
-			sb.append(" select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id");
-			sb.append(" from item) r");
+			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id, r.grade");
+			sb.append(" from (");			
+			sb.append(" select row_number() over(order by i.item_no desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, a.grade");
+			sb.append(" from item i , item_add a where i.item_no=a.item_no) r");		
 			sb.append(" where r.rnum between ? and ?");
 			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
@@ -358,6 +358,9 @@ public class ItemDAO {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(5));
 				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
+				ItemAddVO itemAddVO= new ItemAddVO();
+				itemAddVO.setGrade(rs.getDouble(6));
+				itemVO.setItemAddVO(itemAddVO);
 				picList = getPictureList(rs.getString(1));
 				if(picList != null) 
 					itemVO.setPicList(picList);
