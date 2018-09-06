@@ -38,6 +38,7 @@ public class ItemCategorySearchController implements Controller {
 		        iterator.remove();
 		    }
 		}
+		System.out.println(itemCategorySearchList);
 		
 		CategoryVO categoryVO = ItemDAO.getInstance().getCatNameByCatNo(categoryNo);
 		request.setAttribute("itemCategorySearchList", itemCategorySearchList);

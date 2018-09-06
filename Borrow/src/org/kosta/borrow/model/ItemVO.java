@@ -160,9 +160,9 @@ public void setPagingBean(PagingBean pagingBean) {
 
 @Override
    public String toString() {
-      return "ItemVO [itemNo=" + itemNo + ", itemName=" + itemName + ", itemBrand=" + itemBrand + ", itemModel="
+      return "\nItemVO [itemNo=" + itemNo + ", itemName=" + itemName + ", itemBrand=" + itemBrand + ", itemModel="
             + itemModel + ", itemPrice=" + itemPrice + ", itemRegDate=" + itemRegDate + ", itemExpDate="
-            + itemExpDate + ", itemStatus=" + itemStatus + ", itemExpl=" + itemExpl + ", memberVO=" + memberVO
+            + itemExpDate + ", itemStatus=" + itemStatus + ", itemExpl=" + itemExpl + ", \n memberVO=" + memberVO
             + ", picList=" + picList + ", catList=" + catList + "]";
    }
 
