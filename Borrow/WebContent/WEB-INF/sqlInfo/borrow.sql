@@ -286,7 +286,19 @@ from (
 where rnum between 2 and 4
 order by item_no desc
 
+select id, item_no, item_name, item_expl, item_price
+from item
+where item_status=1 and item_name like'%테%'
+order by item_no desc
 
+select r.rnum, r.id, r.item_no, r.item_name, r.item_expl, r.item_price
+from(
+	select row_number() over(order by item_no desc) as rnum, id, item_no, item_name, item_expl, item_price
+	from item
+	where item_status=1 and item_name like '%테%'
+) r
+where r.rnum between 2 and 4
+order by item_no desc
 
 
 

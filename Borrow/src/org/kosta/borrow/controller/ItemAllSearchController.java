@@ -17,9 +17,9 @@ public class ItemAllSearchController implements Controller {
 		String nowPage = request.getParameter("pageNum");
 		PagingBean pagingBean = null;
 		if(nowPage == null)
-			pagingBean = new PagingBean(totalPostCount);
+			pagingBean = new PagingBean(1, 6, totalPostCount);
 		else
-			pagingBean = new PagingBean(totalPostCount, Integer.parseInt(nowPage));
+			pagingBean = new PagingBean(Integer.parseInt(nowPage), 6, totalPostCount);
 		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemList(pagingBean);
 		request.setAttribute("allItemList", allItemList);
 		request.setAttribute("pagingBean", pagingBean);

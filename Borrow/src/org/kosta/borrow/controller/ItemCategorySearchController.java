@@ -14,14 +14,14 @@ public class ItemCategorySearchController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		PagingBean pagingBean = null;
 		String categoryNo = request.getParameter("categoryNo");
+		PagingBean pagingBean = null;
 		String nowPage = request.getParameter("pageNum");
-		int totalPostCount = ItemDAO.getInstance().getTotalItemCount();
+		int totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo);
 		if(nowPage == null)
-			pagingBean = new PagingBean(totalPostCount);
+			pagingBean = new PagingBean(1, 6, totalPostCount);
 		else
-			pagingBean = new PagingBean(totalPostCount, Integer.parseInt(nowPage));
+			pagingBean = new PagingBean(Integer.parseInt(nowPage), 6, totalPostCount);
 		ArrayList<ItemVO> itemCategorySearchList = ItemDAO.getInstance().getItemNoListByCategory(categoryNo, pagingBean);
 		CategoryVO categoryVO = ItemDAO.getInstance().getCatNameByCatNo(categoryNo);
 		request.setAttribute("itemCategorySearchList", itemCategorySearchList);

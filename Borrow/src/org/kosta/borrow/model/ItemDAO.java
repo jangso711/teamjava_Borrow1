@@ -203,7 +203,7 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
- 	public ArrayList<ItemVO> getAllItemListByName(String searchtext) throws SQLException {
+ 	public ArrayList<ItemVO> getAllItemListByName(String searchtext, PagingBean pagingBean) throws SQLException {
 		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = new ItemVO();
@@ -215,12 +215,19 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select id, item_no, item_name, item_expl, item_price");
+			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price");
+			sb.append(" from(");
+			sb.append(" select row_number() over(order by item_no desc) as rnum,");
+			sb.append(" id, item_no, item_name, item_expl, item_price");
 			sb.append(" from item");
 			sb.append(" where item_status=1 and item_name like ?");
+			sb.append(" ) r");
+			sb.append(" where r.rnum between ? and ?");
 			sb.append(" order by item_no desc");	//180904 MIRI 내림차순으로 변경
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, searchtext);
+			pstmt.setInt(2, pagingBean.getStartRowNumber());
+			pstmt.setInt(3, pagingBean.getEndRowNumber());
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -238,6 +245,37 @@ public class ItemDAO {
 		}
 		return list;
 	}
+ 	
+ 	/**
+ 	 * 180906 MIRI 완료
+ 	 * 아이템 이름 검색시 토탈 카운트
+ 	 * @param searchtext
+ 	 * @return
+ 	 * @throws SQLException
+ 	 */
+ 	public int getAllItemListCountByName(String searchtext) throws SQLException {
+		StringBuilder sb = new StringBuilder();
+		int count = 0;
+		searchtext = "%"+searchtext+"%";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			sb.append(" select count(*) from item");
+			sb.append(" where item_status=1 and item_name like ?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, searchtext);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return count;
+	}    
 	
 	/**
 	 * 180831 MIRI 진행중
@@ -342,8 +380,6 @@ public class ItemDAO {
 			sb.append(" from item where id=?) r, member m");
 			sb.append(" where r.rnum between ? and ? and r.id=m.id");
 			sb.append(" order by item_no desc");
-			/*String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
-			pstmt = con.prepareStatement(sql);*/
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, id);
 			pstmt.setInt(2, pagingBean.getStartRowNumber());
@@ -477,6 +513,37 @@ public class ItemDAO {
 			closeAll(rs, pstmt, con);
 		}
 		return list;
+	}
+	
+	/**
+	 * 180906 MIRI 완료
+	 * 카테고리 검색시 토탈 카운트
+	 * @param catno
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getItemNoListCountByCategory(String catno) throws SQLException {
+		StringBuilder sb = new StringBuilder();
+		int count = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			sb.append(" select count(*)");
+			sb.append(" from item i, item_category ic, category c");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, catno);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return count;
 	}
 	
 	/**
@@ -1041,7 +1108,7 @@ public class ItemDAO {
 			closeAll(rs,pstmt,con);
 		}
 		return null;
-	}    
+	}
 
 	 
 
