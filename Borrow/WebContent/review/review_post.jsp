@@ -28,7 +28,9 @@ h3{
 	height: 80px;
 }
 </style>
-
+<%
+Cookie cookie=new Cookie("hit", "reviewNo");
+%>
 <script type="text/javascript">
 function sendList(){
 	location.href="${pageContext.request.contextPath}/index.jsp";
@@ -43,7 +45,6 @@ function updateReview(){
 		location.href="${pageContext.request.contextPath}/front?command=ReviewUpdateForm&reviewNo=${requestScope.rvo.reviewNo}";
 	}
 }
-
 </script>
 
 <div class="col-sm-12 bgheader"></div>
