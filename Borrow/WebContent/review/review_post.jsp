@@ -4,11 +4,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
-.btn_pk {
-	background-color: #f6cac9;
-	height: 45px;
-	margin: 10px;
-	
+.bg_gr{
+ 	background-color: #e0e0e0;
+ 	font-size:20px;
+ 	font-weight:bold;
+ 	text-shadow: 0 0 2px #000;
+ 	color:#FFFFFF;
+ text-align: center;
+}
+.bg_gr:hover{
+	 background-color: #f6cac9;
+	 font-size:20px;
+	 font-weight:bold;
+	 text-shadow: 0 0 2px #000;
+	 color:#FFFFFF;
+	  text-align: center;
 }
 h3{
 	
@@ -26,6 +36,9 @@ h3{
 }
 .bgfooter {
 	height: 80px;
+}
+table{
+	text-align: center;
 }
 </style>
 <%
@@ -50,7 +63,7 @@ function updateReview(){
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-2" align="center"></div>
 <div class="col-sm-8" align="center">
-<table class="table table-hover boardlist">
+<table class="table table-bordered boardlist">
 
 		<tr style="width:10%">
 			<td style="width:5%">글번호 </td>
@@ -58,7 +71,7 @@ function updateReview(){
 			<td style="width:28%">제목 </td>
 			<td style="width:5%">작성자</td>
 			<td style="width:7%">작성일</td>
-			<td style="width:5%">작성일</td>
+			<td style="width:5%">평점</td>
 			<td style="width:5%">조회수</td>
 		</tr>
 		<tr>
@@ -72,21 +85,32 @@ function updateReview(){
 		</tr>
 
 			<tr style="height:300px">
-				<td colspan="7" style="width:10%">
+				<td colspan="1">내용</td>
+				<td colspan="6" style="width:10%">
 				<pre>${requestScope.rvo.reviewContent}</pre>
 				</td>
 			</tr>
-
+	
 	</table>
 	</div>
+	<hr>
 	<div class="col-sm-2" align="center"></div>
 	<c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
 			 <form name="deleteForm" action="${pageContext.request.contextPath}/front" method="post">
 			 	<input type="hidden" name="command" value="DeleteReview">
 			 	<input type="hidden" name="reviewNo" value="${requestScope.rvo.reviewNo}">
 			 </form>
-			 <button type="button" class="btn" onclick="deleteReview()">삭제</button>
-			 <button type="button" class="btn" onclick="updateReview()">수정</button>
+			 <hr>
+			 <div class="col-sm-2" align="center"></div>
+			 <div class="col-sm-8 mypagecontent" align="center">
+			 <table>
+			 	<tr>
+				 	<td><button type="button" class="btn bg_gr" style="WIDTH: 80pt; HEIGHT: 40pt;" onclick="deleteReview()">삭제</button></td>
+				 	<td><button type="button" class="btn bg_gr" style="WIDTH: 80pt; HEIGHT: 40pt;" onclick="updateReview()">수정</button></td>
+			 	</tr>
+			 </table>
+			 </div>
+			 <div class="col-sm-2" align="center"></div>
 			 </c:if>
 <form id="deleteReviewForm"action="${pageContext.request.contextPath}/front"method="post">
 	<input type="hidden" name="command" value="ReviewDelete">
