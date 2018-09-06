@@ -7,19 +7,25 @@
 		<input type="hidden" name="command" value="ItemSearch"> <input
 			type="search" name="searchtext" placeholder="Search..."
 			style="width: 550px; height: 35px; letter-spacing: 2px; margin-bottom: 5px;"/>
-			<a href="${pageContext.request.contextPath}/front?command=ItemRegisterForm"><img alt="상품등록" src="${pageContext.request.contextPath }/img/등버.png" id="registerBtn"></a>
+			<img alt="상품등록" src="${pageContext.request.contextPath }/img/등버.png" id="registerBtn">
 			<script type="text/javascript">
-			<c:choose>
-			<c:when test="${empty sessionScope.user }">
+			
 			$(document).ready(function() {
 				$("#registerBtn").click(function() {
-					alert("로그인 후 사용 가능");
-					return false;
+					<c:choose>
+					<c:when test="${empty sessionScope.user }">
+					alert("로그인 후 사용 가능");					
+					location.href="${pageContext.request.contextPath}/front?command=LoginForm";
+					</c:when>
+					<c:otherwise>
+					location.href="${pageContext.request.contextPath}/front?command=ItemRegisterForm";
+					</c:otherwise>
+					</c:choose>
 				})//clicdk
 			})//ready
-			</c:when>
-			</c:choose>
+			
 			</script>
+			<!-- <a href=> -->
 	</form>
 	<br>
 	<!-- 180903 MIRI 카테고리 url 작성 -->

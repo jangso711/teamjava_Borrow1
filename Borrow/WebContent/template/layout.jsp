@@ -35,6 +35,9 @@
 	<c:import url="/template/header.jsp"/>
 </div>
 <div class="row">
+	<c:import url="/template/category.jsp"/>
+</div>
+<div class="row">
 		<c:import url="${requestScope.url }"/>
 </div>
 <div class="row footer">

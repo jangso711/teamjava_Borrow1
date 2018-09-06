@@ -721,8 +721,8 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select rental_no, item_no, item_name, id, rental_date, return_date, review_status\r\n" + 
-					"from( select row_number() over(order by r.rental_no desc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date, r.review_status\r\n" + 
+			String sql="select rental_no, item_no, item_name, id, rental_date, return_date, review_status, total_payment \r\n" + 
+					"from( select row_number() over(order by r.rental_no desc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date, r.review_status, r.total_payment \r\n" + 
 					"from rental_details r, item i where r.item_no=i.item_no and r.id=?)  where rnum between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -732,7 +732,6 @@ public class ItemDAO {
 			while(rs.next()) {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
-				rentalDetailVo.setTotalPayment(rs.getInt(2));
 				ItemVO item= new ItemVO();			
 				item.setItemNo(rs.getString(2));
 				item.setPicList(getPictureList(rs.getString(2)));					
@@ -742,6 +741,7 @@ public class ItemDAO {
 				rentalDetailVo.setRentalDate(rs.getString(5));
 				rentalDetailVo.setReturnDate(rs.getString(6));	
 				rentalDetailVo.setReview_status(rs.getInt(7));
+				rentalDetailVo.setTotalPayment(rs.getInt(8));
 				list.add(rentalDetailVo);			
 			}
 				
@@ -816,10 +816,10 @@ public class ItemDAO {
 		try {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("select rental_no, item_no, item_name, id, rental_date, return_date ");
+			sql.append("select rental_no, item_no, item_name, id, rental_date, return_date, review_status ");
 			sql.append("from( select row_number() over(order by r.rental_no desc) as rnum, r.rental_no, r.id, ");
 			sql.append("i.item_no, i.item_name, to_char(r.rental_date,'yyyy-MM-DD') as rental_date,  ");
-			sql.append("to_char(r.return_date,'yyyy-MM-DD') as return_date ");
+			sql.append("to_char(r.return_date,'yyyy-MM-DD') as return_date, r.review_status ");
 			sql.append("from rental_details r, item i, member m  ");
 			sql.append("where m.id = i.id and r.item_no=i.item_no and m.id = ?) ");
 			sql.append("where rnum between ? and ? ");
@@ -837,7 +837,8 @@ public class ItemDAO {
 				item.getMemberVO().setId(rs.getString(4));				
 				rentalDetailVo.setItemVO(item);
 				rentalDetailVo.setRentalDate(rs.getString(5));
-				rentalDetailVo.setReturnDate(rs.getString(6));						
+				rentalDetailVo.setReturnDate(rs.getString(6));		
+				rentalDetailVo.setReview_status(rs.getInt(7));
 				list.add(rentalDetailVo);			
 			}
 		}finally {

@@ -31,6 +31,15 @@ table{
 
 </style>
 <div class="col-sm-12 bgheader"></div>
+<div class="col-sm-7" align="center"></div>
+<div class="col-sm-3" align="center">
+<form action="front">
+		<input type="hidden" name="command" value="">
+		상품넘버로 검색<input type="text" name="itemNo" required="required">
+		<input type="submit" value="검색">
+	</form>
+	</div>
+<div class="col-sm-2" align="center"></div>
 <div class="col-sm-2" align="center"></div>
 <div class="col-sm-8" align="center">
 <table class="table table-bordered table-hover boardlist">
@@ -53,7 +62,7 @@ table{
 				<a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rvo.rentalDetailVO.itemVO.itemNo}">
 				${rvo.rentalDetailVO.itemVO.itemName}</a></td>
 				<td style="width:28%">
-				<a href="${pageContext.request.contextPath}/front?command=ReviewPost&reviewNo=${rvo.reviewNo}">
+				<a href="${pageContext.request.contextPath}/front?command=ReviewPostByReviewNo&reviewNo=${rvo.reviewNo}">
 					${rvo.reviewTitle}</a></td>
 				<td style="width:5%">${rvo.memberVO.id}</td>
 				<td style="width:7%">${rvo.reviewRegdate}</td>

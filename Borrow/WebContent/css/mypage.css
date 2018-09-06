@@ -45,6 +45,17 @@ a{
 	text-align : left;
 	z-index: 2;
 }
+
+.category{
+	position:fixed;
+	left:0px;
+	top:0px;
+	height:25px;
+	background-color: #e0e0e0;
+	text-align:center;
+	z-index: 2;
+	font-weight: bold;
+}
 .maincontent{
 	padding-top:60px;
 	height:470px;
