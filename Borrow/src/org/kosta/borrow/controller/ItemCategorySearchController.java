@@ -1,7 +1,6 @@
 package org.kosta.borrow.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,17 @@ public class ItemCategorySearchController implements Controller {
 		String categoryNo = request.getParameter("categoryNo");
 		PagingBean pagingBean = null;
 		String nowPage = request.getParameter("pageNum");
-		int totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo);
+		HttpSession session=request.getSession();
+		MemberVO mvo= (MemberVO) session.getAttribute("user");
+		int totalPostCount=0;
+		if(mvo==null) {
+			totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo,null);
+		}else {
+			totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo,mvo.getId());
+		}
+		
+		
+		
 		if(nowPage == null)
 			pagingBean = new PagingBean(1, 6, totalPostCount);
 		else
@@ -28,7 +37,7 @@ public class ItemCategorySearchController implements Controller {
 		ArrayList<ItemVO> itemCategorySearchList = ItemDAO.getInstance().getItemNoListByCategory(categoryNo, pagingBean);
 		
 		//180906 MIRI 로그인 했을시에 자신이 등록한 상품은 카테고리에서 검색 불가 (아예 없을 시에 검색 결과 없다고 창띄우기)
-		HttpSession session = request.getSession(false);
+	/*	HttpSession session = request.getSession(false);
 		MemberVO sessionMemberVO = ((MemberVO)(session.getAttribute("user")));
 		Iterator<ItemVO> iterator = itemCategorySearchList.iterator();
 		while(iterator.hasNext()) {
@@ -37,7 +46,7 @@ public class ItemCategorySearchController implements Controller {
 		    if(sessionMemberVO != null && vo.getMemberVO().getId().equals(sessionMemberVO.getId())) {
 		        iterator.remove();
 		    }
-		}
+		}*/
 		
 		CategoryVO categoryVO = ItemDAO.getInstance().getCatNameByCatNo(categoryNo);
 		request.setAttribute("itemCategorySearchList", itemCategorySearchList);
