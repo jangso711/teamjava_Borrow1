@@ -9,8 +9,12 @@
 <style type="text/css">
 .bgheader {
 	height: 50px;
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 th,td{
 	padding-left: 50px;
 	padding-right:50px;
@@ -32,10 +36,14 @@ table{
 	padding-bottom:10px;
 	padding-left : 300px;
 	text-align:center;
+<<<<<<< HEAD
 }
 
 
 
+=======
+}
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 </style>
 
 <script type="text/javascript">

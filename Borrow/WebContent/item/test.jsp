@@ -53,24 +53,15 @@
 						src="https://s3.amazonaws.com/uifaces/faces/twitter/dakshbhagya/128.jpg" />
 						<span class="quote"><i class="fa fa-quote-left"></i></span>
 				</a></li>
-<!-- 				<li role="presentation"><a href="#anna" aria-controls="anna"
-					role="tab" data-toggle="tab"> <img class="img-circle"
-						src="https://s3.amazonaws.com/uifaces/faces/twitter/annapickard/128.jpg" />
-						<span class="quote"><i class="fa fa-quote-left"></i></span>
-				</a></li>
-				<li role="presentation"><a href="#wafer" aria-controls="wafer"
-					role="tab" data-toggle="tab"> <img class="img-circle"
-						src="https://s3.amazonaws.com/uifaces/faces/twitter/waferbaby/128.jpg" />
-						<span class="quote"><i class="fa fa-quote-left"></i></span>
-				</a></li> -->
 			</ul>
 
 			<!-- Tab panes -->
 			<div class="tab-content" id="tabs-collapse">
 				<div role="tabpanel" class="tab-pane fade in active" id="dustin">
 					<div class="tab-inner">
-						<p class="lead">Etiam tincidunt enim et pretium efficitur.
-							Donec auctor leo sollicitudin eros iaculis sollicitudin.</p>
+						<p class="lead">
+							dd
+						</p>
 						<hr>
 						<p>
 							<strong class="text-uppercase">Dustin Lamont</strong>
@@ -94,34 +85,6 @@
 						</p>
 					</div>
 				</div>
-<!-- 				<div role="tabpanel" class="tab-pane fade" id="anna">
-					<div class="tab-inner">
-						<p class="lead">Nullam suscipit ante ac arcu placerat, nec
-							sagittis quam volutpat. Vestibulum aliquam facilisis velit ut
-							ultrices.</p>
-						<hr>
-						<p>
-							<strong class="text-uppercase">Anna Pickard</strong>
-						</p>
-						<p>
-							<em class="text-capitalize"> Master web developer</em> at <a
-								href="#">Intel</a>
-						</p>
-					</div>
-				</div> -->
-<!-- 				<div role="tabpanel" class="tab-pane fade" id="wafer">
-					<div class="tab-inner">
-						<p class="lead">Fusce erat libero, fermentum quis sollicitudin
-							id, venenatis nec felis. Morbi sollicitudin gravida finibus.</p>
-						<hr>
-						<p>
-							<strong class="text-uppercase">Wafer Baby</strong>
-						</p>
-						<p>
-							<em class="text-capitalize"> Web designer</em> at <a href="#">Microsoft</a>
-						</p>
-					</div>
-				</div> -->
 			</div>
 
 		</div>
