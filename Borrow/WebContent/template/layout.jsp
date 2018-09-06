@@ -30,6 +30,7 @@
 <title>Borrow빌리다</title>
 </head>
 <body>
+<div id="MyContainer">
 <div class="row">
 	<c:import url="/template/menubar.jsp"/>
 </div>
@@ -44,6 +45,7 @@
 </div>
 <div class="row footer">
 	<c:import url="/template/footer.jsp"/>
+</div>
 </div>
 </body>
 </html>

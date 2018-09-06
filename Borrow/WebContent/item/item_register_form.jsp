@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 h3{
-	padding-left:100px;
+
 	/* padding-top:30px; */
 	font-weight: bold;
 }
@@ -24,9 +24,9 @@ input[type=number]{
 .formContent{
 	padding-top:20px;
 	padding-bottom:20px;
-	padding-left:200px;
+	padding-left:400px;
 	text-align:center;
-	align:center;
+
 }
 .southContent{
 	padding-left:200px;
@@ -69,7 +69,7 @@ ul{
 		$("#registerBtn").click(function(){
 			$("#catAlert").text("")
 			var flag = true;
-			var cats = $(".category:checkbox:checked");
+			var cats = $(".cats:checkbox:checked");
 			var pics = $("#pictureList li").length;
 			$(".required").each(function(){
 				if($(this).val().length==0){
@@ -98,11 +98,7 @@ ul{
 			});
 			$(this).parent().remove();
 		});
-	
-	
-	});
-	
-
+	});	
 </script>
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12 content">
@@ -133,7 +129,7 @@ ul{
 	<td>분류선택*</td>
 	<td >
 	<c:forEach items="${requestScope.catList }" var="cat" varStatus="info">
-	<input class="category"type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
+	<input class="cats"type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
 	<c:if test="${info.count%3==0}"><br></c:if>
 	</c:forEach>
 	<br><span id="catAlert"></span>

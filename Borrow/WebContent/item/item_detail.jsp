@@ -16,8 +16,6 @@
 	href="${pageContext.request.contextPath }/template/fancytab/css/fancytab.css"
 	rel="stylesheet">
 
-<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
-
 <style>
 .bgheader {
 	height: 50px;
@@ -410,20 +408,7 @@ input[data-readonly] {
 		<div class="col-sm-1"></div>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="col-sm-12" align="center"></div>
-
 <ul class="pagination justify-content-center">
 	<c:if test="${requestScope.rvo.pagingBean.previousPageGroup}">
 		<li class="page-item"><a class="page-link"
