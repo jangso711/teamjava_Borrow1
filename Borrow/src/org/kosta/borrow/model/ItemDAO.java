@@ -174,6 +174,26 @@ public class ItemDAO {
 		}
 		return totItemCnt;
 	}
+	
+	
+	public int getTotalItemCountById(String id) throws SQLException {
+		int totItemCnt = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql="select count(*) from item where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next())
+				totItemCnt = rs.getInt(1);
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+		return totItemCnt;
+	}
 
 	/**
 	 * 180831 MIRI 진행중
@@ -290,6 +310,46 @@ public class ItemDAO {
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, pagingBean.getStartRowNumber());
 			pstmt.setInt(2, pagingBean.getEndRowNumber());
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setId(rs.getString(5));
+				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),  memberVO);
+				picList = getPictureList(rs.getString(2));
+				if(picList != null) 
+					itemVO.setPicList(picList);
+				list.add(itemVO);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return list;
+	}
+	
+	public ArrayList<ItemVO> getAllItemListById(String id, PagingBean pagingBean) throws SQLException {
+		ArrayList<String> picList = null;
+		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
+		ItemVO itemVO = new ItemVO();
+		MemberVO memberVO = null;
+		StringBuilder sb = new StringBuilder();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			sb.append(" select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id");
+			sb.append(" from (");
+			sb.append(" select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id");
+			sb.append(" from item where id=?) r, member m");
+			sb.append(" where r.rnum between ? and ? and r.id=m.id");
+			sb.append(" order by item_no desc");
+			/*String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 order by item_no desc";	//180904 MIRI 내림차순으로 변경
+			pstmt = con.prepareStatement(sql);*/
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, id);
+			pstmt.setInt(2, pagingBean.getStartRowNumber());
+			pstmt.setInt(3, pagingBean.getEndRowNumber());
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
@@ -589,7 +649,7 @@ public class ItemDAO {
 		try {
 			con = getConnection();
 			String sql="select rental_no, item_no, item_name, id, rental_date, return_date\r\n" + 
-					"from( select row_number() over(order by r.rental_no asc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date\r\n" + 
+					"from( select row_number() over(order by r.rental_no desc) as rnum, r.rental_no, i.item_no, i.item_name, i.id,  to_char(r.rental_date,'yyyy-MM-DD') as rental_date, to_char(r.return_date,'yyyy-MM-DD') as return_date\r\n" + 
 					"from rental_details r, item i where r.item_no=i.item_no and r.id=?)  where rnum between ? and ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -683,7 +743,7 @@ public class ItemDAO {
 			con = getConnection();
 			StringBuilder sql = new StringBuilder();
 			sql.append("select rental_no, item_no, item_name, id, rental_date, return_date ");
-			sql.append("from( select row_number() over(order by r.rental_no asc) as rnum, r.rental_no, r.id, ");
+			sql.append("from( select row_number() over(order by r.rental_no desc) as rnum, r.rental_no, r.id, ");
 			sql.append("i.item_no, i.item_name, to_char(r.rental_date,'yyyy-MM-DD') as rental_date,  ");
 			sql.append("to_char(r.return_date,'yyyy-MM-DD') as return_date ");
 			sql.append("from rental_details r, item i, member m  ");
