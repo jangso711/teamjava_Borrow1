@@ -24,7 +24,14 @@ h4 {
 <div class="col-sm-12 bgheader"></div>
 <!-- Page Content -->
 <div class="container">
-	<div class="row">
+	<h3> 전체 상품 목록 </h3><br>
+	<form action="front">
+		<input type="hidden" name="command" value="ItemRegisterAllList">
+		id로 상품 검색<input type="text" name="memberId" required="required">
+		<input type="submit" value="검색">
+	</form>
+	<br>
+	<div class="row">		
 		<c:forEach items="${requestScope.allItemList }" var="allItemList">
 			<c:set value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${allItemList.itemNo}" var="detailurl"></c:set>
 			<!-- 180905 MIRI 내가 등록한 상품은 보여주지 않기 -->

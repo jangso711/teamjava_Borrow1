@@ -9,21 +9,26 @@ import javax.servlet.http.HttpSession;
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
 import org.kosta.borrow.model.MemberVO;
+import org.kosta.borrow.model.PagingBean;
 
 public class ItemRegisterAllListController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session= request.getSession();
-		MemberVO mvo=(MemberVO)(session.getAttribute("user"));
-		String id=null;
-		if(mvo!=null) {
-			id=mvo.getId();			
-		}else
-			id=request.getParameter("memberId");
+		String id=null;		
+		id=request.getParameter("memberId");		
+		int totalPostCount = ItemDAO.getInstance().getTotalItemCountById(id);
+		String nowPage = request.getParameter("pageNo");
+		PagingBean pagingBean = null;
+		if(nowPage == null)
+			pagingBean = new PagingBean(totalPostCount);
+		else
+			pagingBean = new PagingBean(totalPostCount, Integer.parseInt(nowPage));		
 		
-		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemListById(id);
+		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemListById(id, pagingBean);
 		request.setAttribute("allItemList", allItemList);
+		request.setAttribute("pagingBean", pagingBean);
+		request.setAttribute("memberId", id);
 		request.setAttribute("url", "/item/item_register_all_list.jsp");
 		return "template/layout.jsp";
 	}
