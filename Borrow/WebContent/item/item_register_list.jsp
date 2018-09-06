@@ -71,7 +71,7 @@
 			</table>
 			<c:set var="pb" value="${requestScope.pagingBean }" />
 				<div class = "col-sm-12 center">
-					<ul class = "pagination">
+					<ul class = "pagination justify-content-center">
 					<c:if test = "${pb.previousPageGroup}">
 						<li class="page-item">
 							<a class="page-link" href= "${pageContext.request.contextPath}/front?command=ItemRegisterList&nowPage=${pb.startPageOfPageGroup-1}">&laquo;</a>
