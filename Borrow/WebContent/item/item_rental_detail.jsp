@@ -24,7 +24,10 @@ h1 {
 table {
 	text-align: center;
 }
-
+table#info{
+	position: relative;
+	left: 23%;
+}
 .bgheader {
 	height: 50px;
 }
@@ -177,8 +180,10 @@ h5 {
 								<c:when test="${requestScope.check != null}">
 									<div id="friendImg" style="text-align: center">
 										<br>
-										<h5>대여료 상세 정보</h5>
-										<table>
+										<table id="info" width="200">
+											<tr>
+												<td colspan=2><h5>대여료 상세 정보</h5></td>
+											</tr>
 											<tr>
 												<td>일대여료</td>
 												<td>${requestScope.rvo.itemVO.itemPrice}</td>
@@ -193,8 +198,10 @@ h5 {
 								<c:otherwise>
 									<div id="friendImg" style="text-align: center">
 										<br>
-										<h5>대여료 상세 정보</h5>
-										<table>
+										<table id="info" width="200">
+											<tr>
+												<td colspan=2><h5>대여료 상세 정보</h5></td>
+											</tr>
 											<tr>
 												<td>일대여료</td>
 												<td>${requestScope.rvo.itemVO.itemPrice}</td>

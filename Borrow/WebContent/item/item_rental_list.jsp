@@ -10,6 +10,7 @@
 .bgheader {
 	height: 50px;
 }
+<<<<<<< HEAD
 th,td{
 	padding-left: 50px;
 	padding-right:50px;
@@ -32,6 +33,9 @@ table{
 	padding-left : 300px;
 	text-align:center;
 }
+=======
+
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 </style>
 
 <script type="text/javascript">
@@ -90,6 +94,7 @@ table{
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12 content">
 	<br><h3>내가 대여한 목록</h3><br>	
+
 <div class="listContent">
 <!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
