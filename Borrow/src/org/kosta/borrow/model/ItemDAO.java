@@ -350,7 +350,7 @@ public class ItemDAO {
 
 			while(rs.next()) {
 				memberVO = new MemberVO();
-				memberVO.setId(rs.getString(4));
+				memberVO.setId(rs.getString(5));
 				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
 				picList = getPictureList(rs.getString(1));
 				if(picList != null) 
