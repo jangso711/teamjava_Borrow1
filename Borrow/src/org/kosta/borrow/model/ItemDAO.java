@@ -497,15 +497,15 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name");
+			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name, r. grade" );
 			sb.append(" from (");
-			sb.append(" select row_number() over(order by i.item_no desc) as rnum,");
-			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name");
-			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" select row_number() over(order by i.item_no desc) as rnum, ");
+			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name, a. grade ");
+			sb.append(" from item i, item_category ic, category c, item_add a ");
+			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
 			sb.append(" ) r");
-			sb.append(" where rnum between ? and ?");
-			sb.append(" order by item_no desc");
+			sb.append(" where r.rnum between ? and ?");
+			sb.append(" order by r.item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			pstmt.setInt(2, pagingBean.getStartRowNumber());
@@ -516,6 +516,9 @@ public class ItemDAO {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
 				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), memberVO);
+				ItemAddVO itemAddVO= new ItemAddVO();
+				itemAddVO.setGrade(rs.getDouble(7));
+				itemVO.setItemAddVO(itemAddVO);
 				picList = getPictureList(rs.getString(2));
 				if(picList != null) 
 					itemVO.setPicList(picList);
