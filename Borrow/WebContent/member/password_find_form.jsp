@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 h3 {
-	padding-left: 450px;
+
 	padding-top: 55px;
 	font-weight: bold;
 }
@@ -38,8 +38,8 @@ input[type=password] {
 
 
 .formContent{
-	padding-top:18px;
-	padding-bottom:55px;
+	padding-top:80px;
+	padding-bottom:80px;
 	padding-left:450px;
 	text-align:center;
 }

@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 h3 {
-	padding-left: 450px;
+
 	padding-top: 55px;
 	font-weight: bold;
 }
