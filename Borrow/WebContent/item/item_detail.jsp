@@ -90,6 +90,9 @@ input[data-readonly] {
 					<p>
 						<b>Model :</b> ${item.itemModel }
 					</p>
+					<p>
+						<b>평점 :</b> ${item.itemAddVO.grade}
+					</p>
 					
 				<script type="text/javascript">
 				/* 180831 MIRI 게시글 수정 함수 */

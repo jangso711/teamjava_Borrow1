@@ -302,9 +302,9 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
-			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
-			sb.append(" where item_status=1 and item_no=?"); //180904 MIRI 불필요한 정렬 삭제
+			sb.append(" select i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,");
+			sb.append(" to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, a.grade from item i, item_add a ");
+			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
@@ -318,6 +318,9 @@ public class ItemDAO {
 					picList = getPictureList(itemno);
 					itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
 							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
+					ItemAddVO itemAddVO=new ItemAddVO();
+					itemAddVO.setGrade(rs.getDouble(9));
+					itemVO.setItemAddVO(itemAddVO);
 				}
 			}
 		}finally {
