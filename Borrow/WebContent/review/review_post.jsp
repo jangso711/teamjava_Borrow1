@@ -41,9 +41,7 @@ table{
 	text-align: center;
 }
 </style>
-<%
-Cookie cookie=new Cookie("hit", "reviewNo");
-%>
+
 <script type="text/javascript">
 function sendList(){
 	location.href="${pageContext.request.contextPath}/index.jsp";
@@ -65,10 +63,10 @@ function updateReview(){
 <div class="col-sm-8" align="center">
 <table class="table table-bordered boardlist">
 
-		<tr style="width:10%">
+		<tr class="success" style="width:10%">
 			<td style="width:5%">글번호 </td>
 			<td style="width:8%">상품정보</td>
-			<td style="width:28%">제목 </td>
+			<td class="title" style="width:28%">제목 </td>
 			<td style="width:5%">작성자</td>
 			<td style="width:7%">작성일</td>
 			<td style="width:5%">평점</td>
@@ -76,7 +74,8 @@ function updateReview(){
 		</tr>
 		<tr>
 			<td>${requestScope.rvo.reviewNo}</td>
-			<td>${requestScope.rvo.rentalDetailVO.itemVO.itemName}</td>
+			<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rvo.rentalDetailVO.itemVO.itemNo}">
+				${rvo.rentalDetailVO.itemVO.itemName}</a></td>
 			<td>${requestScope.rvo.reviewTitle} </td>
 			<td>${requestScope.rvo.memberVO.id}</td>
 			<td>${requestScope.rvo.reviewRegdate}</td>

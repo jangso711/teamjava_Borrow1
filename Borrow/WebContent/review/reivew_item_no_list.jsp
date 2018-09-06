@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 .btn_pk {
 	background-color: #f6cac9;
@@ -58,7 +58,7 @@ table{
 			<tr style="width:10%">
 				<td style="width:2%">${rvo.reviewNo}</td>
 				<td style="width:8%">
-				<a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rvo.rentalDetailVO.itemVO.itemNo}">
+				<a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rvo.rentalDetailVO.itemVO.itemName}">
 				${rvo.rentalDetailVO.itemVO.itemName}</a></td>
 				<td style="width:28%">
 				<a href="${pageContext.request.contextPath}/front?command=ReviewPostByReviewNo&reviewNo=${rvo.reviewNo}">
@@ -73,13 +73,13 @@ table{
 </table>
 <ul class="pagination justify-content-center">
 <c:if test="${requestScope.rvo.pagingBean.previousPageGroup}">
- <li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
+ <li class="page-item"><a class="page-link" href="front?command=ReviewFindItemName&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
 </c:if>
 <c:forEach begin="${requestScope.rvo.pagingBean.startPageOfPageGroup}"
 	end="${requestScope.rvo.pagingBean.endPageOfPageGroup}" var="pagenum">
 	<c:choose>
 	<c:when test="${requestScope.rvo.pagingBean.nowPage!=pagenum}">	
-		<li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${pagenum}">${pagenum}</a></li>
+		<li class="page-item"><a class="page-link" href="front?command=ReviewFindItemName&pageNo=${pagenum}">${pagenum}</a></li>
 		</c:when>
 		<c:otherwise>
 		<li class="page-item active"><a class="page-link" href="#">${pagenum}</a></li>
@@ -87,7 +87,7 @@ table{
 		</c:choose>
 </c:forEach>
 <c:if test="${requestScope.rvo.pagingBean.nextPageGroup}">
- <li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
+ <li class="page-item"><a class="page-link" href="front?command=ReviewFindItemName&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
 </c:if>
 </ul>
 </div>

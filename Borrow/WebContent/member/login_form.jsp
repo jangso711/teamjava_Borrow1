@@ -4,13 +4,16 @@
 <style>
 .btn_pk{
    background-color: #f6cac9;
-   height:70px;
-   margin:10px;   
+   height:90px;
+   width : 90px;
+   margin:10px;
+   font-weight: bold; 
+   font-size: 20px;  
 }
 
 .logincontent{
    
-   min-height: 300px;
+   min-height: 450px;
    text-align:center;
    padding-top:115px;
    padding-bottom:103px;
@@ -73,19 +76,20 @@ input[type=text]{
 </div>
 <div class="col-sm-12 logincontent">
 <%--<form action="${pageContext.request.contextPath }/front"method="post"> --%>
+<img src="${pageContext.request.contextPath }/img/로그인이미지.png"  width="360px" alt="Loginimg">
 <table align="center" cellpadding="3">
    <tr>
-      <td>아이디</td><td><input type="text"name="memberId" required="required" id="id" tabindex = 1></td>
-      <td rowspan="2"><input class="btn btn_pk"type="submit"value="로그인" id="loginCheck" tabindex = 3></td>
+     <td><input type="text"name="memberId" required="required" id="id" tabindex = 1; placeholder="아이디"></td>
+      <td rowspan="2"><input class="btn btn_pk"type="submit"value="로그인" id="loginCheck" tabindex = 3;></td>
    </tr>
    <tr>
-      <td>비밀번호</td><td><input type="password"name="memberPwd" required="required" id="pass" onkeydown="onEnterSubmit()" tabindex = 2></td>
+      <td><input type="password"name="memberPwd" required="required" id="pass" onkeydown="onEnterSubmit()" tabindex = 2; placeholder="비밀번호"></td>
    </tr>
 </table>
 <input type="hidden"name="command"value="Login">
 <%--</form>--%>
 <br>
-<a style="color:#ff99cc;font-weight: 900;"href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a style="color:#ff99cc;font-weight: 900;"href="${pageContext.request.contextPath }/front?command=MemberRegisterForm">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a style="color:#ff99cc;font-weight: 900; "href="${pageContext.request.contextPath }/front?command=MemberFindPwdForm">비밀번호를 잊으셨습니까?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 </div>
