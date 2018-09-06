@@ -6,6 +6,12 @@
 
 
 <style>
+.mypagecontent{
+	margin-top:30px;
+	margin-bottom:30px;
+	margin-left:auto;
+	margin-right:auto;
+}
 h3 {
 	padding-left: 465px;
 	padding-top: 32px;
@@ -60,7 +66,6 @@ table{
 	<div class="col-sm-12 formContent">
 		<table>
 
-
 			<tr>
 				<th>아이디</th>
 				<td>${vo.id}</td>
@@ -98,4 +103,4 @@ table{
 		</table>
 
 	</div>
-</div>
+

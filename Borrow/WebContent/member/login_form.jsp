@@ -33,7 +33,7 @@ input[type=text]{
 } */
 </style>
 <%-- 로그인 실패  alert 추가 --%>
-<<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function(){
 		$("#loginCheck").click(function(){
 			$.ajax({
@@ -47,7 +47,6 @@ input[type=text]{
 						alert("로그인 실패");
 					}
 				}
-				
 			})
 		})//click
 	})//ready

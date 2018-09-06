@@ -186,6 +186,13 @@ import javax.sql.DataSource;
 				pstmt.setDouble(1, avg);
 				pstmt.setInt(2, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
 				pstmt.executeUpdate();
+				pstmt.close();
+				
+				sql="update rental_details set review_status=1 where rental_no=?"	;	
+				String rentalNo = review.getRentalDetailVO().getRentalNo();
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, rentalNo);
+				pstmt.executeUpdate();
 				
 			}finally {
 				closeAll(rs,pstmt,con);
@@ -212,10 +219,16 @@ import javax.sql.DataSource;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			double avg = 0;
-			try {
-				con = getConnection();
-				String sql = "delete from review where review_no=?";
+			double avg = 0;		
+			try {					
+				con=getConnection();
+				String sql = "update rental_details set review_status=0 where rental_no=(select rental_no from review where review_no=?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(reviewNo));			
+				pstmt.executeUpdate();
+				pstmt.close();
+				
+				sql = "delete from review where review_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(reviewNo));
 				pstmt.executeUpdate();
@@ -240,4 +253,47 @@ import javax.sql.DataSource;
 			}
 			
 		}
+		public ArrayList<ReviewVO> getPostingMyList(PagingBean pagingBean, String id) throws SQLException {
+			ArrayList<ReviewVO> list=new ArrayList<ReviewVO>();
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try{
+				con=dataSource.getConnection(); 
+				StringBuilder sql=new StringBuilder();
+				sql.append("SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD') ");
+				sql.append(",r.review_hit,m.name,i.item_no,i.item_name,r.review_grade ");
+				sql.append("FROM(select row_number() over(ORDER BY review_no DESC) ");
+				sql.append("as rnum,review_no,review_title,to_char(review_regdate,'YYYY.MM.DD') ");
+				sql.append(",review_hit FROM review where id=?) rn, review r, member m, item i  ");
+				sql.append("WHERE r.id=m.id and r.item_no=i.item_no and rn.review_no=r.review_no AND ");
+				sql.append("rnum BETWEEN ? AND ? ORDER BY review_no DESC ");
+				pstmt=con.prepareStatement(sql.toString());	
+				pstmt.setString(1, id);
+				pstmt.setInt(2, pagingBean.getStartRowNumber());
+				pstmt.setInt(3, pagingBean.getEndRowNumber());
+				rs=pstmt.executeQuery();	
+				while(rs.next()){		
+					ReviewVO rvo=new ReviewVO();
+					rvo.setReviewNo(rs.getString(1));
+					rvo.setReviewTitle(rs.getString(2));
+					rvo.setReviewRegdate(rs.getString(3));
+					rvo.setReviewHit(rs.getInt(4));
+					rvo.setReviewGrade(rs.getInt(8));
+					MemberVO mvo=new MemberVO();
+					mvo.setName(rs.getString(5));
+					rvo.setMemberVO(mvo);
+					ItemVO ivo = new ItemVO();
+					ivo.setItemNo(rs.getString(6));
+					ivo.setItemName(rs.getString(7));
+					RentalDetailVO rv = new RentalDetailVO();
+					rv.setItemVO(ivo);
+					rvo.setRentalDetailVO(rv);
+					list.add(rvo);
+				}			
+			}finally{
+				closeAll(rs,pstmt,con);
+			}
+			return list;
+		} 
 	}
