@@ -227,11 +227,5 @@ h5 {
 			</table>
 		</div>
 		<div class="col-sm-1"></div>
-		<br>
 	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 </div>
