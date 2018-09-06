@@ -21,8 +21,17 @@ public class PagingBean {
 	  this.totalPostCount = totalPostCount;
 	  this.nowPage = nowPage;
 	 }
+	 
+	 
 	 	
-	 public int getNowPage() {
+	 public PagingBean(int nowPage, int postCountPerPage, int totalPostCount) {
+		super();
+		this.nowPage = nowPage;
+		this.postCountPerPage = postCountPerPage;
+		this.totalPostCount = totalPostCount;
+	}
+
+	public int getNowPage() {
 	  return nowPage;
 	 }
 

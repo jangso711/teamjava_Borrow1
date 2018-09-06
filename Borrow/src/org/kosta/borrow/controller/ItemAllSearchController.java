@@ -14,7 +14,7 @@ public class ItemAllSearchController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int totalPostCount = ItemDAO.getInstance().getTotalItemCount();
-		String nowPage = request.getParameter("pageNo");
+		String nowPage = request.getParameter("pageNum");
 		PagingBean pagingBean = null;
 		if(nowPage == null)
 			pagingBean = new PagingBean(totalPostCount);
