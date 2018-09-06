@@ -302,18 +302,3 @@ from (
 ) r
 where rnum between 2 and 4
 order by item_no desc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git

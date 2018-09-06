@@ -89,8 +89,10 @@ public class HandlerMapping {
 			controller=new ItemEarlyReturnController();
 		}else if(command.equals("ReviewList")) {
 			controller=new ReviewListController();
-		}else if(command.equals("ReviewPost")) {
-			controller=new ReviewPostController();
+		}else if(command.equals("ReviewPostByReviewNo")) {
+			controller=new ReviewPostByReviewNoController();
+		}else if(command.equals("ReviewPostByRentalNo")) {
+			controller=new ReviewPostByRentalNoController();			
 		}else if(command.equals("ReviewRegisterForm")) {
 			controller=new ReviewRegisterFormController();	//180905 SOJEONG 추가
 		}else if(command.equals("ReviewRegister")) {

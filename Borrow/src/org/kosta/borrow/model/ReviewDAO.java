@@ -295,5 +295,26 @@ import javax.sql.DataSource;
 				closeAll(rs,pstmt,con);
 			}
 			return list;
+		}
+		public String getReviewNoByRentalNo(String rentalNo) throws SQLException {
+			
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String reviewNo=null;
+			try{
+				con=dataSource.getConnection(); 
+				StringBuilder sql=new StringBuilder();
+				sql.append("select review_no from review where rental_no=?");				
+				pstmt=con.prepareStatement(sql.toString());
+				pstmt.setString(1, rentalNo);				
+				rs=pstmt.executeQuery();	
+				if(rs.next()){		
+					reviewNo=rs.getString(1);										
+				}			
+			}finally{
+				closeAll(rs,pstmt,con);
+			}			
+			return reviewNo;
 		} 
 	}
