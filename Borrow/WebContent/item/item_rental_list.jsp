@@ -64,7 +64,7 @@
 
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
-	<br><h3>내가 대여한 목록</h3><br>		
+	<br><h3>내가 대여한 목록</h3><br>	
 	
 <!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
@@ -127,28 +127,28 @@
 					</tr>
 				</c:forEach>
 			</table>
+						
 			<c:set var="pb" value="${requestScope.pagingBean}" />
-				<div class="col-sm-12 center">
-					
-						<ul class="pagination">
+				<div class="col-sm-12 center" align="center">					
+						<ul class="pagination" >
 						<c:if test="${pb.previousPageGroup }">
-							<li><a
+							<li class="page-item"><a class="page-link"
 								href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
 						</c:if>
 						<c:forEach begin="${pb.startPageOfPageGroup}"
 							end="${pb.endPageOfPageGroup}" var="pagenum">
 							<c:choose>
 								<c:when test="${pagenum==pb.nowPage}">
-									<li class="active"><a href="#">${pagenum}</a></li>
+									<li class="page-item active"><a class="page-link" href="#">${pagenum}</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a
+									<li class="page-item"><a class="page-link"
 										href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pagenum}">${pagenum}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 						<c:if test="${pb.nextPageGroup }">
-							<li><a
+							<li class="page-item"><a class="page-link"
 								href="${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
 						</c:if>
 					</ul>				
