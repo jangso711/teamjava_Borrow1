@@ -3,9 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
-
 <style type="text/css">
 .bgheader {
 	height: 50px;
@@ -21,6 +18,7 @@ tr{
 table{
 	border-top:2px solid #e0e0e0;
 	border-bottom:2px solid #e0e0e0;
+	margin : 0 auto;
 }
 .topTr{
 	border-top: 1px solid #000;
@@ -28,12 +26,9 @@ table{
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
-	padding-left : 200px;
 	text-align:center;
 }
-
 </style>
-
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12 content">
 	<br><h3>나의 빌려준 물품 목록</h3><br>	
@@ -43,11 +38,10 @@ table{
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>	
 	<c:choose>
 		<c:when test="${fn:length(requestScope.registerlist)==0}">
-			<span>빌려준 물품이 없습니다!! </span>
+			<h6 style="color:red;">빌려준 물품이 없습니다!!</h6>
 		</c:when>
 		<c:otherwise>
 			<table cellpadding="10">
-
 				<!--
 				<tr>
 					<th>사진</th>
