@@ -69,7 +69,7 @@ ul{
 		$("#registerBtn").click(function(){
 			$("#catAlert").text("")
 			var flag = true;
-			var cats = $(".category:checkbox:checked");
+			var cats = $(".cats:checkbox:checked");
 			var pics = $("#pictureList li").length;
 			$(".required").each(function(){
 				if($(this).val().length==0){
@@ -129,7 +129,7 @@ ul{
 	<td>분류선택*</td>
 	<td >
 	<c:forEach items="${requestScope.catList }" var="cat" varStatus="info">
-	<input class="category"type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
+	<input class="cats"type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
 	<c:if test="${info.count%3==0}"><br></c:if>
 	</c:forEach>
 	<br><span id="catAlert"></span>

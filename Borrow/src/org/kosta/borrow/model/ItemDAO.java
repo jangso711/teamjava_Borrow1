@@ -157,15 +157,21 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public int getTotalItemCount() throws SQLException {
+	public int getTotalItemCount(String exceptId) throws SQLException {
 		int totItemCnt = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select count(*) from item";
+			String sql="select count(*) from item where id!=?";
 			pstmt = con.prepareStatement(sql);
+			if(exceptId==null) {
+				pstmt.setString(1, "admin");
+			}else {
+				pstmt.setString(1, exceptId);
+			}
+			
 			rs = pstmt.executeQuery();
 			if(rs.next())
 				totItemCnt = rs.getInt(1);
@@ -350,7 +356,7 @@ public class ItemDAO {
 
 			while(rs.next()) {
 				memberVO = new MemberVO();
-				memberVO.setId(rs.getString(4));
+				memberVO.setId(rs.getString(5));
 				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
 				picList = getPictureList(rs.getString(1));
 				if(picList != null) 
@@ -519,10 +525,11 @@ public class ItemDAO {
 	 * 180906 MIRI 완료
 	 * 카테고리 검색시 토탈 카운트
 	 * @param catno
+	 * @param object 
 	 * @return
 	 * @throws SQLException
 	 */
-	public int getItemNoListCountByCategory(String catno) throws SQLException {
+	public int getItemNoListCountByCategory(String catno, String exceptId) throws SQLException {
 		StringBuilder sb = new StringBuilder();
 		int count = 0;
 		Connection con = null;
@@ -532,10 +539,16 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select count(*)");
 			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=? and i.id!=?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
+			if(exceptId==null) {
+				pstmt.setString(2, "admin");
+			}else {
+				pstmt.setString(2, exceptId);
+			}
 			rs = pstmt.executeQuery();
+			
 			
 			if(rs.next()) {
 				count = rs.getInt(1);

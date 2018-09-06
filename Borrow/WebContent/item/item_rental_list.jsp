@@ -10,6 +10,7 @@
 .bgheader {
 	height: 50px;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -68,7 +69,9 @@
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
 	<br><h3>내가 대여한 목록</h3><br>	
-	
+<div class="row">
+<div class="col-sm-2"></div>
+<div class="col-sm-8"></div>
 <!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>		
@@ -82,7 +85,6 @@
 					<th>사진</th>
 					<th>거래번호</th>
 					<th>아이템명</th>
-					<th>등록한 사람(id)</th>
 					<!-- <th>지불금액</th> -->
 					<th>대여날짜</th>
 					<th>반납날짜</th>		
@@ -99,7 +101,7 @@
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${rentaldetail.rentalNo} &check=a">${rentaldetail.rentalNo}</a></td>
 						
 						<td>${rentaldetail.itemVO.itemName}</td>
-						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
+						
 						<%-- <td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td> --%>
 						<td >${rentaldetail.rentalDate}</td>
 						<td>${rentaldetail.returnDate}</td>
