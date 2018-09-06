@@ -10,13 +10,34 @@
 .bgheader {
 	height: 50px;
 }
+th,td{
+	padding-left: 50px;
+	padding-right:50px;
+}
+tr{
+	border-top:1px solid #e0e0e0;
+	border-bottom:1px solid #e0e0e0;
+}
+table{
+	border-top:2px solid #e0e0e0;
+	border-bottom:2px solid #e0e0e0;
+}
+.topTr{
+	border-top: 1px solid #000;
+}
+.listContent{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left : 200px;
+	text-align:center;
+}
+
 </style>
 
-
-
 <div class="col-sm-12 bgheader"></div>
-<div class="container" align="center">
+<div class="col-sm-12 content">
 	<br><h3>나의 빌려준 물품 목록</h3><br>	
+	<div class="listContent">
 	<!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>	
@@ -25,32 +46,46 @@
 			<span>빌려준 물품이 없습니다!! </span>
 		</c:when>
 		<c:otherwise>
-			<table class="table col-sm-12">
+			<table cellpadding="10">
+
+				<!--
 				<tr>
 					<th>사진</th>
 					<th>거래번호</th>
 					<th>아이템명</th>
 					<th>빌린 사람(id)</th>
-					<!-- <th>받은금액</th> -->
+					<th>받은금액</th> 
 					<th>대여날짜</th>
 					<th>반납날짜</th>		
 					<th>반납상태</th>			
 				</tr>
-				<c:forEach items="${requestScope.registerlist}" var="registerdetail">
+				-->
+				<c:forEach items="${requestScope.registerlist}" var="registerdetail" varStatus="info">
 					<fmt:parseDate value="${registerdetail.rentalDate}" var="strPlanDate" pattern="yyyy-MM-dd"/>
 					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="false" var="strDate"></fmt:parseNumber>
 					<fmt:parseDate value="${registerdetail.returnDate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
 					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="false" var="endDate"></fmt:parseNumber>
-					<tr>
-						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${registerdetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${registerdetail.itemVO.picList[0]}" width="150" height="150" ></a></td>
+					<tr class="topTr">
+					<td rowspan="5">${info.count }</td>
+					<td rowspan="5"><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${registerdetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${registerdetail.itemVO.picList[0]}" width="150" height="150" ></a></td>		
+						<th>거래번호</th>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${registerdetail.rentalNo} &check=a">${registerdetail.rentalNo} </a> </td>
+						</tr>
+						<tr>
+						<td>상품명</td>
 						<td>${registerdetail.itemVO.itemName}</td>
+						</tr>
+						<tr>
+						<th>빌린 사람(id)</th>
 						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${registerdetail.itemVO.memberVO.id}">${registerdetail.itemVO.memberVO.id}</a></td>
-						<%-- <td><fmt:formatNumber>${registerdetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = ${registerdetail.itemVO.itemPrice*(endDate-strDate)}원</td> --%>
-						<td>${registerdetail.rentalDate}</td>
-						<td>${registerdetail.returnDate}</td>
-						<td>
-							<c:choose>
+						</tr>
+						<tr>
+						<td>대여기간</td>
+						<th>${registerdetail.rentalDate}~${registerdetail.returnDate}</th>
+						</tr>
+						<tr id="bottomTr">
+						<td>현재상태</td>
+							<th><c:choose>
 								<c:when test="${strDate-curDate>0}">
 									결제 후 대기중
 								</c:when>
@@ -72,12 +107,18 @@
 										</c:otherwise>
 									</c:choose>								
 								</c:otherwise>								
-							</c:choose>						
-						</td>
-					</tr>
+							</c:choose>	
+							</th>					
+						</tr>
+					
+			<tr> 
+				<td><div style="margin:10px"></div></td> 
+			</tr> 
+					
 				</c:forEach>
 			</table>
 			<c:set var="pb" value="${requestScope.pagingBean }" />
+			</div>
 				<div class = "col-sm-12 center">
 					<ul class = "pagination justify-content-center">
 					<c:if test = "${pb.previousPageGroup}">

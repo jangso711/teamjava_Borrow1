@@ -10,7 +10,7 @@
 .bgheader {
 	height: 50px;
 }
-<<<<<<< HEAD
+
 th,td{
 	padding-left: 50px;
 	padding-right:50px;
@@ -33,9 +33,9 @@ table{
 	padding-left : 300px;
 	text-align:center;
 }
-=======
 
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+
+
 </style>
 
 <script type="text/javascript">
