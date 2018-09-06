@@ -269,7 +269,33 @@ order by item_no desc
 select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id
 	from (
 	select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id 
-from item) r, member m
-where r.rnum between 2 and 4 and r.id=m.id
+from item) r
+where r.rnum between 2 and 4
 order by item_no desc
+
+select i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name
+from item i, item_category ic, category c
+where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=3008
+
+select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name
+from (
+	select row_number() over(order by i.item_no desc) as rnum, i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name
+	from item i, item_category ic, category c
+	where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=3008
+) r
+where rnum between 2 and 4
+order by item_no desc
+
+
+
+
+
+
+
+
+
+
+
+
+
 
