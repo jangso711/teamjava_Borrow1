@@ -31,7 +31,7 @@ h4 {
 	<h4> 전체 상품 목록 </h4><br>
 	<form action="front">
 		<input type="hidden" name="command" value="ItemRegisterAllList">
-		id로 상품 검색<input type="text" name="memberId" required="required">
+		사용자 id로 상품 검색<input type="text" name="memberId" required="required">
 		<input type="submit" value="검색">
 	</form>
 	<br>
