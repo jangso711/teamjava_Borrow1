@@ -26,10 +26,7 @@ public class ItemCategorySearchController implements Controller {
 			totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo,null);
 		}else {
 			totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo,mvo.getId());
-		}
-		
-		
-		
+		}		
 		if(nowPage == null)
 			pagingBean = new PagingBean(1, 6, totalPostCount);
 		else
@@ -46,8 +43,8 @@ public class ItemCategorySearchController implements Controller {
 		    if(sessionMemberVO != null && vo.getMemberVO().getId().equals(sessionMemberVO.getId())) {
 		        iterator.remove();
 		    }
-		}*/
-		
+
+		}*/		
 		CategoryVO categoryVO = ItemDAO.getInstance().getCatNameByCatNo(categoryNo);
 		request.setAttribute("itemCategorySearchList", itemCategorySearchList);
 		request.setAttribute("categoryVO", categoryVO);
