@@ -6,7 +6,7 @@ public class PagingBean {
 
 	 private int postCountPerPage = 5;
 
-	 private int pageCountPerPageGroup = 4;
+	 private int pageCountPerPageGroup = 2;
 
 	 private int totalPostCount;
 
@@ -30,7 +30,7 @@ public class PagingBean {
 		this.postCountPerPage = postCountPerPage;
 		this.totalPostCount = totalPostCount;
 	}
-
+	 
 	public int getNowPage() {
 	  return nowPage;
 	 }
@@ -107,4 +107,5 @@ public class PagingBean {
 	  }
 	  return flag;
 	 }
+	 
 }

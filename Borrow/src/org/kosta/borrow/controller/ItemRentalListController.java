@@ -24,7 +24,6 @@ public class ItemRentalListController implements Controller {
 		ArrayList<RentalDetailVO> rentallist = ItemDAO.getInstance().getAllRentalListById(id,pagingBean);
 		request.setAttribute("rentallist", rentallist);
 		request.setAttribute("pagingBean", pagingBean);
-				
 		request.setAttribute("url", "/item/item_rental_list.jsp");
 		
 		return "template/layout.jsp";

@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
- 
+
 <style>
 h4 {
 	font-weight: bold;
@@ -30,40 +28,50 @@ h4 {
 
 <!-- Page Content -->
 <div class="container">
-	<h3> 전체 상품 목록 </h3><br>
+	<h4> 전체 상품 목록 </h4><br>
 	<form action="front">
 		<input type="hidden" name="command" value="ItemRegisterAllList">
 		id로 상품 검색<input type="text" name="memberId" required="required">
 		<input type="submit" value="검색">
 	</form>
 	<br>
-	<div class="row">		
-		<c:forEach items="${requestScope.allItemList }" var="allItemList">
-			<c:set
-				value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${allItemList.itemNo}"
-				var="detailurl"></c:set>
-
-			<!-- 180905 MIRI 내가 등록한 상품은 보여주지 않기 -->
-			<c:if test="${not (sessionScope.user.id == allItemList.memberVO.id)}">
-				<div class="col-lg-4 portfolio-item">
-					<div class="card h-100">
-						<a href="${detailurl}"><img class="card-img-top"
-							src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}"
-							width="500" height="250" alt=""></a>
-						<div class="card-body">
-							<h4 class="card-title">
-								<a href="${detailurl }">${allItemList.itemName }</a>
-							</h4>
-							<p class="card-text">
-							<pre class="target">${allItemList.itemExpl }</pre>
-							<fmt:formatNumber>${allItemList.itemPrice }</fmt:formatNumber>
-							원
-							</p>
+	<div class="row">
+		<c:choose>
+			<c:when test="${empty requestScope.allItemList }">
+				<script>
+					//180906 MIRI 전체 상품 없을 시 이전페이지로 이동
+					alert("현재 상품이 없습니다.\n이전페이지로 이동합니다.");
+					history.back();
+				</script>
+			</c:when>
+			<c:otherwise>		
+				<c:forEach items="${requestScope.allItemList }" var="allItemList">
+					<c:set
+						value="${pageContext.request.contextPath }/front?command=ItemDetail&itemNo=${allItemList.itemNo}"
+						var="detailurl"></c:set>
+					<!-- 180905 MIRI 내가 등록한 상품은 보여주지 않기 -->
+					<c:if test="${not (sessionScope.user.id == allItemList.memberVO.id)}">
+						<div class="col-lg-4 portfolio-item">
+							<div class="card h-100">
+								<a href="${detailurl}"><img class="card-img-top"
+									src="${pageContext.request.contextPath}/upload/${allItemList.picList[0]}"
+									width="500" height="250" alt=""></a>
+								<div class="card-body">
+									<h4 class="card-title">
+										<a href="${detailurl }">${allItemList.itemName }</a>
+									</h4>
+									<p class="card-text">
+									<pre class="target">${allItemList.itemExpl }</pre>
+									<fmt:formatNumber>${allItemList.itemPrice }</fmt:formatNumber>
+									원
+									</p>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</c:if>
-		</c:forEach>
+					</c:if>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<!-- /.row -->
 
@@ -71,19 +79,13 @@ h4 {
 	<ul class="pagination justify-content-center pagination">
 		<c:set value="${requestScope.pagingBean }" var="pb"></c:set>
 		<!-- PrevPage -->
-		<c:choose>
-			<c:when test="${pb.previousPageGroup }">
+			<c:if test="${pb.previousPageGroup }">
 				<li class="page-item"><a class="page-link" 
 					href="${pageContext.request.contextPath }/front?command=ItemAllSearch&pageNum=${pb.startPageOfPageGroup-1}"
 					aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
 					class="sr-only">Previous</span>
 				</a></li>&nbsp;&nbsp;
-			</c:when>
-			<c:otherwise>
-				<li class="page-item"><a class="page-link" aria-label="Previous"> 
-				<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span></a></li>&nbsp;&nbsp;
-			</c:otherwise>
-		</c:choose>
+			</c:if>
 		<!-- PageNum -->
 		<c:forEach begin="${pb.startPageOfPageGroup}"
 			end="${pb.endPageOfPageGroup}" var="pageNum">
@@ -98,18 +100,12 @@ h4 {
 			</c:choose>
 		</c:forEach>
 		<!-- NextPage -->
-		<c:choose>
-			<c:when test="${pb.nextPageGroup }">
+			<c:if test="${pb.nextPageGroup }">
 				<li class="page-item"><a class="page-link" 
 					href="${pageContext.request.contextPath }/front?command=ItemAllSearch&pageNum=${pb.endPageOfPageGroup+1}"
 					aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
 					class="sr-only">Next</span>
 				</a></li>&nbsp;&nbsp;
-			</c:when>
-			<c:otherwise>
-				<li class="page-item"><a class="page-link" aria-label="Next"> 
-				<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span></a></li>&nbsp;&nbsp;
-			</c:otherwise>
-		</c:choose>
+			</c:if>
 	</ul>
 </div>
