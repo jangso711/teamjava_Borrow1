@@ -4,10 +4,15 @@
 
 <div class="col-sm-12 maincontent" align="center">
 	<form action="${pageContext.request.contextPath}/front">
-		<input type="hidden" name="command" value="ItemSearch"> <input
-			type="search" name="searchtext" placeholder="Search.."
-			style="width: 550px; height: 35px; letter-spacing: 2px; margin-bottom: 5px; border-radius: 10px;"/>
+ 		<!-- 180907 MIRI 검색창 CSS로 변경 -->
+		<div class="search_container_main" align="left">
+			<input type="hidden" name="command" value="ItemSearch">
+			<input class="search__input" type="text" name="searchtext" placeholder="Search"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<img alt="상품등록" src="${pageContext.request.contextPath }/img/등버.png" id="registerBtn">
+		</div>
+		<!-- <input type="hidden" name="command" value="ItemSearch"> <input
+			type="search" name="searchtext" placeholder="Search.."
+			style="width: 550px; height: 35px; letter-spacing: 2px; margin-bottom: 5px; border-radius: 10px;"/> -->
 			<script type="text/javascript">
 			
 			$(document).ready(function() {
