@@ -7,20 +7,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.kosta.borrow.model.ReviewDAO;
 import org.kosta.borrow.model.ReviewVO;
 
-
-
-public class ReviewPostController implements Controller {
+public class ReviewPostByRentalNoController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		int no=Integer.parseInt(request.getParameter("reviewNo"));
-		String num=request.getParameter("reviewNo");
+		
+		String rentalNo=request.getParameter("rentalNo");		
+		String num=ReviewDAO.getInstance().getReviewNoByRentalNo(rentalNo);	
+		if(num==null)
+			return "redirect:index.jsp";		
+		int no=Integer.parseInt(num);
+		//String num=request.getParameter("reviewNo");
 		
 		boolean isGet=false;
 		  Cookie[] cookies=request.getCookies();
 		  if(cookies!=null){
-		   for(Cookie c: cookies){   
+		   for(Cookie c: cookies){
 		    if(c.getName().equals(num)){
 		     isGet=true; 
 		    }
@@ -39,4 +41,5 @@ public class ReviewPostController implements Controller {
 		request.setAttribute("url", "/review/review_post.jsp");
 		return "/template/layout.jsp";
 	}
+
 }

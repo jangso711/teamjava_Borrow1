@@ -186,6 +186,13 @@ import javax.sql.DataSource;
 				pstmt.setDouble(1, avg);
 				pstmt.setInt(2, Integer.parseInt(review.getRentalDetailVO().getItemVO().getItemNo()));
 				pstmt.executeUpdate();
+				pstmt.close();
+				
+				sql="update rental_details set review_status=1 where rental_no=?"	;	
+				String rentalNo = review.getRentalDetailVO().getRentalNo();
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, rentalNo);
+				pstmt.executeUpdate();
 				
 			}finally {
 				closeAll(rs,pstmt,con);
@@ -212,10 +219,16 @@ import javax.sql.DataSource;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			double avg = 0;
-			try {
-				con = getConnection();
-				String sql = "delete from review where review_no=?";
+			double avg = 0;		
+			try {					
+				con=getConnection();
+				String sql = "update rental_details set review_status=0 where rental_no=(select rental_no from review where review_no=?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(reviewNo));			
+				pstmt.executeUpdate();
+				pstmt.close();
+				
+				sql = "delete from review where review_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(reviewNo));
 				pstmt.executeUpdate();
@@ -282,5 +295,26 @@ import javax.sql.DataSource;
 				closeAll(rs,pstmt,con);
 			}
 			return list;
+		}
+		public String getReviewNoByRentalNo(String rentalNo) throws SQLException {
+			
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String reviewNo=null;
+			try{
+				con=dataSource.getConnection(); 
+				StringBuilder sql=new StringBuilder();
+				sql.append("select review_no from review where rental_no=?");				
+				pstmt=con.prepareStatement(sql.toString());
+				pstmt.setString(1, rentalNo);				
+				rs=pstmt.executeQuery();	
+				if(rs.next()){		
+					reviewNo=rs.getString(1);										
+				}			
+			}finally{
+				closeAll(rs,pstmt,con);
+			}			
+			return reviewNo;
 		} 
 	}

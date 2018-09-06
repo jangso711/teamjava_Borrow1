@@ -20,13 +20,16 @@
 			url:"${pageContext.request.contextPath}/front",
 			data:"command=rentalCancel&rentalNo="+$(this).parent().find(".rNo").val()+"&point="+$(this).parent().find(".point").val(),
 			success : function(result){
-				if(result=="ok"){
-					alert("대여취소를 했습니다");
-					 location.reload(true);
+				alert('대여취소 성공!! 반환 포인트:'+result);
+				location.reload(true);
+				
+				/* if(result=="ok"){					
+					
+					location.reload(true);
 				}else{
 					alert("대여취소를 할 수 없습니다");
-					 location.reload(true);
-				}
+					location.reload(true);
+				} */
 			}
 			});//ajax
 		});//click
@@ -118,7 +121,15 @@
 										</c:when>
 										<c:otherwise>
 											반납완료<br>
-											<button type="button" class="btn btn_center btn_pk" onclick="reviewForm(${rentaldetail.rentalNo})">후기 작성</button>											
+											<c:choose>
+												<c:when test="${rentaldetail.review_status==1}">
+													후기 작성 완료<br>
+													<a href="${pageContext.request.contextPath}/front?command=ReviewPostByRentalNo&rentalNo=${rentaldetail.rentalNo}" style="color:blue;">내 후기 보러가기</a>													
+												</c:when>
+												<c:otherwise>
+													<button type="button" class="btn btn_center btn_pk" onclick="reviewForm(${rentaldetail.rentalNo})">후기 작성하기</button>																						
+												</c:otherwise>
+											</c:choose>
 										</c:otherwise>
 									</c:choose>								
 								</c:otherwise>								
