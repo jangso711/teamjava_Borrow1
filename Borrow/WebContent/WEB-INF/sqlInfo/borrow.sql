@@ -103,9 +103,12 @@ create table rental_details(
    rental_date date not null,
    return_date date not null, 
    total_payment number not null,  
+   review_status number default 0,
    constraint fk_rental_details_id foreign key(id) references member ON DELETE CASCADE,
    constraint fk_rental_details_item_no foreign key(item_no) references item ON DELETE CASCADE
 );
+
+alter table rental_details add review_status number default 0;
 
 -- 8. review --
 create table review(

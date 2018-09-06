@@ -5,11 +5,12 @@ public class RentalDetailVO {
 	private String rentalDate;
 	private String returnDate;
 	private ItemVO itemVO;
-	private MemberVO memberVO;
-	int totalPayment;
+	private MemberVO memberVO;	
+	private int totalPayment;
+	private int review_status;
+	
 	public RentalDetailVO() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();		
 	}
 	public RentalDetailVO(String rentalNo, String rentalDate, String returnDate, ItemVO itemVO, MemberVO memberVO,
 			int totalPayment) {
@@ -56,6 +57,13 @@ public class RentalDetailVO {
 	}
 	public void setTotalPayment(int totalPayment) {
 		this.totalPayment = totalPayment;
+	}
+	
+	public int getReview_status() {
+		return review_status;
+	}
+	public void setReview_status(int review_status) {
+		this.review_status = review_status;
 	}
 	@Override
 	public String toString() {
