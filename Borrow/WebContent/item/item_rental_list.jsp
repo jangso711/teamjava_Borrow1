@@ -64,11 +64,7 @@
 
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
-	<br><h3>내가 대여한 목록</h3><br>	
-	<form>
-		<input type="hidden" value="cc" name="nn">
-		<input type="submit" value="전송">
-	</form>
+	<br><h3>내가 대여한 목록</h3><br>		
 	
 <!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
