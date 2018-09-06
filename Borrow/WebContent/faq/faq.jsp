@@ -7,7 +7,6 @@ h3 {
 	align-content:center;
 	align-items: center;
 	text-align:center;
-	font-weight: bold;
 	padding-bottom:10px;
 	padding-top:10px;
 }
@@ -17,8 +16,18 @@ table{
 .bgheader {
 	height: 50px;
 }
+.accordion{
+	padding-left:100px;
+	padding-right:100px;
+}
+.faqcontent{
+	margin-top:100px;
+	margin-bottom:100px;
+}
 </style>
-<div class="container">
+
+<div class="col-sm-2"></div>
+<div class="col-sm-8 faqcontent">
   <h3>자주 묻는 질문(FAQ)</h3>
   <div id="accordion">
     <div class="card">

@@ -44,6 +44,9 @@ h4 {
 									width="500" height="250"></a>
 								<div class="card-body">
 									<h4 class="card-title"> <a href="${detailurl }">${itemCategorySearchList.itemName }</a> </h4>
+									<p> 
+											평점 : ${itemCategorySearchList.itemAddVO.grade}									
+									</p>
 									<p class="card-text"><pre class="target">${itemCategorySearchList.itemExpl }</pre>
 										<fmt:formatNumber>${itemCategorySearchList.itemPrice }</fmt:formatNumber>원
 									</p>
@@ -74,7 +77,7 @@ h4 {
 			end="${pb.endPageOfPageGroup}" var="pageNum">
 			<c:choose>
 				<c:when test="${pb.nowPage == pageNum }">
-					<li class="active"><a class="page-link-active">${pageNum }</a></li>&nbsp;&nbsp;
+					<li class="page-item active"><a class="page-link">${pageNum }</a></li>&nbsp;&nbsp;
 				</c:when>
 				<c:otherwise>
 					<li><a class="page-link"
@@ -83,7 +86,7 @@ h4 {
 			</c:choose>
 		</c:forEach>
 		<!-- NextPage -->
-			<c:if test="${pb.nextPageGroup }">
+			<c:if test="${pb.nextPageGroup }">	
 				<li class="page-item"><a class="page-link" 
 					href="${pageContext.request.contextPath }/front?command=ItemCategorySearch&categoryNo=${catNo}&pageNum=${pb.endPageOfPageGroup+1}"
 					aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span

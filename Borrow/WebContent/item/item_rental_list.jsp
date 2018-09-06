@@ -24,17 +24,13 @@ table{
 	border-top:2px solid #e0e0e0;
 	border-bottom:2px solid #e0e0e0;
 }
-.topTr{
-	border-top: 1px solid #000;
-}
+
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
 	padding-left : 300px;
 	text-align:center;
 }
-
-
 
 </style>
 

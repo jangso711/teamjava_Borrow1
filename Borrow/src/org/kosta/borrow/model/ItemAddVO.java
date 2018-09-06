@@ -3,7 +3,6 @@ package org.kosta.borrow.model;
 public class ItemAddVO {
 	private int rentalCount;
 	private double grade;
-	private ItemVO itemVO;
 	public ItemAddVO() {
 		
 	}
@@ -11,7 +10,6 @@ public class ItemAddVO {
 		super();
 		this.rentalCount = rentalCount;
 		this.grade = grade;
-		this.itemVO = itemVO;
 	}
 	public int getRentalCount() {
 		return rentalCount;
@@ -25,15 +23,9 @@ public class ItemAddVO {
 	public void setGrade(double grade) {
 		this.grade = grade;
 	}
-	public ItemVO getItemVO() {
-		return itemVO;
-	}
-	public void setItemVO(ItemVO itemVO) {
-		this.itemVO = itemVO;
-	}
 	@Override
 	public String toString() {
-		return "ItemAddVO [rentalCount=" + rentalCount + ", grade=" + grade + ", itemVO=" + itemVO + "]";
+		return "ItemAddVO [rentalCount=" + rentalCount + ", grade=" + grade + "]";
 	}
 	 
 }
