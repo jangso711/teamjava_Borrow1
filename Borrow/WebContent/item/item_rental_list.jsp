@@ -118,7 +118,14 @@
 										</c:when>
 										<c:otherwise>
 											반납완료<br>
-											<button type="button" class="btn btn_center btn_pk" onclick="reviewForm(${rentaldetail.rentalNo})">후기 작성</button>											
+											<c:choose>
+												<c:when test="${rentaldetail.review_status==1}">
+													후기 작성 완료<br>													
+												</c:when>
+												<c:otherwise>
+													<button type="button" class="btn btn_center btn_pk" onclick="reviewForm(${rentaldetail.rentalNo})">후기 작성하기</button>																						
+												</c:otherwise>
+											</c:choose>
 										</c:otherwise>
 									</c:choose>								
 								</c:otherwise>								
