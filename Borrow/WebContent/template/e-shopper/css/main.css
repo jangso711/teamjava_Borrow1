@@ -1000,8 +1000,8 @@ h2.title {
   background: #40403E;
   border-bottom: 1px solid #FE980F;
   list-style: none outside none;
-  margin: 0 0 30px;
-  padding: 0;
+  margin: 0 0 50px;
+  padding: 10;
   width: 100%;
 }
 
@@ -1011,7 +1011,7 @@ h2.title {
   color: #B3AFA8;
   display: block;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: 30px;
   text-transform: uppercase;
 }
 
@@ -1031,6 +1031,9 @@ h2.title {
   cursor: default;
   margin-right:0;
   margin-left:0;
+  text-align: center;
+  float: left;
+  display: inline;
 }
 
 .nav-tabs  li  a {
