@@ -253,4 +253,47 @@ import javax.sql.DataSource;
 			}
 			
 		}
+		public ArrayList<ReviewVO> getPostingMyList(PagingBean pagingBean, String id) throws SQLException {
+			ArrayList<ReviewVO> list=new ArrayList<ReviewVO>();
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try{
+				con=dataSource.getConnection(); 
+				StringBuilder sql=new StringBuilder();
+				sql.append("SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD') ");
+				sql.append(",r.review_hit,m.name,i.item_no,i.item_name,r.review_grade ");
+				sql.append("FROM(select row_number() over(ORDER BY review_no DESC) ");
+				sql.append("as rnum,review_no,review_title,to_char(review_regdate,'YYYY.MM.DD') ");
+				sql.append(",review_hit FROM review where id=?) rn, review r, member m, item i  ");
+				sql.append("WHERE r.id=m.id and r.item_no=i.item_no and rn.review_no=r.review_no AND ");
+				sql.append("rnum BETWEEN ? AND ? ORDER BY review_no DESC ");
+				pstmt=con.prepareStatement(sql.toString());	
+				pstmt.setString(1, id);
+				pstmt.setInt(2, pagingBean.getStartRowNumber());
+				pstmt.setInt(3, pagingBean.getEndRowNumber());
+				rs=pstmt.executeQuery();	
+				while(rs.next()){		
+					ReviewVO rvo=new ReviewVO();
+					rvo.setReviewNo(rs.getString(1));
+					rvo.setReviewTitle(rs.getString(2));
+					rvo.setReviewRegdate(rs.getString(3));
+					rvo.setReviewHit(rs.getInt(4));
+					rvo.setReviewGrade(rs.getInt(8));
+					MemberVO mvo=new MemberVO();
+					mvo.setName(rs.getString(5));
+					rvo.setMemberVO(mvo);
+					ItemVO ivo = new ItemVO();
+					ivo.setItemNo(rs.getString(6));
+					ivo.setItemName(rs.getString(7));
+					RentalDetailVO rv = new RentalDetailVO();
+					rv.setItemVO(ivo);
+					rvo.setRentalDetailVO(rv);
+					list.add(rvo);
+				}			
+			}finally{
+				closeAll(rs,pstmt,con);
+			}
+			return list;
+		} 
 	}
