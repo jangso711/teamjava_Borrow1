@@ -5241,17 +5241,28 @@ border-radius
 	padding: .5rem .75rem;
 	margin-left: -1px;
 	line-height: 1.25;
-	color: #007bff;
-	background-color: #fff;
-	border: 1px solid #dee2e6
+	color: #fff;
+	background-color: #7dc4c6;
+	border: 1px solid #e0e0e0
+}
+
+.page-link-active {
+	position: relative;
+	display: block;
+	padding: .5rem .75rem;
+	margin-left: -1px;
+	line-height: 1.25;
+	color: #404040;
+	background-color: #e0e0e0;
+	border: 1px solid #f6cac9
 }
 
 .page-link:hover {
 	z-index: 2;
-	color: #0056b3;
+	color: #404040;
 	text-decoration: none;
-	background-color: #e9ecef;
-	border-color: #dee2e6
+	background-color: #f6cac9;
+	border-color: #e0e0e0
 }
 
 .page-link:focus {
@@ -5294,8 +5305,8 @@ pointer
 .page-item.active .page-link {
 	z-index: 1;
 	color: #fff;
-	background-color: #007bff;
-	border-color: #007bff
+	background-color: #f6cac9;
+	border-color: #e0e0e0
 }
 
 .page-item.disabled .page-link {
