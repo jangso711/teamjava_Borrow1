@@ -28,7 +28,9 @@ h3{
 	height: 80px;
 }
 </style>
-
+<%
+Cookie cookie=new Cookie("hit", "reviewNo");
+%>
 <script type="text/javascript">
 function sendList(){
 	location.href="${pageContext.request.contextPath}/index.jsp";
@@ -43,28 +45,42 @@ function updateReview(){
 		location.href="${pageContext.request.contextPath}/front?command=ReviewUpdateForm&reviewNo=${requestScope.rvo.reviewNo}";
 	}
 }
-
 </script>
 
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12" align="center">
-<table class="table table-bordered  table-hover boardlist">
-		<tr >
-			<td>글번호 : ${requestScope.rvo.reviewNo}</td>
-			<td>상품정보 : ${requestScope.rvo.rentalDetailVO.itemVO.itemName}</td>
-			<td>제목 : ${requestScope.rvo.reviewTitle} </td>
-			<td>작성자 : ${requestScope.rvo.memberVO.id}</td>
-			<td>조회수 : ${requestScope.rvo.reviewHit}</td>
-			<td>작성일 : ${requestScope.rvo.reviewRegdate}</td>
-		</tr>		
-		<tr>
-			<td colspan="6" >
-			<pre>${requestScope.rvo.reviewContent}</pre>
-			</td>
+<div class="col-sm-2" align="center"></div>
+<div class="col-sm-8" align="center">
+<table class="table table-hover boardlist">
+
+		<tr style="width:10%">
+			<td style="width:5%">글번호 </td>
+			<td style="width:8%">상품정보</td>
+			<td style="width:28%">제목 </td>
+			<td style="width:5%">작성자</td>
+			<td style="width:7%">작성일</td>
+			<td style="width:5%">작성일</td>
+			<td style="width:5%">조회수</td>
 		</tr>
 		<tr>
-			<td colspan="6" class="btnArea">
-			 <c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
+			<td>${requestScope.rvo.reviewNo}</td>
+			<td>${requestScope.rvo.rentalDetailVO.itemVO.itemName}</td>
+			<td>${requestScope.rvo.reviewTitle} </td>
+			<td>${requestScope.rvo.memberVO.id}</td>
+			<td>${requestScope.rvo.reviewRegdate}</td>
+			<td>${requestScope.rvo.reviewGrade}</td>
+			<td>${requestScope.rvo.reviewHit}</td>
+		</tr>
+
+			<tr style="height:300px">
+				<td colspan="7" style="width:10%">
+				<pre>${requestScope.rvo.reviewContent}</pre>
+				</td>
+			</tr>
+
+	</table>
+	</div>
+	<div class="col-sm-2" align="center"></div>
+	<c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
 			 <form name="deleteForm" action="${pageContext.request.contextPath}/front" method="post">
 			 	<input type="hidden" name="command" value="DeleteReview">
 			 	<input type="hidden" name="reviewNo" value="${requestScope.rvo.reviewNo}">
@@ -72,10 +88,6 @@ function updateReview(){
 			 <button type="button" class="btn" onclick="deleteReview()">삭제</button>
 			 <button type="button" class="btn" onclick="updateReview()">수정</button>
 			 </c:if>
-			 </td>
-		</tr>
-	</table>
-	</div>
 <form id="deleteReviewForm"action="${pageContext.request.contextPath}/front"method="post">
 	<input type="hidden" name="command" value="ReviewDelete">
 	<input type="hidden" name="reviewNo" value="${requestScope.rvo.reviewNo}">

@@ -25,57 +25,58 @@ h3{
 .bgfooter {
 	height: 80px;
 }
+
 </style>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12" align="center">
+<div class="col-sm-2" align="center"></div>
+<div class="col-sm-8" align="center">
 <table class="table table-bordered  table-hover boardlist">
 	<thead>
-		<tr class="success">
-			<th>번호</th>
-			<th>상품정보</th>
-			<th class="title">제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>조회</th>
+		<tr class="success" style="width:10%">
+			<th style="width:2%">번호</th>
+			<th style="width:8%">상품정보</th>
+			<th class="title" style="width:28%">제목</th>
+			<th style="width:5%">작성자</th>
+			<th style="width:7%">작성일</th>
+			<th style="width:3%">평점</th>
+			<th style="width:3%">조회</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="rvo" items="${requestScope.rvo.list}">
-			<tr>
-				<td>${rvo.reviewNo}</td>
-				<td>${rvo.rentalDetailVO.itemVO.itemName}</td>
-				<td>
+			<tr style="width:10%">
+				<td style="width:2%">${rvo.reviewNo}</td>
+				<td style="width:8%">${rvo.rentalDetailVO.itemVO.itemName}</td>
+				<td style="width:28%">
 				<a href="${pageContext.request.contextPath}/front?command=ReviewPost&reviewNo=${rvo.reviewNo}">
 					${rvo.reviewTitle}</a></td>
-				<td>${rvo.memberVO.id}</td>
-				<td>${rvo.reviewRegdate}</td>
-				<td>${rvo.reviewHit}</td>
+				<td style="width:5%">${rvo.memberVO.id}</td>
+				<td style="width:7%">${rvo.reviewRegdate}</td>
+				<td style="width:3%">${rvo.reviewGrade}</td>
+				<td style="width:3%">${rvo.reviewHit}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
+<ul class="pagination justify-content-center">
 <c:if test="${requestScope.rvo.pagingBean.previousPageGroup}">
-<ul class="pagination">
- <li><a href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
-</ul>
+ <li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
 </c:if>
 <c:forEach begin="${requestScope.rvo.pagingBean.startPageOfPageGroup}"
 	end="${requestScope.rvo.pagingBean.endPageOfPageGroup}" var="pagenum">
-	<ul class="pagination">
 	<c:choose>
 	<c:when test="${requestScope.rvo.pagingBean.nowPage!=pagenum}">	
-		<li><a href="front?command=ReviewList&pageNo=${pagenum}">${pagenum}</a></li>
+		<li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${pagenum}">${pagenum}</a></li>
 		</c:when>
 		<c:otherwise>
-		<li class="active"><a href="#">${pagenum}</a></li>
+		<li class="page-item active"><a class="page-link" href="#">${pagenum}</a></li>
 		</c:otherwise>
 		</c:choose>
-	</ul>	
 </c:forEach>
 <c:if test="${requestScope.rvo.pagingBean.nextPageGroup}">
-<ul class="pagination">
- <li><a href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
-</ul>
+ <li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
 </c:if>
+</ul>
 </div>
+<div class="col-sm-2" align="center"></div>
 <div class="col-sm-12 bgfooter"></div>

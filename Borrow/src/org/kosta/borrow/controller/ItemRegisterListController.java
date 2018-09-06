@@ -18,15 +18,12 @@ public class ItemRegisterListController implements Controller {
 		HttpSession session=request.getSession();
 		MemberVO user=(MemberVO) session.getAttribute("user");
 		String id=user.getId();		
-		
-		PagingBean pagingBean=new PagingBean();
-		
+		int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		PagingBean pagingBean=new PagingBean(ItemDAO.getInstance().getAllRegisterListCountById(id), nowPage);
 		ArrayList<RentalDetailVO> registerlist = ItemDAO.getInstance().getAllRegisterListById(id, pagingBean);
-		
-		
+		request.setAttribute("pagingBean", pagingBean);
 		request.setAttribute("registerlist", registerlist);					
 		request.setAttribute("url", "/item/item_register_list.jsp");
-		
 		return "template/layout.jsp";
 	}
 
