@@ -50,6 +50,23 @@ input[type=text]{
 			})
 		})//click
 	})//ready
+	
+	function onEnterSubmit(){
+		var keyCode = window.event.keyCode;
+		if(keyCode==13) 
+			$.ajax({
+			type:"post",
+			url:"${pageContext.request.contextPath}/front",
+			data:"command=Login&memberId="+$("#id").val()+"&memberPwd="+$("#pass").val(),
+			success:function(result){
+				if(result=="ok"){
+					location.href="index.jsp";
+				}else{
+					alert("로그인 실패");
+				}
+			}
+		})
+	};
 </script>
 
 <div class="col-sm-12 bgheader">
@@ -58,11 +75,11 @@ input[type=text]{
 <%--<form action="${pageContext.request.contextPath }/front"method="post"> --%>
 <table align="center" cellpadding="3">
    <tr>
-      <td>아이디</td><td><input type="text"name="memberId" required="required" id="id"></td>
-      <td rowspan="2"><input class="btn btn_pk"type="submit"value="로그인" id="loginCheck"></td>
+      <td>아이디</td><td><input type="text"name="memberId" required="required" id="id" tabindex = 1></td>
+      <td rowspan="2"><input class="btn btn_pk"type="submit"value="로그인" id="loginCheck" tabindex = 3></td>
    </tr>
    <tr>
-      <td>비밀번호</td><td><input type="password"name="memberPwd" required="required" id="pass"></td>
+      <td>비밀번호</td><td><input type="password"name="memberPwd" required="required" id="pass" onkeydown="onEnterSubmit()" tabindex = 2></td>
    </tr>
 </table>
 <input type="hidden"name="command"value="Login">

@@ -22,7 +22,7 @@ public class rentalCancelController implements Controller {
 		}else {
 			result = "ok";
 		}
-		request.setAttribute("responsebody", result);
+		request.setAttribute("responsebody", point);
 		return "AjaxView";
 	}
 

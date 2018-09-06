@@ -26,5 +26,4 @@ public class ItemRegisterListController implements Controller {
 		request.setAttribute("url", "/item/item_register_list.jsp");
 		return "template/layout.jsp";
 	}
-
 }
