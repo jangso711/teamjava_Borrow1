@@ -18,7 +18,7 @@
 			$.ajax({
 			type:"post",
 			url:"${pageContext.request.contextPath}/front",
-			data:"command=rentalCancel&rentalNo="+$(this).parent().find(".rNo").val()+"&itemNo="+$(this).parent().find(".iNo").val()+"&point="+$(this).parent().find(".point").val(),
+			data:"command=rentalCancel&rentalNo="+$(this).parent().find(".rNo").val()+"&point="+$(this).parent().find(".point").val(),
 			success : function(result){
 				if(result=="ok"){
 					alert("대여취소를 했습니다");
@@ -30,6 +30,28 @@
 			}
 			});//ajax
 		});//click
+		
+		$(".returnbtn").click(function() {
+			 $.ajax({
+				type:"get",
+				url:"${pageContext.request.contextPath}/front",
+				data:$(this).parent().serialize(),
+				success : function(result){
+					if(result=="ok"){
+						alert("반납 완료");
+						location.reload(true);					
+					}else{
+						alert("반납 실패");
+						location.reload(true);
+					}
+				}				
+			});			 			
+		});
+		
+	
+		
+		
+		
 	});//ready
 	function reviewForm(rentalNo){
 		$("#reviewViewForm").find("#rentalNo").val(rentalNo);
@@ -42,7 +64,8 @@
 
 <div class="col-sm-12 bgheader"></div>
 <div class="container" align="center">
-	<br><h3>내가 대여한 목록</h3><br>	
+	<br><h3>내가 대여한 목록</h3><br>		
+	
 <!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>		
@@ -79,16 +102,19 @@
 						<td>${rentaldetail.returnDate}</td>
 						<td>												
 							<c:choose>
-								<c:when test="${strDate-curDate>0}">						
+								<c:when test="${strDate-curDate>0}">
 									<input type="button" value="대여취소" class="rentalCancel btn btn_center btn_pk">
-									<input type="hidden" class="rNo" value="${rentaldetail.rentalNo}">
-									<input type="hidden" class="iNo" value="${rentaldetail.itemVO.itemNo}">
-									<input type="hidden" class="point" value="${rentaldetail.totalPayment}">									
+									<input type="hidden" class="rNo" value="${rentaldetail.rentalNo}">									
+									<input type="hidden" class="point" value="${rentaldetail.totalPayment}">
 								</c:when>
 								<c:otherwise>
 									<c:choose>
 										<c:when test="${endDate-curDate>0}">
-											<button type="button" class="btn btn_center btn_pk" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemEarlyReturn&rentalNo=${rentaldetail.rentalNo}'">반납하기</button>
+											<form class="earlyReturnForm">
+												<input type="hidden" name="command" value="ItemEarlyReturn">
+												<input type="hidden" name="rentalNo" value="${rentaldetail.rentalNo}">
+												<input type="button" class="returnbtn btn btn_center btn_pk" value="반납하기" id="${rentaldetail.rentalNo}">
+											</form>	
 										</c:when>
 										<c:otherwise>
 											반납완료<br>

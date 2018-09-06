@@ -19,7 +19,7 @@ public class ReviewListController implements Controller {
 		PagingBean pagingBean=new PagingBean(totalPostCount, pageNo);
 		ArrayList<ReviewVO> list=ReviewDAO.getInstance().getPostingList(pagingBean);
 		ReviewListVO rvo=new ReviewListVO(list, pagingBean);
-	
+
 		request.setAttribute("url", "/review/review_list.jsp");
 		request.setAttribute("rvo", rvo);
 		return "/template/layout.jsp";

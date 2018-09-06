@@ -28,23 +28,24 @@ h3{
 	height: 80px;
 }
 </style>
-
+<%
+Cookie cookie=new Cookie("hit", "reviewNo");
+%>
 <script type="text/javascript">
 function sendList(){
 	location.href="${pageContext.request.contextPath}/index.jsp";
 }
 function deleteReview(){
-	if(confirm("게시글을 삭제하시겠습니까?")){
-		document.deleteForm.submit();
+	if(confirm("후기를 삭제하시겠습니까?")){
+		$("#deleteReviewForm").submit();		//180905 SOJEONG 수정
 	}
 }
 function updateReview(){
-	if(confirm("게시글을 수정하시겠습니까?")){
-		location.href="${pageContext.request.contextPath}/front?command=UpdateReviewForm&reviewNo=${requestScope.rvo.reviewNo}";
+	if(confirm("후기를 수정하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/front?command=ReviewUpdateForm&reviewNo=${requestScope.rvo.reviewNo}";
 	}
 }
 </script>
-
 
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12" align="center">
@@ -53,7 +54,7 @@ function updateReview(){
 			<td>글번호 : ${requestScope.rvo.reviewNo}</td>
 			<td>상품정보 : ${requestScope.rvo.rentalDetailVO.itemVO.itemName}</td>
 			<td>제목 : ${requestScope.rvo.reviewTitle} </td>
-			<td>작성자 : ${requestScope.rvo.memberVO.name}</td>
+			<td>작성자 : ${requestScope.rvo.memberVO.id}</td>
 			<td>조회수 : ${requestScope.rvo.reviewHit}</td>
 			<td>작성일 : ${requestScope.rvo.reviewRegdate}</td>
 		</tr>		
@@ -76,11 +77,11 @@ function updateReview(){
 		</tr>
 	</table>
 	</div>
-	
-	
-	
-	
-	
+<form id="deleteReviewForm"action="${pageContext.request.contextPath}/front"method="post">
+	<input type="hidden" name="command" value="ReviewDelete">
+	<input type="hidden" name="reviewNo" value="${requestScope.rvo.reviewNo}">
+	<input type="hidden" name="itemNo" value="${requestScope.rvo.rentalDetailVO.itemVO.itemNo}">
+</form>
 	
 	
 	
