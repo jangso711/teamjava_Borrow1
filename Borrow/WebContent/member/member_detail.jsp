@@ -7,13 +7,13 @@
 
 <style>
 .mypagecontent{
-	margin-top:30px;
-	margin-bottom:30px;
-	margin-left:auto;
-	margin-right:auto;
+	margin-top:40px;
+	margin-bottom:80px;
+	margin-left:465px;
+	margin-right:465px;
 }
 h3 {
-	padding-left: 465px;
+	padding-left: 600px;
 	padding-top: 32px;
 	font-weight: bold;
 }
@@ -63,7 +63,7 @@ table{
 
 </style>
 	<h3>회원 정보</h3>
-	<div class="col-sm-12 formContent">
+	<div class="col-sm-12 mypagecontent">
 		<table>
 
 			<tr>

@@ -16,7 +16,7 @@
 </script>
 <style>
 h3 {
-	padding-left: 465px;
+	padding-left: 650px;
 	padding-top: 53px;
 	font-weight: bold;
 }
@@ -57,8 +57,8 @@ input[type=number] {
 }
 
 .formContent{
-	padding-top:10px;
-	padding-bottom:8px;
+	padding-top:80px;
+	padding-bottom:80px;
 	padding-left:450px;
 	text-align:center;
 }

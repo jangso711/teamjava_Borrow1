@@ -76,7 +76,7 @@ input[type=text]{
 </div>
 <div class="col-sm-12 logincontent">
 <%--<form action="${pageContext.request.contextPath }/front"method="post"> --%>
-<img src="${pageContext.request.contextPath }/img/로그인이미지.png"  width="360px" alt="Loginimg">
+<img src="${pageContext.request.contextPath }/img/로그인이미지.png"  width="360px" alt="Loginimg" >
 <table align="center" cellpadding="3">
    <tr>
      <td><input type="text"name="memberId" required="required" id="id" tabindex = 1; placeholder="아이디"></td>
