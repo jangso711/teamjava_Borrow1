@@ -10,12 +10,12 @@
 }
 h3{
 	
-	padding-top: 140px;
+	padding-top: 40px;
+	padding-bottom:40px;
 	font-weight: bold;
 	text-align:center;
 	font-weight:bold;
- 	text-shadow: 0 0 2px #000;
- 	color:#A9D0F5;
+
 
 }
 
@@ -30,6 +30,7 @@ h3{
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-2" align="center"></div>
 <div class="col-sm-8" align="center">
+<h3>나의 등록 후기</h3>
 <table class="table table-bordered  table-hover boardlist">
 	<thead>
 		<tr class="success" style="width:10%">

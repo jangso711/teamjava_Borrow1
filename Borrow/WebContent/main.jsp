@@ -5,8 +5,8 @@
 <div class="col-sm-12 maincontent" align="center">
 	<form action="${pageContext.request.contextPath}/front">
 		<input type="hidden" name="command" value="ItemSearch"> <input
-			type="search" name="searchtext" placeholder="Search..."
-			style="width: 550px; height: 35px; letter-spacing: 2px; margin-bottom: 5px;"/>
+			type="search" name="searchtext" placeholder="Search.."
+			style="width: 550px; height: 35px; letter-spacing: 2px; margin-bottom: 5px; border-radius: 10px;"/>
 			<img alt="상품등록" src="${pageContext.request.contextPath }/img/등버.png" id="registerBtn">
 			<script type="text/javascript">
 			
