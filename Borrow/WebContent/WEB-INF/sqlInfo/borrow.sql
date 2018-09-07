@@ -14,7 +14,7 @@ drop table member;
 --------------------------------
 
 drop sequence item_no_seq;
-drop sequence rent_no_seq;
+drop sequence rental_no_seq;
 drop sequence cat_no_seq;
 drop sequence review_no_seq;
 
@@ -331,3 +331,11 @@ select row_number() over(order by item_regdate desc) as rnum, item_no, item_name
 from item where id='jangso711' and (item_status=1 or(item_status=0 and item_expdate>sysdate))) r, member m
 where r.rnum between 1 and 2 and r.id=m.id
 order by item_no desc
+
+select * from item i, item_add a where i.item_no=a.item_no and i.item_no=10007
+
+select * from item;
+insert into item_add values(10007,0,0);
+select i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,
+to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, round(a.grade,2),i.item_status from item i, item_add a 
+where (i.item_status=1 or (item_status=0 and item_expdate>sysdate) ) and i.item_no=10007 and i.item_no=a.item_no

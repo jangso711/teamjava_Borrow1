@@ -222,7 +222,7 @@ input[data-readonly] {
 				      	  	$("#subDate").text(numberWithCommas(substractDate * ${item.itemPrice}));
 				      	  	} 
 			         },
-			         beforeShow: function(){
+			         beforeShow:function(){
 			        	// 시작 날짜버튼 클릭시 재설정
 			        	 if(this.id=="from"){
 			         		$(this).datepicker('setDate');	//reset date
