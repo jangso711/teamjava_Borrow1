@@ -231,6 +231,8 @@ insert into rental_details(rental_no, item_no, id, rental_date, return_date,tota
 values (rental_no_seq.nextval, 10005, 'miri', '2018/9/20' , '2018/9/22',10000);
 insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
 values (rental_no_seq.nextval, 10006, 'jb', '2018/5/2' , '2018/5/4',30000);
+insert into rental_details(rental_no, item_no, id, rental_date, return_date,total_payment)
+values (rental_no_seq.nextval, 10005, 'yosep', '2018/9/5' , '2018/9/7',10000);
 
 -- 8. review --
 insert into review(review_no,review_title,review_content,review_grade,review_hit,review_regdate,item_no,id,rental_no) values(review_no_seq.nextval,'카시트 좋아요','조카가 잠깐와서 빌렸어요. 감사합니다.',5,0,'2018/07/18',10001,'lsy',200001);
@@ -320,3 +322,12 @@ from item i , item_add a where i.item_no=a.item_no;
 
 update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10022;
 
+
+
+
+select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id
+from (
+select row_number() over(order by item_regdate desc) as rnum, item_no, item_name, item_expl, item_price, id
+from item where id='jangso711' and (item_status=1 or(item_status=0 and item_expdate>sysdate))) r, member m
+where r.rnum between 1 and 2 and r.id=m.id
+order by item_no desc

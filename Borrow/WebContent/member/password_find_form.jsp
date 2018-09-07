@@ -20,7 +20,7 @@ h3 {
 }
 
 
-input[type=text] {
+.input_text[type=text] {
 	size: 50px;
 	height: 40px;
 	width: 400px;
@@ -28,7 +28,7 @@ input[type=text] {
 	padding: 5px;
 }
 
-input[type=password] {
+.input_pwd[type=password] {
 	size: 50px;
 	height: 40px;
 	width: 400px;
@@ -71,13 +71,13 @@ $(document).ready(function() {
 		<div class="formContent">
 			<table cellpadding="3">
 				<tr>
-					<td><input type="text" name="id" id="id" required="required" placeholder="아이디"></td>
+					<td><input type="text" class="input_text" name="id" id="id" required="required" placeholder="아이디"></td>
 				</tr>
 				<tr>
-					<td><input type="text" name="name" id="name" required="required" placeholder="이름"></td>
+					<td><input type="text" class="input_text" name="name" id="name" required="required" placeholder="이름"></td>
 				</tr>
 				<tr>
-					<td><input type="text" name="tel" id="tel" required="required"placeholder="전화번호"></td>
+					<td><input type="text" class="input_text" name="tel" id="tel" required="required"placeholder="전화번호"></td>
 				</tr>
 				<tr>
 					<td><input class="btn btn_pk" type="submit" id="findBtn"

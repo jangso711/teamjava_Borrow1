@@ -2,8 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
-h1 {
-    color: #08088A;
+h3 {
     text-align: center;
 }
 
@@ -22,14 +21,18 @@ input[type=button]{
    border-radius: 5px;
    padding:5px;
 }
+.resultContent{
+	min-height:450px;
+	height:auto;
+}
 </style>
 <br>
 <br>
 <br>
 <br>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-4 container">       
-	<h1>삭제 완료</h1>  
+<div class="col-sm-12 resultContent">       
+	<h3>삭제 완료</h3>  
 	<table align="center">
    	 <tr>
       <td><input class="btn btn_pk" type="button" value="홈" onclick="location.href='${pageContext.request.contextPath}/index.jsp'"></td>

@@ -25,33 +25,35 @@ h3{
 .bgfooter {
 	height: 80px;
 }
+table{
+	text-align: center;
+}
 
 </style>
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-2" align="center"></div>
 <div class="col-sm-8" align="center">
-<h3>나의 등록 후기</h3>
-<table class="table table-bordered  table-hover boardlist">
+<table class="table table-bordered table-hover boardlist">
 	<thead>
-		<tr class="success" style="width:10%">
+		<tr class="success table-danger" style="width:10%">
 			<th style="width:2%">번호</th>
 			<th style="width:8%">상품정보</th>
 			<th class="title" style="width:28%">제목</th>
-			<th style="width:5%">작성자</th>
 			<th style="width:7%">작성일</th>
-			<th style="width:3%">평점</th>
-			<th style="width:3%">조회</th>
+			<th style="width:4%">평점</th>
+			<th style="width:4%">조회</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="rvo" items="${requestScope.rvo.list}">
 			<tr style="width:10%">
 				<td style="width:2%">${rvo.reviewNo}</td>
-				<td style="width:8%">${rvo.rentalDetailVO.itemVO.itemName}</td>
+				<td style="width:8%">
+				<a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rvo.rentalDetailVO.itemVO.itemNo}">
+				${rvo.rentalDetailVO.itemVO.itemName}</a></td>
 				<td style="width:28%">
 				<a href="${pageContext.request.contextPath}/front?command=ReviewPostByReviewNo&reviewNo=${rvo.reviewNo}">
 					${rvo.reviewTitle}</a></td>
-				<td style="width:5%">${rvo.memberVO.name}</td>
 				<td style="width:7%">${rvo.reviewRegdate}</td>
 				<td style="width:3%">${rvo.reviewGrade}</td>
 				<td style="width:3%">${rvo.reviewHit}</td>

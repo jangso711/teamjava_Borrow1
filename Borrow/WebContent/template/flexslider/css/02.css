@@ -1,0 +1,71 @@
+
+/******* slider01 *********************************/ 
+.slider01 {width:200px; margin: 0; padding: 0;position: relative; zoom: 1;border:solid 0px red;}
+.slider01 .flex-viewport {max-height: 2000px;}
+.slider01 .slides {zoom: 1;margin: 0; padding: 0;}
+.slider01 .slides > li {display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.slider01 .slides img {width: 200px; display: block;}
+
+/* Direction Nav */
+.slider01 .flex-direction-nav {*height: 0;margin: 0; padding: 0; list-style: none;}
+.slider01 .flex-direction-nav a {width: 30px; height: 30px; margin: -20px 0 0; display: block; background: url(./bg_direction_nav.png) no-repeat 0 0; 
+	position: absolute; top: 80%; z-index: 10; cursor: pointer; text-indent: -9999px; opacity: 1; -webkit-transition: all .3s ease;}
+.slider01 .flex-direction-nav .flex-next {background-position: 100% 0; right: 5px; }
+.slider01 .flex-direction-nav .flex-prev {right: 29px;}
+
+/* Control Nav */
+.slider01 .flex-control-nav {width: 100%; 
+	position: absolute; bottom: -15px; text-align: center;margin: 0; padding: 0; list-style: none;}
+.slider01 .flex-control-nav li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
+.slider01 .flex-control-paging li a {width: 11px; height: 11px; display: block; background: #666; background: rgba(0,0,0,0.5); cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; box-shadow: inset 0 0 3px rgba(0,0,0,0.3);}
+.slider01 .flex-control-paging li a:hover { background: #333; background: rgba(0,0,0,0.7); }
+.slider01 .flex-control-paging li a.flex-active { background: #000; background: rgba(0,0,0,0.9); cursor: default; }
+/******* //slider01 *********************************/ 
+
+
+/******* slider02 *********************************/ 
+.slider02 {width:200px; margin: 0; padding: 0;position: relative; zoom: 1;border:solid 0px red;}
+.slider02 .flex-viewport {max-height: 2000px;}
+.slider02 .slides {zoom: 1;margin: 0; padding: 0;}
+.slider02 .slides > li {display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.slider02 .slides img {width: 200px; display: block;}
+
+/* Direction Nav */
+.slider02 .flex-direction-nav {*height: 0;margin: 0; padding: 0; list-style: none;}
+.slider02 .flex-direction-nav a {width: 30px; height: 30px; margin: -20px 0 0; display: block; background: url(./bg_direction_nav.png) no-repeat 0 0; 
+	position: absolute; top: 50%; z-index: 10; cursor: pointer; text-indent: -9999px; opacity: 1; -webkit-transition: all .3s ease;}
+.slider02 .flex-direction-nav .flex-next {background-position: 100% 0; right: 5px; }
+.slider02 .flex-direction-nav .flex-prev {left: 5px;}
+
+/* Control Nav */
+.slider02 .flex-control-nav {width: 100%; 
+	position: absolute; bottom: -15px; text-align: center;margin: 0; padding: 0; list-style: none;}
+.slider02 .flex-control-nav li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
+.slider02 .flex-control-paging li a {width: 11px; height: 11px; display: block; background: #666; background: rgba(0,0,0,0.5); cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; box-shadow: inset 0 0 3px rgba(0,0,0,0.3);}
+.slider02 .flex-control-paging li a:hover { background: #333; background: rgba(0,0,0,0.7); }
+.slider02 .flex-control-paging li a.flex-active { background: #000; background: rgba(0,0,0,0.9); cursor: default; }
+/******* //slider02 *********************************/ 
+
+
+/******* slider03 *********************************/ 
+.slider03 {width:200px; margin: 0; padding: 0;position: relative; zoom: 1;border:solid 0px red;}
+.slider03 .flex-viewport {max-height: 2000px;}
+.slider03 .slides {zoom: 1;margin: 0; padding: 0;}
+.slider03 .slides > li {display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.slider03 .slides img {width: 200px; display: block;}
+
+/* Direction Nav */
+.slider03 .flex-direction-nav {*height: 0;margin: 0; padding: 0; list-style: none;}
+.slider03 .flex-direction-nav a {width: 30px; height: 30px; margin: -20px 0 0; display: block; background: url(./bg_direction_nav.png) no-repeat 0 0; 
+	position: absolute; top: 50%; z-index: 10; cursor: pointer; text-indent: -9999px; opacity: 1; -webkit-transition: all .3s ease;}
+.slider03 .flex-direction-nav .flex-next {background-position: 100% 0; right: 5px; }
+.slider03 .flex-direction-nav .flex-prev {left: 5px;}
+
+/* Control Nav */
+.slider03 .flex-control-nav {width: 100%; 
+	position: absolute; bottom: -15px; text-align: center;margin: 0; padding: 0; list-style: none;}
+.slider03 .flex-control-nav li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
+.slider03 .flex-control-paging li a {width: 11px; height: 11px; display: block; background: #666; background: rgba(0,0,0,0.5); cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; box-shadow: inset 0 0 3px rgba(0,0,0,0.3);}
+.slider03 .flex-control-paging li a:hover { background: #333; background: rgba(0,0,0,0.7); }
+.slider03 .flex-control-paging li a.flex-active { background: #000; background: rgba(0,0,0,0.9); cursor: default; }
+/******* //slider03 *********************************/ 
