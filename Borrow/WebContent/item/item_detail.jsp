@@ -58,7 +58,7 @@ input[data-readonly] {
 	}
 	$(document).ready(function() {
 		var iframe_height = parseInt($('html').height());
-		window.parent.postMessage(iframe_height);
+		/* window.parent.postMessage(iframe_height); */
 	});
 </script>
 
@@ -122,7 +122,11 @@ input[data-readonly] {
 						<b>Model :</b> ${item.itemModel }
 					</p>
 
-					<script type="text/javascript">
+					<p>
+						<b>평점 :</b> ${item.itemAddVO.grade}
+					</p>
+					
+				<script type="text/javascript">
 				/* 180831 MIRI 게시글 수정 함수 */
 				function updateItem(upitem_no) {
 					var up = confirm("게시글을 수정하시겠습니까?");

@@ -58,18 +58,18 @@ a{
 }
 .maincontent{
 	padding-top:60px;
-	height:470px;
+	height:500px;
 }
 .content{
 	margin-top:12px;
 	margin-bottom:10px;
+	height:400px;
 	text-align:center;
-	
 }
 .footer{
 	
 	margin-top:16px;
-
+	width:100%;
 	height:110px;
 	background-color: #7dc4c6;
 		

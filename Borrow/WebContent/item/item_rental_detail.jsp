@@ -16,18 +16,15 @@
 	rel="stylesheet">
 
 <style>
-h1 {
-	color: #08088A;
-	text-align: center;
-}
-
 table {
 	text-align: center;
 }
-table#info{
+
+table#info {
 	position: relative;
 	left: 23%;
 }
+
 .bgheader {
 	height: 50px;
 }
@@ -37,25 +34,20 @@ table#info{
 	height: 30px;
 	margin: 10px;
 }
-
 .mySlides {
 	display: none;
 }
-
 .w3-theme-d1 {
 	color: #fff !important;
 	background-color: #f1a4a3 !important
 }
-
 .w3-theme-d2 {
 	color: #fff !important;
 	background-color: #aeacb7 !important
 }
-
 input[data-readonly] {
 	pointer-events: none;
 }
-
 th {
 	text-align: center;
 }
@@ -63,17 +55,14 @@ th {
 td {
 	text-align: center;
 }
-
 td#test {
 	width: 400px;
 }
-
 h3 {
 	padding-left: 100px;
 	padding-top: 30px;
 	font-weight: bold;
 }
-
 h5 {
 	font-weight: bold;
 }
@@ -81,10 +70,11 @@ h5 {
 <%-- 대여료 상세 추가 --%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	
+</script>
 
-<div class="col-sm-12 bgheader"></div>
-<div class="container-fluid">
+<div class="col-sm-12 content">
 	<fmt:parseDate value="${requestScope.rvo.rentalDate}" var="strPlanDate"
 		pattern="yyyy-MM-dd" />
 	<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}"
@@ -93,7 +83,7 @@ h5 {
 		pattern="yyyy-MM-dd" />
 	<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}"
 		integerOnly="true" var="endDate"></fmt:parseNumber>
-	<h1>대여 상세 보기</h1>
+	<h3>대여 내역</h3>
 	<div class="row">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-5" align="center">
@@ -171,7 +161,7 @@ h5 {
 				<tr>
 					<%-- 대여료 출력 조건 추가 --%>
 					<th>대여료</th>
-					<td id="test"><button type="button" class="btn"
+					<td id="test"><button type="button" class="btn btn-link"
 							data-toggle="collapse" data-target="#demo">
 							<fmt:formatNumber>${requestScope.rvo.totalPayment}</fmt:formatNumber>
 						</button>

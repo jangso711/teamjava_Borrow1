@@ -34,6 +34,13 @@ table{
 <div class="col-sm-2"></div>
 <div class="col-sm-8">
 
+<<<<<<< HEAD
+=======
+
+
+
+<form action="front">
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 <h3>후기 검색 게시판</h3>
 
 <form action="front" style="padding-left: 630px;">

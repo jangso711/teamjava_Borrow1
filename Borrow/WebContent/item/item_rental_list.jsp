@@ -3,18 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
-
 <style type="text/css">
 .bgheader {
 	height: 50px;
-<<<<<<< HEAD
 }
-
-=======
-}
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 th,td{
 	padding-left: 50px;
 	padding-right:50px;
@@ -23,29 +15,17 @@ tr{
 	border-top:1px solid #e0e0e0;
 	border-bottom:1px solid #e0e0e0;
 }
-
 table{
 	border-top:2px solid #e0e0e0;
 	border-bottom:2px solid #e0e0e0;
-}
-.topTr{
-	border-top: 1px solid #000;
+	margin:0 auto;	/*테이블 중간 정렬*/
 }
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
-	padding-left : 300px;
 	text-align:center;
-<<<<<<< HEAD
 }
-
-
-
-=======
-}
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 </style>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".rentalCancel").click(function(){
@@ -83,33 +63,24 @@ table{
 					}
 				}				
 			});			 			
-		});
-		
-	
-		
-		
-		
+		});		
 	});//ready
 	function reviewForm(rentalNo){
 		$("#reviewViewForm").find("#rentalNo").val(rentalNo);
 		$("#reviewViewForm").submit();
-	}
-
-
+}
 </script>
-
-
 <div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12 content">
-	<br><h3>내가 대여한 목록</h3><br>	
+	<br><h3>나의 대여 목록</h3><br>	
 
 <div class="listContent">
-<!-- 	현재 날짜 변수 저장 -->
+<!--현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>		
 	<c:choose>
 		<c:when test="${fn:length(requestScope.rentallist)==0}">
-			<span>대여하신 물품이 없습니다!! </span>
+			<h6 style="color:red;">대여하신 물품이 없습니다!!</h6>
 		</c:when>
 		<c:otherwise>
 			<table cellpadding="10">
@@ -175,10 +146,8 @@ table{
 								</c:otherwise>								
 							</c:choose></th>
 					</tr>
-					
 				</c:forEach>
-			</table>
-						
+			</table>						
 			<c:set var="pb" value="${requestScope.pagingBean}" />
 </div>
 				<div class="col-sm-12 center" align="center">					
@@ -205,7 +174,6 @@ table{
 						</c:if>
 					</ul>				
 			</div>
-			
 		</c:otherwise>
 	</c:choose>
 </div>

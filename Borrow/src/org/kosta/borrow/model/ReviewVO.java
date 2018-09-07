@@ -4,7 +4,7 @@ public class ReviewVO {
 	private String reviewNo;
 	private String reviewTitle;
 	private String reviewContent;
-	private int reviewGrade;
+	private double reviewGrade;
 	private int reviewHit;
 	private String reviewRegdate;
 	private MemberVO memberVO;
@@ -49,10 +49,10 @@ public class ReviewVO {
 	public void setReviewContent(String reviewContent) {
 		this.reviewContent = reviewContent;
 	}
-	public int getReviewGrade() {
+	public double getReviewGrade() {
 		return reviewGrade;
 	}
-	public void setReviewGrade(int reviewGrade) {
+	public void setReviewGrade(double reviewGrade) {
 		this.reviewGrade = reviewGrade;
 	}
 	public int getReviewHit() {
