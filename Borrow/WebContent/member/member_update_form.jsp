@@ -20,7 +20,7 @@ h3 {
 }
 
 
-input[type=text] {
+.input_text[type=text] {
 	size: 50px;
 	height: 40px;
 	width: 400px;
@@ -28,7 +28,7 @@ input[type=text] {
 	padding: 5px;
 }
 
-input[type=password] {
+.input_pwd[type=password] {
 	size: 50px;
 	height: 40px;
 	width: 400px;
@@ -40,12 +40,12 @@ input[type=password] {
 .formContent{
 	padding-top:10px;
 	padding-bottom:20px;
-	padding-left:450px;
 	text-align:center;
 }
 
 table{
-	font-size: 18px;	
+	font-size: 18px;
+	margin:0 auto;	
 }
 </style>
 <script type="text/javascript">
@@ -72,34 +72,33 @@ table{
 			})//ready
 </script>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12 content">
+<div class="col-sm-12 formContent">
 <h3>회원 정보 수정</h3>
 	<form method="post" name="MemberUpdateForm" id="MemberUpdateForm" action="${pageContext.request.contextPath }/front">
 		<input type="hidden" name="command" value="MemberUpdate"> 
-		<div class="formContent">
 		<table cellpadding="3">
 		<tr> 
-		<td> <input type="text" name="id" value="아이디 : ${sessionScope.user.id}"readonly="readonly"></td>
+		<td> <input type="text" class="input_text" name="id" value="아이디 : ${sessionScope.user.id}"readonly="readonly"></td>
 		</tr>
 		<tr>
-		<td><input type="password" name="pwd" id="pwd" required="required" placeholder="비밀번호"></td>
+		<td><input type="password" class="input_pwd" name="pwd" id="pwd" required="required" placeholder="비밀번호"></td>
 		</tr>
 		 <tr>
-		 <td><input type="password" name="repwd" id="repwd" required="required"placeholder="비밀번호확인"></td><td><span id="pwdcheckResult"></span></td>
+		 <td><input type="password" class="input_pwd" name="repwd" id="repwd" required="required"placeholder="비밀번호확인"></td><td><span id="pwdcheckResult"></span></td>
 		 </tr>
 		<tr>
-		<td><input type="text" name="name" required="required" placeholder="이름"></td>
+		<td><input type="text" class="input_text" name="name" required="required" placeholder="이름"></td>
 		</tr>
 		<tr>
-		<td><input type="text" name="address" required="required" placeholder="주소"></td>
+		<td><input type="text" class="input_text" name="address" required="required" placeholder="주소"></td>
 		</tr>
 		<tr>
-		<td><input type="text" name="tel" required="required" placeholder="전화번호"></td>
+		<td><input type="text" class="input_text" name="tel" required="required" placeholder="전화번호"></td>
 		</tr>
 		<tr>
 		<td><input class="btn btn_pk" type="submit" id="updateBtn" value="정보수정"></td>
 		</tr>
 		</table>
-		</div>
+		
 	</form>
 </div>

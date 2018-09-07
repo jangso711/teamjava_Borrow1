@@ -322,3 +322,12 @@ from item i , item_add a where i.item_no=a.item_no;
 
 update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10022;
 
+
+
+
+select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id
+from (
+select row_number() over(order by item_regdate desc) as rnum, item_no, item_name, item_expl, item_price, id
+from item where id='jangso711' and (item_status=1 or(item_status=0 and item_expdate>sysdate))) r, member m
+where r.rnum between 1 and 2 and r.id=m.id
+order by item_no desc
