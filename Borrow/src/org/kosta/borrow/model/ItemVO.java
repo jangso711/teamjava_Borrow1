@@ -16,7 +16,6 @@ public class ItemVO {
 	private MemberVO memberVO;
 	private ArrayList<String> picList ;
 	private ArrayList<CategoryVO> catList;
-	private PagingBean pagingBean;
 	private ItemAddVO itemAddVO;
 	//private CategoryVO categoryVO;
 	public ItemVO() {
@@ -37,17 +36,6 @@ public class ItemVO {
 		catList = new ArrayList<CategoryVO>();
 	}
 	
-	public ItemVO(String itemNo, String itemName, String itemExpl, int itemPrice, MemberVO memberVO, PagingBean pagingBean) {
-		super();
-		this.itemNo = itemNo;
-		this.itemName = itemName;
-		this.itemExpl = itemExpl;
-		this.itemPrice = itemPrice;
-		this.memberVO = memberVO;
-		picList = new ArrayList<String>();
-		catList = new ArrayList<CategoryVO>();
-		this.pagingBean = pagingBean;
-	}
 	
 	public ItemVO(String itemNo, String itemName, String itemBrand, String itemModel, int itemPrice, String itemRegDate,
 			String itemExpDate, String itemStatus, String itemExpl, MemberVO memberVO, ArrayList<String> picList,
@@ -161,15 +149,6 @@ public String getItemNo() {
    public void setItemExpl(String itemExpl) {
       this.itemExpl = itemExpl;
    }
-
-public PagingBean getPagingBean() {
-	return pagingBean;
-}
-
-
-public void setPagingBean(PagingBean pagingBean) {
-	this.pagingBean = pagingBean;
-}
 
 
 @Override
