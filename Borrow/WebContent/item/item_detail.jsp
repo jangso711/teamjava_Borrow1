@@ -267,12 +267,22 @@ input[data-readonly] {
 						<c:choose>
 							<c:when
 								test="${sessionScope.user.id == requestScope.itemDetail.memberVO.id}">
+								<c:choose>
+								<c:when test="${requestScope.itemDetail.itemStatus=='1'}">
 								<button type="button"
 									class="w3-theme-d1 w3-button w3-round-large" name="update"
 									onclick="updateItem(${itemNo})">수정</button>
 						&nbsp;&nbsp;&nbsp;
 						<button id="deleteBtn" type="button"
 									class="w3-theme-d2 w3-button w3-round-large" name="delete">삭제</button>
+								</c:when>
+								<c:otherwise>
+								<span style="color:orange;">삭제 대기중 (삭제 예정 : ${requestScope.itemDetail.itemExpDate })</span>
+								</c:otherwise>
+								</c:choose>
+																
+								
+								
 								<br>
 								<br>
 								<br>

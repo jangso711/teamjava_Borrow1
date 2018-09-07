@@ -43,7 +43,7 @@ public class ItemDetailController implements Controller {
 		request.setAttribute("rvo", rvo);
 		
 		ItemVO itemVO = ItemDAO.getInstance().getDetailItemByNo(itemNo);
-		
+		System.out.println(itemVO);
 		//180904 SOJEONG - 대여 중인 날짜 반환 함수
 		ArrayList<String> rentalDetails = ItemDAO.getInstance().getRentalUnavailableDateList(itemNo);
 		JSONArray dateList = new JSONArray(rentalDetails);
