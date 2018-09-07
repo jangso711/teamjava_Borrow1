@@ -28,22 +28,6 @@ h3 {
 	padding-bottom: 10px;
 }
 
-input[type=text] {
-	size: 50px;
-	height: 40px;
-	width: 400px;
-	border-radius: 5px;
-	padding: 5px;
-}
-
-input[type=password] {
-	size: 50px;
-	height: 40px;
-	width: 400px;
-	border-radius: 5px;
-	padding: 5px;
-}
-
 .formContent {
 	padding-top: 10px;
 	padding-bottom: 20px;

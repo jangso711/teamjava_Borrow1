@@ -7,14 +7,14 @@ h3{
 	/* padding-top:30px; */
 	font-weight: bold;
 }
-input[type=text]{
+.input_text[type=text]{
 	size:50px;
 	height:40px;
 	width:250px;
 	border-radius: 5px;
 	padding:5px;
 }
-input[type=number]{
+.input_num[type=number]{
 	size:50px;
 	height:40px;
 	width:250px;
@@ -110,16 +110,16 @@ ul{
 <input type="hidden"name="command"value="ItemRegister">
 <table cellpadding="3">
 	<tr>
-	<td>상품이름*</td><td><input type="text"name="itemName"class="required"></td>
+	<td>상품이름*</td><td><input type="text" class="input_text"name="itemName"class="required"></td>
 	</tr>
 	<tr>
-	<td>제조사</td><td><input type="text"name="itemBrand"></td>
+	<td>제조사</td><td><input type="text" class="input_text"name="itemBrand"></td>
 	</tr>
 	<tr>
-	<td>모델명(번호)</td><td><input type="text"name="itemModel"></td>
+	<td>모델명(번호)</td><td><input type="text" class="input_text"name="itemModel"></td>
 	</tr>
 	<tr>
-	<td>상품가격*</td><td><input type="number"name="itemPrice"class="required"></td>
+	<td>상품가격*</td><td><input type="number" class="input_num"name="itemPrice"class="required"></td>
 	</tr>
 	<tr>
 	<td>대여기간*</td>
