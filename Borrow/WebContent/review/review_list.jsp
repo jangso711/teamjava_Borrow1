@@ -59,8 +59,8 @@ table{
 			<th class="title" style="width:28%">제목</th>
 			<th style="width:5%">작성자</th>
 			<th style="width:7%">작성일</th>
-			<th style="width:3%">평점</th>
-			<th style="width:3%">조회</th>
+			<th style="width:4%">평점</th>
+			<th style="width:4%">조회</th>
 		</tr>
 	</thead>
 	<tbody>
