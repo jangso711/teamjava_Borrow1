@@ -28,7 +28,7 @@ public class ItemRegisterAllListController implements Controller {
 				return "redirect:front?command=LoginForm";
 			}
 		}
-		int totalPostCount = ItemDAO.getInstance().getTotalItemCountById(id);
+		int totalPostCount = ItemDAO.getInstance().getTotalItemCountById(id,flag);
 		String nowPage = request.getParameter("pageNo");
 		PagingBean pagingBean = null;
 		if(nowPage == null)

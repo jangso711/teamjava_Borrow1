@@ -185,14 +185,19 @@ public class ItemDAO {
 	}
 	
 	
-	public int getTotalItemCountById(String id) throws SQLException {
+	public int getTotalItemCountById(String id,boolean flag) throws SQLException {
 		int totItemCnt = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select count(*) from item where id=? and item_status=1 and item_expdate>sysdate ";
+			String sql=null;
+			if(flag) {
+				sql="select count(*) from item where id=? and (item_status=1 or item_expdate>sysdate)";
+			}else {
+				sql="select count(*) from item where id=? and item_status=1 and item_expdate>sysdate";
+			}
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -411,11 +416,10 @@ public class ItemDAO {
 			sb.append(" select row_number() over(order by item_regdate desc) as rnum, item_no, item_name, item_expl, item_price, id");
 
 			if(flag) {
-				sb.append(" from item where id=? and item_status=1 or(item_status=0 and item_expdate>sysdate)) r, member m");
+				sb.append(" from item where id=? and (item_status=1 or(item_status=0 and item_expdate>sysdate))) r, member m");
 			}else {
 				sb.append(" from item where id=? and item_status=1) r, member m");
 			}
-
 			sb.append(" where r.rnum between ? and ? and r.id=m.id");
 			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
@@ -423,8 +427,9 @@ public class ItemDAO {
 			pstmt.setInt(2, pagingBean.getStartRowNumber());
 			pstmt.setInt(3, pagingBean.getEndRowNumber());
 			rs = pstmt.executeQuery();
-
+			int i=1;
 			while(rs.next()) {
+				System.out.println(i++);
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(5));
 				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),  memberVO);
