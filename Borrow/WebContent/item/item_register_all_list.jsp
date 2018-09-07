@@ -63,31 +63,29 @@ h4 {
 				</c:forEach>
 	</div>
 	<!-- /.row -->
-
-	<!-- Pagination -->
+<!-- Pagination -->
 	<ul class="pagination justify-content-center">
-
-		<c:set value="${requestScope.pagingBean }" var="pb"></c:set>
-		
-		<c:if test="${pb.previousPageGroup }">
-					<li class="page-item"><a class="page-link" href="#"
-			aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
-				class="sr-only">Previous</span>
-			</a></li>						
-		</c:if>		
-		<c:forEach begin="${pb.startPageOfPageGroup}"
-			end="${pb.endPageOfPageGroup}" var="pageNo">
-			<li class="active"><a class="page-link" href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${memberId}&pageNo=${pageNo}">${pageNo }</a></li>
-		</c:forEach>
-		<c:if test="${pb.previousPageGroup }">
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
-					class="sr-only">Next</span>
-			</a></li>
-		</c:if>
-
-	</ul>
+<c:if test="${requestScope.pagingBean.previousPageGroup}">
+ <li class="page-item"><a class="page-link" href="front?command=ItemRegisterAllList&pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
+</c:if>
+<c:forEach begin="${requestScope.pagingBean.startPageOfPageGroup}"
+	end="${requestScope.pagingBean.endPageOfPageGroup}" var="pagenum">
+	<c:choose>
+	<c:when test="${requestScope.pagingBean.nowPage!=pagenum}">	
+		<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${memberId}&pageNo=${pagenum}">${pagenum}</a></li>
+		</c:when>
+		<c:otherwise>
+		<li class="page-item active"><a class="page-link" href="#">${pagenum}</a></li>
+		</c:otherwise>
+		</c:choose>
+</c:forEach>
+<c:if test="${requestScope.pagingBean.nextPageGroup}">
+ <li class="page-item"><a class="page-link" href="front?command=ItemRegisterAllList&pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
+</c:if>
+</ul>
+	
 </div>
 </c:otherwise>
 </c:choose>
+
 <!-- /.container -->

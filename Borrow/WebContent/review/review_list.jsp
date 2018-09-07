@@ -31,25 +31,20 @@ table{
 
 </style>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-6" align="center"></div>
-<div class="col-sm-4" align="center">
-<form action="front">
+
 <div class="col-sm-2"></div>
 <div class="col-sm-8">
-
 <h3>후기 검색 게시판</h3>
-
-<form action="front" style="padding-left: 630px;">
+	<form action="front" style="padding-left: 630px;">
 		<input type="hidden" name="command" value="ReviewFindItemName">
-			상품 이름으로 검색&nbsp;  <input type="text" name="itemName" required="required">
 		<input type="text" name="itemName" required="required" placeholder="상품 이름으로 검색">
 		<input type="submit" value="검색">
 	</form>
 	</div>
 <div class="col-sm-2" align="center"></div>
-<div class="col-sm-1" align="center"></div>
-<div class="col-sm-9" align="center">
-	</form><br>
+<div class="col-sm-2" align="center"></div>
+<div class="col-sm-8" align="center">
+
 <table class="table table-bordered table-hover boardlist">
 	<thead>
 		<tr class="success" style="width:10%">
@@ -100,7 +95,5 @@ table{
 </c:if>
 </ul>
 </div>
-<div class="col-sm-1" align="center"></div>
-<div class="col-sm-2"></div>
 <div class="col-sm-2" align="center"></div>
 <div class="col-sm-12 bgfooter"></div>
