@@ -66,6 +66,10 @@ h3 {
 h5 {
 	font-weight: bold;
 }
+.resultContent{
+	min-height: 500px;
+	height: auto;
+}
 </style>
 <%-- 대여료 상세 추가 --%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +78,7 @@ h5 {
 	
 </script>
 
-<div class="col-sm-12 content">
+<div class="col-sm-12 resultContent">
 	<fmt:parseDate value="${requestScope.rvo.rentalDate}" var="strPlanDate"
 		pattern="yyyy-MM-dd" />
 	<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}"
