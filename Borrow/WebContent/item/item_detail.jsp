@@ -298,8 +298,8 @@ input[data-readonly] {
 </div>
 <div>
 </div>
-<div class="col-sm-2" align="center"></div>
-<div class="col-sm-8" align="center">
+<div class="col-sm-1" align="center"></div>
+<div class="col-sm-10" align="center">
 <table class="table table-bordered  table-hover boardlist">
 	<thead>
 		<tr class="success" style="width:10%">
@@ -348,7 +348,7 @@ input[data-readonly] {
 </c:if>
 </ul>
 </div>
-<div class="col-sm-2" align="center"></div>
+<div class="col-sm-1" align="center"></div>
 <form id="deleteForm" action="${pageContext.request.contextPath}/front"
 	method="post">
 	<input type="hidden" name="command" value="ItemDelete"> <input
