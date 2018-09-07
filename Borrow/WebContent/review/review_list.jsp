@@ -49,7 +49,7 @@ table{
 <div class="col-sm-8" align="center">
 <table class="table table-bordered table-hover boardlist">
 	<thead>
-		<tr class="success" style="width:10%">
+		<tr class="success table-danger" style="width:10%">
 			<th style="width:2%">번호</th>
 			<th style="width:8%">상품정보</th>
 			<th class="title" style="width:28%">제목</th>
