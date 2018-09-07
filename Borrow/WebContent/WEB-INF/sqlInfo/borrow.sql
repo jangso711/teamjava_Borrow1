@@ -2,7 +2,7 @@
 -----------drop table----------
 --------------------------------
 drop table review;
-drop table rental_details;
+drop table rent_details;
 drop table picture;
 drop table item_category;
 drop table category;
@@ -14,12 +14,12 @@ drop table member;
 --------------------------------
 
 drop sequence item_no_seq;
-drop sequence rental_no_seq;
+drop sequence rent_no_seq;
 drop sequence cat_no_seq;
 drop sequence review_no_seq;
 
 --------------------------------
--------delete value--------------
+-------delete vue--------------
 --------------------------------
 delete from member;
 delete from item;
@@ -27,7 +27,7 @@ delete from item_add;
 delete from category;
 delete from item_category;
 delete from picture;
-delete from rental_details;
+delete from rent_details;
 delete from review;
 
 --------------------------------
@@ -65,7 +65,7 @@ create table item(
 --3.item_add---
 create table item_add(
    item_no number primary key,
-   rental_count number default 0,
+   rent_count number default 0,
    grade number default 0,   
    constraint fk_item_add_item_no foreign key(item_no) references item ON DELETE CASCADE
 );
@@ -95,17 +95,17 @@ create table picture(
    constraint pk_picture primary key(item_no,picture_path) 
 );
 
--- 7.rental_details--
-create table rental_details(
-   rental_no number primary key,
+-- 7.rent_details--
+create table rent_details(
+   rent_no number primary key,
    item_no number not null,
    id varchar2(100) not null,
-   rental_date date not null,
+   rent_date date not null,
    return_date date not null, 
-   total_payment number not null,  
+   tot_payment number not null,  
    review_status number default 0,
-   constraint fk_rental_details_id foreign key(id) references member ON DELETE CASCADE,
-   constraint fk_rental_details_item_no foreign key(item_no) references item ON DELETE CASCADE
+   constraint fk_rent_details_id foreign key(id) references member ON DELETE CASCADE,
+   constraint fk_rent_details_item_no foreign key(item_no) references item ON DELETE CASCADE
 );
 
 alter table rental_details add review_status number default 0;
@@ -315,7 +315,8 @@ from(
 where r.rnum between 2 and 4
 order by item_no desc
 
-
+select row_number() over(order by i.item_no desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, a.grade 
+from item i , item_add a where i.item_no=a.item_no;
 
 
 

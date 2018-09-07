@@ -1,7 +1,6 @@
 package org.kosta.borrow.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +16,14 @@ public class ItemAllSearchController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String nowPage = request.getParameter("pageNum");
-		int totalPostCount = ItemDAO.getInstance().getTotalItemCount();
+		HttpSession session= request.getSession();
+		MemberVO user= (MemberVO) session.getAttribute("user");
+		int totalPostCount=0;
+		if(user==null) {
+			totalPostCount = ItemDAO.getInstance().getTotalItemCount(null);
+		}else {
+			totalPostCount = ItemDAO.getInstance().getTotalItemCount(user.getId());
+		}	
 		PagingBean pagingBean = null;
 		if(nowPage == null)
 			pagingBean = new PagingBean(1, 6, totalPostCount);
@@ -26,16 +32,16 @@ public class ItemAllSearchController implements Controller {
 		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemList(pagingBean);
 		
 		//180906 MIRI 로그인 했을시에 자신이 등록한 상품은 검색 불가 (아예 없을 시에 검색 결과 없다고 창띄우기)
-		HttpSession session = request.getSession(false);
-		MemberVO sessionMemberVO = ((MemberVO)(session.getAttribute("user")));
-		Iterator<ItemVO> iterator = allItemList.iterator();
-		while(iterator.hasNext()) {
-			ItemVO vo= iterator.next();
-			//세션 아이디와 ArrayList 아이디가 같으면 삭제
-		    if(sessionMemberVO != null && vo.getMemberVO().getId().equals(sessionMemberVO.getId())) {
-		        iterator.remove();
-		    }
-		}
+//		HttpSession session = request.getSession(false);
+//		MemberVO sessionMemberVO = ((MemberVO)(session.getAttribute("user")));
+//		Iterator<ItemVO> iterator = allItemList.iterator();
+//		while(iterator.hasNext()) {
+//			ItemVO vo= iterator.next();
+//			//세션 아이디와 ArrayList 아이디가 같으면 삭제
+//		    if(sessionMemberVO != null && vo.getMemberVO().getId().equals(sessionMemberVO.getId())) {
+//		        iterator.remove();
+//		    }
+//		}
 		
 		request.setAttribute("allItemList", allItemList);
 		request.setAttribute("pagingBean", pagingBean);

@@ -17,6 +17,7 @@ public class ItemVO {
 	private ArrayList<String> picList ;
 	private ArrayList<CategoryVO> catList;
 	private PagingBean pagingBean;
+	private ItemAddVO itemAddVO;
 	//private CategoryVO categoryVO;
 	public ItemVO() {
 		memberVO=new MemberVO();
@@ -70,7 +71,20 @@ public class ItemVO {
    public ItemVO(String itemNo) {
       this.itemNo = itemNo;
    }
-   public String getItemNo() {
+   
+   
+   
+   public ItemAddVO getItemAddVO() {
+	return itemAddVO;
+}
+
+
+public void setItemAddVO(ItemAddVO itemAddVO) {
+	this.itemAddVO = itemAddVO;
+}
+
+
+public String getItemNo() {
       return itemNo;
    }
    public void setItemNo(String itemNo) {
@@ -160,9 +174,9 @@ public void setPagingBean(PagingBean pagingBean) {
 
 @Override
    public String toString() {
-      return "ItemVO [itemNo=" + itemNo + ", itemName=" + itemName + ", itemBrand=" + itemBrand + ", itemModel="
+      return "\nItemVO [itemNo=" + itemNo + ", itemName=" + itemName + ", itemBrand=" + itemBrand + ", itemModel="
             + itemModel + ", itemPrice=" + itemPrice + ", itemRegDate=" + itemRegDate + ", itemExpDate="
-            + itemExpDate + ", itemStatus=" + itemStatus + ", itemExpl=" + itemExpl + ", memberVO=" + memberVO
+            + itemExpDate + ", itemStatus=" + itemStatus + ", itemExpl=" + itemExpl + ", \n memberVO=" + memberVO
             + ", picList=" + picList + ", catList=" + catList + "]";
    }
 

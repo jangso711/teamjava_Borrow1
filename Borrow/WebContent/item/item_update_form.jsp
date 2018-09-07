@@ -23,7 +23,6 @@ input[type=number]{
 }
 .formContent{
 	padding-top:20px;
-	padding-left:400px;
 	text-align:center;
 }
 .southContent{
@@ -40,6 +39,9 @@ tr{
 }
 ul{
 	list-style: none;
+}
+table{
+	margin:0 auto;
 }
 </style>
 <script>
@@ -86,7 +88,7 @@ ul{
 		$("#updateBtn").click(function(){
 			$("#catAlert").text("")
 			var flag = true;
-			var cats = $(".category:checkbox:checked");
+			var cats = $(".cats:checkbox:checked");
 			var pics = $("#pictureList li").length;
 			$(".required").each(function(){
 				if($(this).val().length==0){
@@ -111,11 +113,8 @@ ul{
 	});
 	
 </script>
-<div class="col-sm-12 bgheader">
-</div>
-<div class="col-sm-12 content">
-<h3>상품등록</h3>
-<div class="formContent">
+<div class="col-sm-12 formContent">
+<h3>상품 정보 수정</h3>
 <form id="updateForm"action="${pageContext.request.contextPath }/front"method="post">
 <input type="hidden"name="command"value="ItemUpdate">
 <c:set value="${requestScope.itemInfo}" var="i"></c:set>
@@ -142,7 +141,9 @@ ul{
 	<td>분류선택*</td>
 	<td >
 	<c:forEach items="${requestScope.catList }" var="cat" varStatus="info">	
-	<input class="category"type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
+	<label>
+	<input class="cats"type="checkbox" name="category" value="${cat.catNo }">${cat.catName}
+	</label>
 	<c:if test="${info.count%3==0}"><br></c:if>
 	</c:forEach>
 	<br><span id="catAlert"></span>
@@ -163,7 +164,6 @@ ul{
 	</tr>
 </table>
 </form>
-</div>
 <div class="southContent">
 <form id="uploadForm" method="post"enctype="multipart/form-data">
 	<input type="hidden"name="command"value="PictureUpload">

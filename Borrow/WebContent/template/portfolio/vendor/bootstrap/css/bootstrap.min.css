@@ -4379,15 +4379,15 @@ none
 	border-radius: 1rem
 }
 
-.nav {
+ .nav {
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
-	padding-left: 0;
+	/* padding-left: 0; */
 	margin-bottom: 0;
 	list-style: none
-}
+} 
 
 .nav-link {
 	display: block;

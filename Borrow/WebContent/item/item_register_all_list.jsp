@@ -68,20 +68,23 @@ h4 {
 	<ul class="pagination justify-content-center">
 
 		<c:set value="${requestScope.pagingBean }" var="pb"></c:set>
-		<li class="page-item"><a class="page-link" href="#"
+		
+		<c:if test="${pb.previousPageGroup }">
+					<li class="page-item"><a class="page-link" href="#"
 			aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
 				class="sr-only">Previous</span>
-		</a></li>
-
+			</a></li>						
+		</c:if>		
 		<c:forEach begin="${pb.startPageOfPageGroup}"
 			end="${pb.endPageOfPageGroup}" var="pageNo">
-			<li class="active"><a class="page-link" href="#">${pageNo }</a></li>
+			<li class="active"><a class="page-link" href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${memberId}&pageNo=${pageNo}">${pageNo }</a></li>
 		</c:forEach>
-
-		<li class="page-item"><a class="page-link" href="#"
-			aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
-				class="sr-only">Next</span>
-		</a></li>
+		<c:if test="${pb.previousPageGroup }">
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
+					class="sr-only">Next</span>
+			</a></li>
+		</c:if>
 
 	</ul>
 </div>

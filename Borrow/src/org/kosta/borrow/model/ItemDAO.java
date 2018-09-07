@@ -157,15 +157,21 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public int getTotalItemCount() throws SQLException {
+	public int getTotalItemCount(String exceptId) throws SQLException {
 		int totItemCnt = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select count(*) from item";
+			String sql="select count(*) from item where id!=?";
 			pstmt = con.prepareStatement(sql);
+			if(exceptId==null) {
+				pstmt.setString(1, "admin");
+			}else {
+				pstmt.setString(1, exceptId);
+			}
+			
 			rs = pstmt.executeQuery();
 			if(rs.next())
 				totItemCnt = rs.getInt(1);
@@ -296,9 +302,9 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select id, item_name, item_brand, item_model, item_price, to_char(item_regdate, 'yyyy-MM-dd') as item_regdate,");
-			sb.append(" to_char(item_expdate, 'yyyy-MM-dd') as item_expdate, item_expl from item");
-			sb.append(" where item_status=1 and item_no=?"); //180904 MIRI 불필요한 정렬 삭제
+			sb.append(" select i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,");
+			sb.append(" to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, a.grade from item i, item_add a ");
+			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
@@ -312,6 +318,9 @@ public class ItemDAO {
 					picList = getPictureList(itemno);
 					itemVO = new ItemVO(itemno, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), 
 							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
+					ItemAddVO itemAddVO=new ItemAddVO();
+					itemAddVO.setGrade(rs.getDouble(9));
+					itemVO.setItemAddVO(itemAddVO);
 				}
 			}
 		}finally {
@@ -337,10 +346,10 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id");
-			sb.append(" from (");
-			sb.append(" select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id");
-			sb.append(" from item) r");
+			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id, r.grade");
+			sb.append(" from (");			
+			sb.append(" select row_number() over(order by i.item_no desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, a.grade");
+			sb.append(" from item i , item_add a where i.item_no=a.item_no) r");		
 			sb.append(" where r.rnum between ? and ?");
 			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
@@ -350,8 +359,11 @@ public class ItemDAO {
 
 			while(rs.next()) {
 				memberVO = new MemberVO();
-				memberVO.setId(rs.getString(4));
+				memberVO.setId(rs.getString(5));
 				itemVO = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),  memberVO);
+				ItemAddVO itemAddVO= new ItemAddVO();
+				itemAddVO.setGrade(rs.getDouble(6));
+				itemVO.setItemAddVO(itemAddVO);
 				picList = getPictureList(rs.getString(1));
 				if(picList != null) 
 					itemVO.setPicList(picList);
@@ -485,15 +497,15 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name");
+			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name, r. grade" );
 			sb.append(" from (");
-			sb.append(" select row_number() over(order by i.item_no desc) as rnum,");
-			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name");
-			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" select row_number() over(order by i.item_no desc) as rnum, ");
+			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name, a. grade ");
+			sb.append(" from item i, item_category ic, category c, item_add a ");
+			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
 			sb.append(" ) r");
-			sb.append(" where rnum between ? and ?");
-			sb.append(" order by item_no desc");
+			sb.append(" where r.rnum between ? and ?");
+			sb.append(" order by r.item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			pstmt.setInt(2, pagingBean.getStartRowNumber());
@@ -504,6 +516,9 @@ public class ItemDAO {
 				memberVO = new MemberVO();
 				memberVO.setId(rs.getString(1));
 				itemVO = new ItemVO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), memberVO);
+				ItemAddVO itemAddVO= new ItemAddVO();
+				itemAddVO.setGrade(rs.getDouble(7));
+				itemVO.setItemAddVO(itemAddVO);
 				picList = getPictureList(rs.getString(2));
 				if(picList != null) 
 					itemVO.setPicList(picList);
@@ -519,10 +534,11 @@ public class ItemDAO {
 	 * 180906 MIRI 완료
 	 * 카테고리 검색시 토탈 카운트
 	 * @param catno
+	 * @param object 
 	 * @return
 	 * @throws SQLException
 	 */
-	public int getItemNoListCountByCategory(String catno) throws SQLException {
+	public int getItemNoListCountByCategory(String catno, String exceptId) throws SQLException {
 		StringBuilder sb = new StringBuilder();
 		int count = 0;
 		Connection con = null;
@@ -532,10 +548,16 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select count(*)");
 			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=? and i.id!=?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
+			if(exceptId==null) {
+				pstmt.setString(2, "admin");
+			}else {
+				pstmt.setString(2, exceptId);
+			}
 			rs = pstmt.executeQuery();
+			
 			
 			if(rs.next()) {
 				count = rs.getInt(1);

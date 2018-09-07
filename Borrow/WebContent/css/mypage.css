@@ -4,7 +4,7 @@ html {
 }
 body {
 	margin: 0;
-	padding: 10;
+	padding: 0;
 	height: 100%; /* needed for container min-height */
 }
 div#MyContainer {
@@ -54,22 +54,22 @@ a{
 	background-color: #e0e0e0;
 	text-align:center;
 	z-index: 2;
-	font-weight: bold;
+	
 }
 .maincontent{
 	padding-top:60px;
-	height:470px;
+	height:500px;
 }
 .content{
 	margin-top:12px;
 	margin-bottom:10px;
+	height:400px;
 	text-align:center;
-	
 }
 .footer{
 	
 	margin-top:16px;
-
+	width:100%;
 	height:110px;
 	background-color: #7dc4c6;
 		

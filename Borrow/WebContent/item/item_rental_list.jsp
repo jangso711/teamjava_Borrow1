@@ -3,15 +3,30 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
-
 <style type="text/css">
 .bgheader {
 	height: 50px;
 }
+th,td{
+	padding-left: 50px;
+	padding-right:50px;
+}
+tr{
+	border-top:1px solid #e0e0e0;
+	border-bottom:1px solid #e0e0e0;
+}
+table{
+	border-top:2px solid #e0e0e0;
+	border-bottom:2px solid #e0e0e0;
+	margin:0 auto;	/*테이블 중간 정렬*/
+}
+.listContent{
+	padding-top:10px;
+	padding-bottom:10px;
+	height:450px;
+	text-align:center;
+}
 </style>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".rentalCancel").click(function(){
@@ -49,64 +64,61 @@
 					}
 				}				
 			});			 			
-		});
-		
-	
-		
-		
-		
+		});		
 	});//ready
 	function reviewForm(rentalNo){
 		$("#reviewViewForm").find("#rentalNo").val(rentalNo);
 		$("#reviewViewForm").submit();
-	}
-
-
+}
 </script>
-
-
 <div class="col-sm-12 bgheader"></div>
-<div class="container" align="center">
-	<br><h3>내가 대여한 목록</h3><br>	
-	
-<!-- 	현재 날짜 변수 저장 -->
+<div class="col-sm-12 listContent">
+	<br><h3>나의 대여 목록</h3><br>	
+
+
+<!--현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>		
 	<c:choose>
 		<c:when test="${fn:length(requestScope.rentallist)==0}">
-			<span>대여하신 물품이 없습니다!! </span>
+			<h6 style="color:red;">대여하신 물품이 없습니다!!</h6>
 		</c:when>
 		<c:otherwise>
-			<table class="table col-sm-12">
-				<tr>
+			<table cellpadding="10">
+<!-- 				<tr>
 					<th>사진</th>
 					<th>거래번호</th>
 					<th>아이템명</th>
 					<th>등록한 사람(id)</th>
-					<!-- <th>지불금액</th> -->
+					<th>지불금액</th>
 					<th>대여날짜</th>
 					<th>반납날짜</th>		
 					<th>반납상태</th>			
-				</tr>
-				<c:forEach items="${requestScope.rentallist}" var="rentaldetail">
+				</tr> -->
+				<c:forEach items="${requestScope.rentallist}" var="rentaldetail" varStatus="info">
 					<fmt:parseDate value="${rentaldetail.rentalDate}" var="strPlanDate" pattern="yyyy-MM-dd"/>
 					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="false" var="strDate"></fmt:parseNumber>
 					<fmt:parseDate value="${rentaldetail.returnDate}" var="endPlanDate" pattern="yyyy-MM-dd"/>
 					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="false" var="endDate"></fmt:parseNumber>					
+					<tr class="topTr">
+					<td rowspan="4">${info.count }</td>
+					<td rowspan="4"><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rentaldetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${rentaldetail.itemVO.picList[0]}" width="150" height="150" ></a></td>						
+					<td>거래번호</td>
+					<th><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${rentaldetail.rentalNo} &check=a">${rentaldetail.rentalNo}</a></th>
+					</tr>
 					<tr>
-						<td><a href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${rentaldetail.itemVO.itemNo}"><img src="${pageContext.request.contextPath}/upload/${rentaldetail.itemVO.picList[0]}" width="150" height="150" ></a></td>						
-						<%-- 2018-09-04 대여상세 링크 추가 --%>
-						<td><a href="${pageContext.request.contextPath}/front?command=ItemRentDetail&rental_no=${rentaldetail.rentalNo} &check=a">${rentaldetail.rentalNo}</a></td>
-						
-						<td>${rentaldetail.itemVO.itemName}</td>
-						<td><a href="${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${rentaldetail.itemVO.memberVO.id}">${rentaldetail.itemVO.memberVO.id}</a></td>
-						<%-- <td><fmt:formatNumber>${rentaldetail.itemVO.itemPrice}</fmt:formatNumber>원 x ${endDate-strDate}일 = <fmt:formatNumber>${rentaldetail.itemVO.itemPrice*(endDate-strDate)}</fmt:formatNumber>원</td> --%>
-						<td >${rentaldetail.rentalDate}</td>
-						<td>${rentaldetail.returnDate}</td>
-						<td>												
-							<c:choose>
+					<td>상품명</td>
+					<th>${rentaldetail.itemVO.itemName}</th>
+					</tr>
+					<tr>
+					<td>대여기간</td>
+					<th>${rentaldetail.rentalDate}~${rentaldetail.returnDate}</th>
+					</tr>
+					<tr id="bottomTr">
+					<td>현재상태</td>
+					<th><c:choose>
 								<c:when test="${strDate-curDate>0}">
-									<input type="button" value="대여취소" class="rentalCancel btn btn_center btn_pk">
+									결제완료&nbsp;&nbsp;<input type="button" value="대여취소" class="rentalCancel btn btn_center btn_pk">
 									<input type="hidden" class="rNo" value="${rentaldetail.rentalNo}">									
 									<input type="hidden" class="point" value="${rentaldetail.totalPayment}">
 								</c:when>
@@ -133,13 +145,15 @@
 										</c:otherwise>
 									</c:choose>								
 								</c:otherwise>								
-							</c:choose>
-						</td>
+							</c:choose></th>
+					</tr>
+					<tr>
+					<td colspan=4><div style="margin:10px"></div></td> 
 					</tr>
 				</c:forEach>
-			</table>
-						
+			</table>						
 			<c:set var="pb" value="${requestScope.pagingBean}" />
+
 				<div class="col-sm-12 center" align="center">					
 						<ul class="pagination justify-content-center">
 						<c:if test="${pb.previousPageGroup }">
@@ -164,7 +178,6 @@
 						</c:if>
 					</ul>				
 			</div>
-			
 		</c:otherwise>
 	</c:choose>
 </div>
