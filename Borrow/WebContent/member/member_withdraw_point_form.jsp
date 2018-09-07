@@ -36,7 +36,7 @@ h3 {
 }
 
 
-input[type=text] {
+.input_text[type=text] {
 	size: 50px;
 	height: 40px;
 	width: 200px;
@@ -44,14 +44,14 @@ input[type=text] {
 	padding: 5px;
 }
 
-input[type=password] {
+.input_pwd[type=password] {
 	size: 50px;
 	height: 40px;
 	width: 200px;
 	border-radius: 5px;
 	padding: 5px;
 }
-input[type=number] {
+.input_num[type=number] {
 	size: 50px;
 	height: 40px;
 	width: 200px;
@@ -79,19 +79,19 @@ input[type=number] {
 <input type="hidden" name="command" value="MemberWithdrawPoint">
 <table>
 <tr>
-<td class="tt">은행</td><td colspan="2"><input type="text" name="countId" required="required"></td>
+<td class="tt">은행</td><td colspan="2"><input type="text" class="input_text" name="countId" required="required"></td>
 </tr>
 <tr>
-<td class="tt">계좌번호</td><td colspan="2"><input type="number" name="countNo" required="required"></td>
+<td class="tt">계좌번호</td><td colspan="2"><input type="number" class="input_num" name="countNo" required="required"></td>
 </tr>
 <tr>
-<td class="tt">계좌주명</td><td colspan="2"><input type="text" name="name" required="required"></td>
+<td class="tt">계좌주명</td><td colspan="2"><input type="text" class="input_text" name="name" required="required"></td>
 </tr>
 <tr>
-<td class="tt">계좌비밀번호</td><td colspan="2"><input type="password" name="countPassword" required="required"></td>
+<td class="tt">계좌비밀번호</td><td colspan="2"><input type="password" class="input_pwd" name="countPassword" required="required"></td>
 </tr>
 <tr>
-<td class="tt">환급 받을 금액</td><td colspan="2"><input type="number" pattern="[0-9]+([,\.][0-9]+)?" name="point" id="point" required="required"></td>
+<td class="tt">환급 받을 금액</td><td colspan="2"><input type="number" class="input_num" pattern="[0-9]+([,\.][0-9]+)?" name="point" id="point" required="required"></td>
 </tr>
 <tr>
 <td></td><td><button type="submit" class="btn btn_center btn_pk" id="submitBtn">환급받기</button></td>
