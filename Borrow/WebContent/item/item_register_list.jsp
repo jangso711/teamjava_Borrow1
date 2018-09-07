@@ -20,9 +20,8 @@ table{
 	border-bottom:2px solid #e0e0e0;
 	margin : 0 auto;
 }
-.topTr{
-	border-top: 1px solid #000;
-}
+
+
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
@@ -107,7 +106,7 @@ table{
 						</tr>
 					
 			<tr> 
-				<td><div style="margin:10px"></div></td> 
+				<td colspan=4><div style="margin:10px"></div></td> 
 			</tr> 
 					
 				</c:forEach>
