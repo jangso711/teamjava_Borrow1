@@ -56,6 +56,7 @@ h4 {
 									<p class="card-text">
 									<pre class="target">${allItemList.itemExpl }</pre>
 									평점 : ${allItemList.itemAddVO.grade}<br>
+									등록자 : ${ allItemList.memberVO.id}<br>
 									<fmt:formatNumber>${allItemList.itemPrice }</fmt:formatNumber>
 									원
 									</p>
