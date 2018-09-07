@@ -24,7 +24,6 @@ input[type=number]{
 .formContent{
 	padding-top:20px;
 	padding-bottom:20px;
-	padding-left:400px;
 	text-align:center;
 
 }
@@ -35,6 +34,9 @@ input[type=number]{
 }
 .bgheader {
 	height: 50px;
+}
+table{
+	margin:0 auto;
 }
 tr{
 	border-top: 1px;
@@ -101,9 +103,9 @@ ul{
 	});	
 </script>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12 content">
+<div class="col-sm-12 formContent">
 <h3>상품등록</h3>
-<div class="formContent">
+
 <form action="${pageContext.request.contextPath }/front"method="post"id="registerForm">
 <input type="hidden"name="command"value="ItemRegister">
 <table cellpadding="3">
@@ -143,8 +145,7 @@ ul{
 	</tr>
 </table>
 </form>
-</div>
-<div class="southContent">
+<div class="col-sm-12 southContent">
 <form id="uploadForm" method="post"enctype="multipart/form-data">
 	<input type="hidden"name="command"value="PictureUpload">
 	<input type="file"name="img"id="imgBtn">

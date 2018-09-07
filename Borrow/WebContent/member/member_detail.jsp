@@ -7,8 +7,6 @@
 .mypagecontent {
 	margin-top: 40px;
 	margin-bottom: 80px;
-	margin-left: 465px;
-	margin-right: 465px;
 }
 
 h3 {
@@ -57,6 +55,7 @@ table {
 	border-top: 2px solid #e0e0e0;
 	border-bottom: 2px solid #e0e0e0;
 	font-size: 18px;
+	margin:0 auto;
 }
 
 tr {

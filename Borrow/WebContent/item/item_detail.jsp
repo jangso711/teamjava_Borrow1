@@ -58,7 +58,7 @@ input[data-readonly] {
 	}
 	$(document).ready(function() {
 		var iframe_height = parseInt($('html').height());
-		window.parent.postMessage(iframe_height);
+		/* window.parent.postMessage(iframe_height); */
 	});
 </script>
 
@@ -321,13 +321,13 @@ input[data-readonly] {
 							<ul class="nav nav-justified" id="nav-tabs" role="tablist" style="align-content: center;align-items: center;">
 								<li role="presentation" >
 								<a href="#daksh" aria-controls="dustin" role="tab" data-toggle="tab"> 
-								<img class="img-rounded" align="middle" src="${pageContext.request.contextPath }/1.png" />
+								<img class="img-rounded" align="middle" src="${pageContext.request.contextPath }/DetailNav.png" />
 										<span class="quote"><i class="fa fa-quote-left"></i></span>
 								</a></li>
 								<li role="presentation" ><a href="#dustin"
 									aria-controls="daksh" role="tab" data-toggle="tab"> <img
 										class="img-rounded" align="middle"
-										src="${pageContext.request.contextPath }/2.png" />
+										src="${pageContext.request.contextPath }/ReviewNav.png" />
 										<span class="quote"><i class="fa fa-quote-left"></i></span>
 								</a></li>
 							</ul>
@@ -347,7 +347,6 @@ input[data-readonly] {
 											<img src="${pageContext.request.contextPath }/upload/${picList}">
 										<br><br><br><br><br>
 										</c:forEach>
-
 
 									</p>
 										<hr>
