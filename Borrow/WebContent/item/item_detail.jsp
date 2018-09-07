@@ -359,14 +359,16 @@ input[data-readonly] {
 									<c:set value="${requestScope.itemDetail }" var="item"></c:set>
 										<br>
 										<br>
-										<br> ${item.itemExpl } <br>
+										<br> <pre>${item.itemExpl }</pre> <br>
 										<br>
 										<br>
 										<br>
 										<br>
 										<c:forEach items="${itemDetail.picList }" var="picList">
+											<!-- 180907 MIRI 사진 사이즈 가로 700에 맞춰 자동으로 조절 -->
 											<img
-												src="${pageContext.request.contextPath }/upload/${picList}">
+												src="${pageContext.request.contextPath }/upload/${picList}"
+												style="width: 700px; height:auto;">
 											<br>
 											<br>	
 											<br>
