@@ -499,7 +499,7 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<ItemVO> getItemNoListByCategory(String catno, PagingBean pagingBean) throws SQLException {
+	public ArrayList<ItemVO> getItemNoListByCategory(String catno, PagingBean pagingBean, String exceptId) throws SQLException {
 		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = new ItemVO();
@@ -513,15 +513,21 @@ public class ItemDAO {
 			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name, round(r.grade,2)" );
 			sb.append(" from (");
 			sb.append(" select row_number() over(order by i.item_regdate desc) as rnum, ");
-			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name, round(a.grade,2) as grade ");
+			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name, round(a. grade,2) as grade ");
 			sb.append(" from item i, item_category ic, category c, item_add a ");
-			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
+			sb.append(" where i.item_expdate>sysdate and i.item_no=a.item_no and i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=? and i.id!=?");
 			sb.append(" ) r");
 			sb.append(" where r.rnum between ? and ?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
-			pstmt.setInt(2, pagingBean.getStartRowNumber());
-			pstmt.setInt(3, pagingBean.getEndRowNumber());
+			if(exceptId==null) {
+				pstmt.setString(2, "admin");
+			}else{
+				pstmt.setString(2, exceptId);
+			}
+			pstmt.setInt(3, pagingBean.getStartRowNumber());
+			pstmt.setInt(4, pagingBean.getEndRowNumber());
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -560,7 +566,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select count(*)");
 			sb.append(" from item i, item_category ic, category c");
-			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=? and i.id!=?");
+			sb.append(" where i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and i.item_expdate>sysdate and ic.cat_no=? and i.id!=?");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			if(exceptId==null) {
