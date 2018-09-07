@@ -306,7 +306,7 @@ import javax.sql.DataSource;
 				con=getConnection(); 
 				StringBuilder sql=new StringBuilder();
 				sql.append("SELECT r.review_no,r.review_title,to_char(review_regdate,'YYYY.MM.DD')\r\n" + 
-						",r.review_hit,m.name,i.item_no,i.item_name,r.review_grade\r\n" + 
+						",r.review_hit,m.name,i.item_no,i.item_name,r.review_grade,r.review_content\r\n" + 
 						"FROM(select row_number() over(ORDER BY review_no DESC)\r\n" + 
 						"as rnum,review_no,review_title,to_char(review_regdate,'YYYY.MM.DD')\r\n" + 
 						",review_hit FROM review) rn, review r, member m, item i\r\n" + 
@@ -324,6 +324,7 @@ import javax.sql.DataSource;
 					rvo.setReviewRegdate(rs.getString(3));
 					rvo.setReviewHit(rs.getInt(4));
 					rvo.setReviewGrade(rs.getInt(8));
+					rvo.setReviewContent(rs.getString(9));	//180907 MIRI 내용 추가
 					MemberVO mvo=new MemberVO();
 					mvo.setName(rs.getString(5));
 					rvo.setMemberVO(mvo);

@@ -351,15 +351,8 @@ input[data-readonly] {
 									<p class="lead" align="center">
 
 										<c:set value="${requestScope.itemDetail }" var="item"></c:set>
-										<br>
-										<br>
-										<br>
-										<br>
-										<br> ${item.itemExpl } <br>
-										<br>
-										<br>
-										<br>
-										<br>
+										<br> <br> <br> <br> <br>
+										${item.itemExpl } <br> <br> <br> <br> <br>
 										<c:forEach items="${itemDetail.picList }" var="picList">
 											<img
 												src="${pageContext.request.contextPath }/upload/${picList}">
@@ -369,14 +362,13 @@ input[data-readonly] {
 											<br>
 											<br>
 										</c:forEach>
-
 									</p>
 									<hr>
 									<p>
-										<strong class="text-uppercase">Daksh Bhagya</strong>
+										<strong class="text-uppercase">Borrow:바로빌리다</strong>
 									</p>
 									<p>
-										<em class="text-capitalize"> UX designer</em> at <a href="#">Google</a>
+										<em class="text-capitalize"> UX designer</em> at <a href="#">MIRI</a>
 									</p>
 								</div>
 							</div>
@@ -386,7 +378,7 @@ input[data-readonly] {
 									<div class="tab-inner">
 										<p class="lead">
 
-											<table class="table table-bordered  table-hover boardlist">
+											<!-- <table class="table table-bordered  table-hover boardlist">
 											<thead>
 												<tr class="success" style="width: 10%">
 													<th style="width: 2%">번호</th>
@@ -398,8 +390,7 @@ input[data-readonly] {
 													<th style="width: 3%">조회</th>
 												</tr>
 											</thead>
-											<tbody>
-											<c:forEach var="rvo" items="${requestScope.rvo.list}">
+											<tbody> -->
 												<%-- <tr style="width: 10%">
 														<td style="width: 2%">${rvo.reviewNo}</td>
 														<td style="width: 8%">${rvo.rentalDetailVO.itemVO.itemName}</td>
@@ -411,8 +402,11 @@ input[data-readonly] {
 														<td style="width: 3%">${rvo.reviewGrade}</td>
 														<td style="width: 3%">${rvo.reviewHit}</td>
 													</tr> --%>
+											<!-- </tbody>
+										</table> -->
 
-												<%-- <div class="reviews">
+											<c:forEach var="rvo" items="${requestScope.rvo.list}">
+												<div class="reviews">
 													<div class="row blockquote review-item">
 														<div class="col-md-3 text-center">
 															<img class="rounded-circle reviewer"
@@ -431,18 +425,16 @@ input[data-readonly] {
 															<small class="review-date">${rvo.reviewRegdate}</small>
 														</div>
 													</div>
-												</div> --%>
+												</div>
 											</c:forEach>
-											</tbody>
-										</table>
 										</p>
 										<hr>
 										<p>
-											<strong class="text-uppercase">Dustin Lamont</strong>
+											<strong class="text-uppercase">Borrow:바로빌리다</strong>
 										</p>
 										<p>
 											<em class="text-capitalize"> Senior web developer</em> at <a
-												href="#">Apple</a>
+												href="#">KOSTA</a>
 										</p>
 									</div>
 								</div>

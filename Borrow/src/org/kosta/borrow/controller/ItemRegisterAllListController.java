@@ -16,17 +16,19 @@ public class ItemRegisterAllListController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id=request.getParameter("memberId");//null일 경우는 자신이 등록한 물품
+		boolean flag = false;
 		if(id==null) {
 			HttpSession session = request.getSession(false);
 			MemberVO user= null;
 			if(session!=null && (user=(MemberVO) session.getAttribute("user"))!=null ) {
 				id = user.getId();
+				flag=true;
 			}else {
 				//자신의 등록물품 검색 시 세션 만료된 경우
 				return "redirect:front?command=LoginForm";
 			}
 		}
-		int totalPostCount = ItemDAO.getInstance().getTotalItemCountById(id);
+		int totalPostCount = ItemDAO.getInstance().getTotalItemCountById(id,flag);
 		String nowPage = request.getParameter("pageNo");
 		PagingBean pagingBean = null;
 		if(nowPage == null)
@@ -34,7 +36,7 @@ public class ItemRegisterAllListController implements Controller {
 		else
 			pagingBean = new PagingBean(Integer.parseInt(nowPage), 3,totalPostCount);		
 		
-		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemListById(id, pagingBean);
+		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemListById(id, pagingBean,flag);
 		request.setAttribute("allItemList", allItemList);
 		request.setAttribute("pagingBean", pagingBean);
 		request.setAttribute("memberId", id);
