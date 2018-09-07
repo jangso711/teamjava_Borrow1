@@ -30,7 +30,9 @@ h3{
  	color:#A9D0F5;
 
 }
-
+.success{
+	font-weight:bold;
+}
 .bgheader {
 	height: 80px;
 }
@@ -39,6 +41,9 @@ h3{
 }
 table{
 	text-align: center;
+}
+pre{
+	text-align:left;
 }
 </style>
 
@@ -65,12 +70,12 @@ function updateReview(){
 
 		<tr class="success" style="width:10%">
 			<td style="width:5%">글번호 </td>
-			<td style="width:8%">상품정보</td>
-			<td class="title" style="width:28%">제목 </td>
-			<td style="width:7%">작성자</td>
-			<td style="width:10%">작성일</td>
-			<td style="width:5%">평점</td>
-			<td style="width:5%">조회</td>
+			<td scope="row" style="width:8%">상품정보</td>
+			<td scope="row" class="title" style="width:28%">제목 </td>
+			<td scope="row" style="width:7%">작성자</td>
+			<td scope="row" style="width:10%">작성일</td>
+			<td scope="row" style="width:5%">평점</td>
+			<td scope="row" style="width:5%">조회</td>
 		</tr>
 		<tr>
 			<td>${requestScope.rvo.reviewNo}</td>
@@ -85,7 +90,7 @@ function updateReview(){
 
 			<tr style="height:300px" style="width:100px">
 				<td colspan="1">내용</td>
-				<td colspan="6" style="width:10%" style="text-align: left">
+				<td colspan="6" style="width:10%" style="text-align:left">
 				<pre>${requestScope.rvo.reviewContent}</pre>
 				</td>
 			</tr>
