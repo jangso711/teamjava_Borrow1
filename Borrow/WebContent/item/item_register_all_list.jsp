@@ -22,10 +22,14 @@ h4 {
 	line-height: 1.2em;
 	height: 3.6em;
 }
+.listContent{
+	min-height:450px;
+	height:auto;
+}
 </style>
 <div class="col-sm-12 bgheader"></div>
 <!-- Page Content -->
-<div class="container">
+<div class="col-sm-12 listContent">
 	<h3>${memberId}님의 상품 목록</h3>
 	<br>
 	<div class="row">
