@@ -109,6 +109,14 @@ input[data-readonly] {
 				<c:set value="${requestScope.itemDetail }" var="item"></c:set>
 				<div class="product-information">
 					<!--/product-information-->
+					<!-- 180907 MIRI 카테고리 정보 추가 -->
+					<div align="right">
+						<p>
+						[
+							<c:forEach items="${item.catList }" var="cat">&nbsp;${cat.catName }&nbsp;</c:forEach>
+						]
+						</p>
+					</div>
 					<h2>
 						<b>${item.itemName }</b>
 					</h2>
@@ -280,9 +288,6 @@ input[data-readonly] {
 								<span style="color:orange;">삭제 대기중 (삭제 예정 : ${requestScope.itemDetail.itemExpDate })</span>
 								</c:otherwise>
 								</c:choose>
-																
-								
-								
 								<br>
 								<br>
 								<br>
@@ -388,7 +393,7 @@ input[data-readonly] {
 														<img class="rounded-circle reviewer"
 															src="http://standaloneinstaller.com/upload/avatar.png">
 														<div class="caption">
-															<small>by <a href="#joe">${rvo.memberVO.name}</a></small>
+															<small>by <a href="#">${rvo.memberVO.id}</a></small>
 														</div>
 													</div>
 													<div class="col-md-9">
