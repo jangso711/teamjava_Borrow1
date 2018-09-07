@@ -30,32 +30,26 @@ table{
 }
 
 </style>
-<div class="col-sm-12 bgheader"></div>
 
+<div class="col-sm-12 bgheader" align="center"><h3>후기 검색 게시판</h3></div>
 <div class="col-sm-2"></div>
-<div class="col-sm-8">
-<h3>후기 검색 게시판</h3>
-<form action="front" style="padding-left: 460px;">
+<div class="col-sm-8" align="center">
+</div>
+<div class="col-sm-2"></div>
+<div class="col-sm-4"></div>
+<div class="col-sm-8" align="center">
+<form action="front">
 		<input type="hidden" name="command" value="ReviewFindItemName">
 		<input type="text" name="itemName" required="required" placeholder="상품 이름으로 검색" style="height:30px; width: 300px;">
 		<input type="submit" value="검색" class="btn btn_pk">
-	</form><br>
 
-
-
-
-	</div>
-
+		</form>
+		</div>
 <div class="col-sm-2" align="center"></div>
-
-<div class="col-sm-2" align="center"></div>
-
 <div class="col-sm-8" align="center">
-
-
 <table class="table table-bordered table-hover boardlist">
 	<thead>
-		<tr class="success" style="width:10%">
+		<tr class="success table-danger" style="width:10%">
 			<th style="width:2%">번호</th>
 			<th style="width:8%">상품정보</th>
 			<th class="title" style="width:28%">제목</th>
@@ -103,5 +97,5 @@ table{
 </c:if>
 </ul>
 </div>
-<div class="col-sm-2" align="center"></div>
+<div class="col-sm-2"></div>
 <div class="col-sm-12 bgfooter"></div>
