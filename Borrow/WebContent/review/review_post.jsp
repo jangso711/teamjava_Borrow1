@@ -86,7 +86,7 @@ function updateReview(){
 			<tr style="height:300px" style="width:100px">
 				<td colspan="1">내용</td>
 				<td colspan="6" style="width:10%" style="text-align: left">
-				${requestScope.rvo.reviewContent}
+				<pre>${requestScope.rvo.reviewContent}</pre>
 				</td>
 			</tr>
 	
