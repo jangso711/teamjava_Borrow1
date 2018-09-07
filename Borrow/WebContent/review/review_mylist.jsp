@@ -49,7 +49,7 @@ h3{
 				<td style="width:2%">${rvo.reviewNo}</td>
 				<td style="width:8%">${rvo.rentalDetailVO.itemVO.itemName}</td>
 				<td style="width:28%">
-				<a href="${pageContext.request.contextPath}/front?command=ReviewPost&reviewNo=${rvo.reviewNo}">
+				<a href="${pageContext.request.contextPath}/front?command=ReviewPostByReviewNo&reviewNo=${rvo.reviewNo}">
 					${rvo.reviewTitle}</a></td>
 				<td style="width:5%">${rvo.memberVO.name}</td>
 				<td style="width:7%">${rvo.reviewRegdate}</td>

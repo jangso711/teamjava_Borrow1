@@ -23,7 +23,8 @@ table{
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
-	height:450px;
+	min-height: 500px;
+	height: auto;
 	text-align:center;
 }
 </style>
