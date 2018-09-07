@@ -411,6 +411,38 @@ input[data-readonly] {
 		<div class="col-sm-1"></div>
 	</div>
 </div>
+<div>
+</div>
+<div class="col-sm-1" align="center"></div>
+<div class="col-sm-10" align="center">
+<table class="table table-bordered  table-hover boardlist">
+	<thead>
+		<tr class="success" style="width:10%">
+			<th style="width:2%">번호</th>
+			<th style="width:8%">상품정보</th>
+			<th class="title" style="width:28%">제목</th>
+			<th style="width:5%">작성자</th>
+			<th style="width:7%">작성일</th>
+			<th style="width:3%">평점</th>
+			<th style="width:3%">조회</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach var="rvo" items="${requestScope.rvo.list}">
+			<tr style="width:10%">
+				<td style="width:2%">${rvo.reviewNo}</td>
+				<td style="width:8%">${rvo.rentalDetailVO.itemVO.itemName}</td>
+				<td style="width:28%">
+				<a href="${pageContext.request.contextPath}/front?command=ReviewPostByReviewNo&reviewNo=${rvo.reviewNo}">
+					${rvo.reviewTitle}</a></td>
+				<td style="width:5%">${rvo.memberVO.name}</td>
+				<td style="width:7%">${rvo.reviewRegdate}</td>
+				<td style="width:3%">${rvo.reviewGrade}</td>
+				<td style="width:3%">${rvo.reviewHit}</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
 <div class="col-sm-12" align="center"></div>
 <ul class="pagination justify-content-center">
 	<c:if test="${requestScope.rvo.pagingBean.previousPageGroup}">
@@ -434,7 +466,8 @@ input[data-readonly] {
 			href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${requestScope.itemDetail.itemNo}&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>
 	</c:if>
 </ul>
-<div class="col-sm-2" align="center"></div>
+</div>
+<div class="col-sm-1" align="center"></div>
 <form id="deleteForm" action="${pageContext.request.contextPath}/front"
 	method="post">
 	<input type="hidden" name="command" value="ItemDelete"> <input
