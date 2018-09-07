@@ -36,8 +36,8 @@ table{
 <div class="col-sm-8" align="center">
 </div>
 <div class="col-sm-2"></div>
-<div class="col-sm-3"></div>
-<div class="col-sm-9" align="center">
+<div class="col-sm-4"></div>
+<div class="col-sm-8" align="center">
 <form action="front">
 		<input type="hidden" name="command" value="ReviewFindItemName">
 		<input type="text" name="itemName" required="required" placeholder="상품 이름으로 검색" style="height:30px; width: 300px;">
