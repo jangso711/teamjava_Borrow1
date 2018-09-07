@@ -85,6 +85,16 @@ body {
     background-position: 100% center;
 }
 
+.search__input_header:hover,
+        .search__input_header:focus {
+    padding: 12px 0;
+    outline: 0;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #575756;
+    border-radius: 0;
+    background-position: 100% center;
+}
+
 /* .credits__container {
     margin-top: 24px;
 } */

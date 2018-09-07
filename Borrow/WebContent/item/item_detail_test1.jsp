@@ -15,7 +15,15 @@
 <link
 	href="${pageContext.request.contextPath }/template/fancytab/css/fancytab.css"
 	rel="stylesheet">
-
+<link
+	href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/template/review/css/review.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/template/review/js/review.js"
+	rel="stylesheet">
 <style>
 .bgheader {
 	height: 50px;
@@ -125,8 +133,8 @@ input[data-readonly] {
 					<p>
 						<b>평점 :</b> ${item.itemAddVO.grade}
 					</p>
-					
-				<script type="text/javascript">
+
+					<script type="text/javascript">
 				/* 180831 MIRI 게시글 수정 함수 */
 				function updateItem(upitem_no) {
 					var up = confirm("게시글을 수정하시겠습니까?");
@@ -316,54 +324,69 @@ input[data-readonly] {
 		<div class="col-sm-10" align="center">
 			<div class="product-information" align="center">
 				<div class="container text-center" align="center">
-						<div role="tabpanel" align="center">
-							<!-- Nav tabs -->
-							<ul class="nav nav-justified" id="nav-tabs" role="tablist" style="align-content: center;align-items: center;">
-								<li role="presentation" >
-								<a href="#daksh" aria-controls="dustin" role="tab" data-toggle="tab"> 
-								<img class="img-rounded" align="middle" src="${pageContext.request.contextPath }/1.png" />
-										<span class="quote"><i class="fa fa-quote-left"></i></span>
-								</a></li>
-								<li role="presentation" ><a href="#dustin"
-									aria-controls="daksh" role="tab" data-toggle="tab"> <img
-										class="img-rounded" align="middle"
-										src="${pageContext.request.contextPath }/2.png" />
-										<span class="quote"><i class="fa fa-quote-left"></i></span>
-								</a></li>
-							</ul>
+					<div role="tabpanel" align="center">
+						<!-- Nav tabs -->
+						<ul class="nav nav-justified" id="nav-tabs" role="tablist"
+							style="align-content: center; align-items: center;">
+							<li role="presentation"><a href="#daksh"
+								aria-controls="dustin" role="tab" data-toggle="tab"> <img
+									class="img-rounded" align="middle"
+									src="${pageContext.request.contextPath }/DetailNav.png" /> <span
+									class="quote"><i class="fa fa-quote-left"></i></span>
+							</a></li>
+							<li role="presentation"><a href="#dustin"
+								aria-controls="daksh" role="tab" data-toggle="tab"> <img
+									class="img-rounded" align="middle"
+									src="${pageContext.request.contextPath }/ReviewNav.png" /> <span
+									class="quote"><i class="fa fa-quote-left"></i></span>
+							</a></li>
+						</ul>
 
-							<!-- Tab panes -->
-							<div class="tab-content" id="tabs-collapse">
+						<!-- Tab panes -->
+						<div class="tab-content" id="tabs-collapse">
 
-								<div role="tabpanel" class="tab-pane fade" id="daksh" align="center">
-									<div class="tab-inner" align="center">
-										<p class="lead" align="center">
-	
+							<div role="tabpanel" class="tab-pane fade" id="daksh"
+								align="center">
+								<div class="tab-inner" align="center">
+									<p class="lead" align="center">
+
 										<c:set value="${requestScope.itemDetail }" var="item"></c:set>
-										<br><br><br><br><br>
-										${item.itemExpl }
-										<br><br><br><br><br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br> ${item.itemExpl } <br>
+										<br>
+										<br>
+										<br>
+										<br>
 										<c:forEach items="${itemDetail.picList }" var="picList">
-											<img src="${pageContext.request.contextPath }/upload/${picList}">
-										<br><br><br><br><br>
+											<img
+												src="${pageContext.request.contextPath }/upload/${picList}">
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
 										</c:forEach>
 
-
 									</p>
-										<hr>
-										<p>
-											<strong class="text-uppercase">Daksh Bhagya</strong>
-										</p>
-										<p>
-											<em class="text-capitalize"> UX designer</em> at <a href="#">Google</a>
-										</p>
-									</div>
+									<hr>
+									<p>
+										<strong class="text-uppercase">Daksh Bhagya</strong>
+									</p>
+									<p>
+										<em class="text-capitalize"> UX designer</em> at <a href="#">Google</a>
+									</p>
 								</div>
-							
+							</div>
+							<div>
+
 								<div role="tabpanel" class="tab-pane fade in active" id="dustin">
 									<div class="tab-inner">
 										<p class="lead">
-										<table class="table table-bordered  table-hover boardlist">
+
+											<table class="table table-bordered  table-hover boardlist">
 											<thead>
 												<tr class="success" style="width: 10%">
 													<th style="width: 2%">번호</th>
@@ -376,8 +399,8 @@ input[data-readonly] {
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="rvo" items="${requestScope.rvo.list}">
-													<tr style="width: 10%">
+											<c:forEach var="rvo" items="${requestScope.rvo.list}">
+												<%-- <tr style="width: 10%">
 														<td style="width: 2%">${rvo.reviewNo}</td>
 														<td style="width: 8%">${rvo.rentalDetailVO.itemVO.itemName}</td>
 														<td style="width: 28%"><a
@@ -387,11 +410,31 @@ input[data-readonly] {
 														<td style="width: 7%">${rvo.reviewRegdate}</td>
 														<td style="width: 3%">${rvo.reviewGrade}</td>
 														<td style="width: 3%">${rvo.reviewHit}</td>
-													</tr>
-												</c:forEach>
+													</tr> --%>
+
+												<%-- <div class="reviews">
+													<div class="row blockquote review-item">
+														<div class="col-md-3 text-center">
+															<img class="rounded-circle reviewer"
+																src="http://standaloneinstaller.com/upload/avatar.png">
+															<div class="caption">
+																<small>by <a href="#joe">${rvo.memberVO.name}</a></small>
+															</div>
+
+														</div>
+														<div class="col-md-9">
+															<h4>${rvo.reviewTitle }</h4>
+															<div class="ratebox text-center" data-id="0"
+																data-rating="5"></div>
+															<p class="review-text">${rvo.reviewContent }</p>
+
+															<small class="review-date">${rvo.reviewRegdate}</small>
+														</div>
+													</div>
+												</div> --%>
+											</c:forEach>
 											</tbody>
 										</table>
-
 										</p>
 										<hr>
 										<p>
@@ -406,39 +449,39 @@ input[data-readonly] {
 
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
+			<div class="col-sm-1"></div>
 		</div>
-		<div class="col-sm-1"></div>
 	</div>
-</div>
-<div class="col-sm-12" align="center"></div>
-<ul class="pagination justify-content-center">
-	<c:if test="${requestScope.rvo.pagingBean.previousPageGroup}">
-		<li class="page-item"><a class="page-link"
-			href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${requestScope.itemDetail.itemNo}&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li>
-	</c:if>
-	<c:forEach begin="${requestScope.rvo.pagingBean.startPageOfPageGroup}"
-		end="${requestScope.rvo.pagingBean.endPageOfPageGroup}" var="pagenum">
-		<c:choose>
-			<c:when test="${requestScope.rvo.pagingBean.nowPage!=pagenum}">
-				<li class="page-item"><a class="page-link"
-					href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${requestScope.itemDetail.itemNo}&pageNo=${pagenum}">${pagenum}</a></li>
-			</c:when>
-			<c:otherwise>
-				<li class="page-item active"><a class="page-link" href="#">${pagenum}</a></li>
-			</c:otherwise>
-		</c:choose>
-	</c:forEach>
-	<c:if test="${requestScope.rvo.pagingBean.nextPageGroup}">
-		<li class="page-item"><a class="page-link"
-			href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${requestScope.itemDetail.itemNo}&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>
-	</c:if>
-</ul>
-<div class="col-sm-2" align="center"></div>
-<form id="deleteForm" action="${pageContext.request.contextPath}/front"
-	method="post">
-	<input type="hidden" name="command" value="ItemDelete"> <input
-		type="hidden" name="itemNo" value="${itemNo}"> <input
-		type="hidden" name="flag" id="flag">
-</form>
+	<div class="col-sm-12" align="center"></div>
+	<ul class="pagination justify-content-center">
+		<c:if test="${requestScope.rvo.pagingBean.previousPageGroup}">
+			<li class="page-item"><a class="page-link"
+				href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${requestScope.itemDetail.itemNo}&pageNo=${requestScope.rvo.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li>
+		</c:if>
+		<c:forEach begin="${requestScope.rvo.pagingBean.startPageOfPageGroup}"
+			end="${requestScope.rvo.pagingBean.endPageOfPageGroup}" var="pagenum">
+			<c:choose>
+				<c:when test="${requestScope.rvo.pagingBean.nowPage!=pagenum}">
+					<li class="page-item"><a class="page-link"
+						href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${requestScope.itemDetail.itemNo}&pageNo=${pagenum}">${pagenum}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item active"><a class="page-link" href="#">${pagenum}</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${requestScope.rvo.pagingBean.nextPageGroup}">
+			<li class="page-item"><a class="page-link"
+				href="${pageContext.request.contextPath}/front?command=ItemDetail&itemNo=${requestScope.itemDetail.itemNo}&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>
+		</c:if>
+	</ul>
+	<div class="col-sm-2" align="center"></div>
+	<form id="deleteForm" action="${pageContext.request.contextPath}/front"
+		method="post">
+		<input type="hidden" name="command" value="ItemDelete"> <input
+			type="hidden" name="itemNo" value="${itemNo}"> <input
+			type="hidden" name="flag" id="flag">
+	</form>
