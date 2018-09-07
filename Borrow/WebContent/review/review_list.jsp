@@ -44,10 +44,12 @@ table{
 
 
 	</div>
+<!-- 
 <div class="col-sm-2" align="center"></div>
-
 <div class="col-sm-1" align="center"></div>
-<div class="col-sm-9" align="center">
+ -->	
+
+<div class="col-sm-8" align="center">
 
 
 <table class="table table-bordered table-hover boardlist">
