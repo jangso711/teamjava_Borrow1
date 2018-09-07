@@ -28,12 +28,6 @@ h4 {
 <div class="container">
 	<h3>${memberId}님의 상품 목록</h3>
 	<br>
-	<form action="front">
-		<input type="hidden" name="command" value="ItemRegisterAllList">
-		id로 상품 검색<input type="text" name="memberId" required="required">
-		<input type="submit" value="검색">
-	</form>
-	<br>
 	<div class="row">
 		<c:choose>
 			<c:when test="${empty requestScope.allItemList }">
