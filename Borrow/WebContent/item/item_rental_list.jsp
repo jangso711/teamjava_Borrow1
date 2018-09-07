@@ -163,7 +163,7 @@ table{
 								</c:otherwise>								
 							</c:choose></th>
 					</tr>
-					
+					<td><div style="margin:10px"></div></td> 
 				</c:forEach>
 			</table>
 						
