@@ -318,5 +318,5 @@ order by item_no desc
 select row_number() over(order by i.item_no desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, a.grade 
 from item i , item_add a where i.item_no=a.item_no;
 
-
+update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=10022;
 
