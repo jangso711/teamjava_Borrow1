@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- colspan 수정하지 마세요 -->
 <style>
 .btn_pk {
 	background-color: #f6cac9;
-	height: 45px;
+	height: 30px;
 	margin: 10px;
 	
 }
 h3{
 	
-	padding-top: 40px;
-	padding-bottom:40px;
+	padding-top: 20px;
+	padding-bottom:20px;
 	font-weight: bold;
 	text-align:center;
 	font-weight:bold;
-
-
 }
+
 
 .bgheader {
 	height: 80px;
@@ -31,25 +31,28 @@ table{
 
 </style>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-6" align="center"></div>
-<div class="col-sm-4" align="center">
-<form action="front">
+
 <div class="col-sm-2"></div>
 <div class="col-sm-8">
-
 <h3>후기 검색 게시판</h3>
-
-<form action="front" style="padding-left: 630px;">
+<form action="front" style="padding-left: 460px;">
 		<input type="hidden" name="command" value="ReviewFindItemName">
-			상품 이름으로 검색&nbsp;  <input type="text" name="itemName" required="required">
-		<input type="text" name="itemName" required="required" placeholder="상품 이름으로 검색">
-		<input type="submit" value="검색">
-	</form>
-	</div>
-<div class="col-sm-2" align="center"></div>
-<div class="col-sm-1" align="center"></div>
-<div class="col-sm-9" align="center">
+		<input type="text" name="itemName" required="required" placeholder="상품 이름으로 검색" style="height:30px; width: 300px;">
+		<input type="submit" value="검색" class="btn btn_pk">
 	</form><br>
+
+
+
+
+	</div>
+
+<div class="col-sm-2" align="center"></div>
+
+<div class="col-sm-2" align="center"></div>
+
+<div class="col-sm-8" align="center">
+
+
 <table class="table table-bordered table-hover boardlist">
 	<thead>
 		<tr class="success" style="width:10%">
@@ -58,8 +61,8 @@ table{
 			<th class="title" style="width:28%">제목</th>
 			<th style="width:5%">작성자</th>
 			<th style="width:7%">작성일</th>
-			<th style="width:3%">평점</th>
-			<th style="width:3%">조회</th>
+			<th style="width:4%">평점</th>
+			<th style="width:4%">조회</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -100,7 +103,5 @@ table{
 </c:if>
 </ul>
 </div>
-<div class="col-sm-1" align="center"></div>
-<div class="col-sm-2"></div>
 <div class="col-sm-2" align="center"></div>
 <div class="col-sm-12 bgfooter"></div>
