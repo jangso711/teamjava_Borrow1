@@ -30,44 +30,23 @@ table{
 }
 
 </style>
-<<<<<<< HEAD
-<div class="col-sm-12 bgheader" align="center"><h3>후기 검색 게시판</h3></div>
-<div class="col-sm-4"></div>
-<div class="col-sm-8" align="center">
-<form action="front">
-=======
-<div class="col-sm-12 bgheader"></div>
 
+<div class="col-sm-12 bgheader" align="center"><h3>후기 검색 게시판</h3></div>
 <div class="col-sm-2"></div>
-<div class="col-sm-8">
-<h3>후기 검색 게시판</h3>
-<form action="front" style="padding-left: 460px;">
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
+<div class="col-sm-8" align="center">
+</div>
+<div class="col-sm-2"></div>
+<div class="col-sm-3"></div>
+<div class="col-sm-9" align="center">
+<form action="front">
 		<input type="hidden" name="command" value="ReviewFindItemName">
 		<input type="text" name="itemName" required="required" placeholder="상품 이름으로 검색" style="height:30px; width: 300px;">
 		<input type="submit" value="검색" class="btn btn_pk">
-<<<<<<< HEAD
+
 		</form>
 		</div>
-	
-<div class="col-sm-2"></div>
-<div class="col-sm-8" align="center">
-=======
-	</form><br>
-
-
-
-
-	</div>
-
 <div class="col-sm-2" align="center"></div>
-
-<div class="col-sm-2" align="center"></div>
-
 <div class="col-sm-8" align="center">
-
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
-
 <table class="table table-bordered table-hover boardlist">
 	<thead>
 		<tr class="success" style="width:10%">
@@ -117,13 +96,6 @@ table{
  <li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
 </c:if>
 </ul>
-<<<<<<< HEAD
 </div>
-
 <div class="col-sm-2"></div>
-
-=======
-</div>
-<div class="col-sm-2" align="center"></div>
->>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 <div class="col-sm-12 bgfooter"></div>
