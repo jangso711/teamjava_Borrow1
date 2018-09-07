@@ -46,7 +46,7 @@ h4 {
 									<h4 class="card-title"> <a href="${detailurl }">${itemCategorySearchList.itemName }</a> </h4>
 									<p> 
 											평점 : ${itemCategorySearchList.itemAddVO.grade}<br>					
-											등록자 : ${itemCategorySearchList.memberVO.id}<br>
+						<%-- 					등록자 : ${itemCategorySearchList.memberVO.id}<br> --%>
 									</p>
 									<p class="card-text"><pre class="target">${itemCategorySearchList.itemExpl }</pre>
 										<fmt:formatNumber>${itemCategorySearchList.itemPrice }</fmt:formatNumber>원
