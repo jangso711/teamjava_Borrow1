@@ -146,7 +146,9 @@ table{
 								</c:otherwise>								
 							</c:choose></th>
 					</tr>
-					<td><div style="margin:10px"></div></td> 
+					<tr>
+					<td colspan=4><div style="margin:10px"></div></td> 
+					</tr>
 				</c:forEach>
 			</table>						
 			<c:set var="pb" value="${requestScope.pagingBean}" />

@@ -105,7 +105,7 @@ table{
 						</tr>
 					
 			<tr> 
-				<td><div style="margin:10px"></div></td> 
+				<td colspan=4><div style="margin:10px"></div></td> 
 			</tr> 
 					
 				</c:forEach>
