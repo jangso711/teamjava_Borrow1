@@ -47,6 +47,7 @@ public class ItemDAO {
 				sql = "update item set item_status=0,item_expdate=to_char(sysdate,'YYYY-MM-DD') where item_no=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, Integer.parseInt(vo.getItemNo()));
+				pstmt.executeUpdate();
 				// 180905 JB 상품삭제시 후기 삭제 추가
 				pstmt.close();
 				sql = "delete from review where item_no = ?";
@@ -57,6 +58,7 @@ public class ItemDAO {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, flag);
 				pstmt.setInt(2, Integer.parseInt(vo.getItemNo()));
+				pstmt.executeUpdate();
 				// 180905 JB 상품삭제시 후기 삭제 추가
 				pstmt.close();
 				sql = "delete from review where item_no = ?";
@@ -304,8 +306,8 @@ public class ItemDAO {
 		try {
 			con = getConnection();
 			sb.append(" select i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,");
-			sb.append(" to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, round(a.grade,2) from item i, item_add a ");
-			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=?"); //180904 MIRI 불필요한 정렬 삭제
+			sb.append(" to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, round(a.grade,2),i.item_status from item i, item_add a ");
+			sb.append(" where (i.item_no=a.item_no and i.item_status=1 or (item_status=0 and item_expdate>sysdate) )and i.item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
 			rs = pstmt.executeQuery();
@@ -321,8 +323,11 @@ public class ItemDAO {
 							rs.getString(6), rs.getString(7), "1", rs.getString(8), memberVO, picList, catList);
 					ItemAddVO itemAddVO=new ItemAddVO();
 					itemAddVO.setGrade(rs.getDouble(9));
+					itemVO.setItemStatus(rs.getString(10));
 					itemVO.setItemAddVO(itemAddVO);
+					System.out.println("check1");
 				}
+				System.out.println("check2");
 			}
 		}finally {
 			closeAll(rs, pstmt, con);
@@ -351,9 +356,9 @@ public class ItemDAO {
 			sb.append(" from (");			
 			sb.append(" select row_number() over(order by item_regdate desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, round(a.grade,2) as grade");
 			if(user!=null) {	//로그인 상태인 경우
-				sb.append(" from item i , item_add a where i.item_no=a.item_no and i.id!=?) r");		
+				sb.append(" from item i , item_add a where i.item_no=a.item_no and i.id!=? and item_status=1) r");		
 			}else {//로그인 x인 경우
-				sb.append(" from item i , item_add a where i.item_no=a.item_no) r");		
+				sb.append(" from item i , item_add a where i.item_no=a.item_no and item_status=1) r");		
 			}
 			sb.append(" where r.rnum between ? and ?");
 			pstmt = con.prepareStatement(sb.toString());
@@ -388,7 +393,7 @@ public class ItemDAO {
 		return list;
 	}
 	
-	public ArrayList<ItemVO> getAllItemListById(String id, PagingBean pagingBean) throws SQLException {
+	public ArrayList<ItemVO> getAllItemListById(String id, PagingBean pagingBean,boolean flag) throws SQLException {
 		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = new ItemVO();
@@ -402,7 +407,11 @@ public class ItemDAO {
 			sb.append(" select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id");
 			sb.append(" from (");
 			sb.append(" select row_number() over(order by item_regdate desc) as rnum, item_no, item_name, item_expl, item_price, id");
-			sb.append(" from item where id=?) r, member m");
+			if(flag) {
+				sb.append(" from item where id=? and item_status=1 or(item_status=0 and item_expdate>sysdate)) r, member m");
+			}else {
+				sb.append(" from item where id=? and item_status=1) r, member m");
+			}
 			sb.append(" where r.rnum between ? and ? and r.id=m.id");
 			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
