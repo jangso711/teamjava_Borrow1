@@ -40,12 +40,12 @@ h3 {
 .formContent{
 	padding-top:10px;
 	padding-bottom:20px;
-	padding-left:450px;
 	text-align:center;
 }
 
 table{
-	font-size: 18px;	
+	font-size: 18px;
+	margin:0 auto;	
 }
 </style>
 <script type="text/javascript">
@@ -72,11 +72,10 @@ table{
 			})//ready
 </script>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12 content">
+<div class="col-sm-12 formContent">
 <h3>회원 정보 수정</h3>
 	<form method="post" name="MemberUpdateForm" id="MemberUpdateForm" action="${pageContext.request.contextPath }/front">
 		<input type="hidden" name="command" value="MemberUpdate"> 
-		<div class="formContent">
 		<table cellpadding="3">
 		<tr> 
 		<td> <input type="text" class="input_text" name="id" value="아이디 : ${sessionScope.user.id}"readonly="readonly"></td>
@@ -100,6 +99,6 @@ table{
 		<td><input class="btn btn_pk" type="submit" id="updateBtn" value="정보수정"></td>
 		</tr>
 		</table>
-		</div>
+		
 	</form>
 </div>
