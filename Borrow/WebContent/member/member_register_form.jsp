@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
 h3 {
 
@@ -18,17 +19,16 @@ h3 {
 	  padding-top: 10px;
 	 padding-bottom: 10px;
 }
-
-
-input[type=text] {
-	size: 50px;
-	height: 40px;
-	width: 400px;
-	border-radius: 5px;
-	padding: 5px;
+/* 180907 MIRI css 수정 */
+.input_reg[type=text]{
+   size:50px;
+   height:40px;
+   width:400px;
+   border-radius: 5px;
+   padding:5px;
 }
-
-input[type=password] {
+/* 180907 MIRI css 수정 */
+.input_pwd[type=password] {
 	size: 50px;
 	height: 40px;
 	width: 400px;
@@ -91,25 +91,26 @@ table{
 	<form method="post" name="MemberRegisterForm" id="MemberRegisterForm"
 		action="front">
 		<input type="hidden" name="command" value="MemberRegister">
-		<div class="formContent">
+		<div class="formContent" align="center">
+		<!-- 180907 MIRI css 수정 -->
 		<table cellpadding="3">
 		<tr>
-		<td><input type="text" name="id" id="id" required="required" placeholder="아이디"></td><td><span id="idCheckResult"></span></td>
+		<td><input type="text" class="input_reg" name="id" id="id" required="required" placeholder="아이디"></td><td><span id="idCheckResult"></span></td>
 		</tr>	
 		<tr>
-		<td><input type="password" name="pwd" id="pwd" required="required" placeholder="비밀번호"></td>
+		<td><input type="password" class="input_pwd" name="pwd" id="pwd" required="required" placeholder="비밀번호"></td>
 		</tr>
 		 <tr>
-		 <td><input type="password" name="repwd" id="repwd" required="required"placeholder="비밀번호확인"></td><td><span id="pwdcheckResult"></span></td>
+		 <td><input type="password" class="input_pwd" name="repwd" id="repwd" required="required"placeholder="비밀번호확인"></td><td><span id="pwdcheckResult"></span></td>
 		 </tr>	 
 		<tr>
-		<td><input type="text" name="name" required="required" placeholder="이름"></td>
+		<td><input type="text" class="input_reg" name="name" required="required" placeholder="이름"></td>
 		</tr>
 		<tr>
-		<td><input type="text" name="address" required="required" placeholder="주소"></td>
+		<td><input type="text" class="input_reg" name="address" required="required" placeholder="주소"></td>
 		</tr>
 		<tr>
-		<td><input type="text" name="tel" required="required" placeholder="전화번호"></td>
+		<td><input type="text" class="input_reg" name="tel" required="required" placeholder="전화번호"></td>
 		</tr>
 		<tr>
 		<td><input class="btn btn_pk" type="submit" value="회원가입" id="registerBtn"></td>
