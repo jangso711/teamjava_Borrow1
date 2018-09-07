@@ -60,7 +60,7 @@ h4 {
 <!-- Pagination -->
 	<ul class="pagination justify-content-center">
 <c:if test="${requestScope.pagingBean.previousPageGroup}">
- <li class="page-item"><a class="page-link" href="front?command=ItemRegisterAllList&pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
+ <li class="page-item"><a class="page-link" href="front?command=ItemRegisterAllList&memberId=${memberId}&pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">&laquo;</a></li> 
 </c:if>
 <c:forEach begin="${requestScope.pagingBean.startPageOfPageGroup}"
 	end="${requestScope.pagingBean.endPageOfPageGroup}" var="pagenum">
@@ -74,7 +74,7 @@ h4 {
 		</c:choose>
 </c:forEach>
 <c:if test="${requestScope.pagingBean.nextPageGroup}">
- <li class="page-item"><a class="page-link" href="front?command=ItemRegisterAllList&pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
+ <li class="page-item"><a class="page-link" href="front?command=ItemRegisterAllList&memberId=${memberId}&pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
 </c:if>
 </ul>
 	
