@@ -304,7 +304,7 @@ public class ItemDAO {
 		try {
 			con = getConnection();
 			sb.append(" select i.id, i.item_name, i.item_brand, i.item_model, i.item_price, to_char(i.item_regdate, 'yyyy-MM-dd') as item_regdate,");
-			sb.append(" to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, a.grade from item i, item_add a ");
+			sb.append(" to_char(i.item_expdate, 'yyyy-MM-dd') as item_expdate, i.item_expl, round(a.grade,2) from item i, item_add a ");
 			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=?"); //180904 MIRI 불필요한 정렬 삭제
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, itemno);
@@ -347,16 +347,15 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id, r.grade");
+			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id, round(r.grade,2)");
 			sb.append(" from (");			
-			sb.append(" select row_number() over(order by i.item_no desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, a.grade");
+			sb.append(" select row_number() over(order by item_regdate desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, round(a.grade,2)");
 			if(user!=null) {	//로그인 상태인 경우
 				sb.append(" from item i , item_add a where i.item_no=a.item_no and i.id!=?) r");		
 			}else {//로그인 x인 경우
 				sb.append(" from item i , item_add a where i.item_no=a.item_no) r");		
 			}
 			sb.append(" where r.rnum between ? and ?");
-			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
 			
 			if(user!=null) {	//로그인 상태인 경우
@@ -402,7 +401,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id");
 			sb.append(" from (");
-			sb.append(" select row_number() over(order by item_no desc) as rnum, item_no, item_name, item_expl, item_price, id");
+			sb.append(" select row_number() over(order by item_regdate desc) as rnum, item_no, item_name, item_expl, item_price, id");
 			sb.append(" from item where id=?) r, member m");
 			sb.append(" where r.rnum between ? and ? and r.id=m.id");
 			sb.append(" order by item_no desc");
@@ -511,15 +510,14 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name, r. grade" );
+			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name, round(r. grade,2)" );
 			sb.append(" from (");
-			sb.append(" select row_number() over(order by i.item_no desc) as rnum, ");
-			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name, a. grade ");
+			sb.append(" select row_number() over(order by i.item_regdate desc) as rnum, ");
+			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name, round(a. grade,2) ");
 			sb.append(" from item i, item_category ic, category c, item_add a ");
 			sb.append(" where i.item_no=a.item_no and i.item_status=1 and i.item_no=ic.item_no and ic.cat_no=c.cat_no and ic.cat_no=?");
 			sb.append(" ) r");
 			sb.append(" where r.rnum between ? and ?");
-			sb.append(" order by r.item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, catno);
 			pstmt.setInt(2, pagingBean.getStartRowNumber());
@@ -937,7 +935,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 and id=? order by item_no asc";
+			String sql = "select item_no, item_name, item_expl, item_price, id from item where item_status=1 and id=? order by item_regdate desc";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
