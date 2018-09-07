@@ -32,7 +32,7 @@ table{
 </style>
 
 <div class="col-sm-12 listContent">
-	<br><h3>나의 빌려준 물품 목록</h3><br>	
+	<br><h3>빌려준 물품 목록</h3><br>	
 	
 	<!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
