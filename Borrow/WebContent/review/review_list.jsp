@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- colspan 수정하지 마세요 -->
 <style>
 .btn_pk {
 	background-color: #f6cac9;
@@ -29,18 +30,43 @@ table{
 }
 
 </style>
+<<<<<<< HEAD
 <div class="col-sm-12 bgheader" align="center"><h3>후기 검색 게시판</h3></div>
 <div class="col-sm-4"></div>
 <div class="col-sm-8" align="center">
 <form action="front">
+=======
+<div class="col-sm-12 bgheader"></div>
+
+<div class="col-sm-2"></div>
+<div class="col-sm-8">
+<h3>후기 검색 게시판</h3>
+<form action="front" style="padding-left: 460px;">
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 		<input type="hidden" name="command" value="ReviewFindItemName">
 		<input type="text" name="itemName" required="required" placeholder="상품 이름으로 검색" style="height:30px; width: 300px;">
 		<input type="submit" value="검색" class="btn btn_pk">
+<<<<<<< HEAD
 		</form>
 		</div>
 	
 <div class="col-sm-2"></div>
 <div class="col-sm-8" align="center">
+=======
+	</form><br>
+
+
+
+
+	</div>
+
+<div class="col-sm-2" align="center"></div>
+
+<div class="col-sm-2" align="center"></div>
+
+<div class="col-sm-8" align="center">
+
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 
 <table class="table table-bordered table-hover boardlist">
 	<thead>
@@ -50,8 +76,8 @@ table{
 			<th class="title" style="width:28%">제목</th>
 			<th style="width:5%">작성자</th>
 			<th style="width:7%">작성일</th>
-			<th style="width:3%">평점</th>
-			<th style="width:3%">조회</th>
+			<th style="width:4%">평점</th>
+			<th style="width:4%">조회</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -91,8 +117,13 @@ table{
  <li class="page-item"><a class="page-link" href="front?command=ReviewList&pageNo=${requestScope.rvo.pagingBean.endPageOfPageGroup+1}">&raquo;</a></li>  
 </c:if>
 </ul>
+<<<<<<< HEAD
 </div>
 
 <div class="col-sm-2"></div>
 
+=======
+</div>
+<div class="col-sm-2" align="center"></div>
+>>>>>>> branch 'master' of https://github.com/jangso711/teamjava_Borrow1.git
 <div class="col-sm-12 bgfooter"></div>
