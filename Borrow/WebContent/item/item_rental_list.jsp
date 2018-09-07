@@ -23,8 +23,12 @@ table{
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
-	height:450px;
+	min-height: 500px;
+	height: auto;
 	text-align:center;
+}
+.center{
+	padding-top:20px;
 }
 </style>
 <script type="text/javascript">
@@ -71,9 +75,8 @@ table{
 		$("#reviewViewForm").submit();
 }
 </script>
-<div class="col-sm-12 bgheader"></div>
 <div class="col-sm-12 listContent">
-	<br><h3>나의 대여 목록</h3><br>	
+	<br><h3>빌린 물품 목록</h3><br>	
 
 
 <!--현재 날짜 변수 저장 -->
@@ -128,7 +131,7 @@ table{
 											<form class="earlyReturnForm">
 												<input type="hidden" name="command" value="ItemEarlyReturn">
 												<input type="hidden" name="rentalNo" value="${rentaldetail.rentalNo}">
-												<input type="button" class="returnbtn btn btn_center btn_pk" value="반납하기" id="${rentaldetail.rentalNo}">
+												대여중&nbsp;&nbsp;<input type="button" class="returnbtn btn btn_center btn_pk" value="반납하기" id="${rentaldetail.rentalNo}">
 											</form>	
 										</c:when>
 										<c:otherwise>

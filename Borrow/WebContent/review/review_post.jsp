@@ -59,8 +59,8 @@ function updateReview(){
 </script>
 
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-2" align="center"></div>
-<div class="col-sm-8" align="center">
+<div class="col-sm-1" align="center"></div>
+<div class="col-sm-9" align="center">
 <table class="table table-bordered boardlist">
 
 		<tr class="success" style="width:10%">
@@ -83,17 +83,17 @@ function updateReview(){
 			<td>${requestScope.rvo.reviewHit}</td>
 		</tr>
 
-			<tr style="height:300px">
+			<tr style="height:300px" style="width:100px">
 				<td colspan="1">내용</td>
-				<td colspan="6" style="width:10%">
-				<pre>${requestScope.rvo.reviewContent}</pre>
+				<td colspan="6" style="width:10%" style="text-align: left">
+				${requestScope.rvo.reviewContent}
 				</td>
 			</tr>
 	
 	</table>
 	</div>
 	<hr>
-	<div class="col-sm-2" align="center"></div>
+	<div class="col-sm-1" align="center"></div>
 	<c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
 			 <form name="deleteForm" action="${pageContext.request.contextPath}/front" method="post">
 			 	<input type="hidden" name="command" value="DeleteReview">
@@ -109,7 +109,7 @@ function updateReview(){
 			 	</tr>
 			 </table>
 			 </div>
-			 <div class="col-sm-2" align="center"></div>
+			 <div class="col-sm-1" align="center"></div>
 			 </c:if>
 <form id="deleteReviewForm"action="${pageContext.request.contextPath}/front"method="post">
 	<input type="hidden" name="command" value="ReviewDelete">

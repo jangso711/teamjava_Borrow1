@@ -164,7 +164,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select count(*) from item where id!=?";
+			String sql="select count(*) from item where item_status=1 and item_expdate>sysdate and id!=?";
 			pstmt = con.prepareStatement(sql);
 			if(exceptId==null) {
 				pstmt.setString(1, "admin");
