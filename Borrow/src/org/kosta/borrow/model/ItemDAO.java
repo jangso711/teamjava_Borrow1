@@ -175,6 +175,7 @@ public class ItemDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next())
 				totItemCnt = rs.getInt(1);
+			System.out.println(totItemCnt);
 		} finally {
 			closeAll(rs, pstmt, con);
 		}
@@ -335,7 +336,7 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public ArrayList<ItemVO> getAllItemList(PagingBean pagingBean) throws SQLException {
+	public ArrayList<ItemVO> getAllItemList(PagingBean pagingBean,MemberVO user) throws SQLException {
 		ArrayList<String> picList = null;
 		ArrayList<ItemVO> list = new ArrayList<ItemVO>();
 		ItemVO itemVO = new ItemVO();
@@ -349,12 +350,25 @@ public class ItemDAO {
 			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id, r.grade");
 			sb.append(" from (");			
 			sb.append(" select row_number() over(order by i.item_no desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, a.grade");
-			sb.append(" from item i , item_add a where i.item_no=a.item_no) r");		
+			if(user!=null) {	//로그인 상태인 경우
+				sb.append(" from item i , item_add a where i.item_no=a.item_no and item_expdate>sysdate and i.id!=?) r");		
+			}else {//로그인 x인 경우
+				sb.append(" from item i , item_add a where i.item_no=a.item_no and item_expdate>sysdate) r");		
+			}
 			sb.append(" where r.rnum between ? and ?");
 			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
-			pstmt.setInt(1, pagingBean.getStartRowNumber());
-			pstmt.setInt(2, pagingBean.getEndRowNumber());
+			
+			if(user!=null) {	//로그인 상태인 경우
+				System.out.println("로그인상태");
+				pstmt.setString(1,user.getId());
+				pstmt.setInt(2, pagingBean.getStartRowNumber());
+				pstmt.setInt(3, pagingBean.getEndRowNumber());
+			}else {
+				pstmt.setInt(1, pagingBean.getStartRowNumber());
+				pstmt.setInt(2, pagingBean.getEndRowNumber());
+			}
+
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {

@@ -52,7 +52,6 @@ table{
 			}
 			});//ajax
 		});//click
-		
 		$(".returnbtn").click(function() {
 			 $.ajax({
 				type:"get",
@@ -77,8 +76,6 @@ table{
 </script>
 <div class="col-sm-12 listContent">
 	<br><h3>빌린 물품 목록</h3><br>	
-
-
 <!--현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>		
