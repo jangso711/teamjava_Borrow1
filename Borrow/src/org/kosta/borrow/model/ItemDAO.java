@@ -351,9 +351,9 @@ public class ItemDAO {
 			sb.append(" from (");			
 			sb.append(" select row_number() over(order by i.item_no desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, a.grade");
 			if(user!=null) {	//로그인 상태인 경우
-				sb.append(" from item i , item_add a where i.item_no=a.item_no and item_expdate>sysdate and i.id!=?) r");		
+				sb.append(" from item i , item_add a where i.item_no=a.item_no and i.id!=?) r");		
 			}else {//로그인 x인 경우
-				sb.append(" from item i , item_add a where i.item_no=a.item_no and item_expdate>sysdate) r");		
+				sb.append(" from item i , item_add a where i.item_no=a.item_no) r");		
 			}
 			sb.append(" where r.rnum between ? and ?");
 			sb.append(" order by item_no desc");
