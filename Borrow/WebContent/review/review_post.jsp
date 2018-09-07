@@ -68,7 +68,7 @@ function updateReview(){
 <div class="col-sm-8" align="center">
 <table class="table table-bordered boardlist">
 
-		<tr class="success" style="width:10%">
+		<tr class="success table-danger" style="width:10%">
 			<td style="width:5%">글번호 </td>
 			<td scope="row" style="width:8%">상품정보</td>
 			<td scope="row" class="title" style="width:28%">제목 </td>

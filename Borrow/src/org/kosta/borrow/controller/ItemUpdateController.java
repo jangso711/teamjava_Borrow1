@@ -41,7 +41,7 @@ public class ItemUpdateController implements Controller {
 		String dirPath = request.getServletContext().getRealPath("upload");
 		ItemDAO.getInstance().updateItem(ivo,dirPath);
 		
-		return "redirect:index.jsp";
+		return "redirect:front?command=ItemDetail&itemNo="+itemNo;
 	}
 
 }

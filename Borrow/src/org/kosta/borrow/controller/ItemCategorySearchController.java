@@ -21,17 +21,19 @@ public class ItemCategorySearchController implements Controller {
 		String nowPage = request.getParameter("pageNum");
 		HttpSession session=request.getSession();
 		MemberVO mvo= (MemberVO) session.getAttribute("user");
+		String exceptId=null;
 		int totalPostCount=0;
 		if(mvo==null) {
 			totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo,null);
 		}else {
 			totalPostCount = ItemDAO.getInstance().getItemNoListCountByCategory(categoryNo,mvo.getId());
+			exceptId=mvo.getId();
 		}		
 		if(nowPage == null)
 			pagingBean = new PagingBean(1, 6, totalPostCount);
 		else
 			pagingBean = new PagingBean(Integer.parseInt(nowPage), 6, totalPostCount);
-		ArrayList<ItemVO> itemCategorySearchList = ItemDAO.getInstance().getItemNoListByCategory(categoryNo, pagingBean);
+		ArrayList<ItemVO> itemCategorySearchList = ItemDAO.getInstance().getItemNoListByCategory(categoryNo, pagingBean, exceptId);
 		
 		//180906 MIRI 로그인 했을시에 자신이 등록한 상품은 카테고리에서 검색 불가 (아예 없을 시에 검색 결과 없다고 창띄우기)
 	/*	HttpSession session = request.getSession(false);

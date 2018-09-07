@@ -21,14 +21,15 @@ table{
 	padding-right:100px;
 }
 .faqcontent{
-	margin-top:100px;
-	margin-bottom:100px;
+	margin-top:10px;
+	margin-bottom:10px;
 }
 </style>
 
 <div class="col-sm-2"></div>
 <div class="col-sm-8 faqcontent">
   <h3>자주 묻는 질문(FAQ)</h3>
+<div class="col-sm-2"></div>
   <div id="accordion">
     <div class="card">
       <div class="card-header">
