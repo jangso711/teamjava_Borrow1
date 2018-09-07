@@ -34,7 +34,7 @@ margin-top:30px;
 }
 </style>
 <div class="col-sm-12 mypagecontent" align="center">
-    <button type="button" class="btn bg_gr" style="WIDTH: 150pt; HEIGHT: 150pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList&memberId=${sessionScope.user.id}'" >등록 물품</button>
+    <button type="button" class="btn bg_gr" style="WIDTH: 150pt; HEIGHT: 150pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterAllList'" >등록 물품</button>
     <button type="button" class="btn bg_gr" style="WIDTH: 150pt; HEIGHT: 150pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRegisterList&nowPage=1'">빌려준 목록</button>
     <button type="button" class="btn bg_gr" style="WIDTH: 150pt; HEIGHT: 150pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=ItemRentalList&nowPage=1'">빌린 목록</button><br><br>
     <button type="button" class="btn bg_gr" style="WIDTH: 150pt; HEIGHT: 150pt;" onclick="location.href='${pageContext.request.contextPath}/front?command=MemberDetail'">회원정보</button>

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<!-- colspan 수정하지 마세요 -->
 <style>
 .bg_gr{
  	background-color: #e0e0e0;
@@ -30,7 +30,9 @@ h3{
  	color:#A9D0F5;
 
 }
-
+.success{
+	font-weight:bold;
+}
 .bgheader {
 	height: 80px;
 }
@@ -39,6 +41,9 @@ h3{
 }
 table{
 	text-align: center;
+}
+pre{
+	text-align:left;
 }
 </style>
 
@@ -59,18 +64,18 @@ function updateReview(){
 </script>
 
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-1" align="center"></div>
-<div class="col-sm-9" align="center">
+<div class="col-sm-2" align="center"></div>
+<div class="col-sm-8" align="center">
 <table class="table table-bordered boardlist">
 
-		<tr class="success" style="width:10%">
+		<tr class="success table-danger" style="width:10%">
 			<td style="width:5%">글번호 </td>
-			<td style="width:8%">상품정보</td>
-			<td class="title" style="width:28%">제목 </td>
-			<td style="width:5%">작성자</td>
-			<td style="width:7%">작성일</td>
-			<td style="width:5%">평점</td>
-			<td style="width:5%">조회수</td>
+			<td scope="row" style="width:8%">상품정보</td>
+			<td scope="row" class="title" style="width:28%">제목 </td>
+			<td scope="row" style="width:7%">작성자</td>
+			<td scope="row" style="width:10%">작성일</td>
+			<td scope="row" style="width:5%">평점</td>
+			<td scope="row" style="width:5%">조회</td>
 		</tr>
 		<tr>
 			<td>${requestScope.rvo.reviewNo}</td>
@@ -85,15 +90,14 @@ function updateReview(){
 
 			<tr style="height:300px" style="width:100px">
 				<td colspan="1">내용</td>
-				<td colspan="6" style="width:10%" style="text-align: left">
-				${requestScope.rvo.reviewContent}
+				<td colspan="6" style="width:10%" style="text-align:left">
+				<pre>${requestScope.rvo.reviewContent}</pre>
 				</td>
 			</tr>
 	
 	</table>
 	</div>
-	<hr>
-	<div class="col-sm-1" align="center"></div>
+	<div class="col-sm-2" align="center"></div>
 	<c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
 			 <form name="deleteForm" action="${pageContext.request.contextPath}/front" method="post">
 			 	<input type="hidden" name="command" value="DeleteReview">
@@ -109,7 +113,7 @@ function updateReview(){
 			 	</tr>
 			 </table>
 			 </div>
-			 <div class="col-sm-1" align="center"></div>
+			 <div class="col-sm-2" align="center"></div>
 			 </c:if>
 <form id="deleteReviewForm"action="${pageContext.request.contextPath}/front"method="post">
 	<input type="hidden" name="command" value="ReviewDelete">

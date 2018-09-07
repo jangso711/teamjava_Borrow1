@@ -4,17 +4,28 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.kosta.borrow.model.ItemDAO;
 import org.kosta.borrow.model.ItemVO;
+import org.kosta.borrow.model.MemberVO;
 import org.kosta.borrow.model.PagingBean;
 
 public class ItemRegisterAllListController implements Controller {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String id=null;		
-		id=request.getParameter("memberId");
+		String id=request.getParameter("memberId");//null일 경우는 자신이 등록한 물품
+		if(id==null) {
+			HttpSession session = request.getSession(false);
+			MemberVO user= null;
+			if(session!=null && (user=(MemberVO) session.getAttribute("user"))!=null ) {
+				id = user.getId();
+			}else {
+				//자신의 등록물품 검색 시 세션 만료된 경우
+				return "redirect:front?command=LoginForm";
+			}
+		}
 		int totalPostCount = ItemDAO.getInstance().getTotalItemCountById(id);
 		String nowPage = request.getParameter("pageNo");
 		PagingBean pagingBean = null;

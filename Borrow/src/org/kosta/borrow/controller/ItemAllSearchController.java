@@ -16,20 +16,23 @@ public class ItemAllSearchController implements Controller {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String nowPage = request.getParameter("pageNum");
-		HttpSession session= request.getSession();
-		MemberVO user= (MemberVO) session.getAttribute("user");
+		HttpSession session= request.getSession(false);
+		MemberVO user= null;
 		int totalPostCount=0;
-		if(user==null) {
-			totalPostCount = ItemDAO.getInstance().getTotalItemCount(null);
-		}else {
+		if(session!=null && (user=(MemberVO) session.getAttribute("user"))!=null ) {
+			//로그인 상태일 경우 자신의 아이템은 제외하고 검색하기
 			totalPostCount = ItemDAO.getInstance().getTotalItemCount(user.getId());
-		}	
+		}else {
+			totalPostCount = ItemDAO.getInstance().getTotalItemCount(null);
+		}
 		PagingBean pagingBean = null;
-		if(nowPage == null)
+		if(nowPage == null) {
 			pagingBean = new PagingBean(1, 6, totalPostCount);
-		else
+		}else {
 			pagingBean = new PagingBean(Integer.parseInt(nowPage), 6, totalPostCount);
-		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemList(pagingBean);
+		}
+		
+		ArrayList<ItemVO> allItemList = ItemDAO.getInstance().getAllItemList(pagingBean,user);
 		
 		//180906 MIRI 로그인 했을시에 자신이 등록한 상품은 검색 불가 (아예 없을 시에 검색 결과 없다고 창띄우기)
 //		HttpSession session = request.getSession(false);

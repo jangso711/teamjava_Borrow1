@@ -62,7 +62,7 @@ table{
 							}//else
 						});//keyup
 				$("#updateBtn").click(
-						alert("update");
+						//alert("update");
 						function() {//비밀번호 오류시 회원정보 수정 실패
 							if ($("#pwdcheckResult").text() == "비밀번호 불일치") {
 								alert('비밀번호를 확인하세요');

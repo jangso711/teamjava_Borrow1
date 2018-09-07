@@ -149,11 +149,12 @@ input[data-readonly] {
 					}
 				}
 				  /* 180904 SOJEONG 대여중인 날짜 비활성화 */
-				  var dates = ${requestScope.dateList};
+				 var dates = ${requestScope.dateList};
 			 	function getNextDisabledDate(date){
 			 		if(dates==null)return "no";
 				  var nextDisabledDate = "no";
 				  dates.sort();
+				 
 				  $.each(dates, function(i, d) {
 				  	if(date<d){
 				  		nextDisabledDate = d;
@@ -186,8 +187,6 @@ input[data-readonly] {
 		        	var firDateSelect;
 		        	var secDateSelect;
 		        	var substractDate;
-				 });
-				 $(function() {
 			        var dates = $( "#from,#to" ).datepicker({
 			      	  showOn:"both",
 			      	 buttonText: "<i class='fa fa-calendar'></i>",	// 180905 SOJEONG button이미지 추가 
