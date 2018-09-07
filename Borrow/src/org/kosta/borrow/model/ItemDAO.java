@@ -349,7 +349,7 @@ public class ItemDAO {
 			con = getConnection();
 			sb.append(" select r.item_no, r.item_name, r.item_expl, r.item_price, r.id, round(r.grade,2)");
 			sb.append(" from (");			
-			sb.append(" select row_number() over(order by item_regdate desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, round(a.grade,2) as grade ");
+			sb.append(" select row_number() over(order by item_regdate desc) as rnum, i.item_no, i.item_name, i.item_expl, i.item_price, i.id, round(a.grade,2) as grade");
 			if(user!=null) {	//로그인 상태인 경우
 				sb.append(" from item i , item_add a where i.item_status=1 and i.item_no=a.item_no and i.id!=?) r");		
 			}else {//로그인 x인 경우
@@ -510,7 +510,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name, round(r. grade,2)" );
+			sb.append(" select r.id, r.item_no, r.item_name, r.item_expl, r.item_price, r.cat_name, round(r.grade,2)" );
 			sb.append(" from (");
 			sb.append(" select row_number() over(order by i.item_regdate desc) as rnum, ");
 			sb.append(" i.id, i.item_no, i.item_name, i.item_expl, i.item_price, c.cat_name, round(a. grade,2) as grade ");
