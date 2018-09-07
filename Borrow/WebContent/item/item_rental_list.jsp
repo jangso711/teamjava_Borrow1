@@ -23,6 +23,7 @@ table{
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
+	height:450px;
 	text-align:center;
 }
 </style>
@@ -71,10 +72,10 @@ table{
 }
 </script>
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12 content">
+<div class="col-sm-12 listContent">
 	<br><h3>나의 대여 목록</h3><br>	
 
-<div class="listContent">
+
 <!--현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>		
@@ -149,7 +150,7 @@ table{
 				</c:forEach>
 			</table>						
 			<c:set var="pb" value="${requestScope.pagingBean}" />
-</div>
+
 				<div class="col-sm-12 center" align="center">					
 						<ul class="pagination justify-content-center">
 						<c:if test="${pb.previousPageGroup }">

@@ -26,13 +26,14 @@ table{
 .listContent{
 	padding-top:10px;
 	padding-bottom:10px;
+	height:450px;
 	text-align:center;
 }
 </style>
-<div class="col-sm-12 bgheader"></div>
-<div class="col-sm-12 content">
+
+<div class="col-sm-12 listContent">
 	<br><h3>나의 빌려준 물품 목록</h3><br>	
-	<div class="listContent">
+	
 	<!-- 	현재 날짜 변수 저장 -->
 	<jsp:useBean id="currTime" class="java.util.Date" />	
 	<fmt:parseNumber value="${currTime.time / (1000*60*60*24)}" integerOnly="false" var="curDate"></fmt:parseNumber>	
@@ -140,7 +141,7 @@ table{
 						</li>
 					</c:if>
 					</ul>
-				</div>
+				
 		</c:otherwise>
 	</c:choose>
 </div>
