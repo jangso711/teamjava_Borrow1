@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<!-- colspan 수정하지 마세요 -->
 <style>
 .bg_gr{
  	background-color: #e0e0e0;
@@ -59,8 +59,8 @@ function updateReview(){
 </script>
 
 <div class="col-sm-12 bgheader"></div>
-<div class="col-sm-1" align="center"></div>
-<div class="col-sm-9" align="center">
+<div class="col-sm-2" align="center"></div>
+<div class="col-sm-8" align="center">
 <table class="table table-bordered boardlist">
 
 		<tr class="success" style="width:10%">
@@ -92,8 +92,7 @@ function updateReview(){
 	
 	</table>
 	</div>
-	<hr>
-	<div class="col-sm-1" align="center"></div>
+	<div class="col-sm-2" align="center"></div>
 	<c:if test="${requestScope.rvo.memberVO.id==sessionScope.user.id}">
 			 <form name="deleteForm" action="${pageContext.request.contextPath}/front" method="post">
 			 	<input type="hidden" name="command" value="DeleteReview">
@@ -109,7 +108,7 @@ function updateReview(){
 			 	</tr>
 			 </table>
 			 </div>
-			 <div class="col-sm-1" align="center"></div>
+			 <div class="col-sm-2" align="center"></div>
 			 </c:if>
 <form id="deleteReviewForm"action="${pageContext.request.contextPath}/front"method="post">
 	<input type="hidden" name="command" value="ReviewDelete">

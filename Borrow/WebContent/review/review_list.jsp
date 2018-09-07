@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- colspan 수정하지 마세요 -->
 <style>
 .btn_pk {
 	background-color: #f6cac9;
@@ -46,8 +47,8 @@ table{
 	</div>
 <div class="col-sm-2" align="center"></div>
 
-<div class="col-sm-1" align="center"></div>
-<div class="col-sm-9" align="center">
+<div class="col-sm-2" align="center"></div>
+<div class="col-sm-8" align="center">
 
 
 <table class="table table-bordered table-hover boardlist">
