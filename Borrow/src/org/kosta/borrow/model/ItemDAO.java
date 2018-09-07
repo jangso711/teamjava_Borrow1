@@ -192,7 +192,7 @@ public class ItemDAO {
 		ResultSet rs = null;
 		try {
 			con = getConnection();
-			String sql="select count(*) from item where id=?";
+			String sql="select count(*) from item where id=? and item_status=1 and item_expdate>sysdate ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -358,7 +358,9 @@ public class ItemDAO {
 			if(user!=null) {	//로그인 상태인 경우
 				sb.append(" from item i , item_add a where i.item_no=a.item_no and i.id!=? and item_status=1) r");		
 			}else {//로그인 x인 경우
-				sb.append(" from item i , item_add a where i.item_no=a.item_no and item_status=1) r");		
+
+				sb.append(" from item i , item_add a where i.item_no=a.item_no and i.item_status=1) r");		
+
 			}
 			sb.append(" where r.rnum between ? and ?");
 			pstmt = con.prepareStatement(sb.toString());
@@ -407,11 +409,13 @@ public class ItemDAO {
 			sb.append(" select r.rnum, r.item_no, r.item_name, r.item_expl, r.item_price, r.id");
 			sb.append(" from (");
 			sb.append(" select row_number() over(order by item_regdate desc) as rnum, item_no, item_name, item_expl, item_price, id");
+
 			if(flag) {
 				sb.append(" from item where id=? and item_status=1 or(item_status=0 and item_expdate>sysdate)) r, member m");
 			}else {
 				sb.append(" from item where id=? and item_status=1) r, member m");
 			}
+
 			sb.append(" where r.rnum between ? and ? and r.id=m.id");
 			sb.append(" order by item_no desc");
 			pstmt = con.prepareStatement(sb.toString());
@@ -881,7 +885,8 @@ public class ItemDAO {
 				RentalDetailVO rentalDetailVo= new RentalDetailVO();
 				rentalDetailVo.setRentalNo(rs.getString(1));
 				ItemVO item= new ItemVO();
-				item.setPicList(getPictureList(rs.getString(2)));				
+				item.setPicList(getPictureList(rs.getString(2)));			
+				item.setItemNo(rs.getString(2));
 				item.setItemName(rs.getString(3));
 				item.getMemberVO().setId(rs.getString(4));				
 				rentalDetailVo.setItemVO(item);
